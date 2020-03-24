@@ -22,6 +22,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\CommentController.cs" />
+    <Compile Remove="DTO\EmptyClass.cs" />
+    <Compile Remove="DTO\CommentDTO %28copy%29.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Comment\Create.cshtml" />
