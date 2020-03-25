@@ -224,10 +224,6 @@ namespace WediumAPI.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.FullName)
-                    .IsRequired()
-                    .HasMaxLength(101);
-
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(50);

@@ -20,7 +20,6 @@ namespace WediumAPI.Models
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string FullName { get; set; }
 
         public virtual ICollection<Comment> Comment { get; set; }
         public virtual ICollection<CommentLike> CommentLike { get; set; }
