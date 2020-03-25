@@ -37,7 +37,7 @@ namespace WediumTestSuite
         }
 
         [Test]
-        public void BasicPersistanceTest()
+        public void PersistanceTest()
         {
             // Adding a User to the DB
             User testUser = new User
