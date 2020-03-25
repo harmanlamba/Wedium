@@ -103,12 +103,14 @@ namespace WediumTestSuite
                 ArticleBody = "Test Body"
             };
 
+            var postType = _db.PostType.First();
+
             Post testPost = new Post
             {
                 Date = DateTime.Now,
                 Title = "Urzababa The Great",
                 Description = "The Life of Urzababa",
-                PostTypeId = 3
+                PostTypeId = postType.PostTypeId
             };
 
             Favourite testFavourite = new Favourite
