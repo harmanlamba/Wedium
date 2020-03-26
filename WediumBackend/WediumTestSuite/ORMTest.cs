@@ -45,11 +45,11 @@ namespace WediumTestSuite
                 _db.SaveChanges();
                
                 var user = _db.User.FirstOrDefault(u => u.FirstName == "Test");
-                Assert.AreEqual("Test", user.FirstName);
-                Assert.AreEqual("User", user.LastName);
-                Assert.AreEqual("test@user.com", user.Email);
-                Assert.AreEqual("testUser", user.Username);
-                Assert.AreEqual("supersecretpassword", user.Password);
+                Assert.AreEqual(testUser.FirstName, user.FirstName);
+                Assert.AreEqual(testUser.LastName, user.LastName);
+                Assert.AreEqual(testUser.Email, user.Email);
+                Assert.AreEqual(testUser.Username, user.Username);
+                Assert.AreEqual(testUser.Password, user.Password);
                 
                 user.FirstName = "Updated Firstname";
                 user.LastName = "Updated Lastname";
@@ -71,7 +71,7 @@ namespace WediumTestSuite
         }
 
         [Test]
-        public void BaiscJoinTest()
+        public void JoinTest()
         {
             User testUser = new User
             {

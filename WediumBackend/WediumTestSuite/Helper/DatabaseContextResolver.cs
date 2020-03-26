@@ -21,7 +21,6 @@ namespace WediumTestSuite.Helper
             return config;
         }
 
-
         public static WediumContext GetDatabaseContext()
         {
             string connectionString = String.Empty;
@@ -40,6 +39,5 @@ namespace WediumTestSuite.Helper
             optionsBuilder.UseSqlServer(connectionString);
             return new WediumContext(optionsBuilder.Options);
         }
-
     }
 }
