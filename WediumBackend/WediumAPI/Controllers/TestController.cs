@@ -35,25 +35,6 @@ namespace WediumAPI.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-
-            User testUser = new User
-            {
-                FirstName = "Test",
-                LastName = "User",
-                Email = "test@user.com",
-                Username = "testUser",
-                Password = "supersecretpassword"
-            };
-
-
-            _db.User.Add(testUser);
-            _db.SaveChanges();
-
-            var user = _db.User.FirstOrDefault(u => u.FirstName == "Test user");
-            _db.User.Remove(user);
-            _db.SaveChanges();
-
-
             return Ok(new
             {
                 Date = "today",
