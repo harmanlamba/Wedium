@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WediumAPI.Models;
 
 namespace WediumAPI.Controllers
 {
@@ -11,6 +12,7 @@ namespace WediumAPI.Controllers
     [Route("[controller]")]
     public class TestController : ControllerBase
     {
+        public readonly WediumContext _db;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -18,10 +20,17 @@ namespace WediumAPI.Controllers
 
         private readonly ILogger<TestController> _logger;
 
-        public TestController(ILogger<TestController> logger)
+        //public TestController(ILogger<TestController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        public TestController(WediumContext db)
         {
-            _logger = logger;
+            _db = db;
         }
+
+
 
         [HttpGet]
         public ActionResult Get()

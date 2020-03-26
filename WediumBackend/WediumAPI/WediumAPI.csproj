@@ -6,8 +6,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
   </ItemGroup>
-
-
+  <ItemGroup>
+    <Compile Remove="Controllers\CommentController.cs" />
+    <Compile Remove="DTO\EmptyClass.cs" />
+    <Compile Remove="DTO\CommentDTO %28copy%29.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Comment\Create.cshtml" />
+    <Content Remove="Views\Comment\Edit.cshtml" />
+    <Content Remove="Views\Comment\Details.cshtml" />
+    <Content Remove="Views\Comment\Delete.cshtml" />
+    <Content Remove="Views\Comment\Index.cshtml" />
+  </ItemGroup>
 </Project>
