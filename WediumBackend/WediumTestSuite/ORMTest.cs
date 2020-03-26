@@ -53,22 +53,19 @@ namespace WediumTestSuite
             {
                 _db.User.Add(testUser);
                 _db.SaveChanges();
-
-                // Finding the User
+               
                 var user = _db.User.FirstOrDefault(u => u.FirstName == "Test");
                 Assert.AreEqual("Test", user.FirstName);
                 Assert.AreEqual("User", user.LastName);
                 Assert.AreEqual("test@user.com", user.Email);
                 Assert.AreEqual("testUser", user.Username);
                 Assert.AreEqual("supersecretpassword", user.Password);
-
-                // Modifying User information
+                
                 user.FirstName = "Updated Firstname";
                 user.LastName = "Updated Lastname";
-                //Persisting to the database
+                
                 _db.SaveChanges();
-
-                // Asserting the persist
+                
                 Assert.AreEqual("Updated Firstname", user.FirstName);
                 Assert.AreEqual("Updated Lastname", user.LastName);
             }
