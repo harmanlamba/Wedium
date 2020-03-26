@@ -18,4 +18,6 @@ jobs:
     - name: Build with dotnet
       run: dotnet build '.\WediumBackend\WediumBackend.sln'
     - name: Run tests
+      env:
+        DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING}}
       run: dotnet test '.\WediumBackend\WediumBackend.sln' --verbosity normal

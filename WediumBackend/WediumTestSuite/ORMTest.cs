@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using WediumAPI;
 using WediumAPI.Models;
-
+using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
 {
@@ -18,22 +18,12 @@ namespace WediumTestSuite
     {
         private WediumContext _db;
 
-        public static IConfiguration InitConfiguration()
-        {
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-            return config;
-        }
+      
 
         [SetUp]
         public void SetUp()
         {
-            var config = InitConfiguration();
-
-            var optionsBuilder = new DbContextOptionsBuilder<WediumContext>();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("WediumDatabase"));
-            _db = new WediumContext(optionsBuilder.Options);
+            _db = DatabaseContextResolver.GetDatabaseContext();
         }
 
         [Test]
