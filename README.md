@@ -6,19 +6,19 @@ Be sure that you are aware of our license, code and GitHub conventions and our g
 
 ## Setup Guide
 ### Prerequisites
-We recommend the usage of Visual Studio for the developlment of the backend and your choice of text editor for the frontend.
+We recommend the usage of Visual Studio for the development of the backend and your choice of text editor for the frontend.
 
-* Ensure you have installed the ```.NET Core 3.1``` SDK.
-    * If using Visual Studio, also ensure the ```ASP.NET and Web Development Tools``` package is installed.
-* Ensure ```NPM / NodeJS``` is installed to run the frontend.
+* Ensure you have installed the `.NET Core 3.1` SDK.
+    * If using Visual Studio, also ensure the `ASP.NET and Web Development Tools` package is installed.
+* Ensure `NPM / NodeJS` is installed to run the frontend.
 
 ### Setup Steps
-1. Find and open ```WediumBackend.sln``` in ```./WediumBackend```.
-2. Build the project and launch ```WediumAPI``` in Visual Studio. This will install the necessary NuGet packages and launch IISExpress. 
-3. Naviagate to the frontend folder in ```./wedium``` in a command line tool
-4. Run ```npm install``` in the command line tool to download and install frontend dependencies.
-5. Run ```npm start``` in the command line tool to start the React development server.
-6. The default internet browser redirect to the home page. This should be successfully connected to the backend
+1. Find and open `WediumBackend.sln` in `./WediumBackend`.
+2. Build the project and launch `WediumAPI` in Visual Studio. This will install the necessary NuGet packages and launch IISExpress. 
+3. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool
+4. Run `npm install` in the command line tool to download and install frontend dependencies.
+5. Run `npm start` in the command line tool to start the React development server.
+6. The default internet browser redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend
 
 ## Team Members
 
