@@ -18,7 +18,7 @@ We recommend the usage of Visual Studio for the development of the backend and y
 3. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool
 4. Run `npm install` in the command line tool to download and install frontend dependencies.
 5. Run `npm start` in the command line tool to start the React development server.
-6. The default internet browser redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend
+6. The default internet browser will redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend
 
 ## Team Members
 
