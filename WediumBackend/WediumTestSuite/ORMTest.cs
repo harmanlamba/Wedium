@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WediumAPI;
+using WediumAPI.Helper;
 using WediumAPI.Models;
 using WediumTestSuite.Helper;
 
@@ -17,8 +18,6 @@ namespace WediumTestSuite
     public class ORMTest
     {
         private WediumContext _db;
-
-      
 
         [SetUp]
         public void SetUp()

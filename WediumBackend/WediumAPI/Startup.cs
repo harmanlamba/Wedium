@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WediumAPI.Helper;
 using WediumAPI.Models;
 using WediumAPI.Services;
 
@@ -28,12 +29,8 @@ namespace WediumAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
             services.AddDbContext<WediumContext>(options =>
-                    options.UseSqlServer(config.GetConnectionString("WediumDatabase")));
+                    options.UseSqlServer(ConnectionStringResolver.GetConnectionString()));
 
             services.AddControllers();
             services.AddScoped<IPostTypeService, PostTypeService>();
