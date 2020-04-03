@@ -13,7 +13,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+<<<<<<< HEAD
 using Microsoft.IdentityModel.Tokens;
+=======
+using WediumAPI.Helper;
+>>>>>>> e4ce30c... Refactored database context resolver for integration testing
 using WediumAPI.Models;
 using WediumAPI.Services;
 
@@ -33,10 +37,10 @@ namespace WediumAPI
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+            
             services.AddDbContext<WediumContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("WediumDatabase")));
-          
+                    options.UseSqlServer(ConnectionStringResolver.GetConnectionString()));
+
             services.AddControllers();
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
