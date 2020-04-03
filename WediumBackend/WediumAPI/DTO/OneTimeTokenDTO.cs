@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WediumAPI.DTO
 {
-    public class UserViewDTO
+    public class OneTimeTokenDTO
     {
         public string tokenId { get; set; }
     }

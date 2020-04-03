@@ -10,11 +10,33 @@ namespace WediumTestSuite.Helper
 {
     public class DatabaseContextResolver
     {
+        public static IConfiguration InitConfiguration()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            return config;
+        }
+
+        public static bool TryGetSetting(string setting, out string value)
+        {
+            value = InitConfiguration().GetSection(setting).Value;
+
+            return value != null;
+        }
+
         public static WediumContext GetDatabaseContext()
         {
-            string connectionString = ConnectionStringResolver.GetConnectionString();
-            var optionsBuilder = new DbContextOptionsBuilder<WediumContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+            if (!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
+            {
+                IConfiguration config = InitConfiguration();
+                connectionString = config.GetConnectionString("WediumDatabase");
+            }
+
+            DbContextOptionsBuilder<WediumContext> optionsBuilder = new DbContextOptionsBuilder<WediumContext>()
+                .UseSqlServer(connectionString);
+            
             return new WediumContext(optionsBuilder.Options);
         }
     }

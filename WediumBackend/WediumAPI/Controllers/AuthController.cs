@@ -18,7 +18,7 @@ using WediumAPI.Services;
 namespace WediumAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         public readonly WediumContext _db;
@@ -34,9 +34,9 @@ namespace WediumAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("google")]
-        public async Task<IActionResult> Google([FromBody]UserViewDTO userView)
+        public async Task<IActionResult> Google([FromBody]OneTimeTokenDTO oneTimeTokenDTO)
         {
-            var payload = GoogleJsonWebSignature.ValidateAsync(userView.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
+            var payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDTO.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
             User user = await _authService.Authenticate(payload);
 
             return Ok(new

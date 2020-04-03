@@ -4,7 +4,7 @@ import {
 } from "../actiontypes/authActionTypes";
 import axios from "axios";
 
-const SEND_TOKEN_END_POINT = "https://localhost:44300/";
+const SEND_TOKEN_END_POINT = "https://localhost:44300/api/";
 
  function login(token) {
     return dispatch => {

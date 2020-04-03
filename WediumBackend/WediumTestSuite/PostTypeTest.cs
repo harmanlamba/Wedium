@@ -1,35 +1,36 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WediumAPI;
+using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
 {
     class PostTypeTest
     {
-        private TestServer _server;
-        private HttpClient _client;
+        private TestServerHandler _testServer;
+        private string _apiEndpoint;
 
         [OneTimeSetUp]
         public void Setup()
         {
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
-            _client = _server.CreateClient();
+            _testServer = new TestServerHandler();
+
+            DatabaseContextResolver.TryGetSetting("APIEndpointURI", out _apiEndpoint);
         }
 
         [Test]
         public async Task GetPostTypeTest()
         {
-            HttpResponseMessage response = await _client.GetAsync("https://localhost:44300/api/PostType/Get");
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            using (HttpClient client = _testServer.CreateClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/PostType/Get");
+                JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
 
-            JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
-            Assert.AreEqual(13, content.Count);
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+                Assert.AreEqual(13, content.Count);
+            }
         }
     }
 }
