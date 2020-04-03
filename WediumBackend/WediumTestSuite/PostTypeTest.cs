@@ -1,22 +1,26 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WediumAPI;
 using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
 {
     class PostTypeTest
     {
-        private APIWebApplicationFactory _factory;
+        private TestServer _server;
         private HttpClient _client;
 
         [OneTimeSetUp]
         public void Setup()
         {
-            _factory = new APIWebApplicationFactory();
-            _client = _factory.CreateClient();
+            _server = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>());
+            _client = _server.CreateClient();
         }
 
         [Test]
@@ -27,13 +31,6 @@ namespace WediumTestSuite
 
             JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
             Assert.AreEqual(13, content.Count);
-        }
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            _client.Dispose();
-            _factory.Dispose();
         }
     }
 }
