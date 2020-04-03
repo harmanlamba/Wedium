@@ -23,9 +23,9 @@ namespace WediumTestSuite
         public async Task GetPostTypeTest()
         {
             HttpResponseMessage response = await _client.GetAsync("https://localhost:44300/api/PostType/Get");
-            JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
-
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+            JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
             Assert.AreEqual(13, content.Count);
         }
 
