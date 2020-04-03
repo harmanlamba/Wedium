@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using WediumAPI.DTO;
 using WediumAPI.Models;
 using WediumAPI.Services;
 
@@ -33,7 +34,7 @@ namespace WediumAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("google")]
-        public async Task<IActionResult> Google([FromBody]UserView userView)
+        public async Task<IActionResult> Google([FromBody]UserViewDTO userView)
         {
             var payload = GoogleJsonWebSignature.ValidateAsync(userView.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
             User user = await _authService.Authenticate(payload);

@@ -6,7 +6,7 @@ import axios from "axios";
 
 const SEND_TOKEN_END_POINT = "https://localhost:44300/auth/google";
 
-export function login(token) {
+ function login(token) {
     return dispatch => {
         dispatch({
             type: LOGIN,
@@ -30,7 +30,7 @@ export function sendToken(tokenBlob) {
     console.log("Token blob: " + tokenBlob);
 
     return dispatch => {
-        axios.post(SEND_TOKEN_END_POINT, "tokenBlob")
+        axios.post(SEND_TOKEN_END_POINT, tokenBlob)
             .then(response => {
                 response.json().then(user => {
                     const token = user.token;

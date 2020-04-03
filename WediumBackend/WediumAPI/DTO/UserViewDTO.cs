@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WediumAPI.Models
+namespace WediumAPI.DTO
 {
-    public class UserView
+    public class UserViewDTO
     {
         public string tokenId { get; set; }
     }

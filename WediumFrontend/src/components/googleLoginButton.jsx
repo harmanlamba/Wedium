@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter, redirect } from 'react-router-dom';
 import config from '../config.json';
 
-import { login, sendToken } from '../redux/actions/authActions';
+import { sendToken } from '../redux/actions/authActions';
 
 class GoogleLoginButton extends Component {
   onFailure = error => {
@@ -14,10 +14,9 @@ class GoogleLoginButton extends Component {
   googleResponse = response => {
     console.log('Response token: ' + response.tokenId);
 
-    const tokenBlob = new Blob(
-      [JSON.stringify({ tokenId: response.tokenId }, null, 2)],
-      { type: 'application/json' }
-    );
+    const tokenBlob = {
+      "tokenId": response.tokenId
+    };
 
     this.props.sendToken(tokenBlob);
   };
@@ -53,9 +52,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: token => {
-      dispatch(login(token));
-    },
     sendToken: tokenBlob => {
       dispatch(sendToken(tokenBlob));
     }
