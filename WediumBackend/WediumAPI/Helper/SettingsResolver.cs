@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WediumAPI.Helper
 {
-    public static class ConnectionStringResolver
+    public static class SettingsResolver
     {
         private static readonly string GITHUB_ENVIRONMENT_VARIABLE = "GITHUB_ACTIONS";
         private static readonly string DB_CONNECTION_ENVIRONMENT_VARIABLE = "DB_CONNECTION_STRING";
@@ -17,7 +17,16 @@ namespace WediumAPI.Helper
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
+
             return config;
+        }
+
+        public static bool TryGetSetting(string setting, out string value)
+        {
+            var config = InitConfiguration();
+            value = config.GetSection(setting).Value;
+
+            return value != null;
         }
 
         public static string GetConnectionString()

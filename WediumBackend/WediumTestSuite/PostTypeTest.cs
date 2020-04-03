@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WediumAPI;
+using WediumAPI.Helper;
 using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
@@ -13,20 +14,26 @@ namespace WediumTestSuite
     class PostTypeTest
     {
         private HttpClient _client;
+        private string _apiEndpoint;
 
         [OneTimeSetUp]
         public void Setup()
         {
             _client = TestServerInitialiser.GetClient();
+
+            if (SettingsResolver.TryGetSetting("APIEndpointURI", out string apiEndpoint))
+            {
+                _apiEndpoint = apiEndpoint;
+            }
         }
 
         [Test]
         public async Task GetPostTypeTest()
         {
-            HttpResponseMessage response = await _client.GetAsync("https://localhost:44300/api/PostType/Get");
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-
+            HttpResponseMessage response = await _client.GetAsync(_apiEndpoint + "api/PostType/Get");
             JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreEqual(13, content.Count);
         }
     }
