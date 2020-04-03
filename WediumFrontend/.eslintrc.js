@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    "plugin:prettier/recommended"
   ],
   globals: {
     Atomics: 'readonly',
@@ -20,11 +21,14 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'react',
+    'react', 'prettier'
   ],
   rules: {
     "react/jsx-filename-extension": [1, {
       "extensions": [".js", ".jsx"]
     }],
+    "linebreak-style": 0,
+    "prettier/prettier": "error"
+
   },
 };
