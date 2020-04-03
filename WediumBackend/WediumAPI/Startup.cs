@@ -29,8 +29,13 @@ namespace WediumAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if(!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
+            {
+                connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("DatabaseName"));
+            }
+
             services.AddDbContext<WediumContext>(options =>
-                    options.UseSqlServer(SettingsResolver.GetConnectionString()));
+                    options.UseSqlServer(connectionString));
 
             services.AddControllers();
             services.AddScoped<IPostTypeService, PostTypeService>();
