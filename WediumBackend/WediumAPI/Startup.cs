@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WediumAPI.Models;
+using WediumAPI.Services;
 
 namespace WediumAPI
 {
@@ -31,6 +32,7 @@ namespace WediumAPI
                     options.UseSqlServer(Configuration.GetConnectionString("WediumDatabase")));
           
             services.AddControllers();
+            services.AddScoped<IPostTypeService, PostTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
