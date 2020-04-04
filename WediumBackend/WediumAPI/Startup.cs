@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WediumAPI.Helper;
 using WediumAPI.Models;
+using WediumAPI.Services;
 
 namespace WediumAPI
 {
@@ -27,10 +29,16 @@ namespace WediumAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if(!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
+            {
+                connectionString = Configuration.GetConnectionString("WediumDatabase");
+            }
+
             services.AddDbContext<WediumContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("WediumDatabase")));
-          
+                    options.UseSqlServer(connectionString));
+
             services.AddControllers();
+            services.AddScoped<IPostTypeService, PostTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
