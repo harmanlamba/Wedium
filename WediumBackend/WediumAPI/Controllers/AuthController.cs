@@ -41,7 +41,7 @@ namespace WediumAPI.Controllers
 
             return Ok(new
             {
-                token = CreateToken(user)
+                JWTToken = CreateToken(user)
             });
             
             //Add error checking

@@ -1,7 +1,7 @@
 import {
     LOGIN,
     LOGOUT
-} from "../actionTypes/authActionTypes";
+} from "../actiontypes/authActionTypes";
 
 const INIT_AUTH_REDUCER_STATE = ({
     user: '',

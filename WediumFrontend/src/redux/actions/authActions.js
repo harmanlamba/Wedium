@@ -1,9 +1,9 @@
 import {
     LOGIN,
     LOGOUT
-} from "../actionTypes/authActionTypes";
+} from "../actiontypes/authActionTypes";
 import {
-    postToken,
+    postOneTimeToken,
     checkJWTToken
 } from "../../apis/auth";
 
@@ -27,15 +27,15 @@ export function logout() {
 
 export function sendToken(tokenBlob) {
     return dispatch => {
-        const token = postToken(tokenBlob);
-        dispatch(login(token));
-
-        // //TODO: Temp Testing 
-        // const tokenJSON = {
-        //     headers: {
-        //         Authorization: "Bearer " + token
-        //     }
-        // }
-        // checkJWTToken(tokenJSON);
+        postOneTimeToken(tokenBlob)
+        .then(jwtToken => {
+            dispatch(login(jwtToken));
+            
+            //TODO: Here for testing purposes
+            //checkJWTToken(jwtToken);
+        });
+        
+    
+        
     }
 }
