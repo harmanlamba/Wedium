@@ -1,12 +1,13 @@
 import {
     LOGIN,
     LOGOUT
-} from "../actiontypes/authActionTypes";
-import axios from "axios";
+} from "../actionTypes/authActionTypes";
+import {
+    postToken,
+    checkJWTToken
+} from "../../apis/auth";
 
-const SEND_TOKEN_END_POINT = "https://localhost:44300/api/";
-
- function login(token) {
+function login(token) {
     return dispatch => {
         dispatch({
             type: LOGIN,
@@ -26,25 +27,15 @@ export function logout() {
 
 export function sendToken(tokenBlob) {
     return dispatch => {
-        axios.post(SEND_TOKEN_END_POINT + "auth/google", tokenBlob)
-            .then(response => {
-                const token = response.data.token;
-                dispatch(login(token));
+        const token = postToken(tokenBlob);
+        dispatch(login(token));
 
-                // TODO: Temp Testing 
-                // const tempConfig = {
-                //     headers: {
-                //         Authorization: "Bearer " + token
-                //     }
-                // }
-
-                // axios.get("https://localhost:44300/auth/", tempConfig)
-                //     .then((response => {
-                //         console.log("Get Request with JWT Token Response");
-                //         console.log(response);
-                //     }));
-                
-            })
-            .catch(error => console.log("Axios error message (sendToken): " + error.message));
+        // //TODO: Temp Testing 
+        // const tokenJSON = {
+        //     headers: {
+        //         Authorization: "Bearer " + token
+        //     }
+        // }
+        // checkJWTToken(tokenJSON);
     }
 }

@@ -1,14 +1,14 @@
 import {
     LOGIN,
     LOGOUT
-} from "../actiontypes/authActionTypes";
+} from "../actionTypes/authActionTypes";
 
-const initAuthReducerState = ({
+const INIT_AUTH_REDUCER_STATE = ({
     user: '',
     isAuthenticated: false
 });
 
-const authReducer = (state = initAuthReducerState, action) => {
+function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
     switch (action.type) {
         case LOGIN:
             state = {

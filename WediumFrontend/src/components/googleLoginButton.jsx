@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
-import { withRouter, redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { sendToken } from '../redux/actions/authActions';
-import  config  from '../config.json'
+import config from '../config.json';
 
 class GoogleLoginButton extends Component {
-  onFailure = error => {
+  onFailure = (error) => {
     alert(error);
   };
 
-  googleResponse = response => {
-
+  googleResponse = (response) => {
     const tokenBlob = {
-      "tokenId": response.tokenId
+      tokenId: response.tokenId,
     };
 
     this.props.sendToken(tokenBlob);
   };
 
-  checkAuthentication = isAuthenticated => {
+  checkAuthentication = (isAuthenticated) => {
     if (isAuthenticated) {
       console.log('Is auth');
     } else {
@@ -42,17 +41,17 @@ class GoogleLoginButton extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    sendToken: tokenBlob => {
+    sendToken: (tokenBlob) => {
       dispatch(sendToken(tokenBlob));
-    }
+    },
   };
 };
 
