@@ -50,11 +50,18 @@ namespace WediumAPI.Controllers
         [HttpGet]
         public ActionResult Get()
         {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userID = Int32.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            User user = _db.User.FirstOrDefault(u => u.UserId == userID);
+
+
             return Ok(new
             {
-                Date = "today",
-                TemperatureC = 5,
-                Summary = true
+                user.Username,
+                user.FirstName,
+                user.LastName,
+                user.Email
             });
         }
 
@@ -68,7 +75,7 @@ namespace WediumAPI.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Email.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

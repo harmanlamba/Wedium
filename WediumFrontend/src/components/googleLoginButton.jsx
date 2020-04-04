@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { withRouter, redirect } from 'react-router-dom';
-import config from '../config.json';
-
 import { sendToken } from '../redux/actions/authActions';
+import  config  from '../config.json'
 
 class GoogleLoginButton extends Component {
   onFailure = error => {
@@ -12,7 +11,6 @@ class GoogleLoginButton extends Component {
   };
 
   googleResponse = response => {
-    console.log('Response token: ' + response.tokenId);
 
     const tokenBlob = {
       "tokenId": response.tokenId

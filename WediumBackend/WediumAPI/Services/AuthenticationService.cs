@@ -22,7 +22,7 @@ namespace WediumAPI.Services
         }
 
 
-        public User AuthenticateUser(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
+        private User AuthenticateUser(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
         {
             User user = _db.User.Where(x => x.Email == payload.Email).FirstOrDefault();
 
@@ -30,9 +30,10 @@ namespace WediumAPI.Services
             {
                 user = new User()
                 {
-                    FirstName = payload.Name,
+                    FirstName = payload.GivenName,
                     Email = payload.Email,
                     Username = payload.Email,
+                    LastName = payload.FamilyName,
                     Password = "test"
 
                 };

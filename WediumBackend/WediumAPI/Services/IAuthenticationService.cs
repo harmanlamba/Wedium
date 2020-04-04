@@ -9,6 +9,5 @@ namespace WediumAPI.Services
     public interface IAuthenticationService
     {
         Task<User> Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload);
-        User AuthenticateUser(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload);
     }
 }

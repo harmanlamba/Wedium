@@ -4,7 +4,7 @@ import {
 } from "../actiontypes/authActionTypes";
 import axios from "axios";
 
-const SEND_TOKEN_END_POINT = "https://localhost:44300/auth/google";
+const SEND_TOKEN_END_POINT = "https://localhost:44300/";
 
  function login(token) {
     return dispatch => {
@@ -16,8 +16,6 @@ const SEND_TOKEN_END_POINT = "https://localhost:44300/auth/google";
 }
 
 export function logout() {
-    console.log("Logging out");
-
     return dispatch => {
         dispatch({
             type: LOGOUT,
@@ -27,16 +25,25 @@ export function logout() {
 }
 
 export function sendToken(tokenBlob) {
-    console.log("Token blob: " + tokenBlob);
-
     return dispatch => {
-        axios.post(SEND_TOKEN_END_POINT, tokenBlob)
+        axios.post(SEND_TOKEN_END_POINT + "auth/google", tokenBlob)
             .then(response => {
-                response.json().then(user => {
-                    const token = user.token;
-                    console.log("Google token received:" + token);
-                    dispatch(login(token));
-                });
+                const token = response.data.token;
+                dispatch(login(token));
+
+                // TODO: Temp Testing 
+                // const tempConfig = {
+                //     headers: {
+                //         Authorization: "Bearer " + token
+                //     }
+                // }
+
+                // axios.get("https://localhost:44300/auth/", tempConfig)
+                //     .then((response => {
+                //         console.log("Get Request with JWT Token Response");
+                //         console.log(response);
+                //     }));
+                
             })
             .catch(error => console.log("Axios error message (sendToken): " + error.message));
     }
