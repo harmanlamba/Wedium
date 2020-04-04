@@ -21,9 +21,9 @@ namespace WediumTestSuite
         public void Setup()
         {
             _testServer = new TestServerHandler();
-
-            _apiEndpoint = AppSettingsResolver.GetSetting("APIEndpointURI");
-            _batchSize = Int32.Parse(AppSettingsResolver.GetSetting("GetPostBatchSize"));
+            
+            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+            _batchSize = AppSettingsResolver.GetSetting<int>("GetPostBatchSize");
         }
 
         [Test]

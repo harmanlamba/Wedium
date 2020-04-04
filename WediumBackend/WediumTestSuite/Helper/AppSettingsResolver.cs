@@ -16,9 +16,9 @@ namespace WediumTestSuite.Helper
             return config;
         }
 
-        public static string GetSetting(string setting)
+        public static T GetSetting<T>(string key)
         {
-            return InitConfiguration().GetSection(setting).Value;
+            return (T)Convert.ChangeType(InitConfiguration().GetSection(key).Value, typeof(T));
         }
     }
 }
