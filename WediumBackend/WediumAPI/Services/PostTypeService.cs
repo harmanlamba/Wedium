@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WediumAPI.DTO;
+using WediumAPI.Dto;
 using WediumAPI.Mappers;
 using WediumAPI.Models;
 
@@ -17,9 +17,9 @@ namespace WediumAPI.Services
             _db = wediumContext;
         }
 
-        public IEnumerable<PostTypeDTO> GetPostTypes()
+        public IEnumerable<PostTypeDto> GetPostTypes()
         {
-            return PostTypeMapper.ToDTO(_db.PostType.ToList());
+            return PostTypeMapper.ToDto(_db.PostType.ToList());
         }
     }
 }

@@ -11,19 +11,19 @@ namespace WediumAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostTypeController : ControllerBase
+    public class PostController : ControllerBase
     {
-        private readonly IPostTypeService _service; 
+        private readonly IPostService _service;
 
-        public PostTypeController(IPostTypeService service)
+        public PostController(IPostService service)
         {
             _service = service;
         }
 
         [HttpGet("Get")]
-        public ActionResult<List<PostTypeDto>> Get()
+        public ActionResult<List<PostDto>> Get()
         {
-            return Ok(_service.GetPostTypes());
+            return Ok(_service.GetPosts());
         }
     }
 }
