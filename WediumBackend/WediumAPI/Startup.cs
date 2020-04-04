@@ -32,7 +32,6 @@ namespace WediumAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
             if(!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
@@ -54,13 +53,6 @@ namespace WediumAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
-
-
-            var appSettingsSection = Configuration.GetSection("AuthSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            var settings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(settings.JwtSecret);
 
             services.AddAuthentication(x =>
             {
