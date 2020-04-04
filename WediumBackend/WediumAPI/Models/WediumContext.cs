@@ -10,7 +10,8 @@ namespace WediumAPI.Models
         {
         }
 
-        public WediumContext(DbContextOptions<WediumContext> options) : base(options)
+        public WediumContext(DbContextOptions<WediumContext> options)
+            : base(options)
         {
         }
 
@@ -28,10 +29,10 @@ namespace WediumAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:DefaultSchema", "WDM");
-
             modelBuilder.Entity<Comment>(entity =>
             {
+                entity.ToTable("Comment", "WDM");
+
                 entity.Property(e => e.CommentId).HasColumnName("CommentID");
 
                 entity.Property(e => e.Body)
@@ -68,6 +69,12 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<CommentLike>(entity =>
             {
+                entity.ToTable("CommentLike", "WDM");
+
+                entity.HasIndex(e => new { e.CommentId, e.UserId })
+                    .HasName("UQ_CommentLike_CommentID_UserID")
+                    .IsUnique();
+
                 entity.Property(e => e.CommentLikeId).HasColumnName("CommentLikeID");
 
                 entity.Property(e => e.CommentId).HasColumnName("CommentID");
@@ -91,6 +98,12 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<CommentType>(entity =>
             {
+                entity.ToTable("CommentType", "WDM");
+
+                entity.HasIndex(e => e.CommentTypeValue)
+                    .HasName("UQ_CommentType_CommentTypeValue")
+                    .IsUnique();
+
                 entity.Property(e => e.CommentTypeId).HasColumnName("CommentTypeID");
 
                 entity.Property(e => e.CommentTypeValue)
@@ -100,6 +113,12 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<Favourite>(entity =>
             {
+                entity.ToTable("Favourite", "WDM");
+
+                entity.HasIndex(e => new { e.PostId, e.UserId })
+                    .HasName("UQ_Favourite_PostID_UserID")
+                    .IsUnique();
+
                 entity.Property(e => e.FavouriteId).HasColumnName("FavouriteID");
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
@@ -123,6 +142,8 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<Post>(entity =>
             {
+                entity.ToTable("Post", "WDM");
+
                 entity.Property(e => e.PostId).HasColumnName("PostID");
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
@@ -160,6 +181,12 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<PostLike>(entity =>
             {
+                entity.ToTable("PostLike", "WDM");
+
+                entity.HasIndex(e => new { e.PostId, e.UserId })
+                    .HasName("UQ_PostLike_PostID_UserID")
+                    .IsUnique();
+
                 entity.Property(e => e.PostLikeId).HasColumnName("PostLikeID");
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
@@ -183,6 +210,12 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<PostType>(entity =>
             {
+                entity.ToTable("PostType", "WDM");
+
+                entity.HasIndex(e => e.PostTypeValue)
+                    .HasName("UQ_PostType_PostTypeValue")
+                    .IsUnique();
+
                 entity.Property(e => e.PostTypeId).HasColumnName("PostTypeID");
 
                 entity.Property(e => e.PostTypeValue)
@@ -192,6 +225,12 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<Settings>(entity =>
             {
+                entity.ToTable("Settings", "WDM");
+
+                entity.HasIndex(e => e.Key)
+                    .HasName("UQ_Settings_Key")
+                    .IsUnique();
+
                 entity.Property(e => e.SettingsId).HasColumnName("SettingsID");
 
                 entity.Property(e => e.Key)
@@ -207,6 +246,8 @@ namespace WediumAPI.Models
             {
                 entity.HasNoKey();
 
+                entity.ToTable("TestTable", "WDM");
+
                 entity.Property(e => e.TestId)
                     .HasColumnName("TestID")
                     .ValueGeneratedOnAdd();
@@ -214,6 +255,16 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("User", "WDM");
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("UQ_User_Email")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Username)
+                    .HasName("UQ_User_Username")
+                    .IsUnique();
+
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.Property(e => e.Email)
@@ -239,13 +290,19 @@ namespace WediumAPI.Models
 
             modelBuilder.Entity<WikiArticle>(entity =>
             {
-                entity.Property(e => e.WikiArticleId).HasColumnName("WikiArticleID");
+                entity.ToTable("WikiArticle", "WDM");
 
-                entity.Property(e => e.ArticleAuthor).IsRequired();
+                entity.Property(e => e.WikiArticleId).HasColumnName("WikiArticleID");
 
                 entity.Property(e => e.ArticleBody).IsRequired();
 
                 entity.Property(e => e.ArticleDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ArticleImageUrl).HasColumnName("ArticleImageURL");
+
+                entity.Property(e => e.ArticleTitle)
+                    .IsRequired()
+                    .HasMaxLength(150);
 
                 entity.Property(e => e.Url)
                     .IsRequired()
