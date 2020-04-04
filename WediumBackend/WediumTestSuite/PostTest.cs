@@ -15,13 +15,15 @@ namespace WediumTestSuite
     {
         private TestServerHandler _testServer;
         private string _apiEndpoint;
+        private int _batchSize;
 
         [OneTimeSetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
 
-            DatabaseContextResolver.TryGetSetting("APIEndpointURI", out _apiEndpoint);
+            _apiEndpoint = AppSettingsResolver.GetSetting("APIEndpointURI");
+            _batchSize = Int32.Parse(AppSettingsResolver.GetSetting("GetPostBatchSize"));
         }
 
         [Test]
@@ -41,14 +43,11 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            DatabaseContextResolver.TryGetSetting("GetPostBatchSize", out string GetPostBatchSize);
-            int batchSize = Int32.Parse(GetPostBatchSize);
-
             HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get");
             JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.AreEqual(batchSize, content.Count);
+            Assert.AreEqual(_batchSize, content.Count);
         }
 
         [Test]
@@ -56,22 +55,19 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            DatabaseContextResolver.TryGetSetting("GetPostBatchSize", out string GetPostBatchSize);
-            int batchSize = Int32.Parse(GetPostBatchSize);
-
             HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get");
             JArray firstBatchContent = JArray.Parse(await firstBatchResponse.Content.ReadAsStringAsync());
 
             Assert.AreEqual(HttpStatusCode.OK, firstBatchResponse.StatusCode);
-            Assert.AreEqual(Int32.Parse(GetPostBatchSize), firstBatchContent.Count);
+            Assert.AreEqual(_batchSize, firstBatchContent.Count);
 
-            int postId = firstBatchContent[batchSize - 1].Value<int>("PostId");
+            int postId = firstBatchContent[_batchSize - 1].Value<int>("PostId");
 
             HttpResponseMessage secondBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get/" + postId);
             JArray secondBatchContent = JArray.Parse(await firstBatchResponse.Content.ReadAsStringAsync());
 
             Assert.AreEqual(HttpStatusCode.OK, secondBatchResponse.StatusCode);
-            Assert.AreEqual(batchSize, secondBatchContent.Count);
+            Assert.AreEqual(_batchSize, secondBatchContent.Count);
         }
     }
 }

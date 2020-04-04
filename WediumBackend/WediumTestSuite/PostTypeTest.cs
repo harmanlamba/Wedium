@@ -17,7 +17,7 @@ namespace WediumTestSuite
         {
             _testServer = new TestServerHandler();
 
-            DatabaseContextResolver.TryGetSetting("APIEndpointURI", out _apiEndpoint);
+            _apiEndpoint = AppSettingsResolver.GetSetting("APIEndpointURI");
         }
 
         [Test]
