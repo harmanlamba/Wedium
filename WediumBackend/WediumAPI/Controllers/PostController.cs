@@ -23,7 +23,13 @@ namespace WediumAPI.Controllers
         [HttpGet("Get")]
         public ActionResult<List<PostDto>> Get()
         {
-            return Ok(_service.GetPosts());
+            return Ok(_service.GetPosts(null));
+        }
+
+        [HttpGet("Get/{postId}")]
+        public ActionResult<List<PostDto>> Get(int postId)
+        {
+            return Ok(_service.GetPosts(postId));
         }
     }
 }

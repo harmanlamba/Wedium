@@ -6,6 +6,6 @@ namespace WediumAPI.Services
 {
     public interface IPostService
     {
-        public IEnumerable<PostDto> GetPosts();
+        public IEnumerable<PostDto> GetPosts(int? postId);
     }
 }

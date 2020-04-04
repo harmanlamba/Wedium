@@ -12,20 +12,43 @@ namespace WediumAPI.Services
     {
         private readonly WediumContext _db;
 
-        public PostService(WediumContext wediumContext)
+        public PostService(WediumContext wediumContepostListQueryt)
         {
-            _db = wediumContext;
+            _db = wediumContepostListQueryt;
         }
 
-        public IEnumerable<PostDto> GetPosts()
+        public IEnumerable<PostDto> GetPosts(int? postId)
         {
-            var x = _db.Post
+            IOrderedQueryable<Post> postListQuery;
+
+            if (postId == null)
+            {
+                postListQuery = _db.Post
+                    .OrderByDescending(d => d.Date);
+            }
+            else
+            {
+                Post post = _db.Post
+                    .FirstOrDefault(p => p.PostId == postId);
+
+                if (post == null)
+                {
+                    return new List<PostDto>();
+                }
+
+                postListQuery = _db.Post
+                    .Where(d => d.Date < post.Date)
+                    .OrderByDescending(d => d.Date);
+            }
+
+            List<Post> postList = postListQuery
+                .Take(5)
                 .Include(u => u.User)
                 .Include(p => p.PostType)
                 .Include(w => w.WikiArticle)
                 .ToList();
 
-            return PostMapper.ToDto(x);
+            return PostMapper.ToDto(postList);
         }
     }
 }
