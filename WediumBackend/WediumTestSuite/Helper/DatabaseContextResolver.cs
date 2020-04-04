@@ -31,7 +31,7 @@ namespace WediumTestSuite.Helper
             if (!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
             {
                 IConfiguration config = InitConfiguration();
-                connectionString = config.GetConnectionString(config.GetValue<string>("DatabaseName"));
+                connectionString = config.GetConnectionString("WediumDatabase");
             }
 
             DbContextOptionsBuilder<WediumContext> optionsBuilder = new DbContextOptionsBuilder<WediumContext>()

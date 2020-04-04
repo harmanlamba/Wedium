@@ -31,7 +31,7 @@ namespace WediumAPI
         {
             if(!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
             {
-                connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("DatabaseName"));
+                connectionString = Configuration.GetConnectionString("WediumDatabase");
             }
 
             services.AddDbContext<WediumContext>(options =>
