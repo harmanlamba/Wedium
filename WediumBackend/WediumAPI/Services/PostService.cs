@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WediumAPI.Dto;
 using WediumAPI.Mappers;
 using WediumAPI.Models;
@@ -11,10 +12,12 @@ namespace WediumAPI.Services
     public class PostService : IPostService
     {
         private readonly WediumContext _db;
+        private readonly Options _options;
 
-        public PostService(WediumContext wediumContepostListQueryt)
+        public PostService(WediumContext wediumContepostListQueryt, IOptions<Options> options)
         {
             _db = wediumContepostListQueryt;
+            _options = options.Value;
         }
 
         public IEnumerable<PostDto> GetPosts(int? postId)
@@ -42,7 +45,7 @@ namespace WediumAPI.Services
             }
 
             List<Post> postList = postListQuery
-                .Take(5)
+                .Take(_options.GetPostBatchSize)
                 .Include(u => u.User)
                 .Include(p => p.PostType)
                 .Include(w => w.WikiArticle)

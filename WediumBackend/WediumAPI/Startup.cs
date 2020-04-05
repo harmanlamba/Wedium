@@ -37,6 +37,7 @@ namespace WediumAPI
             services.AddDbContext<WediumContext>(options =>
                     options.UseSqlServer(connectionString));
 
+            services.Configure<Options>(Configuration.GetSection("Options"));
             services.AddControllers();
             services.AddScoped<IPostTypeService, PostTypeService>();
             services.AddScoped<IPostService, PostService>();

@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using WediumAPI.Dto;
 using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
@@ -21,9 +20,9 @@ namespace WediumTestSuite
         public void Setup()
         {
             _testServer = new TestServerHandler();
-            
+
             _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
-            _batchSize = AppSettingsResolver.GetSetting<int>("GetPostBatchSize");
+            _batchSize = AppSettingsResolver.GetSetting<int>("Options:GetPostBatchSize");
         }
 
         [Test]
