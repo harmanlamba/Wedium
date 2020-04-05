@@ -32,7 +32,7 @@ export function sendToken(tokenBlob) {
             dispatch(login(jwtToken));
             
             //TODO: Here for testing purposes
-            checkJWTToken(jwtToken);
+            //checkJWTToken(jwtToken);
         });
         
     

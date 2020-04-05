@@ -31,8 +31,17 @@ namespace WediumAPI.Controllers
         [HttpPost("google")]
         public async Task<IActionResult> Google([FromBody]OneTimeTokenDto oneTimeTokenDto)
         {
-            var payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
-            UserDto user = await _authService.Authenticate(payload);
+            UserDto user = null;
+
+            try
+            {
+                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
+                user = await _authService.Authenticate(payload);
+            }
+            catch (Exception e)
+            {
+                return new UnauthorizedResult();
+            }
 
             return Ok(new
             {
@@ -40,22 +49,23 @@ namespace WediumAPI.Controllers
             });
         }
 
-        [HttpGet]
-        public ActionResult<UserDto> Get()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            string email = identity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            UserDto user = _authService.GetUser(email);
+        //This method is used for JWT Token Testing, can leave for now, have to remove for production.
+        //[HttpGet]
+        //public ActionResult<UserDto> Get()
+        //{
+        //    ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    string email = identity.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    UserDto user = _authService.GetUser(email);
 
-            return Ok(user);
-        }
+        //    return Ok(user);
+        //}
 
         private string CreateToken(UserDto user)
         {
             // Creates jwt token for user based on user's email is the primary key of the user.
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_options.JwtSecret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(_options.JwtSecret);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
@@ -64,7 +74,7 @@ namespace WediumAPI.Controllers
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
         }
