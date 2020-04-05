@@ -17,7 +17,7 @@ namespace WediumAPI.Services
             _db = wediumContext;
         }
 
-        public IEnumerable<PostTypeDTO> GetPostTypes()
+        public IEnumerable<PostTypeDto> GetPostTypes()
         {
             return PostTypeMapper.ToDto(_db.PostType.ToList());
         }
