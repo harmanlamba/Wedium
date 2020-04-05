@@ -9,15 +9,15 @@ namespace WediumAPI.Mappers
 {
     public class PostTypeMapper
     {
-        public static PostTypeDto ToDto(PostType postType)
+        public static PostTypeDTO ToDto(PostType postType)
         {
-            return new PostTypeDto
+            return new PostTypeDTO
             {
                 PostType = postType.PostTypeValue
             };
         }
 
-        public static IEnumerable<PostTypeDto> ToDto(IEnumerable<PostType> postTypeList)
+        public static IEnumerable<PostTypeDTO> ToDto(IEnumerable<PostType> postTypeList)
         {
             return postTypeList.Select(p => ToDto(p));
         }

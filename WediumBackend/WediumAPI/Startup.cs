@@ -63,7 +63,7 @@ namespace WediumAPI
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AuthSettings:JwtSecret"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Options:JwtSecret"])),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };

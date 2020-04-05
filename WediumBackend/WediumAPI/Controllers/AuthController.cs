@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using WediumAPI.DTO;
+using WediumAPI.Dto;
 using WediumAPI.Models;
 using WediumAPI.Services;
 
@@ -23,20 +24,20 @@ namespace WediumAPI.Controllers
     {
         public readonly WediumContext _db;
         private IAuthenticationService _authService;
-        private IConfiguration _configuration;
+        private Options _options;
   
-        public AuthController(WediumContext db, IConfiguration configuration, IAuthenticationService authService)
+        public AuthController(WediumContext db, IOptions<Options> options, IAuthenticationService authService)
         {
             _db = db;
             _authService = authService;
-            _configuration = configuration;
+            _options = options.Value;
         }
 
         [AllowAnonymous]
         [HttpPost("google")]
-        public async Task<IActionResult> Google([FromBody]OneTimeTokenDTO oneTimeTokenDTO)
+        public async Task<IActionResult> Google([FromBody]OneTimeTokenDto oneTimeTokenDto)
         {
-            var payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDTO.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
+            var payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
             User user = await _authService.Authenticate(payload);
 
             return Ok(new
@@ -70,7 +71,7 @@ namespace WediumAPI.Controllers
         {
             // Creates jwt token for user based on user's username as username is the primary key of the user.
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["AuthSettings:JwtSecret"]);
+            var key = Encoding.ASCII.GetBytes(_options.JwtSecret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

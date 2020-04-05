@@ -8,6 +8,6 @@ namespace WediumAPI.Services
 {
     public interface IPostTypeService
     {
-        public IEnumerable<PostTypeDto> GetPostTypes();
+        public IEnumerable<PostTypeDTO> GetPostTypes();
     }
 }

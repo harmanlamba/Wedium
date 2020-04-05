@@ -21,7 +21,7 @@ namespace WediumAPI.Controllers
         }
 
         [HttpGet("Get")]
-        public ActionResult<List<PostTypeDto>> Get()
+        public ActionResult<List<PostTypeDTO>> Get()
         {
             return Ok(_service.GetPostTypes());
         }

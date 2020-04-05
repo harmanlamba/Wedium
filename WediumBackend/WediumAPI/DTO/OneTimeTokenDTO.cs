@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WediumAPI.DTO
+namespace WediumAPI.Dto
 {
-    public class OneTimeTokenDTO
+    public class OneTimeTokenDto
     {
         public string tokenId { get; set; }
     }
