@@ -33,9 +33,6 @@ export function sendToken(tokenBlob) {
             
             //TODO: Here for testing purposes
             //checkJWTToken(jwtToken);
-        });
-        
-    
-        
+        }); 
     }
 }

@@ -10,11 +10,11 @@ namespace WediumAPI.Services
 {
     public class UserService : IUserService
     {
-        private WediumContext _db;
+        private WediumContext _wediumContext;
 
-        public UserService(WediumContext db)
+        public UserService(WediumContext wediumContext)
         {
-            _db = db;
+            _wediumContext = wediumContext;
         }
 
         public async Task<UserDto> Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
@@ -25,7 +25,7 @@ namespace WediumAPI.Services
 
         private UserDto AuthenticateUser(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
         {
-            User user = _db.User
+            User user = _wediumContext.User
                 .Where(x => x.Email == payload.Email)
                 .FirstOrDefault();
 
@@ -38,10 +38,9 @@ namespace WediumAPI.Services
                     Username = payload.Email,
                     LastName = payload.FamilyName,
                     Password = "test"
-
                 };
-                _db.User.Add(user);
-                _db.SaveChanges();
+                _wediumContext.User.Add(user);
+                _wediumContext.SaveChanges();
             }
 
             return UserMapper.ToDto(user); 
@@ -49,7 +48,7 @@ namespace WediumAPI.Services
 
         public UserDto GetUser(string email)
         {
-            return UserMapper.ToDto(_db.User
+            return UserMapper.ToDto(_wediumContext.User
                 .First(u => u.Email == email));
         }
     }

@@ -21,9 +21,9 @@ namespace WediumAPI.Controllers
         private IUserService _authService;
         private Options _options;
   
-        public UserController(IUserService authService, IOptions<Options> options)
+        public UserController(IUserService userService, IOptions<Options> options)
         {
-            _authService = authService;
+            _authService = userService;
             _options = options.Value;
         }
 

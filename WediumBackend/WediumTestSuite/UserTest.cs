@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
+using System.Threading.Tasks;
 using WediumAPI.Dto;
 using WediumTestSuite.Helper;
 
@@ -25,7 +26,7 @@ namespace WediumTestSuite
         }
 
         [Test]
-        public async System.Threading.Tasks.Task PostInvalidOneTimeTokenTestAsync()
+        public async Task PostInvalidOneTimeTokenTestAsync()
         {
             HttpClient client = _testServer.CreateClient();
 
