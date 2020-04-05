@@ -42,10 +42,6 @@ namespace WediumAPI
             services.AddDbContext<WediumContext>(options =>
                     options.UseSqlServer(connectionString));
 
-            services.AddControllers();
-
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -72,8 +68,12 @@ namespace WediumAPI
                         ValidateAudience = false
                     };
                 });
-
+                
+            services.Configure<Options>(Configuration.GetSection("Options"));
+            services.AddControllers();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IPostTypeService, PostTypeService>();
+            services.AddScoped<IPostService, PostService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

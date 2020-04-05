@@ -15,7 +15,7 @@ namespace WediumTestSuite.Helper
         public TestServerHandler()
         {
             _server = new TestServer(new WebHostBuilder()
-                .UseConfiguration(DatabaseContextResolver.InitConfiguration())
+                .UseConfiguration(AppSettingsResolver.InitConfiguration())
                 .UseStartup<Startup>());
         }
 
