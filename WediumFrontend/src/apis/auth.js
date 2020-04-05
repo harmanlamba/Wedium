@@ -3,7 +3,7 @@ import axios from "axios";
 const SEND_TOKEN_END_POINT = "https://localhost:44300/api/";
 
 export function postOneTimeToken(tokenBlob) {
-    return axios.post(SEND_TOKEN_END_POINT + "auth/google", tokenBlob)
+    return axios.post(SEND_TOKEN_END_POINT + "user/google", tokenBlob)
         .then(response => {
             return response.data.jwtToken;
         })
@@ -17,7 +17,7 @@ export function checkJWTToken(tokenJSON) {
         }
     }
 
-    return axios.get(SEND_TOKEN_END_POINT + "auth", tokenJSONConfig)
+    return axios.get(SEND_TOKEN_END_POINT + "user", tokenJSONConfig)
         .then(response => {
             console.log("Get Request with JWT Token Response");
             console.log(response);

@@ -71,7 +71,7 @@ namespace WediumAPI
                 
             services.Configure<Options>(Configuration.GetSection("Options"));
             services.AddControllers();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostTypeService, PostTypeService>();
             services.AddScoped<IPostService, PostService>();
         }
