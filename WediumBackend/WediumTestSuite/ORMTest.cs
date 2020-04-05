@@ -84,9 +84,9 @@ namespace WediumTestSuite
             WikiArticle testArticle = new WikiArticle
             {
                 Url = "http://test",
-                ArticleAuthor = "Sangra Spider",
                 ArticleDate = DateTime.Now,
-                ArticleBody = "Test Body"
+                ArticleBody = "Test Body",
+                ArticleTitle = "Test Title"
             };
 
             var postType = _db.PostType.First();
