@@ -34,7 +34,7 @@ namespace WediumTestSuite
 
             OneTimeTokenDto invalidToken = new OneTimeTokenDto
             {
-                tokenId = "testToken"
+                TokenId = "testToken"
             };
 
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/user/google", invalidToken, new JsonMediaTypeFormatter());

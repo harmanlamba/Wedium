@@ -35,7 +35,7 @@ namespace WediumAPI.Controllers
 
             try
             {
-                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
+                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.TokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
                 user = await _authService.Authenticate(payload);
             }
             catch (Exception)
