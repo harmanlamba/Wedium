@@ -50,6 +50,7 @@ namespace WediumAPI.Controllers
         }
 
         //This method is used for JWT Token Testing, can leave for now, have to remove for production.
+        //[Authorize]
         //[HttpGet]
         //public ActionResult<UserDto> Get()
         //{
