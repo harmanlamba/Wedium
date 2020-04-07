@@ -5,7 +5,7 @@ const SEND_TOKEN_END_POINT = "https://localhost:44300/api/";
 export function postOneTimeToken(tokenBlob) {
     return axios.post(SEND_TOKEN_END_POINT + "user/google", tokenBlob)
         .then(response => {
-            return response.data.jwtToken;
+            return response.data;
         })
         .catch(error => console.log("Axios error message (postToken): " + error.message));
 }

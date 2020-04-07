@@ -29,39 +29,36 @@ namespace WediumAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("google")]
-        public IActionResult Google([FromBody]OneTimeTokenDto oneTimeTokenDto)
+        public ActionResult<UserDto> Google([FromBody]OneTimeTokenDto oneTimeTokenDto)
         {
-            string jwtToken;
+            UserDto user;
 
             try
             {
                 GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.TokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
-                UserDto user = _service.Authenticate(payload, out int userId);
+                user = _service.Authenticate(payload, out int userId);
 
-                jwtToken = CreateToken(userId);
+                user.JWTToken = CreateToken(userId);
             }
             catch (Exception)
             {
                 return new UnauthorizedResult();
             }
 
-            return Ok(new
-            {
-                JWTToken = jwtToken
-            });
+            return Ok(user);
         }
 
         //This method is used for JWT Token Testing, can leave for now, have to remove for production.
-        [Authorize]
-        [HttpGet]
-        public ActionResult<UserDto> Get()
-        {
-            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
-            UserDto user = _service.GetUser(userId);
+        //[Authorize]
+        //[HttpGet]
+        //public ActionResult<UserDto> Get()
+        //{
+        //    ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+        //    UserDto user = _service.GetUser(userId);
 
-            return Ok(user);
-        }
+        //    return Ok(user);
+        //}
 
         private string CreateToken(int userId)
         {

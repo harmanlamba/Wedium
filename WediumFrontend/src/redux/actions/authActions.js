@@ -7,11 +7,11 @@ import {
     checkJWTToken
 } from "../../apis/auth";
 
-function login(token) {
+function login(user) {
     return dispatch => {
         dispatch({
             type: LOGIN,
-            payload: token
+            payload: user
         });
     }
 }
@@ -28,11 +28,11 @@ export function logout() {
 export function sendToken(tokenBlob) {
     return dispatch => {
         postOneTimeToken(tokenBlob)
-        .then(jwtToken => {
-            dispatch(login(jwtToken));
+        .then(user => {
+            dispatch(login(user));
             
             //TODO: Here for testing purposes
-            //checkJWTToken(jwtToken);
+            // checkJWTToken(user.jwtToken);
         }); 
     }
 }
