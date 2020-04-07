@@ -9,7 +9,7 @@ namespace WediumAPI.Services
 {
     public interface IUserService
     {
-        public Task<UserDto> Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload);
-        public UserDto GetUser(string email);
+        public Task<(UserDto userDto, int UserId)> Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload);
+        public UserDto GetUser(int userId);
     }
 }

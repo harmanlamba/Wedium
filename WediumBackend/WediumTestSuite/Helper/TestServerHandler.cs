@@ -20,19 +20,19 @@ namespace WediumTestSuite.Helper
                 .UseStartup<Startup>());
         }
 
-        public HttpClient CreateClient(string authenticationClaimValue = null)
+        public HttpClient CreateClient(int? authenticationClaimValue = null)
         {
             HttpClient client = _server.CreateClient();
 
-            if (!string.IsNullOrEmpty(authenticationClaimValue))
+            if (authenticationClaimValue != null)
             {
-                AuthenticateClient(client, authenticationClaimValue);
+                AuthenticateClient(client, authenticationClaimValue.Value);
             }
 
             return client;
         }
 
-        public void AuthenticateClient(HttpClient client, string authenticationClaimValue)
+        public void AuthenticateClient(HttpClient client, int authenticationClaimValue)
         {
             string token = MockJWTTokenResolver.CreateMockJWTToken(authenticationClaimValue);
 

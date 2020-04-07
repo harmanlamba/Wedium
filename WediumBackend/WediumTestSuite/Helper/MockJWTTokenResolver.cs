@@ -9,7 +9,7 @@ namespace WediumTestSuite.Helper
 {
     public static class MockJWTTokenResolver
     {
-        public static string CreateMockJWTToken(string authenticationClaimValue)
+        public static string CreateMockJWTToken(int authenticationClaimValue)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(AppSettingsResolver.GetSetting<string>("Options:JwtSecret"));
@@ -17,7 +17,7 @@ namespace WediumTestSuite.Helper
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, authenticationClaimValue)
+                    new Claim(ClaimTypes.NameIdentifier, authenticationClaimValue.ToString())
                 }),
 
                 // Changed expiry from original value to reduce active claims for security

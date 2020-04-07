@@ -14,9 +14,9 @@ namespace WediumAPI.Services
         private readonly WediumContext _db;
         private readonly Options _options;
 
-        public PostService(WediumContext wediumContepostListQueryt, IOptions<Options> options)
+        public PostService(WediumContext wediumContext, IOptions<Options> options)
         {
-            _db = wediumContepostListQueryt;
+            _db = wediumContext;
             _options = options.Value;
         }
 

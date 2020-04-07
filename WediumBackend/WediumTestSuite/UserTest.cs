@@ -57,9 +57,9 @@ namespace WediumTestSuite
         //    WediumContext db = DatabaseContextResolver.GetDatabaseContext();
 
         //    User user = db.User
-        //        .First(u => u.Email == "test1@gmail.com");
+        //        .First(u => u.UserId == 136);
 
-        //    HttpClient client = _testServer.CreateClient(user.Email);
+        //    HttpClient client = _testServer.CreateClient(user.UserId);
 
         //    HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/user");
         //    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
