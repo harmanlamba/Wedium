@@ -74,6 +74,7 @@ namespace WediumAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostTypeService, PostTypeService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IPostLikeService, PostLikeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

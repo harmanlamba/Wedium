@@ -7,5 +7,6 @@ namespace WediumAPI.Services
     public interface IPostService
     {
         public IEnumerable<PostDto> GetPosts(int? postId);
+        public bool CheckExists(int postId);
     }
 }

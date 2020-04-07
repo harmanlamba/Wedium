@@ -53,5 +53,11 @@ namespace WediumAPI.Services
 
             return PostMapper.ToDto(postList);
         }
+
+        public bool CheckExists(int postId)
+        {
+            return _db.Post
+                .Any(p => p.PostId == postId);
+        }
     }
 }
