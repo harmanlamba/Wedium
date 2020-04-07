@@ -17,19 +17,12 @@ namespace WediumAPI.Services
             _wediumContext = wediumContext;
         }
 
-        public async Task<UserDto> Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
-        {
-            //await Task.Delay(1);
-            return this.AuthenticateUser(payload);
-        }
-
-        private UserDto AuthenticateUser(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload)
+        public UserDto Authenticate(Google.Apis.Auth.GoogleJsonWebSignature.Payload payload, out int userId)
         {
             User user = _wediumContext.User
-                .Where(x => x.Email == payload.Email)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.Email == payload.Email);
 
-            if(user == null)
+            if (user == null)
             {
                 user = new User()
                 {
@@ -39,17 +32,20 @@ namespace WediumAPI.Services
                     LastName = payload.FamilyName,
                     Password = "test"
                 };
-                _wediumContext.User.Add(user);
+
+                 _wediumContext.User.Add(user);
                 _wediumContext.SaveChanges();
             }
 
-            return UserMapper.ToDto(user); 
+            userId = user.UserId;
+
+            return UserMapper.ToDto(user);
         }
 
-        public UserDto GetUser(string email)
+        public UserDto GetUser(int userId)
         {
             return UserMapper.ToDto(_wediumContext.User
-                .First(u => u.Email == email));
+                .First(u => u.UserId == userId));
         }
     }
 }

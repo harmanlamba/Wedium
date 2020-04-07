@@ -4,7 +4,10 @@ import {
 } from "../actiontypes/authActionTypes";
 
 const INIT_AUTH_REDUCER_STATE = ({
-    user: '',
+    user: null,
+    firstName: null,
+    lastName: null,
+    username: null,
     isAuthenticated: false
 });
 
@@ -13,7 +16,10 @@ function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
         case LOGIN:
             state = {
                 ...state,
-                user: action.payload,
+                user: action.payload.jwtToken,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                username: action.payload.username,
                 isAuthenticated: true
             };
             break;

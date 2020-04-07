@@ -15,7 +15,6 @@ namespace WediumAPI.Mappers
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email,
                 Username = user.Username
             };
         }
