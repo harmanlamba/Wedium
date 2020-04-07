@@ -35,7 +35,7 @@ namespace WediumAPI.Controllers
 
             try
             {
-                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.tokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
+                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(oneTimeTokenDto.TokenId, new GoogleJsonWebSignature.ValidationSettings()).Result;
                 user = await _authService.Authenticate(payload);
             }
             catch (Exception)
@@ -50,6 +50,7 @@ namespace WediumAPI.Controllers
         }
 
         //This method is used for JWT Token Testing, can leave for now, have to remove for production.
+        //[Authorize]
         //[HttpGet]
         //public ActionResult<UserDto> Get()
         //{

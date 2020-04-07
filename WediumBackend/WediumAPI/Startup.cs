@@ -88,6 +88,8 @@ namespace WediumAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseCors(x => x
@@ -95,8 +97,6 @@ namespace WediumAPI
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials());
-
-            app.UseAuthentication();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

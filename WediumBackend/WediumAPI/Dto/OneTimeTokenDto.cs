@@ -7,6 +7,6 @@ namespace WediumAPI.Dto
 {
     public class OneTimeTokenDto
     {
-        public string tokenId { get; set; }
+        public string TokenId { get; set; }
     }
 }

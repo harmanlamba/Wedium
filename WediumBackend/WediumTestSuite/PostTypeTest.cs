@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WediumAPI.Dto;
 using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
@@ -26,9 +28,9 @@ namespace WediumTestSuite
             using (HttpClient client = _testServer.CreateClient())
             {
                 HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/PostType/Get");
-                JArray content = JArray.Parse(await response.Content.ReadAsStringAsync());
-
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+                List<PostTypeDto> content = await response.Content.ReadAsAsync<List<PostTypeDto>>();
                 Assert.AreEqual(13, content.Count);
             }
         }
