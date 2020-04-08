@@ -3,7 +3,8 @@ import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { sendToken } from '../redux/actions/auth-actions';
-import config from '../config.json';
+
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 class GoogleLoginButton extends Component {
   onFailure = (error) => {
@@ -30,7 +31,7 @@ class GoogleLoginButton extends Component {
     return (
       <div>
         <GoogleLogin
-          clientId={config.GOOGLE_CLIENT_ID}
+          clientId={GOOGLE_CLIENT_ID}
           buttonText="Google Login"
           onSuccess={this.googleResponse}
           onFailure={this.googleResponse}

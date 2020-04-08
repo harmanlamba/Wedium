@@ -9,7 +9,7 @@ import store from './redux/store';
 
 // Components
 import GoogleLoginButton from './components/google-login-button';
-import PostTypes from './components/postType/post-types';
+import Home from './components/home/home';
 
 export const App = () => {
   return (
@@ -17,8 +17,7 @@ export const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <h1>Home Page</h1>
-            <PostTypes />
+            <Home />
           </Route>
           <Route exact path="/search">
             <h1>Search Results Page</h1>

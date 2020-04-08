@@ -25,6 +25,7 @@ class PostTypes extends Component {
 
         return (
             <div>
+                <Divider />
                 <Typography variant="h6">Categories</Typography>
                 <List>{listItems}</List>
                 <Divider />
@@ -34,7 +35,6 @@ class PostTypes extends Component {
 }
 
 // Redux
-
 const mapStateToProps = (state) => {
     return {
         postTypes: state.postType.postTypes,
