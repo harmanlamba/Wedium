@@ -13,7 +13,7 @@ export function loadPostTypesSuccess(postTypes) {
     }
 }
 
-export function loadEventsError(err) {
+export function loadPostTypesError(err) {
     return {
         type: LOAD_POST_TYPES_ERROR,
         err

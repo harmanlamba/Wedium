@@ -6,7 +6,10 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+
+// Components
 import GoogleLoginButton from './components/google-login-button';
+import PostTypes from './components/postType/post-types';
 
 export const App = () => {
   return (
@@ -15,6 +18,7 @@ export const App = () => {
         <Switch>
           <Route exact path="/">
             <h1>Home Page</h1>
+            <PostTypes />
           </Route>
           <Route exact path="/search">
             <h1>Search Results Page</h1>
