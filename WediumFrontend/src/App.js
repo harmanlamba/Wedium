@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import GoogleLoginButton from './components/googleLoginButton';
+import GoogleLoginButton from './components/google-login-button';
 
 export const App = () => {
   return (

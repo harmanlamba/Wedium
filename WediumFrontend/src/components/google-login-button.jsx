@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { sendToken } from '../redux/actions/authActions';
+import { sendToken } from '../redux/actions/auth-actions';
 import config from '../config.json';
 
 class GoogleLoginButton extends Component {
