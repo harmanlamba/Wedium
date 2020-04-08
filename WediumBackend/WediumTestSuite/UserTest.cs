@@ -42,32 +42,32 @@ namespace WediumTestSuite
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-        //[Test]
-        //public async Task CheckUnauthenticatedUserAccessOfAuthenticateEndpointTest()
-        //{
-        //    HttpClient client = _testServer.CreateClient();
+        [Test]
+        public async Task CheckUnauthenticatedUserAccessOfAuthenticateEndpointTest()
+        {
+            HttpClient client = _testServer.CreateClient();
 
-        //    HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/user");
-        //    Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-        //}
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/user");
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
 
-        //[Test]
-        //public async Task CheckAuthenticatedUserAccessOfAuthenticateEndpointTest()
-        //{
-        //    WediumContext db = DatabaseContextResolver.GetDatabaseContext();
+        [Test]
+        public async Task CheckAuthenticatedUserAccessOfAuthenticateEndpointTest()
+        {
+            WediumContext db = DatabaseContextResolver.GetDatabaseContext();
 
-        //    User user = db.User
-        //        .First(u => u.UserId == 136);
+            User user = db.User
+                .First(u => u.UserId == 136);
 
-        //    HttpClient client = _testServer.CreateClient(user.UserId);
+            HttpClient client = _testServer.CreateClient(user.UserId);
 
-        //    HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/user");
-        //    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/user");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-        //    UserDto content = await response.Content.ReadAsAsync<UserDto>();
-        //    Assert.AreEqual(user.FirstName, content.FirstName);
-        //    Assert.AreEqual(user.LastName, content.LastName);
-        //    Assert.AreEqual(user.Username, content.Username);
-        //}
+            UserDto content = await response.Content.ReadAsAsync<UserDto>();
+            Assert.AreEqual(user.FirstName, content.FirstName);
+            Assert.AreEqual(user.LastName, content.LastName);
+            Assert.AreEqual(user.Username, content.Username);
+        }
     }
 }
