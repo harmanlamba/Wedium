@@ -20,4 +20,5 @@ jobs:
     - name: Run tests
       env:
         DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING}}
+        JWT_SECRET: ${{ secrets.JWT_SECRET}}
       run: dotnet test '.\WediumBackend\WediumBackend.sln' --verbosity normal
