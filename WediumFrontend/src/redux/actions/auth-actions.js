@@ -1,7 +1,7 @@
 import {
     LOGIN,
     LOGOUT
-} from "../actiontypes/authActionTypes";
+} from "../action-types/action-types";
 import {
     postOneTimeToken,
     checkJWTToken
