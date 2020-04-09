@@ -18,12 +18,10 @@ namespace WediumAPI.Controllers
     {
         private readonly IFavouriteService _service;
 
-
         public FavouriteController(IFavouriteService service)
         {
             _service = service;
         }
-
 
         [Authorize]
         [HttpPost("Post")]
@@ -34,7 +32,7 @@ namespace WediumAPI.Controllers
                 ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
                 int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                _service.AddFavourite(userId, favouriteDto.PostId);
+                _service.CreateFavourite(userId, favouriteDto.PostId);
 
                 return StatusCode(StatusCodes.Status201Created);
             }
@@ -57,7 +55,7 @@ namespace WediumAPI.Controllers
                 ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
                 int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                _service.RemoveFavourite(userId, favouriteDto.PostId);
+                _service.DeleteFavourite(userId, favouriteDto.PostId);
 
                 return Ok();
             }
@@ -70,8 +68,5 @@ namespace WediumAPI.Controllers
                 return NotFound();
             }
         }
-
-
-
     }
 }

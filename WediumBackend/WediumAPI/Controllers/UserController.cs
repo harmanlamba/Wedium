@@ -63,12 +63,14 @@ namespace WediumAPI.Controllers
         private string CreateToken(int userId)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
             if (!EnvironmentSettingsResolver.TryGetJWTSecretFromEnvironment(out string jwtSecret))
             {
                 jwtSecret = _options.JwtSecret;
             }
 
             byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
+
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -84,3 +86,4 @@ namespace WediumAPI.Controllers
         }
     }
 }
+

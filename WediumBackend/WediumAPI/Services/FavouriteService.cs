@@ -18,7 +18,7 @@ namespace WediumAPI.Services
             _postService = postService;
         }
 
-        public void AddFavourite(int userId, int postId)
+        public void CreateFavourite(int userId, int postId)
         {
             if (!_postService.CheckExists(postId))
             {
@@ -41,7 +41,7 @@ namespace WediumAPI.Services
             _db.SaveChanges();
         }
 
-        public void RemoveFavourite(int userId, int postId)
+        public void DeleteFavourite(int userId, int postId)
         {
             if (!_postService.CheckExists(postId))
             {

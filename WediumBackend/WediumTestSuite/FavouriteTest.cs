@@ -25,7 +25,7 @@ namespace WediumTestSuite
         }
 
         [Test]
-        public async Task FavouriteAndUnFavouritePostTest()
+        public async Task FavouriteAndUnfavouritePostTest()
         {
             HttpClient client = _testServer.CreateClient(139);
 
@@ -74,6 +74,5 @@ namespace WediumTestSuite
             HttpResponseMessage duplicateDeleteResponse = await client.PostAsync(_apiEndpoint + "api/favourite/delete", favouriteDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.NotFound, duplicateDeleteResponse.StatusCode);
         }
-
     }
 }
