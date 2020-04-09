@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WediumAPI.Dto;
+using WediumAPI.Exceptions;
 using WediumAPI.Services;
 
 namespace WediumAPI.Controllers
@@ -37,11 +38,11 @@ namespace WediumAPI.Controllers
 
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch (ArgumentException)
+            catch (FavouriteAlreadyExistsException)
             {
                 return Ok();
             }
-            catch (KeyNotFoundException)
+            catch (PostNotFoundException)
             {
                 return NotFound();
             }
@@ -60,11 +61,11 @@ namespace WediumAPI.Controllers
 
                 return Ok();
             }
-            catch (ArgumentException)
+            catch (FavouriteNotFoundException)
             {
                 return NoContent();
             }
-            catch (KeyNotFoundException)
+            catch (PostNotFoundException)
             {
                 return NotFound();
             }

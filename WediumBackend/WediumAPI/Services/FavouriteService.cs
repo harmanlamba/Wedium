@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WediumAPI.Exceptions;
 using WediumAPI.Models;
 
 namespace WediumAPI.Services
@@ -21,12 +22,12 @@ namespace WediumAPI.Services
         {
             if (!_postService.CheckExists(postId))
             {
-                throw new KeyNotFoundException();
+                throw new PostNotFoundException();
             }
 
             if (_db.Favourite.Any(p => p.UserId == userId && p.PostId == postId))
             {
-                throw new ArgumentException();
+                throw new FavouriteAlreadyExistsException();
             }
 
             Favourite favourite = new Favourite
@@ -44,7 +45,7 @@ namespace WediumAPI.Services
         {
             if (!_postService.CheckExists(postId))
             {
-                throw new KeyNotFoundException();
+                throw new PostNotFoundException();
             }
 
             Favourite favourite = _db.Favourite
@@ -52,7 +53,7 @@ namespace WediumAPI.Services
 
             if (favourite == null)
             {
-                throw new ArgumentException();
+                throw new FavouriteNotFoundException();
             }
 
             _db.Favourite.Remove(favourite);
