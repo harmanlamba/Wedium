@@ -7,56 +7,56 @@ using WediumAPI.Models;
 
 namespace WediumAPI.Services
 {
-    public class PostLikeService : IPostLikeService
+    public class FavouriteService : IFavouriteService
     {
         private readonly WediumContext _db;
         private readonly IPostService _postService;
 
-        public PostLikeService(WediumContext wediumContext, IPostService postService)
+        public FavouriteService(WediumContext wediumContext, IPostService postService)
         {
             _db = wediumContext;
             _postService = postService;
         }
 
-        public void CreatePostLike(int userId, int postId)
+        public void CreateFavourite(int userId, int postId)
         {
             if (!_postService.CheckExists(postId))
             {
                 throw new PostNotFoundException();
             }
 
-            if (_db.PostLike.Any(p => p.UserId == userId && p.PostId == postId))
+            if (_db.Favourite.Any(p => p.UserId == userId && p.PostId == postId))
             {
-                throw new PostLikeAlreadyExistsException();
+                throw new FavouriteAlreadyExistsException();
             }
 
-            PostLike postLike = new PostLike
+            Favourite favourite = new Favourite
             {
                 PostId = postId,
                 UserId = userId,
                 Date = DateTime.Now
             };
 
-            _db.PostLike.Add(postLike);
+            _db.Favourite.Add(favourite);
             _db.SaveChanges();
         }
 
-        public void DeletePostLike(int userId, int postId)
+        public void DeleteFavourite(int userId, int postId)
         {
             if (!_postService.CheckExists(postId))
             {
                 throw new PostNotFoundException();
             }
 
-            PostLike postLike = _db.PostLike
+            Favourite favourite = _db.Favourite
                 .FirstOrDefault(p => p.UserId == userId && p.PostId == postId);
-            
-            if (postLike == null)
+
+            if (favourite == null)
             {
-                throw new PostLikeNotFoundException();
+                throw new FavouriteNotFoundException();
             }
 
-            _db.PostLike.Remove(postLike);
+            _db.Favourite.Remove(favourite);
             _db.SaveChanges();
         }
     }

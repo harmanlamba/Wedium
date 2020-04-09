@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WediumAPI.Dto;
+using WediumAPI.Helper;
 using WediumAPI.Services;
 
 namespace WediumAPI.Controllers
@@ -48,23 +49,28 @@ namespace WediumAPI.Controllers
             return Ok(user);
         }
 
-        //This method is used for JWT Token Testing, can leave for now, have to remove for production.
-        //[Authorize]
-        //[HttpGet]
-        //public ActionResult<UserDto> Get()
-        //{
-        //    ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-        //    int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
-        //    UserDto user = _service.GetUser(userId);
+        [Authorize]
+        [HttpGet]
+        public ActionResult<UserDto> GetUserDto()
+        {
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            UserDto user = _service.GetUser(userId);
 
-        //    return Ok(user);
-        //}
+            return Ok(user);
+        }
 
         private string CreateToken(int userId)
         {
-            // Creates jwt token for user based on user's email is the primary key of the user.
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(_options.JwtSecret);
+
+            if (!EnvironmentSettingsResolver.TryGetJWTSecretFromEnvironment(out string jwtSecret))
+            {
+                jwtSecret = _options.JwtSecret;
+            }
+
+            byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
+
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -80,3 +86,4 @@ namespace WediumAPI.Controllers
         }
     }
 }
+

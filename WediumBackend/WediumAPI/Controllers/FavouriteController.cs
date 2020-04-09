@@ -14,29 +14,30 @@ namespace WediumAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostLikeController : ControllerBase
+    public class FavouriteController : ControllerBase
     {
-        private readonly IPostLikeService _service;
+        private readonly IFavouriteService _service;
 
-        public PostLikeController(IPostLikeService service)
+        public FavouriteController(IFavouriteService service)
         {
             _service = service;
         }
 
         [Authorize]
         [HttpPost("Post")]
-        public IActionResult Create([FromBody]PostLikeDto postLikeDto)
+        public IActionResult Create([FromBody]FavouriteDto favouriteDto)
         {
             try
             {
                 ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
                 int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                _service.CreatePostLike(userId, postLikeDto.PostId);
+                _service.CreateFavourite(userId, favouriteDto.PostId);
 
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch(PostLikeAlreadyExistsException){
+            catch (FavouriteAlreadyExistsException)
+            {
                 return Ok();
             }
             catch (PostNotFoundException)
@@ -47,18 +48,18 @@ namespace WediumAPI.Controllers
 
         [Authorize]
         [HttpPost("Delete")]
-        public IActionResult Delete([FromBody]PostLikeDto postLikeDto)
+        public IActionResult Delete([FromBody]FavouriteDto favouriteDto)
         {
             try
             {
                 ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
                 int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                _service.DeletePostLike(userId, postLikeDto.PostId);
+                _service.DeleteFavourite(userId, favouriteDto.PostId);
 
                 return Ok();
             }
-            catch (PostLikeNotFoundException)
+            catch (FavouriteNotFoundException)
             {
                 return NoContent();
             }

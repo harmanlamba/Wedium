@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WediumAPI.Helper;
 
 namespace WediumTestSuite.Helper
 {
@@ -12,7 +13,14 @@ namespace WediumTestSuite.Helper
         public static string CreateMockJWTToken(int authenticationClaimValue)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(AppSettingsResolver.GetSetting<string>("Options:JwtSecret"));
+
+            if (!EnvironmentSettingsResolver.TryGetJWTSecretFromEnvironment(out string jwtSecret))
+            {
+                jwtSecret = AppSettingsResolver.GetSetting<string>("Options:JwtSecret");
+            }
+
+            byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
+
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

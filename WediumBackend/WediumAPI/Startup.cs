@@ -50,6 +50,14 @@ namespace WediumAPI
                     .AllowAnyHeader());
             });
 
+            
+            if (!EnvironmentSettingsResolver.TryGetJWTSecretFromEnvironment(out string jwtSecret))
+            {
+                jwtSecret = Configuration["Options:JwtSecret"];
+            }
+
+            byte[] key = Encoding.UTF8.GetBytes(jwtSecret);
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,7 +71,7 @@ namespace WediumAPI
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Options:JwtSecret"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
@@ -75,6 +83,7 @@ namespace WediumAPI
             services.AddScoped<IPostTypeService, PostTypeService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IPostLikeService, PostLikeService>();
+            services.AddScoped<IFavouriteService, FavouriteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
