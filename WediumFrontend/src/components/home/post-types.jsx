@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadPostTypes } from '../../redux/actions/thunk';
+import { loadPostTypes } from '../../redux/actions/thunk/post-type-thunk';
 
 // Material UI
 import List from '@material-ui/core/List';
