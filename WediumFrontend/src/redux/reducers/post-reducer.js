@@ -15,10 +15,10 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
                 ...state,
                 posts: [],
             };
-        case LOAD_POSTS_SUCCESS:
+        case LOAD_POSTS_SUCCESS:            
             return {
                 ...state,
-                posts: action.posts,
+                posts: [...state.posts, ...action.posts],
             };
 
         case LOAD_POSTS_ERROR:
