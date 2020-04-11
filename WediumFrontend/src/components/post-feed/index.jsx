@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import InfiniteScroll from 'react-infinite-scroller';
 import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
 
-class PostCard extends Component {
+// Components
+import PostCard from './post-card';
+import InfiniteScroll from 'react-infinite-scroller';
+
+// Material UI
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+class PostFeed extends Component {
     
     componentDidMount() {
         this.props.loadInitialPosts();
@@ -15,17 +21,14 @@ class PostCard extends Component {
     }
 
     render() {
-        const loader = <div className="loader" key="loader">Loading ...</div>;
-
+        const loader = <LinearProgress />;
         var items = [];
         var hasMore = true;
         this.props.posts.map((post, i) => {
+            console.log(post);
             items.push(
                 <div key={i}>
-                    {post.postId}
-                    {post.title}
-                    <br />
-                    <br />
+                    <PostCard post={post} />
                 </div>
             );
             hasMore = post.hasMore;
@@ -61,5 +64,5 @@ const mapDispatchToProps = {
 }
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(PostCard)
+    connect(mapStateToProps, mapDispatchToProps)(PostFeed)
 );

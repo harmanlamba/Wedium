@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
-const LIMIT = 15;
+const LIMIT = 5;
 
 export function getPosts(postId) {
     const endpoint = `/api/post/Get?limit=${LIMIT}` + (postId ? `&after_id=${postId}` : "");

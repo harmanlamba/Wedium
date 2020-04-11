@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 // Material UI
 import Typography from '@material-ui/core/Typography';
 
-// Component(s)
+// Components
 import PostTypes from './post-types'
-import PostCard from '../post-card/post-card'
+import PostFeed from '../post-feed'
 
 class Home extends Component {
 
@@ -16,7 +16,7 @@ class Home extends Component {
             <div>
                 <Typography variant="h2">Wedium</Typography>
                 <PostTypes />
-                <PostCard />
+                <PostFeed />
             </div>
         );
     }
