@@ -12,8 +12,7 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
     switch (action.type) {
         case LOAD_POSTS_LOADING:
             return {
-                ...state,
-                posts: [],
+                ...state
             };
         case LOAD_POSTS_SUCCESS:            
             return {

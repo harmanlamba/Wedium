@@ -2,7 +2,7 @@ import { LOAD_POSTS_LOADING, LOAD_POSTS_SUCCESS, LOAD_POSTS_ERROR } from '../act
 
 export function loadPostsLoading() {
     return {
-        type: LOAD_POSTS_LOADING
+        type: LOAD_POSTS_LOADING,
     }
 }
 
