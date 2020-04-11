@@ -31,7 +31,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get/0");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get?after_id=0");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             
             List<PostDto> content = await response.Content.ReadAsAsync<List<PostDto>>();
@@ -43,7 +43,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get?limit=5");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
             List<PostDto> content = await response.Content.ReadAsAsync<List<PostDto>>();
@@ -55,7 +55,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get");
+            HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get?limit=5");
             Assert.AreEqual(HttpStatusCode.OK, firstBatchResponse.StatusCode);
 
             List<PostDto> firstBatchContent = await firstBatchResponse.Content.ReadAsAsync<List<PostDto>>();
@@ -63,7 +63,7 @@ namespace WediumTestSuite
 
             int postId = firstBatchContent[_batchSize - 1].PostId;
 
-            HttpResponseMessage secondBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get/" + postId);
+            HttpResponseMessage secondBatchResponse = await client.GetAsync(_apiEndpoint + $"api/Post/Get/?limit=5&after_id={postId}");
             Assert.AreEqual(HttpStatusCode.OK, secondBatchResponse.StatusCode);
 
             List<PostDto> secondBatchContent = await secondBatchResponse.Content.ReadAsAsync<List<PostDto>>();
