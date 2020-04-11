@@ -55,9 +55,14 @@ namespace WediumAPI.Services
                 .Include(w => w.WikiArticle)
                 .ToList();
 
-            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList);
-            PostDto lastPost = postDtoList.Last();
-            lastPost.HasMore = _db.Post.Any(p => p.Date < lastPost.Date);
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList).ToList();
+            
+            if (postDtoList.Any())
+            {
+                PostDto lastPost = postDtoList.Last();
+
+                postDtoList.Last().HasMore = _db.Post.Any(p => p.Date < lastPost.Date);
+            }
 
             return postDtoList;
         }

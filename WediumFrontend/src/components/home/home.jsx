@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Component(s)
 import PostTypes from './post-types'
+import PostCard from '../post-card/post-card'
 
 class Home extends Component {
 
@@ -15,6 +16,7 @@ class Home extends Component {
             <div>
                 <Typography variant="h2">Wedium</Typography>
                 <PostTypes />
+                <PostCard />
             </div>
         );
     }

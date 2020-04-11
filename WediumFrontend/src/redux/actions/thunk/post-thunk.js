@@ -4,7 +4,7 @@ import { getPosts } from '../../../apis/post';
 export function loadPosts(postId) {
     return dispatch => {
 
-        dispatch(loadPostsLoading());
+        // dispatch(loadPostsLoading());
 
         getPosts(postId)
             .then(
