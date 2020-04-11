@@ -26,7 +26,10 @@ namespace WediumAPI.Mappers
                 ArticleBody = post.WikiArticle.ArticleBody,
                 ArticleTitle = post.WikiArticle.ArticleTitle,
                 ArticleUrl = post.WikiArticle.Url,
-                ArticleImageUrl = post.WikiArticle.ArticleImageUrl
+                ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
+
+                // For Pagination
+                HasMore = true
             };
         }
 

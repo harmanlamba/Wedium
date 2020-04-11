@@ -23,16 +23,9 @@ namespace WediumAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("Get")]
-        public ActionResult<List<PostDto>> Get()
+        public ActionResult<List<PostDto>> Get(int? limit = null, int? after_id = null)
         {
-            return Ok(_service.GetPosts(null));
-        }
-
-        [AllowAnonymous]
-        [HttpGet("Get/{postId}")]
-        public ActionResult<List<PostDto>> Get(int postId)
-        {
-            return Ok(_service.GetPosts(postId));
+            return Ok(_service.GetPosts(limit, after_id));
         }
     }
 }

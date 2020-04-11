@@ -20,11 +20,11 @@ namespace WediumAPI.Services
             _options = options.Value;
         }
 
-        public IEnumerable<PostDto> GetPosts(int? postId)
+        public IEnumerable<PostDto> GetPosts(int? limit, int? after_id)
         {
-            IOrderedQueryable<Post> postListQuery;
+            IQueryable<Post> postListQuery;
 
-            if (postId == null)
+            if (after_id == null)
             {
                 postListQuery = _db.Post
                     .OrderByDescending(d => d.Date);
@@ -32,7 +32,7 @@ namespace WediumAPI.Services
             else
             {
                 Post post = _db.Post
-                    .FirstOrDefault(p => p.PostId == postId);
+                    .FirstOrDefault(p => p.PostId == after_id);
 
                 if (post == null)
                 {
@@ -44,14 +44,22 @@ namespace WediumAPI.Services
                     .OrderByDescending(d => d.Date);
             }
 
+            if (limit != null)
+            {
+                postListQuery = postListQuery.Take(limit.Value);
+            }
+
             List<Post> postList = postListQuery
-                .Take(_options.GetPostBatchSize)
                 .Include(u => u.User)
                 .Include(p => p.PostType)
                 .Include(w => w.WikiArticle)
                 .ToList();
 
-            return PostMapper.ToDto(postList);
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList);
+            PostDto lastPost = postDtoList.Last();
+            lastPost.HasMore = _db.Post.Any(p => p.Date < lastPost.Date);
+
+            return postDtoList;
         }
 
         public bool CheckExists(int postId)

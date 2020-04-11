@@ -19,5 +19,8 @@ namespace WediumAPI.Dto
         public string ArticleBody { get; set; }
         public string ArticleTitle { get; set; }
         public string ArticleImageUrl { get; set; }
+
+        // For Pagination
+        public bool HasMore { get; set; }
     }
 }
