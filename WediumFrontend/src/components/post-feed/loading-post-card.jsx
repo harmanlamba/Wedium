@@ -39,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         width: 140,
-        height: 130,
+        height: 128,
         border: '2px solid gainsboro',
         marginTop: 16,
-        marginRight: 10
+        marginRight: 8
     }
 }));
