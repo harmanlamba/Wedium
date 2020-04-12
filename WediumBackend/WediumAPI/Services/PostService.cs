@@ -31,6 +31,7 @@ namespace WediumAPI.Services
             }
             else
             {
+                // Check post with after_id as the id value exists
                 Post post = _db.Post
                     .FirstOrDefault(p => p.PostId == after_id);
 
@@ -39,17 +40,14 @@ namespace WediumAPI.Services
                     return new List<PostDto>();
                 }
 
+                // Gets all posts in chronological order after after_id
                 postListQuery = _db.Post
                     .Where(d => d.Date < post.Date)
                     .OrderByDescending(d => d.Date);
-            }
-
-            if (limit != null)
-            {
-                postListQuery = postListQuery.Take(limit.Value);
-            }
-
+            }                
+            
             List<Post> postList = postListQuery
+                .Take(limit.HasValue ? limit.Value : _options.GetPostDefaultLimit)
                 .Include(u => u.User)
                 .Include(p => p.PostType)
                 .Include(w => w.WikiArticle)
@@ -60,8 +58,7 @@ namespace WediumAPI.Services
             if (postDtoList.Any())
             {
                 PostDto lastPost = postDtoList.Last();
-
-                postDtoList.Last().HasMore = _db.Post.Any(p => p.Date < lastPost.Date);
+                lastPost.HasMore = _db.Post.Any(p => p.Date < lastPost.Date);
             }
 
             return postDtoList;
