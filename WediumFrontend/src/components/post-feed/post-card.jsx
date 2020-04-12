@@ -14,37 +14,37 @@ const PostCard = (props) => {
     const classes = useStyles();
 
     return (
-        <div>
-            <Card className={classes.root}>
-                <div>
-                    <CardContent>
-                        <Typography variant="subtitle1">{post.postType} -
+        <Card className={classes.root}>
+            <div>
+                <CardContent>
+                    <Typography variant="subtitle1">
+                        {post.postType} -
                             <Link className={classes.articleLink} href={post.articleUrl} target="_blank">
-                                {post.articleTitle}
-                            </Link>
-                        </Typography>
-                        <Typography variant="h6">{post.title}</Typography>
-                    </CardContent>
+                            {post.articleTitle}
+                        </Link>
+                    </Typography>
 
-                    <CardContent>
-                        <Typography variant="subtitle2">{post.username}</Typography>
-                        <Typography variant="subtitle2" color="textSecondary">
-                            {moment(post.date).format('DD MMM')} - {moment(post.date).fromNow()}
-                        </Typography>
-                    </CardContent>
-                </div>
+                    <Typography variant="h6">{post.title}</Typography>
+                    <br />
 
-                <div>
-                    {post.articleImageUrl !== "" &&
-                        <CardMedia
-                            className={classes.image}
-                            component="img"
-                            src={post.articleImageUrl}
-                        />
-                    }
-                </div>
-            </Card>
-        </div>
+                    <Link variant="subtitle2" color="textSecondary">{post.username}</Link>
+
+                    <Typography variant="subtitle2" color="textSecondary">
+                        {moment(post.date).format('DD MMM')} - {moment(post.date).fromNow()}
+                    </Typography>
+                </CardContent>
+            </div>
+
+            <div>
+                {post.articleImageUrl !== "" &&
+                    <CardMedia
+                        className={classes.image}
+                        component="img"
+                        src={post.articleImageUrl}
+                    />
+                }
+            </div>
+        </Card>
     );
 }
 
@@ -54,13 +54,13 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         justifyContent: 'space-between',
-        padding: 8,
-        marginBottom: 30,
+        marginBottom: 24,
     },
     image: {
-        width: 190,
-        height: 160,
-        border: '1px solid gainsboro',
+        width: 140,
+        height: 130,
+        border: '2px solid gainsboro',
+        marginTop: 16,
     },
     articleLink: {
         marginLeft: 8,

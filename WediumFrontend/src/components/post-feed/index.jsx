@@ -11,7 +11,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 class PostFeed extends Component {
-    
+
     componentDidMount() {
         this.props.loadInitialPosts();
     }
@@ -24,20 +24,22 @@ class PostFeed extends Component {
         var items = [];
         var hasMore = true;
         this.props.posts.map((post, i) => {
-            items.push(
-                <PostCard post={post} key={i} />
+            return (
+                items.push(
+                    <PostCard post={post} key={i} />
+                ),
+                hasMore = post.hasMore
             );
-            hasMore = post.hasMore;
         });
 
-        return(
+        return (
             <div>
                 {items.length > 0 &&
                     <InfiniteScroll
                         pageStart={0}
                         loadMore={this.loadMore.bind(this)}
                         hasMore={hasMore}
-                        loader={<LinearProgress key={0}/>}>
+                        loader={<LinearProgress key={0} />}>
 
                         {items}
                     </InfiniteScroll>
