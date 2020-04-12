@@ -51,6 +51,7 @@ namespace WediumAPI.Services
                 .Include(u => u.User)
                 .Include(p => p.PostType)
                 .Include(w => w.WikiArticle)
+                .Include(pl => pl.PostLike)
                 .ToList();
 
             IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList).ToList();

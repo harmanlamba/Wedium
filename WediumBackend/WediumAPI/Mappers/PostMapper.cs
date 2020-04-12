@@ -17,6 +17,8 @@ namespace WediumAPI.Mappers
                 Date = post.Date,
                 Title = post.Title,
                 Description = post.Description,
+
+                // User
                 Username = $"{post.User.FirstName} {post.User.LastName}",
 
                 // Post Type
@@ -27,6 +29,9 @@ namespace WediumAPI.Mappers
                 ArticleTitle = post.WikiArticle.ArticleTitle,
                 ArticleUrl = post.WikiArticle.Url,
                 ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
+
+                // PostLikes
+                NumberOfLikes = post.PostLike.Count,
 
                 // For Pagination
                 HasMore = true

@@ -9,6 +9,8 @@ namespace WediumAPI.Dto
         public DateTime Date { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        
+        // User
         public string Username { get; set; }
 
         // Post Type
@@ -19,6 +21,9 @@ namespace WediumAPI.Dto
         public string ArticleBody { get; set; }
         public string ArticleTitle { get; set; }
         public string ArticleImageUrl { get; set; }
+
+        // PostLike
+        public int NumberOfLikes { get; set; }
 
         // For Pagination
         public bool HasMore { get; set; }
