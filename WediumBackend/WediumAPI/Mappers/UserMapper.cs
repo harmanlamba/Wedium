@@ -14,8 +14,7 @@ namespace WediumAPI.Mappers
             return new UserDto
             {
                 FirstName = user.FirstName,
-                LastName = user.LastName,
-                Username = user.Username
+                LastName = user.LastName
             };
         }
     }

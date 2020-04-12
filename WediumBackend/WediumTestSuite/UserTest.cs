@@ -67,7 +67,6 @@ namespace WediumTestSuite
             UserDto content = await response.Content.ReadAsAsync<UserDto>();
             Assert.AreEqual(user.FirstName, content.FirstName);
             Assert.AreEqual(user.LastName, content.LastName);
-            Assert.AreEqual(user.Username, content.Username);
         }
     }
 }

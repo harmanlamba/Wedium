@@ -17,7 +17,6 @@ namespace WediumAPI.Mappers
                 Date = post.Date,
                 Title = post.Title,
                 Description = post.Description,
-                Username = post.User.Username,
 
                 // Post Type
                 PostType = post.PostType.PostTypeValue,
