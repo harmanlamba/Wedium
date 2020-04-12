@@ -5,10 +5,8 @@ import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-
 
 // Components
 import PostCard from './post-card';
+import LoadingPostCard from './loading-post-card';
 import InfiniteScroll from 'react-infinite-scroller';
-
-// Material UI
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 class PostFeed extends Component {
 
@@ -39,7 +37,8 @@ class PostFeed extends Component {
                         pageStart={0}
                         loadMore={this.loadMore.bind(this)}
                         hasMore={hasMore}
-                        loader={<LinearProgress key={0} />}>
+                        loader={<LoadingPostCard key={0} />}
+                        threshold={600}>
 
                         {items}
                     </InfiniteScroll>

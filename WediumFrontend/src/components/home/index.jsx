@@ -21,7 +21,7 @@ class Home extends Component {
             <div className={classes.root}>
                 <Grid
                     container
-                    spacing={3}
+                    spacing={3} // This causes the horizontal scroll
                     direction="row"
                     justify="center"
                     alignItems="flex-start">
@@ -47,7 +47,7 @@ class Home extends Component {
 
 const styles = (theme) => ({
     root: {
-        flexGrow: 1,
+        flexGrow: 1
     },
 });
 
