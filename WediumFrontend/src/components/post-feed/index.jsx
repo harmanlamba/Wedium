@@ -25,7 +25,7 @@ class PostFeed extends Component {
         var hasMore = true;
         this.props.posts.map((post, i) => {
             items.push(
-                    <PostCard post={post} key={i} />
+                <PostCard post={post} key={i} />
             );
             hasMore = post.hasMore;
         });

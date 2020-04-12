@@ -18,10 +18,11 @@ const PostCard = (props) => {
             <Card className={classes.root}>
                 <div>
                     <CardContent>
-                        <Typography variant="subtitle">{post.postType} -</Typography>
-                        <Link className={classes.articleLink} href={post.articleUrl} target="_blank">
-                            {post.articleTitle}
-                        </Link>
+                        <Typography variant="subtitle1">{post.postType} -
+                            <Link className={classes.articleLink} href={post.articleUrl} target="_blank">
+                                {post.articleTitle}
+                            </Link>
+                        </Typography>
                         <Typography variant="h6">{post.title}</Typography>
                     </CardContent>
 
