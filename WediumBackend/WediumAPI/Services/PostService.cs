@@ -20,11 +20,11 @@ namespace WediumAPI.Services
             _options = options.Value;
         }
 
-        public IEnumerable<PostDto> GetPosts(int? limit, int? after_id)
+        public IEnumerable<PostDto> GetPosts(int? limit, int? afterId)
         {
             IQueryable<Post> postListQuery;
 
-            if (after_id == null)
+            if (afterId == null)
             {
                 postListQuery = _db.Post
                     .OrderByDescending(d => d.Date);
@@ -33,7 +33,7 @@ namespace WediumAPI.Services
             {
                 // Check post with after_id as the id value exists
                 Post post = _db.Post
-                    .FirstOrDefault(p => p.PostId == after_id);
+                    .FirstOrDefault(p => p.PostId == afterId);
 
                 if (post == null)
                 {
