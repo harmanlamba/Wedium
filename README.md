@@ -14,11 +14,13 @@ We recommend the usage of Visual Studio for the development of the backend and y
 
 ### Setup Steps
 1. Find and open `WediumBackend.sln` in `./WediumBackend`.
-2. Build the project and launch `WediumAPI` in Visual Studio. This will install the necessary NuGet packages and launch IISExpress. 
-3. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool
-4. Run `npm install` in the command line tool to download and install frontend dependencies.
-5. Run `npm start` in the command line tool to start the React development server.
-6. The default internet browser will redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend
+2. Add the `WediumDatabase` connection string and `JwtSecret` into `appsettings.json` _(contact a team-member to obtain values)_.
+3. Build the project and launch `WediumAPI` in Visual Studio. This will install the necessary NuGet packages and launch IISExpress. 
+4. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool.
+5. Run `npm install` in the command line tool to download and install frontend dependencies.
+6. Create a `.env.development` file in `./WediumFrontend`. Add the required settings _(contact a team-member to obtain values)_.
+7. Run `npm start` in the command line tool to start the React development server.
+8. The default internet browser will redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend.
 
 ## Team Members
 
