@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WediumAPI.Dto;
+using WediumAPI.Exceptions;
 using WediumAPI.Mappers;
 using WediumAPI.Models;
 
@@ -12,11 +13,13 @@ namespace WediumAPI.Services
     public class PostService : IPostService
     {
         private readonly WediumContext _db;
+        private readonly IWikiMediaApiService _wikiMediaApiService; 
         private readonly Options _options;
 
-        public PostService(WediumContext wediumContext, IOptions<Options> options)
+        public PostService(WediumContext wediumContext, IWikiMediaApiService wikiMediaApiService, IOptions<Options> options)
         {
             _db = wediumContext;
+            _wikiMediaApiService = wikiMediaApiService;
             _options = options.Value;
         }
 
@@ -58,6 +61,24 @@ namespace WediumAPI.Services
         {
             return _db.Post
                 .Any(p => p.PostId == postId);
+        }
+
+        public void CreatePost(PostDto postDto, int userId)
+        {
+            _wikiMediaApiService.GetWikiContentAsync("Nelson");
+
+            //Post post = new Post()
+            //{
+            //    UserId = userId,
+            //    Date = DateTime.Now,
+            //    WikiArticleId = 0,
+            //    Title = postDto.Title,
+            //    Description = postDto.Description,
+            //    PostTypeId = 0
+            //};
+
+            //_db.Post.Add(post);
+            //_db.SaveChanges();
         }
     }
 }

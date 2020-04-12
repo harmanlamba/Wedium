@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,19 @@ namespace WediumAPI.Controllers
         public ActionResult<List<PostDto>> Get(int postId)
         {
             return Ok(_service.GetPosts(postId));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("Post")]
+        public IActionResult CreatePost([FromBody]PostDto postDto)
+        {
+
+                //ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+                //int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+                _service.CreatePost(postDto, 139);
+
+            return Ok();
         }
     }
 }
