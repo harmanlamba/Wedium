@@ -21,15 +21,11 @@ class PostFeed extends Component {
     }
 
     render() {
-        const loader = <LinearProgress />;
         var items = [];
         var hasMore = true;
         this.props.posts.map((post, i) => {
-            console.log(post);
             items.push(
-                <div key={i}>
-                    <PostCard post={post} />
-                </div>
+                    <PostCard post={post} key={i} />
             );
             hasMore = post.hasMore;
         });
@@ -41,7 +37,7 @@ class PostFeed extends Component {
                         pageStart={0}
                         loadMore={this.loadMore.bind(this)}
                         hasMore={hasMore}
-                        loader={loader}>
+                        loader={<LinearProgress key={0}/>}>
 
                         {items}
                     </InfiniteScroll>
