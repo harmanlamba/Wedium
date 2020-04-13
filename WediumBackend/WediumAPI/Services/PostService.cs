@@ -65,23 +65,27 @@ namespace WediumAPI.Services
 
         public void CreatePost(PostDto postDto, int userId)
         {
-            
-       
-            WikiArticle wikiArticle = new WikiArticle()
+            WikiArticle wikiArticle;
+
+            try
             {
-                Url = postDto.ArticleUrl,
-                ArticleDate = _wikiMediaApiService.GetWikiLatestDateAsync(postDto.ArticleTitle).Result,
-                ArticleBody = _wikiMediaApiService.GetWikiContentAsync(postDto.ArticleTitle).Result.Query.Pages.First().Extract,
-                ArticleTitle = postDto.ArticleTitle,
-                ArticleImageUrl = _wikiMediaApiService.GetWikiThumbnailAsync(postDto.ArticleTitle).Result
-
-            };
-
+                wikiArticle = new WikiArticle()
+                {
+                    Url = postDto.ArticleUrl,
+                    ArticleDate = _wikiMediaApiService.GetWikiLatestDateAsync(postDto.ArticleTitle).Result,
+                    ArticleBody = _wikiMediaApiService.GetWikiContentAsync(postDto.ArticleTitle).Result.Query.Pages.First().Extract,
+                    ArticleTitle = postDto.ArticleTitle,
+                    ArticleImageUrl = _wikiMediaApiService.GetWikiThumbnailAsync(postDto.ArticleTitle).Result
+                };
+            } catch (ArgumentNullException)
+            {
+                throw new WikiArticleNotFoundException();
+            }
+           
             _db.WikiArticle.Add(wikiArticle);
             _db.SaveChanges();
 
             PostType postType = _db.PostType.First(pt => pt.PostTypeValue == postDto.PostType);
-
             Post post = new Post()
             {
                 UserId = userId,
@@ -94,6 +98,20 @@ namespace WediumAPI.Services
 
             _db.Post.Add(post);
             _db.SaveChanges();
+        }
+
+        public bool DeletePost(PostDto postDto, int userId)
+        {
+            Post post = _db.Post.First(p => p.PostId == postDto.PostId);
+
+            if (post.UserId == userId)
+            {
+                _db.Post.Remove(post);
+                _db.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
     }
 }

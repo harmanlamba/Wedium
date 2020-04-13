@@ -17,7 +17,6 @@ namespace WediumAPI.Services
         private readonly string WIKIMEDIA_GET_CONTENT_ENDPOINT;
         private readonly string WIKIMEDIA_GET_THUMBNAIL_ENDPOINT;
         private readonly string WIKIMEDIA_GET_LATEST_DATE_ENDPOINT;
-
         public WikiMediaApiService(WediumContext wediumContext)
         {
             _db = wediumContext;
@@ -72,7 +71,7 @@ namespace WediumAPI.Services
             if (wikiMediaThumbnailDto.Query.Pages.First().Value.Thumbnail == null)
             {
                 throw new WikiArticleThumbnailNotFoundException();
-            }else if(response.StatusCode != HttpStatusCode.OK)
+            } else if (response.StatusCode != HttpStatusCode.OK)
             {
                 throw new WikiArticleNotFoundException();
             }
@@ -89,8 +88,5 @@ namespace WediumAPI.Services
 
             return wikiMediaDateDto.Query.Pages.First().Value.Revisions.First().Timestamp;
         }
-
-        
-
     }
 }

@@ -37,17 +37,17 @@ namespace WediumAPI.Controllers
             return Ok(_service.GetPosts(postId));
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost("Post")]
         public IActionResult CreatePost([FromBody]PostDto postDto)
         {
-
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             try
             {
-                _service.CreatePost(postDto, 139);
+                _service.CreatePost(postDto, userId);
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (WikiArticleNotFoundException)
             {
@@ -57,8 +57,23 @@ namespace WediumAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status206PartialContent);
             }
-               
-            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("Delete")]
+        public IActionResult DeletePost([FromBody]PostDto postDto)
+        {
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            bool hasDeleted = _service.DeletePost(postDto, userId);
+
+            if (hasDeleted)
+            {
+                return Ok();
+            }
+
+            return Unauthorized();
         }
     }
 }
