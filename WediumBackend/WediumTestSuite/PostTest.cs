@@ -81,7 +81,7 @@ namespace WediumTestSuite
         [Test]
         public async Task CreatePost_SuccessfulCreate()
         {
-            HttpClient client = _testServer.CreateClient(139);
+            HttpClient client = _testServer.CreateClient(USER_ID);
 
             PostDto postDto = new PostDto
             {
@@ -93,12 +93,16 @@ namespace WediumTestSuite
 
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+
+            //Deleting the Recently Created Post
+            HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
+            Assert.AreEqual(HttpStatusCode.OK, statuscode);
         }
 
         [Test]
         public async Task CreatePost_WikiArticleNotFound()
         {
-            HttpClient client = _testServer.CreateClient(139);
+            HttpClient client = _testServer.CreateClient(USER_ID);
 
             PostDto postDto = new PostDto
             {
@@ -115,7 +119,7 @@ namespace WediumTestSuite
         [Test]
         public async Task CreatePost_WikiArticleThumbnailNotFound()
         {
-            HttpClient client = _testServer.CreateClient(139);
+            HttpClient client = _testServer.CreateClient(USER_ID);
 
             PostDto postDto = new PostDto
             {
@@ -126,7 +130,11 @@ namespace WediumTestSuite
             };
 
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
-            Assert.AreEqual(HttpStatusCode.PartialContent, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+
+            //Deleting the Recently Created Post
+            HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
+            Assert.AreEqual(HttpStatusCode.OK, statuscode);
         }
 
         [Test]
@@ -146,29 +154,16 @@ namespace WediumTestSuite
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-            // Delete unsuccessful 
-            Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == USER_ID);
-            PostDto postDtoDelete = new PostDto
-            {
-                PostId = post.PostId
-            };
-
-            HttpRequestMessage request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri(_apiEndpoint + "api/Post/Delete"),
-                Content = new StringContent(JsonConvert.SerializeObject(postDtoDelete), Encoding.UTF8, "application/json")
-            };
-
-            HttpResponseMessage responseDelete = await client.SendAsync(request);
-            Assert.AreEqual(HttpStatusCode.OK, responseDelete.StatusCode);
+            //Deleting the Recently Created Post
+            HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
+            Assert.AreEqual(HttpStatusCode.OK, statuscode);
         }
 
         [Test]
         public async Task DeletePost_UnsuccessfulDelete()
         {
-            HttpClient authorizedClient = _testServer.CreateClient(USER_ID);
-            HttpClient unauthorizedClient = _testServer.CreateClient();
+            HttpClient client = _testServer.CreateClient(USER_ID);
+            
 
             // Create post
             PostDto postDto = new PostDto
@@ -179,11 +174,30 @@ namespace WediumTestSuite
                 ArticleUrl = "https://en.wikipedia.org/wiki/Bugatti"
             };
 
-            HttpResponseMessage response = await authorizedClient.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
+            HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
             // Delete unsuccessful 
-            Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == USER_ID);
+            HttpStatusCode uncessfulStatusCode = await DeletePostHelper(postDto);
+            Assert.AreEqual(HttpStatusCode.Unauthorized, uncessfulStatusCode);
+
+            //Deleting the Recently Created Post Sucessfully
+            HttpStatusCode statusCode = await DeletePostHelper(postDto, USER_ID);
+            Assert.AreEqual(HttpStatusCode.OK, statusCode);
+
+        }
+
+        private async Task<HttpStatusCode> DeletePostHelper(PostDto postDto, int? userId = null)
+        {
+            if(userId == null)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+
+            HttpClient client = _testServer.CreateClient(userId);
+
+            Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == userId);
+
             PostDto postDtoDelete = new PostDto
             {
                 PostId = post.PostId
@@ -196,12 +210,9 @@ namespace WediumTestSuite
                 Content = new StringContent(JsonConvert.SerializeObject(postDtoDelete), Encoding.UTF8, "application/json")
             };
 
-            HttpResponseMessage responseDeleteFail = await unauthorizedClient.SendAsync(request);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, responseDeleteFail.StatusCode);
+            HttpResponseMessage response = await client.SendAsync(request);
 
-            // Delete successfully
-            HttpResponseMessage responseDeleteSuccess = await authorizedClient.SendAsync(request);
-            Assert.AreEqual(HttpStatusCode.OK, responseDeleteSuccess.StatusCode);
+            return response.StatusCode;
         }
     }
 }

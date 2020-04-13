@@ -49,13 +49,16 @@ namespace WediumAPI.Controllers
                 _service.CreatePost(postDto, userId);
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch (WikiArticleNotFoundException)
+            catch (AggregateException e)
             {
-                return NotFound();
-            }
-            catch (WikiArticleThumbnailNotFoundException)
-            {
-                return StatusCode(StatusCodes.Status206PartialContent);
+                if(e.InnerException.GetType() == typeof(WikiArticleNotFoundException))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
         }
 

@@ -86,6 +86,11 @@ namespace WediumAPI.Services
 
             WikiMediaMetaDataDto wikiMediaDateDto = await response.Content.ReadAsAsync<WikiMediaMetaDataDto>();
 
+            if(wikiMediaDateDto.Query.Pages.First().Value.Revisions == null)
+            {
+                throw new WikiArticleNotFoundException();
+            }
+
             return wikiMediaDateDto.Query.Pages.First().Value.Revisions.First().Timestamp;
         }
     }
