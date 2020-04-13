@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WediumAPI.Dto
+namespace WediumAPI.Dto.WikiMedia
 {
-    public class QueryDto
+    public class RevisionsDto
     {
-        public IEnumerable<PagesDto> Pages { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

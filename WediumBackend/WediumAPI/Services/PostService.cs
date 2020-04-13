@@ -65,20 +65,35 @@ namespace WediumAPI.Services
 
         public void CreatePost(PostDto postDto, int userId)
         {
-            _wikiMediaApiService.GetWikiContentAsync("Nelson");
+            
+       
+            WikiArticle wikiArticle = new WikiArticle()
+            {
+                Url = postDto.ArticleUrl,
+                ArticleDate = _wikiMediaApiService.GetWikiLatestDateAsync(postDto.ArticleTitle).Result,
+                ArticleBody = _wikiMediaApiService.GetWikiContentAsync(postDto.ArticleTitle).Result.Query.Pages.First().Extract,
+                ArticleTitle = postDto.ArticleTitle,
+                ArticleImageUrl = _wikiMediaApiService.GetWikiThumbnailAsync(postDto.ArticleTitle).Result
 
-            //Post post = new Post()
-            //{
-            //    UserId = userId,
-            //    Date = DateTime.Now,
-            //    WikiArticleId = 0,
-            //    Title = postDto.Title,
-            //    Description = postDto.Description,
-            //    PostTypeId = 0
-            //};
+            };
 
-            //_db.Post.Add(post);
-            //_db.SaveChanges();
+            _db.WikiArticle.Add(wikiArticle);
+            _db.SaveChanges();
+
+            PostType postType = _db.PostType.First(pt => pt.PostTypeValue == postDto.PostType);
+
+            Post post = new Post()
+            {
+                UserId = userId,
+                Date = DateTime.Now,
+                WikiArticleId = wikiArticle.WikiArticleId,
+                Title = postDto.Title,
+                Description = postDto.Description,
+                PostTypeId = postType.PostTypeId
+            };
+
+            _db.Post.Add(post);
+            _db.SaveChanges();
         }
     }
 }

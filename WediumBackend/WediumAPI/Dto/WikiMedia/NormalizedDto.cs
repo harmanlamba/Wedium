@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WediumAPI.Dto
 {
-    public class NormalizedDto
+    public class GetContentNormalizedDto
     {
         public bool FromEncoded { get; set; }
         public string From { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WediumAPI.Dto;
+using WediumAPI.Exceptions;
 using WediumAPI.Services;
 
 namespace WediumAPI.Controllers
@@ -41,11 +42,22 @@ namespace WediumAPI.Controllers
         public IActionResult CreatePost([FromBody]PostDto postDto)
         {
 
-                //ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-                //int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
+            try
+            {
                 _service.CreatePost(postDto, 139);
-
+            }
+            catch (WikiArticleNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (WikiArticleThumbnailNotFoundException)
+            {
+                return StatusCode(StatusCodes.Status206PartialContent);
+            }
+               
             return Ok();
         }
     }

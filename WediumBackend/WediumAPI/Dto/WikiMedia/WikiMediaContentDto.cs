@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace WediumAPI.Dto
 {
-    public class WikiMediaDto
+    public class WikiMediaContentDto
     {
-        public bool BatchComplete { get; set; }
         public QueryDto Query { get; set; }
     }
 }

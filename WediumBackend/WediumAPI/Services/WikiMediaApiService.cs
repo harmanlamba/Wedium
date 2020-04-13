@@ -7,30 +7,41 @@ using WediumAPI.Dto;
 using System.Net;
 using WediumAPI.Exceptions;
 using WediumAPI.Models;
+using WediumAPI.Dto.WikiMedia;
 
 namespace WediumAPI.Services
 {
     public class WikiMediaApiService : IWikiMediaApiService
     {
         private readonly WediumContext _db;
-        private readonly string WIKIMEDIA_GET_CONTENT_ENDPOINT; 
+        private readonly string WIKIMEDIA_GET_CONTENT_ENDPOINT;
+        private readonly string WIKIMEDIA_GET_THUMBNAIL_ENDPOINT;
+        private readonly string WIKIMEDIA_GET_LATEST_DATE_ENDPOINT;
 
         public WikiMediaApiService(WediumContext wediumContext)
         {
             _db = wediumContext;
             
-            Settings settings = _db.Settings
+            Settings GetContentSettings = _db.Settings
                 .First(s => s.Key == "WIKIMEDIA_GET_CONTENT_ENDPOINT");
 
-            WIKIMEDIA_GET_CONTENT_ENDPOINT = settings.Value;
+            Settings GetThumbnailSettings = _db.Settings
+                .First(s => s.Key == "WIKIMEDIA_GET_THUMBNAIL_ENDPOINT");
+
+            Settings GetLatestDateSettings = _db.Settings
+                .First(s => s.Key == "WIKIMEDIA_GET_LATEST_DATE_ENDPOINT");
+
+            WIKIMEDIA_GET_CONTENT_ENDPOINT = GetContentSettings.Value;
+            WIKIMEDIA_GET_THUMBNAIL_ENDPOINT = GetThumbnailSettings.Value;
+            WIKIMEDIA_GET_LATEST_DATE_ENDPOINT = GetLatestDateSettings.Value;
         }
 
-        public async Task<(WikiMediaDto content, long pageId)> GetWikiContentAsync(string title)
+        public async Task<WikiMediaContentDto> GetWikiContentAsync(string title)
         {
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage response = await httpClient.GetAsync($"{WIKIMEDIA_GET_CONTENT_ENDPOINT}&titles={title}");
 
-            WikiMediaDto wikiMediaDto = await response.Content.ReadAsAsync<WikiMediaDto>();
+            WikiMediaContentDto wikiMediaDto = await response.Content.ReadAsAsync<WikiMediaContentDto>();
 
             long pageId;
             try
@@ -47,7 +58,39 @@ namespace WediumAPI.Services
                 throw new WikiArticleNotFoundException();
             }
 
-            return (wikiMediaDto, pageId);
+            return wikiMediaDto;
         }
+
+        
+        public async Task<string> GetWikiThumbnailAsync(string title)
+        {
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync($"{WIKIMEDIA_GET_THUMBNAIL_ENDPOINT}&titles={title}");
+
+            WikiMediaMetaDataDto wikiMediaThumbnailDto = await response.Content.ReadAsAsync<WikiMediaMetaDataDto>();
+
+            if (wikiMediaThumbnailDto.Query.Pages.First().Value.Thumbnail == null)
+            {
+                throw new WikiArticleThumbnailNotFoundException();
+            }else if(response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new WikiArticleNotFoundException();
+            }
+
+            return wikiMediaThumbnailDto.Query.Pages.First().Value.Thumbnail.Source;
+        }
+
+        public async Task<DateTime> GetWikiLatestDateAsync(string title)
+        {
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync($"{WIKIMEDIA_GET_LATEST_DATE_ENDPOINT}&titles={title}");
+
+            WikiMediaMetaDataDto wikiMediaDateDto = await response.Content.ReadAsAsync<WikiMediaMetaDataDto>();
+
+            return wikiMediaDateDto.Query.Pages.First().Value.Revisions.First().Timestamp;
+        }
+
+        
+
     }
 }
