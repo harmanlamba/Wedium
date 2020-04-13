@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -43,7 +44,8 @@ namespace WediumAPI.Controllers
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
-
+            
+            HttpStatusCode statusCode = HttpStatusCode.InternalServerError; 
             try
             {
                 _service.CreatePost(postDto, userId);
@@ -51,15 +53,18 @@ namespace WediumAPI.Controllers
             }
             catch (AggregateException e)
             {
-                if(e.InnerException.GetType() == typeof(WikiArticleNotFoundException))
+                e.Handle((x) =>
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-                }
+                    if (x is WikiArticleNotFoundException)
+                    {
+                        statusCode = HttpStatusCode.NotFound;
+                        return true;
+                    }
+                    return false; 
+                });
             }
+
+            return StatusCode((int)statusCode);
         }
 
         [Authorize]

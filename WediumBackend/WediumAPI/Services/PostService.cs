@@ -74,10 +74,18 @@ namespace WediumAPI.Services
             }
             catch (AggregateException e)
             {
-                if(e.InnerException.GetType() == typeof(WikiArticleThumbnailNotFoundException))
+                e.Handle((x) =>
                 {
-                    articleImageUrl = "DefaultURLFromDB";
-                }
+                    if (x is WikiArticleThumbnailNotFoundException)
+                    {
+                        articleImageUrl = "DefaultURLFromDB";
+                        return true;
+                    }
+                    return false;
+                });
+                
+              
+               
             }
 
             wikiArticle = new WikiArticle()
