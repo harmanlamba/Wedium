@@ -17,6 +17,7 @@ namespace WediumAPI.Services
         private readonly string WIKIMEDIA_GET_CONTENT_ENDPOINT;
         private readonly string WIKIMEDIA_GET_THUMBNAIL_ENDPOINT;
         private readonly string WIKIMEDIA_GET_LATEST_DATE_ENDPOINT;
+
         public WikiMediaApiService(WediumContext wediumContext)
         {
             _db = wediumContext;
@@ -34,7 +35,6 @@ namespace WediumAPI.Services
             WIKIMEDIA_GET_THUMBNAIL_ENDPOINT = GetThumbnailSettings.Value;
             WIKIMEDIA_GET_LATEST_DATE_ENDPOINT = GetLatestDateSettings.Value;
         }
-
         public async Task<WikiMediaContentDto> GetWikiContentAsync(string title)
         {
             HttpClient httpClient = new HttpClient();
@@ -60,7 +60,6 @@ namespace WediumAPI.Services
             return wikiMediaDto;
         }
 
-        
         public async Task<string> GetWikiThumbnailAsync(string title)
         {
             HttpClient httpClient = new HttpClient();

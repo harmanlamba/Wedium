@@ -16,11 +16,18 @@ namespace WediumAPI.Services
         private readonly IWikiMediaApiService _wikiMediaApiService; 
         private readonly Options _options;
 
+        private readonly string WIKIARTICLE_DEFAULT_THUMBNAIL;
+
         public PostService(WediumContext wediumContext, IWikiMediaApiService wikiMediaApiService, IOptions<Options> options)
         {
             _db = wediumContext;
             _wikiMediaApiService = wikiMediaApiService;
             _options = options.Value;
+
+            Settings GetDefaultThumbnailSettings = _db.Settings
+                .First(s => s.Key == "WIKIARTICLE_DEFAULT_THUMBNAIL");
+
+            WIKIARTICLE_DEFAULT_THUMBNAIL = GetDefaultThumbnailSettings.Value;
         }
 
         public IEnumerable<PostDto> GetPosts(int? postId)
@@ -78,14 +85,11 @@ namespace WediumAPI.Services
                 {
                     if (x is WikiArticleThumbnailNotFoundException)
                     {
-                        articleImageUrl = "DefaultURLFromDB";
+                        articleImageUrl = WIKIARTICLE_DEFAULT_THUMBNAIL;
                         return true;
                     }
                     return false;
                 });
-                
-              
-               
             }
 
             wikiArticle = new WikiArticle()
@@ -96,7 +100,6 @@ namespace WediumAPI.Services
                 ArticleTitle = postDto.ArticleTitle,
                 ArticleImageUrl = articleImageUrl
             };
-           
            
             _db.WikiArticle.Add(wikiArticle);
             _db.SaveChanges();

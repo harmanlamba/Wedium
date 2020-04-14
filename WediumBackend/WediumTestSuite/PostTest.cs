@@ -22,6 +22,7 @@ namespace WediumTestSuite
 
         private string _apiEndpoint;
         private int _batchSize;
+
         private readonly int USER_ID = 139;
 
         [OneTimeSetUp]
@@ -164,7 +165,6 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient(USER_ID);
             
-
             // Create post
             PostDto postDto = new PostDto
             {
@@ -181,15 +181,14 @@ namespace WediumTestSuite
             HttpStatusCode uncessfulStatusCode = await DeletePostHelper(postDto);
             Assert.AreEqual(HttpStatusCode.Unauthorized, uncessfulStatusCode);
 
-            //Deleting the Recently Created Post Sucessfully
+            // Deleting the Recently Created Post Sucessfully
             HttpStatusCode statusCode = await DeletePostHelper(postDto, USER_ID);
             Assert.AreEqual(HttpStatusCode.OK, statusCode);
-
         }
 
         private async Task<HttpStatusCode> DeletePostHelper(PostDto postDto, int? userId = null)
         {
-            if(userId == null)
+            if (userId == null)
             {
                 return HttpStatusCode.Unauthorized;
             }
