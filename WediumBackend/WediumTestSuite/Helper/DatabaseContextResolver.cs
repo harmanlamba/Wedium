@@ -22,5 +22,15 @@ namespace WediumTestSuite.Helper
             
             return new WediumContext(optionsBuilder.Options);
         }
+
+        public static string GetConnectionString()
+        {
+            if (!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
+            {
+                connectionString = AppSettingsResolver.InitConfiguration().GetConnectionString("WediumDatabase");
+            }
+
+            return connectionString;
+        }
     }
 }

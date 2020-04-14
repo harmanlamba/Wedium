@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
@@ -197,6 +198,8 @@ namespace WediumTestSuite
 
             Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == userId);
 
+            int wikiArticleId = post.WikiArticleId;
+
             PostDto postDtoDelete = new PostDto
             {
                 PostId = post.PostId
@@ -211,7 +214,25 @@ namespace WediumTestSuite
 
             HttpResponseMessage response = await client.SendAsync(request);
 
+            RemoveWikiArticle(wikiArticleId);
+
             return response.StatusCode;
         }
+
+        //Method usees manual SQl query to delete WikiArticle for testing purposes. Since we do not want to Cascade delete due to our FK relation
+        //and buisness logic, EF Core is not able to delete the entities. Thus, manual SQL queries have to be used. 
+        public void RemoveWikiArticle(int wikiArticleId)
+        {
+            string deleteCommand = "DELETE FROM WDM.[WikiArticle] where WikiArticleId =";
+            
+            using (SqlConnection connection = new SqlConnection(DatabaseContextResolver.GetConnectionString()))
+            {
+                SqlCommand command = new SqlCommand(deleteCommand + wikiArticleId, connection);
+                connection.Open();
+                command.BeginExecuteNonQuery();
+            }
+            
+        }
+
     }
 }
