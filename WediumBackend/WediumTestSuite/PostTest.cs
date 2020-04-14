@@ -134,7 +134,7 @@ namespace WediumTestSuite
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-            //Deleting the Recently Created Post
+            // Deleting the Recently Created Post
             HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
             Assert.AreEqual(HttpStatusCode.OK, statuscode);
         }
@@ -156,7 +156,7 @@ namespace WediumTestSuite
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-            //Deleting the Recently Created Post
+            // Deleting the Recently Created Post
             HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
             Assert.AreEqual(HttpStatusCode.OK, statuscode);
         }
@@ -197,7 +197,6 @@ namespace WediumTestSuite
             HttpClient client = _testServer.CreateClient(userId);
 
             Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == userId);
-
             int wikiArticleId = post.WikiArticleId;
 
             PostDto postDtoDelete = new PostDto
@@ -219,8 +218,10 @@ namespace WediumTestSuite
             return response.StatusCode;
         }
 
-        //Method usees manual SQl query to delete WikiArticle for testing purposes. Since we do not want to Cascade delete due to our FK relation
-        //and buisness logic, EF Core is not able to delete the entities. Thus, manual SQL queries have to be used. 
+        // Method usees manual SQl query to delete WikiArticle for testing purposes. 
+        // Since we do not want to Cascade delete due to our FK relation
+        // and buisness logic, EF Core is not able to delete the entities. 
+        // Thus, manual SQL queries have to be used. 
         public void RemoveWikiArticle(int wikiArticleId)
         {
             string deleteCommand = "DELETE FROM WDM.[WikiArticle] where WikiArticleId =";
@@ -231,8 +232,6 @@ namespace WediumTestSuite
                 connection.Open();
                 command.BeginExecuteNonQuery();
             }
-            
         }
-
     }
 }
