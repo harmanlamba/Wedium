@@ -14,19 +14,25 @@ class PostFeed extends Component {
         this.props.loadInitialPosts();
     }
 
+    getLastPost() {
+        return this.props.posts.slice(-1)[0]
+    }
+
     loadMore() {
-        return this.props.loadMorePosts(this.props.posts.slice(-1)[0].postId);
+        return this.props.loadMorePosts(this.getLastPost().postId);
+    }
+
+    hasMore() {
+        return this.getLastPost().hasMore;
     }
 
     render() {
         var items = [];
-        var hasMore = true;
         this.props.posts.map((post, i) => {
             return (
                 items.push(
                     <PostCard post={post} key={i} />
-                ),
-                hasMore = post.hasMore
+                )
             );
         });
 
@@ -36,9 +42,9 @@ class PostFeed extends Component {
                     <InfiniteScroll
                         pageStart={0}
                         loadMore={this.loadMore.bind(this)}
-                        hasMore={hasMore}
+                        hasMore={this.hasMore()}
                         loader={<LoadingPostCard key={0} />}
-                        threshold={600}>
+                        threshold={400}>
 
                         {items}
                     </InfiniteScroll>
