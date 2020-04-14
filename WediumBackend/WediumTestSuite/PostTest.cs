@@ -30,14 +30,11 @@ namespace WediumTestSuite
             HttpClient client = _testServer.CreateClient();
 
             HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get?after_id=0");
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            
-            List<PostDto> content = await response.Content.ReadAsAsync<List<PostDto>>();
-            Assert.AreEqual(0, content.Count);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Test]
-        public async Task GetPostLimitInputTest()
+        public async Task GetPostValidLimitInputTest()
         {
             HttpClient client = _testServer.CreateClient();
 
@@ -56,6 +53,17 @@ namespace WediumTestSuite
 
             List<PostDto> limit2Content = await limit2Response.Content.ReadAsAsync<List<PostDto>>();
             Assert.AreEqual(limit2, limit2Content.Count);
+        }
+
+        [Test]
+        public async Task GetPostNegativeLimitInputTest()
+        {
+            HttpClient client = _testServer.CreateClient();
+
+            int limit1 = -1;
+
+            HttpResponseMessage limit1Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit1}");
+            Assert.AreEqual(HttpStatusCode.BadRequest, limit1Response.StatusCode);
         }
 
         [Test]

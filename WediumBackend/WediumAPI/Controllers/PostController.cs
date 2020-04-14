@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WediumAPI.Dto;
+using WediumAPI.Exceptions;
 using WediumAPI.Services;
 
 namespace WediumAPI.Controllers
@@ -25,7 +26,21 @@ namespace WediumAPI.Controllers
         [HttpGet("Get")]
         public ActionResult<List<PostDto>> Get(int? limit = null, int? after_id = null)
         {
-            return Ok(_service.GetPosts(limit, after_id));
+            if (limit.HasValue && limit.Value < 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                IEnumerable<PostDto> postDtoList = _service.GetPosts(limit, after_id);
+
+                return Ok(postDtoList);
+            }
+            catch (PostNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

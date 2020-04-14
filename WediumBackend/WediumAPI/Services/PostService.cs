@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WediumAPI.Dto;
+using WediumAPI.Exceptions;
 using WediumAPI.Mappers;
 using WediumAPI.Models;
 
@@ -37,7 +38,7 @@ namespace WediumAPI.Services
 
                 if (post == null)
                 {
-                    return new List<PostDto>();
+                    throw new PostNotFoundException();
                 }
 
                 // Gets all posts in chronological order after after_id
