@@ -28,9 +28,7 @@ namespace WediumAPI.Services
                 {
                     FirstName = payload.GivenName,
                     Email = payload.Email,
-                    Username = payload.Email,
-                    LastName = payload.FamilyName,
-                    Password = "test"
+                    LastName = payload.FamilyName
                 };
 
                  _wediumContext.User.Add(user);

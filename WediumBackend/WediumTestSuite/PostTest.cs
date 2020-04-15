@@ -15,7 +15,6 @@ namespace WediumTestSuite
     {
         private TestServerHandler _testServer;
         private string _apiEndpoint;
-        private int _batchSize;
 
         [OneTimeSetUp]
         public void Setup()
@@ -23,7 +22,6 @@ namespace WediumTestSuite
             _testServer = new TestServerHandler();
 
             _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
-            _batchSize = AppSettingsResolver.GetSetting<int>("Options:GetPostBatchSize");
         }
 
         [Test]
@@ -31,43 +29,64 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get/0");
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            
-            List<PostDto> content = await response.Content.ReadAsAsync<List<PostDto>>();
-            Assert.AreEqual(0, content.Count);
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get?after_id=0");
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Test]
-        public async Task GetPost_NoPostIdInput()
+        public async Task GetPostValidLimitInputTest()
         {
             HttpClient client = _testServer.CreateClient();
 
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/Get");
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            int limit1 = 5;
 
-            List<PostDto> content = await response.Content.ReadAsAsync<List<PostDto>>();
-            Assert.AreEqual(_batchSize, content.Count);
+            HttpResponseMessage limit1Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit1}");
+            Assert.AreEqual(HttpStatusCode.OK, limit1Response.StatusCode);
+
+            List<PostDto> limit1Content = await limit1Response.Content.ReadAsAsync<List<PostDto>>();
+            Assert.AreEqual(limit1, limit1Content.Count);
+
+            int limit2 = 10;
+
+            HttpResponseMessage limit2Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit2}");
+            Assert.AreEqual(HttpStatusCode.OK, limit2Response.StatusCode);
+
+            List<PostDto> limit2Content = await limit2Response.Content.ReadAsAsync<List<PostDto>>();
+            Assert.AreEqual(limit2, limit2Content.Count);
         }
 
         [Test]
-        public async Task GetPost_GetSecondBatch()
+        public async Task GetPostNegativeLimitInputTest()
         {
             HttpClient client = _testServer.CreateClient();
 
-            HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get");
+            int limit1 = -1;
+
+            HttpResponseMessage limit1Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit1}");
+            Assert.AreEqual(HttpStatusCode.BadRequest, limit1Response.StatusCode);
+        }
+
+        [Test]
+        public async Task GetPostAfterIdInputTest()
+        {
+            HttpClient client = _testServer.CreateClient();
+
+            int limit = 5;
+
+            HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit}");
             Assert.AreEqual(HttpStatusCode.OK, firstBatchResponse.StatusCode);
 
             List<PostDto> firstBatchContent = await firstBatchResponse.Content.ReadAsAsync<List<PostDto>>();
-            Assert.AreEqual(_batchSize, firstBatchContent.Count);
+            Assert.AreEqual(limit, firstBatchContent.Count);
 
-            int postId = firstBatchContent[_batchSize - 1].PostId;
+            int postId = firstBatchContent[limit - 2].PostId;
 
-            HttpResponseMessage secondBatchResponse = await client.GetAsync(_apiEndpoint + "api/Post/Get/" + postId);
+            HttpResponseMessage secondBatchResponse = await client.GetAsync(_apiEndpoint + $"api/Post/Get/?limit={limit}&after_id={postId}");
             Assert.AreEqual(HttpStatusCode.OK, secondBatchResponse.StatusCode);
 
             List<PostDto> secondBatchContent = await secondBatchResponse.Content.ReadAsAsync<List<PostDto>>();
-            Assert.AreEqual(_batchSize, secondBatchContent.Count);
+            Assert.AreEqual(limit, secondBatchContent.Count);
+            Assert.AreEqual(firstBatchContent[limit - 1].PostId, secondBatchContent[0].PostId);
         }
     }
 }

@@ -261,10 +261,6 @@ namespace WediumAPI.Models
                     .HasName("UQ_User_Email")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Username)
-                    .HasName("UQ_User_Username")
-                    .IsUnique();
-
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.Property(e => e.Email)
@@ -276,14 +272,6 @@ namespace WediumAPI.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(50);
             });
