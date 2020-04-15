@@ -9,7 +9,7 @@ import store from './redux/store';
 
 // Components
 import GoogleLoginButton from './components/google-login-button';
-import Home from './components/home/home';
+import Home from './components/home';
 
 export const App = () => {
   return (

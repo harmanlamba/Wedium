@@ -1,12 +1,12 @@
 import { loadPostTypesLoading, loadPostTypesSuccess, loadPostTypesError } from '../post-type-actions';
-import Api from '../../../apis';
+import { getPostTypes } from '../../../apis/post-type';
 
 export function loadPostTypes() {
     return dispatch => {
 
         dispatch(loadPostTypesLoading());
 
-        Api.getPostTypes()
+        getPostTypes()
             .then(
                 postTypes => dispatch(loadPostTypesSuccess(postTypes)),
 

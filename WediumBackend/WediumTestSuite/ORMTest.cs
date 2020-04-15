@@ -33,9 +33,7 @@ namespace WediumTestSuite
             {
                 FirstName = "Test",
                 LastName = "User",
-                Email = "test@user.com",
-                Username = "testUser",
-                Password = "supersecretpassword"
+                Email = "test@user.com"
             };
 
             try
@@ -47,8 +45,6 @@ namespace WediumTestSuite
                 Assert.AreEqual(testUser.FirstName, user.FirstName);
                 Assert.AreEqual(testUser.LastName, user.LastName);
                 Assert.AreEqual(testUser.Email, user.Email);
-                Assert.AreEqual(testUser.Username, user.Username);
-                Assert.AreEqual(testUser.Password, user.Password);
                 
                 user.FirstName = "Updated Firstname";
                 user.LastName = "Updated Lastname";
@@ -76,9 +72,7 @@ namespace WediumTestSuite
             {
                 FirstName = "Test",
                 LastName = "User",
-                Email = "test@user.com",
-                Username = "testUser",
-                Password = "supersecretpassword"
+                Email = "test@user.com"
             };
 
             WikiArticle testArticle = new WikiArticle
@@ -113,7 +107,7 @@ namespace WediumTestSuite
                 WikiArticle wikiArticle = _db.WikiArticle.First(wa => wa.ArticleDate == testArticle.ArticleDate);
                 testPost.WikiArticleId = wikiArticle.WikiArticleId;
 
-                User user = _db.User.First(u => u.Username == testUser.Username);
+                User user = _db.User.First(u => u.Email == testUser.Email);
                 testPost.UserId = user.UserId;
 
                 _db.Post.Add(testPost);
