@@ -84,32 +84,20 @@ namespace WediumAPI.Controllers
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             try
             {
                 _service.DeletePost(postId, userId);
 
                 return Ok();
             }
-            catch (AggregateException e)
+            catch (PostNotFoundException)
             {
-                e.Handle((x) =>
-                {
-                    if (x is PostNotValidUserException)
-                    {
-                        statusCode = HttpStatusCode.Unauthorized;
-                        return true;
-                    } 
-                    else if (x is PostNotFoundException)
-                    {
-                        statusCode = HttpStatusCode.NotFound;
-                        return true;
-                    }
-                    return false;
-                });
+                return NotFound();
             }
-
-            return StatusCode((int) statusCode);
+            catch (PostNotValidUserException)
+            {
+                return Unauthorized();
+            }
         }
     }
 }
