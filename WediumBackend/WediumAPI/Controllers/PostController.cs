@@ -56,6 +56,7 @@ namespace WediumAPI.Controllers
             try
             {
                 _service.CreatePost(postDto, userId);
+
                 return StatusCode(StatusCodes.Status201Created);
             }
             catch (AggregateException e)
@@ -65,8 +66,10 @@ namespace WediumAPI.Controllers
                     if (x is WikiArticleNotFoundException)
                     {
                         statusCode = HttpStatusCode.NotFound;
+
                         return true;
                     }
+
                     return false; 
                 });
             }
@@ -75,20 +78,38 @@ namespace WediumAPI.Controllers
         }
 
         [Authorize]
-        [HttpDelete("Delete")]
-        public IActionResult DeletePost([FromBody]PostDto postDto)
+        [HttpDelete("Delete/{postId}")]
+        public IActionResult DeletePost(int postId)
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            bool hasDeleted = _service.DeletePost(postDto, userId);
-
-            if (hasDeleted)
+            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+            try
             {
+                _service.DeletePost(postId, userId);
+
                 return Ok();
             }
+            catch (AggregateException e)
+            {
+                e.Handle((x) =>
+                {
+                    if (x is PostNotValidUserException)
+                    {
+                        statusCode = HttpStatusCode.Unauthorized;
+                        return true;
+                    } 
+                    else if (x is PostNotFoundException)
+                    {
+                        statusCode = HttpStatusCode.NotFound;
+                        return true;
+                    }
+                    return false;
+                });
+            }
 
-            return Unauthorized();
+            return StatusCode((int) statusCode);
         }
     }
 }

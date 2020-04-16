@@ -218,16 +218,10 @@ namespace WediumTestSuite
             Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == userId);
             int wikiArticleId = post.WikiArticleId;
 
-            PostDto postDtoDelete = new PostDto
-            {
-                PostId = post.PostId
-            };
-
             HttpRequestMessage request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
-                RequestUri = new Uri(_apiEndpoint + "api/Post/Delete"),
-                Content = new StringContent(JsonConvert.SerializeObject(postDtoDelete), Encoding.UTF8, "application/json")
+                RequestUri = new Uri(_apiEndpoint + $"api/Post/Delete/{post.PostId}"),
             };
 
             HttpResponseMessage response = await client.SendAsync(request);

@@ -70,7 +70,8 @@ namespace WediumAPI.Services
             if (wikiMediaThumbnailDto.Query.Pages.First().Value.Thumbnail == null)
             {
                 throw new WikiArticleThumbnailNotFoundException();
-            } else if (response.StatusCode != HttpStatusCode.OK)
+            } 
+            else if (response.StatusCode != HttpStatusCode.OK)
             {
                 throw new WikiArticleNotFoundException();
             }
@@ -85,7 +86,7 @@ namespace WediumAPI.Services
 
             WikiMediaMetaDataDto wikiMediaDateDto = await response.Content.ReadAsAsync<WikiMediaMetaDataDto>();
 
-            if(wikiMediaDateDto.Query.Pages.First().Value.Revisions == null)
+            if (wikiMediaDateDto.Query.Pages.First().Value.Revisions == null)
             {
                 throw new WikiArticleNotFoundException();
             }

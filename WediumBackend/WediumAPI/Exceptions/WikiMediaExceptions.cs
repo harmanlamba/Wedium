@@ -14,6 +14,7 @@ namespace WediumAPI.Exceptions
         //Constructor for serialisation when the exception propagates from a remoting server to the client
         protected WikiArticleNotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
+
     public class WikiArticleThumbnailNotFoundException : Exception
     {
         public WikiArticleThumbnailNotFoundException() : base() { }

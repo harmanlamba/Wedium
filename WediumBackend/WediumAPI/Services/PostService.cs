@@ -97,8 +97,10 @@ namespace WediumAPI.Services
                     if (x is WikiArticleThumbnailNotFoundException)
                     {
                         articleImageUrl = WIKIARTICLE_DEFAULT_THUMBNAIL;
+
                         return true;
                     }
+
                     return false;
                 });
             }
@@ -130,18 +132,24 @@ namespace WediumAPI.Services
             _db.SaveChanges();
         }
 
-        public bool DeletePost(PostDto postDto, int userId)
+        public void DeletePost(int postId, int userId)
         {
-            Post post = _db.Post.First(p => p.PostId == postDto.PostId);
+            Post post = _db.Post.FirstOrDefault(p => p.PostId == postId);
+
+            if (post == null)
+            {
+                throw new PostNotFoundException();
+            }
 
             if (post.UserId == userId)
             {
                 _db.Post.Remove(post);
                 _db.SaveChanges();
-                return true;
             }
-
-            return false;
+            else
+            {
+                throw new PostNotValidUserException();
+            }
         }
     }
 }

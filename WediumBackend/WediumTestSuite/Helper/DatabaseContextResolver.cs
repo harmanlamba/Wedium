@@ -12,13 +12,8 @@ namespace WediumTestSuite.Helper
     {
         public static WediumContext GetDatabaseContext()
         {
-            if (!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
-            {
-                connectionString = AppSettingsResolver.InitConfiguration().GetConnectionString("WediumDatabase");
-            }
-
             DbContextOptionsBuilder<WediumContext> optionsBuilder = new DbContextOptionsBuilder<WediumContext>()
-                .UseSqlServer(connectionString);
+                .UseSqlServer(GetConnectionString());
             
             return new WediumContext(optionsBuilder.Options);
         }
