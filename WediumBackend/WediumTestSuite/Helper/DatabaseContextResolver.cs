@@ -12,15 +12,20 @@ namespace WediumTestSuite.Helper
     {
         public static WediumContext GetDatabaseContext()
         {
+            DbContextOptionsBuilder<WediumContext> optionsBuilder = new DbContextOptionsBuilder<WediumContext>()
+                .UseSqlServer(GetConnectionString());
+            
+            return new WediumContext(optionsBuilder.Options);
+        }
+
+        public static string GetConnectionString()
+        {
             if (!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
             {
                 connectionString = AppSettingsResolver.InitConfiguration().GetConnectionString("WediumDatabase");
             }
 
-            DbContextOptionsBuilder<WediumContext> optionsBuilder = new DbContextOptionsBuilder<WediumContext>()
-                .UseSqlServer(connectionString);
-            
-            return new WediumContext(optionsBuilder.Options);
+            return connectionString;
         }
     }
 }
