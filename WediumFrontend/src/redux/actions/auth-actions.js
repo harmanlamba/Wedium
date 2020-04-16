@@ -30,9 +30,6 @@ export function sendToken(tokenBlob) {
         postOneTimeToken(tokenBlob)
         .then(user => {
             dispatch(login(user));
-            
-            //TODO: Here for testing purposes
-            // checkJWTToken(user.jwtToken);
         }); 
     }
 }

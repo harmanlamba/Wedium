@@ -18,6 +18,9 @@ namespace WediumAPI.Mappers
                 Title = post.Title,
                 Description = post.Description,
 
+                // User
+                Username = $"{post.User.FirstName} {post.User.LastName}",
+
                 // Post Type
                 PostType = post.PostType.PostTypeValue,
 
@@ -25,7 +28,13 @@ namespace WediumAPI.Mappers
                 ArticleBody = post.WikiArticle.ArticleBody,
                 ArticleTitle = post.WikiArticle.ArticleTitle,
                 ArticleUrl = post.WikiArticle.Url,
-                ArticleImageUrl = post.WikiArticle.ArticleImageUrl
+                ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
+
+                // PostLikes
+                NumberOfLikes = post.PostLike.Count,
+
+                // For Pagination
+                HasMore = true
             };
         }
 

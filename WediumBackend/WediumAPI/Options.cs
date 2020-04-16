@@ -7,7 +7,7 @@ namespace WediumAPI
 {
     public class Options
     {
-        public int GetPostBatchSize { get; set; }
+        public int GetPostDefaultLimit { get; set; }
         public string JwtSecret { get; set; }
     }
 }
