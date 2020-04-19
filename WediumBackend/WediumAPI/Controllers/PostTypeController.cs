@@ -22,7 +22,7 @@ namespace WediumAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("Get")]
+        [HttpGet]
         public ActionResult<List<PostTypeDto>> Get()
         {
             return Ok(_service.GetPostTypes());

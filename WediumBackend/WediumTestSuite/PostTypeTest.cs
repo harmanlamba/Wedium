@@ -27,7 +27,7 @@ namespace WediumTestSuite
         {
             using (HttpClient client = _testServer.CreateClient())
             {
-                HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/PostType/Get");
+                HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/PostType/");
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
                 List<PostTypeDto> content = await response.Content.ReadAsAsync<List<PostTypeDto>>();
