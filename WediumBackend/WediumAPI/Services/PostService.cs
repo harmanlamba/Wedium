@@ -30,7 +30,7 @@ namespace WediumAPI.Services
             WIKIARTICLE_DEFAULT_THUMBNAIL = GetDefaultThumbnailSettings.Value;
         }
 
-        public IEnumerable<PostDto> GetPosts(int? limit, int? afterId)
+        public IEnumerable<PostDto> GetPosts(int? userId, int? limit, int? afterId)
         {
             IQueryable<Post> postListQuery;
 
@@ -62,9 +62,10 @@ namespace WediumAPI.Services
                 .Include(p => p.PostType)
                 .Include(w => w.WikiArticle)
                 .Include(pl => pl.PostLike)
+                .Include(f => f.Favourite)
                 .ToList();
 
-            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList).ToList();
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList, userId).ToList();
             
             if (postDtoList.Any())
             {

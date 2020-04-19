@@ -9,7 +9,7 @@ namespace WediumAPI.Mappers
 {
     public class PostMapper
     {
-        public static PostDto ToDto(Post post)
+        public static PostDto ToDto(Post post, int? userId)
         {
             return new PostDto
             {
@@ -32,15 +32,19 @@ namespace WediumAPI.Mappers
 
                 // PostLikes
                 NumberOfLikes = post.PostLike.Count,
+                IsPostLiked = userId.HasValue ? (bool?)post.PostLike.Any(pl => pl.UserId == userId.Value) : null,
+
+                // Favourite
+                IsFavourited = userId.HasValue ? (bool?)post.Favourite.Any(f => f.UserId == userId.Value) : null,
 
                 // For Pagination
                 HasMore = true
             };
         }
 
-        public static IEnumerable<PostDto> ToDto(IEnumerable<Post> postList)
+        public static IEnumerable<PostDto> ToDto(IEnumerable<Post> postList, int? userId)
         {
-            return postList.Select(p => ToDto(p));
+            return postList.Select(p => ToDto(p, userId));
         }
     }
 }

@@ -24,6 +24,10 @@ namespace WediumAPI.Dto
 
         // PostLike
         public int NumberOfLikes { get; set; }
+        public bool? IsPostLiked { get; set; }
+
+        //Favourite
+        public bool? IsFavourited { get; set; }
 
         // For Pagination
         public bool HasMore { get; set; }
