@@ -60,7 +60,7 @@ namespace WediumAPI.Services
             if (!string.IsNullOrEmpty(search))
             {
                 postListQuery = postListQuery
-                    .Where(p => p.Title.Contains(search) || p.Description.Contains(search) || p.WikiArticle.ArticleTitle.Contains(search));
+                    .Where(p => p.Title.Contains(search) || p.Description.Contains(search) || p.WikiArticle.ArticleTitle.Contains(search) || p.WikiArticle.Url.Equals(search));
             }
 
             // Applies PostType filter if present
