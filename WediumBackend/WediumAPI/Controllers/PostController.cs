@@ -33,9 +33,13 @@ namespace WediumAPI.Controllers
                 return BadRequest();
             }
 
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            Claim claim = identity.FindFirst(ClaimTypes.NameIdentifier);
+            int? userId = claim == null ? null : (int?)int.Parse(claim.Value);
+
             try
             {
-                IEnumerable<PostDto> postDtoList = _service.GetPosts(limit, after_id);
+                IEnumerable<PostDto> postDtoList = _service.GetPosts(userId, limit, after_id);
 
                 return Ok(postDtoList);
             }
