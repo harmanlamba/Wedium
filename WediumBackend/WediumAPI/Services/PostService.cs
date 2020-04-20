@@ -30,7 +30,7 @@ namespace WediumAPI.Services
             WIKIARTICLE_DEFAULT_THUMBNAIL = GetDefaultThumbnailSettings.Value;
         }
 
-        public IEnumerable<PostDto> GetPosts(int? userId, string search, string postType, int? limit = null, int? afterId = null)
+        public IEnumerable<PostDto> GetPosts(int? userId, string search, string postType, int? limit, int? afterId)
         {
             IQueryable<Post> postListQuery = _db.Post
                 .AsQueryable();
