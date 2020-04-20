@@ -30,7 +30,7 @@ namespace WediumAPI.Services
             WIKIARTICLE_DEFAULT_THUMBNAIL = GetDefaultThumbnailSettings.Value;
         }
 
-        public IEnumerable<PostDto> GetPosts(int? userId, string title, string postType, int? limit = null, int? afterId = null)
+        public IEnumerable<PostDto> GetPosts(int? userId, string search, string postType, int? limit = null, int? afterId = null)
         {
             IQueryable<Post> postListQuery = _db.Post
                 .AsQueryable();
@@ -39,28 +39,29 @@ namespace WediumAPI.Services
             if (afterId.HasValue)
             {
                 // Check post with after_id as the id value exists
-                Post post = _db.Post
+                Post queryInputPost = _db.Post
                     .FirstOrDefault(p => p.PostId == afterId);
 
-                if (post == null)
+                if (queryInputPost == null)
                 {
                     throw new PostNotFoundException();
                 }
 
                 // Gets all posts in chronological order after after_id
                 postListQuery = _db.Post
-                    .Where(d => d.Date < post.Date);
-            }   
-
-            // Applies Title search if present
-            if (!string.IsNullOrEmpty(title))
-            {
-                postListQuery = postListQuery
-                    .Where(t => t.Title.Contains(title));
+                    .Where(p => p.Date < queryInputPost.Date);
             }
 
             postListQuery = postListQuery
-                .Include(p => p.PostType);
+                .Include(p => p.PostType)
+                .Include(p => p.WikiArticle);
+
+            // Applies smart-search of searchString if present
+            if (!string.IsNullOrEmpty(search))
+            {
+                postListQuery = postListQuery
+                    .Where(p => p.Title.Contains(search) || p.Description.Contains(search) || p.WikiArticle.ArticleTitle.Contains(search));
+            }
 
             // Applies PostType filter if present
             if (!string.IsNullOrEmpty(postType))
