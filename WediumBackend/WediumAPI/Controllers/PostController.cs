@@ -26,7 +26,7 @@ namespace WediumAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("Get")]
-        public ActionResult<List<PostDto>> Get(int? limit = null, int? after_id = null)
+        public ActionResult<List<PostDto>> Get(string title, string postType, int? limit = null, int? after_id = null)
         {
             if (limit.HasValue && limit.Value < 0)
             {
@@ -39,7 +39,7 @@ namespace WediumAPI.Controllers
 
             try
             {
-                IEnumerable<PostDto> postDtoList = _service.GetPosts(userId, limit, after_id);
+                IEnumerable<PostDto> postDtoList = _service.GetPosts(userId, title, postType, limit, after_id);
 
                 return Ok(postDtoList);
             }
