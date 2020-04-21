@@ -71,10 +71,9 @@ namespace WediumAPI.Services
             }
 
             List<Post> postList = postListQuery
-                .OrderByDescending(d => d.Date)
+                .OrderByDescending(p => p.Date)
                 .Take(limit.HasValue ? limit.Value : _options.GetPostDefaultLimit)
                 .Include(p => p.User)
-                .Include(p => p.WikiArticle)
                 .Include(p => p.PostLike)
                 .Include(p => p.Favourite)
                 .ToList();
