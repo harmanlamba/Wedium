@@ -30,43 +30,57 @@ namespace WediumAPI.Services
             WIKIARTICLE_DEFAULT_THUMBNAIL = GetDefaultThumbnailSettings.Value;
         }
 
-        public IEnumerable<PostDto> GetPosts(int? userId, int? limit, int? afterId)
+        public IEnumerable<PostDto> GetPosts(int? userId, string search, string postType, int? limit, int? afterId)
         {
-            IQueryable<Post> postListQuery;
+            IQueryable<Post> postListQuery = _db.Post
+                .AsQueryable();
 
-            if (afterId == null)
-            {
-                postListQuery = _db.Post
-                    .OrderByDescending(d => d.Date);
-            }
-            else
+            // Applies afterId query if present
+            if (afterId.HasValue)
             {
                 // Check post with after_id as the id value exists
-                Post post = _db.Post
+                Post queryInputPost = _db.Post
                     .FirstOrDefault(p => p.PostId == afterId);
 
-                if (post == null)
+                if (queryInputPost == null)
                 {
                     throw new PostNotFoundException();
                 }
 
                 // Gets all posts in chronological order after after_id
                 postListQuery = _db.Post
-                    .Where(d => d.Date < post.Date)
-                    .OrderByDescending(d => d.Date);
-            }                
-            
-            List<Post> postList = postListQuery
-                .Take(limit.HasValue ? limit.Value : _options.GetPostDefaultLimit)
-                .Include(u => u.User)
+                    .Where(p => p.Date < queryInputPost.Date);
+            }
+
+            postListQuery = postListQuery
                 .Include(p => p.PostType)
-                .Include(w => w.WikiArticle)
-                .Include(pl => pl.PostLike)
-                .Include(f => f.Favourite)
+                .Include(p => p.WikiArticle);
+
+            // Applies smart-search of searchString if present
+            if (!string.IsNullOrEmpty(search))
+            {
+                postListQuery = postListQuery
+                    .Where(p => p.Title.Contains(search) || p.Description.Contains(search) || p.WikiArticle.ArticleTitle.Contains(search) || p.WikiArticle.Url.Equals(search));
+            }
+
+            // Applies PostType filter if present
+            if (!string.IsNullOrEmpty(postType))
+            {
+                postListQuery = postListQuery
+                    .Where(p => p.PostType.PostTypeValue.Equals(postType));
+            }
+
+            List<Post> postList = postListQuery
+                .OrderByDescending(p => p.Date)
+                .Take(limit.HasValue ? limit.Value : _options.GetPostDefaultLimit)
+                .Include(p => p.User)
+                .Include(p => p.PostLike)
+                .Include(p => p.Favourite)
                 .ToList();
 
             IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList, userId).ToList();
             
+            // Sets HasMore of last Post
             if (postDtoList.Any())
             {
                 PostDto lastPost = postDtoList.Last();
