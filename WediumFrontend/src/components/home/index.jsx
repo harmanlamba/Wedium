@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 // Components
+import Header from '../header';
 import PostTypes from './post-types'
 import PostFeed from '../post-feed'
 
@@ -19,6 +20,7 @@ class Home extends Component {
 
         return (
             <div className={classes.root}>
+                <Header />
                 <Grid
                     container
                     spacing={3} // This causes the horizontal scroll
