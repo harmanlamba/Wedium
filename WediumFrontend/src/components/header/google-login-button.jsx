@@ -11,13 +11,19 @@ class GoogleLoginButton extends Component {
     alert(error);
   };
 
-  googleResponse = (response) => {
+  googleSuccessfulResponse = (response) => {
     const tokenBlob = {
       tokenId: response.tokenId,
     };
 
     this.props.sendToken(tokenBlob);
   };
+
+
+  googleFailureResponse = (response) => {
+    //Do not need to do anything in case of failure
+    //The button auto-resets and allows the user to login in again
+  }
 
   checkAuthentication = (isAuthenticated) => {
     if (isAuthenticated) {
@@ -33,8 +39,8 @@ class GoogleLoginButton extends Component {
         <GoogleLogin
           clientId={GOOGLE_CLIENT_ID}
           buttonText="Google Login"
-          onSuccess={this.googleResponse}
-          onFailure={this.googleResponse}
+          onSuccess={this.googleSuccessfulResponse}
+          onFailure={this.googleFailureResponse}
         ></GoogleLogin>
         {this.checkAuthentication(this.props.auth.isAuthenticated)}
       </div>
