@@ -1,71 +1,57 @@
 import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
+import { logout } from '../../redux/actions/auth-actions';
+import { useDispatch } from "react-redux";
 
 // Material UI
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         flexGrow: 1,
-//     },
-//     title: {
-//         marginLeft: theme.spacing(2),
-//         flexGrow: 1,
-//     },
-// }));
-
+import { makeStyles } from '@material-ui/core/styles';
 
 const UserMenu = (props) => {
-    // const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const auth = props.auth;
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleLogout = () => {
+    dispatch(logout());
+    handleClose();
+  }
 
-    const logout = () => {
-        props.handleLogout();
-        handleClose();
-    }
+  return (
+    <div>
+      {props.user.username}
+      <IconButton onClick={handleMenu}>
+        <AccountCircle />
+      </IconButton>
 
-    return (
-        auth && (
-            <div>
-                <IconButton onClick={handleMenu}>
-                    <AccountCircle />
-                </IconButton>
-                <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={logout}>Log Out</MenuItem>
-                </Menu>
-            </div>
-        )
+      <Menu className={classes.root}
+        anchorEl={anchorEl}
 
-    );
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+      </Menu>
+    </div>
+  );
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 32,
+  },
+}));
 
 export default UserMenu;

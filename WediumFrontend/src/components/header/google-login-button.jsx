@@ -19,12 +19,12 @@ class GoogleLoginButton extends Component {
     this.props.sendToken(tokenBlob);
   };
 
-
   googleFailureResponse = (response) => {
-    //Do not need to do anything in case of failure
-    //The button auto-resets and allows the user to login in again
+    // Do not need to do anything in case of failure
+    // The button auto-resets and allows the user to login in again
   }
 
+  // For testing
   checkAuthentication = (isAuthenticated) => {
     if (isAuthenticated) {
       console.log('Is auth');
@@ -38,7 +38,6 @@ class GoogleLoginButton extends Component {
       <div>
         <GoogleLogin
           clientId={GOOGLE_CLIENT_ID}
-          buttonText="Google Login"
           onSuccess={this.googleSuccessfulResponse}
           onFailure={this.googleFailureResponse}
         ></GoogleLogin>
