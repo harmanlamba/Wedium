@@ -9,8 +9,6 @@ import {
 import { authTokenIsValid } from '../../services/auth-service';
 
 export function login(user) {
-    console.log("Actions");
-
     // If a valid login session exists, dispatch LOGIN with the user information from local storage
     const storedUser = JSON.parse(localStorage.getItem("user"));
     

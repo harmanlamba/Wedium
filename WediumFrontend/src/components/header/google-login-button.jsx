@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { sendToken } from '../../redux/actions/auth-actions';
+import { useDispatch, useSelector } from "react-redux";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-class GoogleLoginButton extends Component {
-  onFailure = (error) => {
+const GoogleLoginButton = (props) => {
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+
+  const onFailure = (error) => {
     alert(error);
   };
 
-  googleSuccessfulResponse = (response) => {
+  const googleSuccessfulResponse = (response) => {
     const tokenBlob = {
       tokenId: response.tokenId,
     };
 
-    this.props.sendToken(tokenBlob);
+    dispatch(sendToken(tokenBlob));
   };
 
-  googleFailureResponse = (response) => {
+  const googleFailureResponse = (response) => {
     // Do not need to do anything in case of failure
     // The button auto-resets and allows the user to login in again
   }
 
-  // For testing
-  checkAuthentication = (isAuthenticated) => {
+  // For testing isAuthenticated status
+  const checkAuthentication = (isAuthenticated) => {
     if (isAuthenticated) {
       console.log('Is auth');
     } else {
@@ -33,34 +35,16 @@ class GoogleLoginButton extends Component {
     }
   };
 
-  render() {
-    return (
-      <div>
-        <GoogleLogin
-          clientId={GOOGLE_CLIENT_ID}
-          onSuccess={this.googleSuccessfulResponse}
-          onFailure={this.googleFailureResponse}
-        ></GoogleLogin>
-        {this.checkAuthentication(this.props.auth.isAuthenticated)}
-      </div>
-    );
-  }
+  return (
+    <div>
+      <GoogleLogin
+        clientId={GOOGLE_CLIENT_ID}
+        onSuccess={googleSuccessfulResponse}
+        onFailure={googleFailureResponse}
+      ></GoogleLogin>
+      {checkAuthentication(auth.isAuthenticated)}
+    </div>
+  );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendToken: (tokenBlob) => {
-      dispatch(sendToken(tokenBlob));
-    },
-  };
-};
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(GoogleLoginButton)
-);
+export default GoogleLoginButton;

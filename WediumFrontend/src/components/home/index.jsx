@@ -18,7 +18,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.login();
-    console.log(this.props.auth);
   }
 
   render() {
