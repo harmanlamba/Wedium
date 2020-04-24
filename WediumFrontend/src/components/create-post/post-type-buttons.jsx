@@ -16,23 +16,22 @@ function PostTypeButtons(props) {
 
   useEffect(() => {
     props.loadPostTypes();
-    console.log(props.postTypes);
   }, []);
 
   return (
-    <ToggleButtonGroup
+    
+   <ToggleButtonGroup
       size="medium"
       value={postType}
       exclusive
       onChange={handlePostType}
       aria-label="text alignment"
     >
-      {props.PostTypes &&
-        props.PostTypes.map((postTypes, i) => (
-          <ToggleButton value={postTypes.postType} key={i}>
-            {postTypes.postType}
-          </ToggleButton>
-        ))}
+      {
+      props.postTypes && 
+      props.postTypes.map(postTypes =><ToggleButton value={postTypes.postType} key={postTypes.postType}> {postTypes.postType} </ToggleButton> )
+      }
+
     </ToggleButtonGroup>
   );
 }
@@ -44,8 +43,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  loadPostTypes,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadPostTypes: () => dispatch(loadPostTypes())
+  };
+  
 };
 
 export default withRouter(
