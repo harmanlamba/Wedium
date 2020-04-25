@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createSinglePost } from '../../redux/actions/thunk/post-thunk';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -11,6 +14,51 @@ import { withStyles } from '@material-ui/core/styles';
 import PostTypeButtons from './post-type-buttons';
 
 class PostForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+      wikipediaURL: '',
+      description: '',
+      postType: null,
+    };
+  }
+
+  handleFieldChange = (event) => {
+    switch (event.target.id) {
+      case 'titleField':
+        this.setState({ title: event.target.value });
+        break;
+      case 'wikipediaURLField':
+        this.setState({ wikipediaURL: event.target.value });
+        break;
+      case 'descriptionField':
+        this.setState({ description: event.target.value });
+        break;
+      default:
+    }
+  };
+
+  handleToggleButtonChange = (postTypeText) => {
+    this.setState({ postType: postTypeText });
+  };
+
+  handleSend = () => {
+    // To get Wikipedia Title value
+    let URLString = this.state.wikipediaURL.split('/');
+    let titleResult = URLString[URLString.length - 1].replace(/_/g, ' ');
+
+    const postDto = {
+      ArticleTitle: titleResult,
+      ArticleUrl: this.state.wikipediaURL,
+      Title: this.state.title,
+      Description: this.state.description,
+      PostType: this.state.postType,
+    };
+
+    this.props.createSinglePost(postDto);
+  };
+
   render() {
     return (
       <div>
@@ -22,15 +70,17 @@ class PostForm extends Component {
           alignItems="flex-start"
         >
           <Grid item xs={12}>
-            <Typography variant="h4">Create Post</Typography>
+            <Typography variant="h5">Create Post</Typography>
           </Grid>
 
           <Grid item xs={12}>
             <TextField
               id="titleField"
               label="Title"
+              onChange={this.handleFieldChange}
               variant="outlined"
               fullWidth
+              required
             />
           </Grid>
 
@@ -38,8 +88,10 @@ class PostForm extends Component {
             <TextField
               id="wikipediaURLField"
               label="Wikipedia URL"
+              onChange={this.handleFieldChange}
               variant="outlined"
               fullWidth
+              required
             />
           </Grid>
 
@@ -47,6 +99,7 @@ class PostForm extends Component {
             <TextField
               id="descriptionField"
               label="Description (optional)"
+              onChange={this.handleFieldChange}
               variant="outlined"
               multiline
               rows={8}
@@ -56,7 +109,9 @@ class PostForm extends Component {
           </Grid>
 
           <Grid item xs={12}>
-            <PostTypeButtons />
+            <PostTypeButtons
+              handleToggleButtonChange={this.handleToggleButtonChange}
+            />
           </Grid>
 
           <Grid item xs={6}>
@@ -71,7 +126,11 @@ class PostForm extends Component {
             justify="flex-end"
             direction="row"
           >
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleSend}
+            >
               Send
             </Button>
           </Grid>
@@ -81,4 +140,11 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+// Redux
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createSinglePost: (postDto) => dispatch(createSinglePost(postDto)),
+  };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(PostForm));

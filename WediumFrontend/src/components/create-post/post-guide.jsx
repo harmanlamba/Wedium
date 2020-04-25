@@ -20,7 +20,7 @@ class PostGuide extends Component {
           alignItems="flex-start"
         >
           <Grid item xs={12}>
-            <Typography variant="h4">Post Guide</Typography>
+            <Typography variant="h5">Post Guide</Typography>
           </Grid>
           <Grid item xs={12}>
             <List>

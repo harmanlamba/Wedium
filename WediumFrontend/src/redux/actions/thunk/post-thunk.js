@@ -1,5 +1,12 @@
-import { loadPostsLoading, loadPostsSuccess, loadPostsError } from '../post-actions';
-import { getPosts } from '../../../apis/post';
+import {
+    loadPostsLoading,
+    loadPostsSuccess,
+    loadPostsError
+} from '../post-actions';
+import {
+    getPosts,
+    createPost
+} from '../../../apis/post';
 
 export function loadInitialPosts() {
     return dispatch => {
@@ -21,5 +28,15 @@ export function loadMorePosts(postId) {
                 posts => dispatch(loadPostsSuccess(posts)),
 
                 error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
+    }
+}
+
+export function createSinglePost(postDto) {
+
+    return dispatch => {
+        createPost(postDto)
+            .then(
+                console.log("yeyuh")
+            )
     }
 }

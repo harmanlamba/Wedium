@@ -12,6 +12,8 @@ function PostTypeButtons(props) {
 
   const handlePostType = (event, newPostType) => {
     setPostType(newPostType);
+
+    props.handleToggleButtonChange(newPostType);
   };
 
   useEffect(() => {
@@ -19,19 +21,24 @@ function PostTypeButtons(props) {
   }, []);
 
   return (
-    
-   <ToggleButtonGroup
-      size="medium"
+    <ToggleButtonGroup
+      size="small"
       value={postType}
       exclusive
       onChange={handlePostType}
       aria-label="text alignment"
+      required
     >
-      {
-      props.postTypes && 
-      props.postTypes.map(postTypes =><ToggleButton value={postTypes.postType} key={postTypes.postType}> {postTypes.postType} </ToggleButton> )
-      }
-
+      {props.postTypes &&
+        props.postTypes.map((postTypes) => (
+          <ToggleButton
+            id="postTypeField"
+            value={postTypes.postType}
+            key={postTypes.postType}
+          >
+            {postTypes.postType}
+          </ToggleButton>
+        ))}
     </ToggleButtonGroup>
   );
 }
@@ -45,9 +52,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadPostTypes: () => dispatch(loadPostTypes())
+    loadPostTypes: () => dispatch(loadPostTypes()),
   };
-  
 };
 
 export default withRouter(
