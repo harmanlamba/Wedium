@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createSinglePost } from '../../redux/actions/thunk/post-thunk';
+import  { createPost }  from '../../apis/post';
 import  AlertDialog  from '../create-post/alert-dialog'
 
 // Material UI
@@ -94,7 +92,23 @@ class PostForm extends Component {
     };
 
     if(this.checkPostDto(postDto)){
-      this.props.createSinglePost(postDto);
+        createPost(postDto)
+        .then(response => {
+          if(response === 201){
+            this.setState({
+              AlertDialogMessageTitle: 'Post Created',
+              AlertDialogMessageContent: 'The post was created successfully!!',
+              AlertDialogOpenState: true
+            })
+          }else if(response === 404){
+            this.setState({
+              AlertDialogMessageTitle: 'Wikipedia Article Not Found',
+              AlertDialogMessageContent: 'Please verify the Wikipedia Article URL and retry the operation',
+              AlertDialogOpenState: true
+            })
+          }
+        
+        })
     }
   };
 
@@ -180,11 +194,4 @@ class PostForm extends Component {
   }
 }
 
-// Redux
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createSinglePost: (postDto) => dispatch(createSinglePost(postDto)),
-  };
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(PostForm));
+export default (PostForm);

@@ -5,7 +5,6 @@ import {
 } from '../post-actions';
 import {
     getPosts,
-    createPost
 } from '../../../apis/post';
 
 export function loadInitialPosts() {
@@ -28,18 +27,5 @@ export function loadMorePosts(postId) {
                 posts => dispatch(loadPostsSuccess(posts)),
 
                 error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
-    }
-}
-
-export function createSinglePost(postDto) {
-
-    return dispatch => {
-        createPost(postDto)
-            .then( response => {
-                if(response === 404){
-                    alert("Please enter a valid Wikipedia Article URL")
-                }
-                return response
-            })
     }
 }
