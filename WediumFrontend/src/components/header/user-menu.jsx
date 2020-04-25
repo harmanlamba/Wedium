@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { logout } from '../../redux/actions/auth-actions';
 import { useDispatch } from "react-redux";
 
@@ -11,42 +11,46 @@ import { makeStyles } from '@material-ui/core/styles';
 
 // Components
 import GoogleLoginButton from './google-login-button';
+import { Typography } from '@material-ui/core';
 
 const UserMenu = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleMenu = (event) => {
+  const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
   const handleLogout = () => {
-    handleClose();
+    handleMenuClose();
     dispatch(logout());
   }
 
   return (
     <div>
-      {props.user.isAuthenticated ? props.user.username : "Sign In"}
-      <IconButton onClick={handleMenu}>
+      {props.user.isAuthenticated ?
+        <Typography variant="button" display="inline">{props.user.username}</Typography>
+        : <Typography variant="button" display="inline">Sign In</Typography>
+      }
+      <IconButton onClick={handleMenuOpen}>
         <AccountCircle />
       </IconButton>
 
       <Menu className={classes.root}
         anchorEl={anchorEl}
-
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleMenuClose}
       >
-        {props.user.isAuthenticated ? <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-          : <MenuItem onClick={handleClose}><GoogleLoginButton /></MenuItem>}
-
+        {props.user.isAuthenticated ?
+          <MenuItem onClick={handleLogout}><Typography variant="subtitle2">Sign Out</Typography></MenuItem>
+          : <MenuItem onClick={handleMenuClose}><GoogleLoginButton /></MenuItem>
+        }
       </Menu>
     </div>
   );
