@@ -15,6 +15,11 @@ export function createPost(postDto) {
     const endpoint = '/api/post/Post';
 
     return axios.post(API_URL + endpoint, postDto)
-        .then(response => console.log(response))
-        .catch(error => console.log("Axios error message (createPosts): " + error.message));
+        .then(response => {
+            return response.status;
+        })
+        .catch(error => {
+            console.log("Axios error message (createPosts): " + error.message)
+            return error.response.status;        
+        });
 }

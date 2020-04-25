@@ -35,8 +35,11 @@ export function createSinglePost(postDto) {
 
     return dispatch => {
         createPost(postDto)
-            .then(
-                console.log("yeyuh")
-            )
+            .then( response => {
+                if(response === 404){
+                    alert("Please enter a valid Wikipedia Article URL")
+                }
+                return response
+            })
     }
 }

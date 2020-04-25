@@ -22,7 +22,7 @@ function PostTypeButtons(props) {
 
   return (
     <ToggleButtonGroup
-      size="small"
+      size="medium"
       value={postType}
       exclusive
       onChange={handlePostType}

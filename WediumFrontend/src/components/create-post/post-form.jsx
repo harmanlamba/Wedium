@@ -43,6 +43,22 @@ class PostForm extends Component {
     this.setState({ postType: postTypeText });
   };
 
+
+  checkPostDto = (postDto) => {
+    if(postDto.Title === "" ){
+      alert("Please ensure to include a post title")
+      return false;
+    }else if (postDto.ArticleUrl === ""  ){
+      alert("Please ensure to input a wikipedia article url");
+      return false;
+    }else if(postDto.PostType === null || postDto.PostType === ""){
+      alert("Please ensure to choose a Post Type");
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   handleSend = () => {
     // To get Wikipedia Title value
     let URLString = this.state.wikipediaURL.split('/');
@@ -56,7 +72,9 @@ class PostForm extends Component {
       PostType: this.state.postType,
     };
 
-    this.props.createSinglePost(postDto);
+    if(this.checkPostDto(postDto)){
+      this.props.createSinglePost(postDto);
+    }
   };
 
   render() {
