@@ -7,21 +7,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 // Components
-import GoogleLoginButton from './google-login-button';
 import UserMenu from './user-menu';
 
 const Header = (props) => {
     const classes = useStyles();
 
     const user = props.user;
-    const isAuth = user.isAuthenticated;
 
     return (
         <AppBar color="transparent" position="static">
             <Toolbar variant="dense">
                 <Typography variant="h6" className={classes.title}>Wedium</Typography>
-                {!isAuth && <GoogleLoginButton />}
-                {isAuth && <UserMenu user={user} />}
+                <UserMenu user={user}/>
             </Toolbar>
         </AppBar>
     );

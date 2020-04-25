@@ -9,6 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 
+// Components
+import GoogleLoginButton from './google-login-button';
+
 const UserMenu = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -23,13 +26,13 @@ const UserMenu = (props) => {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
     handleClose();
+    dispatch(logout());
   }
 
   return (
     <div>
-      {props.user.username}
+      {props.user.isAuthenticated ? props.user.username : "Sign In"}
       <IconButton onClick={handleMenu}>
         <AccountCircle />
       </IconButton>
@@ -41,7 +44,9 @@ const UserMenu = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+        {props.user.isAuthenticated ? <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+          : <MenuItem onClick={handleClose}><GoogleLoginButton /></MenuItem>}
+
       </Menu>
     </div>
   );
