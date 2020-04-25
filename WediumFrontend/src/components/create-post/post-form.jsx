@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createSinglePost } from '../../redux/actions/thunk/post-thunk';
+import  AlertDialog  from '../create-post/alert-dialog'
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -21,6 +22,9 @@ class PostForm extends Component {
       wikipediaURL: '',
       description: '',
       postType: null,
+      AlertDialogOpenState: false,
+      AlertDialogMessageTitle: 'Title',
+      AlertDialogMessageContent: 'Content'
     };
   }
 
@@ -43,16 +47,33 @@ class PostForm extends Component {
     this.setState({ postType: postTypeText });
   };
 
+  handleAlertDialogClose = () => {
+    this.setState({AlertDialogOpenState: !this.state.AlertDialogOpenState})
+  }
+
+
 
   checkPostDto = (postDto) => {
     if(postDto.Title === "" ){
-      alert("Please ensure to include a post title")
+      this.setState({
+        AlertDialogMessageTitle: 'Missing Title',
+        AlertDialogMessageContent: 'Please enter a title for your post!',
+        AlertDialogOpenState: true
+      })
       return false;
     }else if (postDto.ArticleUrl === ""  ){
-      alert("Please ensure to input a wikipedia article url");
+      this.setState({
+        AlertDialogMessageTitle: 'Missing Wikipedia Url',
+        AlertDialogMessageContent: 'Please ensure that you have entered a Wikipedia URL',
+        AlertDialogOpenState: true
+      })
       return false;
     }else if(postDto.PostType === null || postDto.PostType === ""){
-      alert("Please ensure to choose a Post Type");
+      this.setState({
+        AlertDialogMessageTitle: 'Missing Post Type',
+        AlertDialogMessageContent: 'Please ensure that you pick a post type that best suits your post!',
+        AlertDialogOpenState: true
+      })
       return false;
     }else{
       return true;
@@ -89,6 +110,7 @@ class PostForm extends Component {
         >
           <Grid item xs={12}>
             <Typography variant="h5">Create Post</Typography>
+            <AlertDialog title = {this.state.AlertDialogMessageTitle} content = {this.state.AlertDialogMessageContent} open = {this.state.AlertDialogOpenState} onCloseHandler={this.handleAlertDialogClose} />
           </Grid>
 
           <Grid item xs={12}>
