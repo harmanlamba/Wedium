@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import  { createPost }  from '../../apis/post';
-import  AlertDialog  from '../create-post/alert-dialog'
+import { createPost } from '../../apis/post';
+import AlertDialog from '../create-post/alert-dialog';
+import { withRouter } from 'react-router-dom';
 
 // Material UI
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -20,9 +22,10 @@ class PostForm extends Component {
       wikipediaURL: '',
       description: '',
       postType: null,
-      AlertDialogOpenState: false,
-      AlertDialogMessageTitle: 'Title',
-      AlertDialogMessageContent: 'Content'
+      sendLoading: false,
+      alertDialogOpenState: false,
+      alertDialogMessageTitle: 'Title',
+      alertDialogMessageContent: 'Content',
     };
   }
 
@@ -46,37 +49,37 @@ class PostForm extends Component {
   };
 
   handleAlertDialogClose = () => {
-    this.setState({AlertDialogOpenState: !this.state.AlertDialogOpenState})
-  }
-
-
+    this.setState({ alertDialogOpenState: !this.state.alertDialogOpenState });
+  };
 
   checkPostDto = (postDto) => {
-    if(postDto.Title === "" ){
+    if (postDto.Title === '') {
       this.setState({
-        AlertDialogMessageTitle: 'Missing Title',
-        AlertDialogMessageContent: 'Please enter a title for your post!',
-        AlertDialogOpenState: true
-      })
+        alertDialogMessageTitle: 'Missing Title',
+        alertDialogMessageContent: 'Please enter a title for your post!',
+        alertDialogOpenState: true,
+      });
       return false;
-    }else if (postDto.ArticleUrl === ""  ){
+    } else if (postDto.ArticleUrl === '') {
       this.setState({
-        AlertDialogMessageTitle: 'Missing Wikipedia Url',
-        AlertDialogMessageContent: 'Please ensure that you have entered a Wikipedia URL',
-        AlertDialogOpenState: true
-      })
+        alertDialogMessageTitle: 'Missing Wikipedia Url',
+        alertDialogMessageContent:
+          'Please ensure that you have entered a Wikipedia URL',
+        alertDialogOpenState: true,
+      });
       return false;
-    }else if(postDto.PostType === null || postDto.PostType === ""){
+    } else if (postDto.PostType === null || postDto.PostType === '') {
       this.setState({
-        AlertDialogMessageTitle: 'Missing Post Type',
-        AlertDialogMessageContent: 'Please ensure that you pick a post type that best suits your post!',
-        AlertDialogOpenState: true
-      })
+        alertDialogMessageTitle: 'Missing Post Type',
+        alertDialogMessageContent:
+          'Please ensure that you pick a post type that best suits your post!',
+        alertDialogOpenState: true,
+      });
       return false;
-    }else{
+    } else {
       return true;
     }
-  }
+  };
 
   handleSend = () => {
     // To get Wikipedia Title value
@@ -91,24 +94,21 @@ class PostForm extends Component {
       PostType: this.state.postType,
     };
 
-    if(this.checkPostDto(postDto)){
-        createPost(postDto)
-        .then(response => {
-          if(response === 201){
-            this.setState({
-              AlertDialogMessageTitle: 'Post Created',
-              AlertDialogMessageContent: 'The post was created successfully!!',
-              AlertDialogOpenState: true
-            })
-          }else if(response === 404){
-            this.setState({
-              AlertDialogMessageTitle: 'Wikipedia Article Not Found',
-              AlertDialogMessageContent: 'Please verify the Wikipedia Article URL and retry the operation',
-              AlertDialogOpenState: true
-            })
-          }
-        
-        })
+    if (this.checkPostDto(postDto)) {
+      createPost(postDto).then((response) => {
+        if (response === 201) {
+          this.setState({ sendLoading: false }); // Set loading stopped
+          this.props.history.push('/');
+        } else if (response === 404) {
+          this.setState({
+            alertDialogMessageTitle: 'Wikipedia Article Not Found',
+            alertDialogMessageContent:
+              'Please verify the Wikipedia Article URL and retry the operation',
+            alertDialogOpenState: true,
+            sendLoading: false, // Set loading stopped
+          });
+        }
+      });
     }
   };
 
@@ -124,7 +124,12 @@ class PostForm extends Component {
         >
           <Grid item xs={12}>
             <Typography variant="h5">Create Post</Typography>
-            <AlertDialog title = {this.state.AlertDialogMessageTitle} content = {this.state.AlertDialogMessageContent} open = {this.state.AlertDialogOpenState} onCloseHandler={this.handleAlertDialogClose} />
+            <AlertDialog
+              title={this.state.alertDialogMessageTitle}
+              content={this.state.alertDialogMessageContent}
+              open={this.state.alertDialogOpenState}
+              onCloseHandler={this.handleAlertDialogClose}
+            />
           </Grid>
 
           <Grid item xs={12}>
@@ -135,6 +140,9 @@ class PostForm extends Component {
               variant="outlined"
               fullWidth
               required
+              inputProps={{
+                maxLength: 100,
+              }}
             />
           </Grid>
 
@@ -159,6 +167,9 @@ class PostForm extends Component {
               rows={8}
               rowsMax={20}
               fullWidth
+              inputProps={{
+                maxLength: 500,
+              }}
             />
           </Grid>
 
@@ -184,8 +195,12 @@ class PostForm extends Component {
               variant="contained"
               color="primary"
               onClick={this.handleSend}
+              disabled={this.state.sendLoading}
             >
-              Send
+              {this.state.sendLoading && (
+                <CircularProgress size={20} thickness={6} color="inherit" />
+              )}
+              {!this.state.sendLoading && 'Send'}
             </Button>
           </Grid>
         </Grid>
@@ -194,4 +209,4 @@ class PostForm extends Component {
   }
 }
 
-export default (PostForm);
+export default withRouter(PostForm);

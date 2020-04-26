@@ -8,7 +8,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 function PostTypeButtons(props) {
-  const [postType, setPostType] = React.useState('');
+  const [postType, setPostType] = useState('');
 
   const handlePostType = (event, newPostType) => {
     setPostType(newPostType);
