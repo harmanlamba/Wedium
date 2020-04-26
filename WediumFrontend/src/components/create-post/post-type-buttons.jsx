@@ -6,8 +6,10 @@ import { loadPostTypes } from '../../redux/actions/thunk/post-type-thunk';
 // Material UI
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { withStyles } from '@material-ui/core/styles';
 
 function PostTypeButtons(props) {
+  const { classes } = props;
   const [postType, setPostType] = useState('');
 
   const handlePostType = (event, newPostType) => {
@@ -28,6 +30,7 @@ function PostTypeButtons(props) {
       onChange={handlePostType}
       aria-label="text alignment"
       required
+      className={classes.root}
     >
       {props.postTypes &&
         props.postTypes.map((postTypes) => (
@@ -35,6 +38,7 @@ function PostTypeButtons(props) {
             id="postTypeField"
             value={postTypes.postType}
             key={postTypes.postType}
+            className={classes.childButton}
           >
             {postTypes.postType}
           </ToggleButton>
@@ -42,6 +46,20 @@ function PostTypeButtons(props) {
     </ToggleButtonGroup>
   );
 }
+
+const styles = (theme) => ({
+  root: {
+    flexWrap: 'wrap',
+  },
+  childButton: {
+    margin: '0 5px 5px 0',
+    border: '1px solid #c4c4c4 !important',
+    borderRadius: '50px !important',
+    '&$selected': {
+      backgroundColor: 'green !important',
+    },
+  },
+});
 
 // Redux
 const mapStateToProps = (state) => {
@@ -57,5 +75,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PostTypeButtons)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(PostTypeButtons))
 );
