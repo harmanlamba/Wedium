@@ -7,11 +7,6 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const GoogleLoginButton = (props) => {
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-
-  const onFailure = (error) => {
-    alert(error);
-  };
 
   const googleSuccessfulResponse = (response) => {
     const tokenBlob = {
@@ -26,15 +21,6 @@ const GoogleLoginButton = (props) => {
     // The button auto-resets and allows the user to login in again
   }
 
-  // For testing isAuthenticated status
-  const checkAuthentication = (isAuthenticated) => {
-    if (isAuthenticated) {
-      console.log('Is auth');
-    } else {
-      console.log('No auth');
-    }
-  };
-
   return (
     <div>
       <GoogleLogin
@@ -43,7 +29,6 @@ const GoogleLoginButton = (props) => {
         onSuccess={googleSuccessfulResponse}
         onFailure={googleFailureResponse}
       ></GoogleLogin>
-      {checkAuthentication(auth.isAuthenticated)}
     </div>
   );
 }
