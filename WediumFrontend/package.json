@@ -14,7 +14,7 @@
     "moment": "^2.24.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-google-login": "^5.1.2",
+    "react-google-login": "^5.1.10",
     "react-infinite-scroller": "^1.2.4",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
