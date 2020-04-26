@@ -95,6 +95,7 @@ class PostForm extends Component {
     };
 
     if (this.checkPostDto(postDto)) {
+      this.setState({ sendLoading: true }); // Start loading
       createPost(postDto).then((response) => {
         if (response === 201) {
           this.setState({ sendLoading: false }); // Set loading stopped
