@@ -18,7 +18,6 @@ const TITLE_CHAR_LIMIT = 100;
 const DESCRIPTION_CHAR_LIMIT = 500;
 
 class PostForm extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -121,13 +120,14 @@ class PostForm extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.container}>
         <Grid
           container
           spacing={3}
           direction="row"
           justify="center"
           alignItems="flex-start"
+          className={classes.container}
         >
           <Grid item xs={12}>
             <Typography variant="h5">Create Post</Typography>
@@ -221,10 +221,14 @@ class PostForm extends Component {
 }
 
 const styles = (theme) => ({
+  container: {
+    backgroundColor: '#fff',
+    borderRadius: '10px',
+  },
   textField: {
     marginBottom: '-15px !important',
-    '& p':{
-      textAlign:'right !important',
+    '& p': {
+      textAlign: 'right !important',
     },
   },
 });

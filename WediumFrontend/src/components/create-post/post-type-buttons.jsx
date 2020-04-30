@@ -38,7 +38,7 @@ function PostTypeButtons(props) {
             id="postTypeField"
             value={postTypes.postType}
             key={postTypes.postType}
-            classes={{root: classes.toggleButton, selected: classes.selected}}
+            classes={{ root: classes.toggleButton, selected: classes.selected }}
           >
             {postTypes.postType}
           </ToggleButton>
@@ -50,6 +50,7 @@ function PostTypeButtons(props) {
 const styles = (theme) => ({
   toggleGroup: {
     flexWrap: 'wrap',
+    backgroundColor: 'transparent !important',
   },
   toggleButton: {
     margin: '0 5px 5px 0',
@@ -58,8 +59,8 @@ const styles = (theme) => ({
   },
   selected: {
     backgroundColor: '#3f51b5 !important',
-    color: "#fff !important"
-  }
+    color: '#fff !important',
+  },
 });
 
 // Redux
