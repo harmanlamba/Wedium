@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 // Material UI
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,7 +40,7 @@ const UserMenu = (props) => {
           <Typography
             variant="button"
             display="inline"
-            className={classes.textName}
+            className={classes.spacing}
           >
             {props.user.username}
           </Typography>
@@ -47,20 +49,22 @@ const UserMenu = (props) => {
             Sign In
           </Typography>
         )}
-        <AccountCircle />
+        <AccountCircle className={classes.spacing} />
+        <ExpandMoreIcon />
       </Button>
 
       <Menu
         className={classes.root}
         anchorEl={anchorEl}
-        keepMounted
+        getContentAnchorEl={null}
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         {props.user.isAuthenticated ? (
           <MenuItem onClick={handleLogout}>
+            <MeetingRoomIcon className={classes.spacing} />
             <Typography variant="subtitle2">Sign Out</Typography>
           </MenuItem>
         ) : (
@@ -78,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: 32,
   },
-  textName: {
+  spacing: {
     marginRight: '10px',
   },
 }));
