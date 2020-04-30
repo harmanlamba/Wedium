@@ -11,30 +11,35 @@ import GoogleLoginButton from './google-login-button';
 import UserMenu from './user-menu';
 
 const Header = (props) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const user = props.user;
-    const isAuth = user.isAuthenticated;
+  const user = props.user;
+  const isAuth = user.isAuthenticated;
 
-    return (
-        <AppBar color="transparent" position="static">
-            <Toolbar variant="dense">
-                <Typography variant="h6" className={classes.title}>Wedium</Typography>
-                {!isAuth && <GoogleLoginButton />}
-                {isAuth && <UserMenu user={user} />}
-            </Toolbar>
-        </AppBar>
-    );
-}
+  return (
+    <AppBar color="transparent" position="static" className={classes.appBar}>
+      <Toolbar variant="dense">
+        <Typography variant="h6" className={classes.title}>
+          Wedium
+        </Typography>
+        {!isAuth && <GoogleLoginButton />}
+        {isAuth && <UserMenu user={user} />}
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    title: {
-        marginLeft: theme.spacing(2),
-        flexGrow: 1,
-    },
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flexGrow: 1,
+  },
+  appBar: {
+    padding: '5px 0',
+  },
 }));
 
 export default Header;
