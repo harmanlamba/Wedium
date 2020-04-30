@@ -30,7 +30,7 @@ function PostTypeButtons(props) {
       onChange={handlePostType}
       aria-label="text alignment"
       required
-      className={classes.root}
+      className={classes.toggleGroup}
     >
       {props.postTypes &&
         props.postTypes.map((postTypes) => (
@@ -38,7 +38,7 @@ function PostTypeButtons(props) {
             id="postTypeField"
             value={postTypes.postType}
             key={postTypes.postType}
-            className={classes.childButton}
+            classes={{root: classes.toggleButton, selected: classes.selected}}
           >
             {postTypes.postType}
           </ToggleButton>
@@ -48,17 +48,18 @@ function PostTypeButtons(props) {
 }
 
 const styles = (theme) => ({
-  root: {
+  toggleGroup: {
     flexWrap: 'wrap',
   },
-  childButton: {
+  toggleButton: {
     margin: '0 5px 5px 0',
     border: '1px solid #c4c4c4 !important',
     borderRadius: '50px !important',
-    '&$selected': {
-      backgroundColor: 'green !important',
-    },
   },
+  selected: {
+    backgroundColor: '#3f51b5 !important',
+    color: "#fff !important"
+  }
 });
 
 // Redux

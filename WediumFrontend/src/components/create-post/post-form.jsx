@@ -14,7 +14,11 @@ import { withStyles } from '@material-ui/core/styles';
 // Components
 import PostTypeButtons from './post-type-buttons';
 
+const TITLE_CHAR_LIMIT = 100;
+const DESCRIPTION_CHAR_LIMIT = 500;
+
 class PostForm extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -114,6 +118,8 @@ class PostForm extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
         <Grid
@@ -141,9 +147,11 @@ class PostForm extends Component {
               variant="outlined"
               fullWidth
               required
+              helperText={`${this.state.title.length}/${TITLE_CHAR_LIMIT}`}
               inputProps={{
-                maxLength: 100,
+                maxLength: TITLE_CHAR_LIMIT,
               }}
+              className={classes.textField}
             />
           </Grid>
 
@@ -165,12 +173,14 @@ class PostForm extends Component {
               onChange={this.handleFieldChange}
               variant="outlined"
               multiline
-              rows={8}
-              rowsMax={20}
+              rows={6}
+              rowsMax={10}
               fullWidth
+              helperText={`${this.state.description.length}/${DESCRIPTION_CHAR_LIMIT}`}
               inputProps={{
-                maxLength: 500,
+                maxLength: DESCRIPTION_CHAR_LIMIT,
               }}
+              className={classes.textField}
             />
           </Grid>
 
@@ -210,4 +220,13 @@ class PostForm extends Component {
   }
 }
 
-export default withRouter(PostForm);
+const styles = (theme) => ({
+  textField: {
+    marginBottom: '-15px !important',
+    '& p':{
+      textAlign:'right !important',
+    },
+  },
+});
+
+export default withRouter(withStyles(styles)(PostForm));
