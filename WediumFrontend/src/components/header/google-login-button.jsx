@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { sendToken } from '../../redux/actions/auth-actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { sendTokenAndLogin } from '../../redux/actions/thunk/auth-thunk';
+import { useDispatch } from 'react-redux';
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -13,7 +13,7 @@ const GoogleLoginButton = (props) => {
       tokenId: response.tokenId,
     };
 
-    dispatch(sendToken(tokenBlob));
+    dispatch(sendTokenAndLogin(tokenBlob));
   };
 
   const googleFailureResponse = (response) => {

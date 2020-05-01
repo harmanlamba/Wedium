@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { logout } from '../../redux/actions/auth-actions';
-import { useDispatch } from 'react-redux';
+import { connect } from "react-redux";
+import { logoutUser } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -10,14 +10,13 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 // Components
 import GoogleLoginButton from './google-login-button';
-import { Typography } from '@material-ui/core';
 
 const UserMenu = (props) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -30,7 +29,7 @@ const UserMenu = (props) => {
 
   const handleLogout = () => {
     handleMenuClose();
-    dispatch(logout());
+    props.logoutUser();
   };
 
   return (
@@ -40,7 +39,7 @@ const UserMenu = (props) => {
           <Typography
             variant="button"
             display="inline"
-            className={classes.spacing}
+            className={classes.rightSpacing}
           >
             {props.user.username}
           </Typography>
@@ -49,7 +48,7 @@ const UserMenu = (props) => {
             Sign In
           </Typography>
         )}
-        <AccountCircle className={classes.spacing} />
+        <AccountCircle className={classes.rightSpacing} />
         <ExpandMoreIcon />
       </Button>
 
@@ -64,7 +63,7 @@ const UserMenu = (props) => {
       >
         {props.user.isAuthenticated ? (
           <MenuItem onClick={handleLogout}>
-            <MeetingRoomIcon className={classes.spacing} />
+            <MeetingRoomIcon className={classes.rightSpacing} />
             <Typography variant="subtitle2">Sign Out</Typography>
           </MenuItem>
         ) : (
@@ -82,9 +81,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: 32,
   },
-  spacing: {
+  rightSpacing: {
     marginRight: '10px',
   },
 }));
 
-export default UserMenu;
+const mapDispatchToProps = { logoutUser };
+
+export default connect(null, mapDispatchToProps)(UserMenu);

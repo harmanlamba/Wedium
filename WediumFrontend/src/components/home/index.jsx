@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../../redux/actions/auth-actions';
+import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -17,7 +17,7 @@ import PostFeed from '../post-feed'
 class Home extends Component {
 
   componentDidMount() {
-    this.props.login();
+    this.props.tryLogin();
   }
 
   render() {
@@ -55,20 +55,6 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: () => {
-      dispatch(login());
-    },
-  };
-};
-
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
 };
@@ -80,6 +66,17 @@ const styles = (theme) => ({
     width: '100%',
   }
 });
+
+// Redux
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = {
+  tryLogin
+}
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
