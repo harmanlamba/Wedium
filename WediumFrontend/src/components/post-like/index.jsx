@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tryLikePost, tryUnlikePost } from '../../redux/actions/thunk/post-like-thunk';
 
@@ -8,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/Button';
 import LikedIcon from '@material-ui/icons/ThumbUp';
 import UnlikedIcon from '@material-ui/icons/ThumbUpTwoTone';
+import { red } from '@material-ui/core/colors';
 
 
 class PostLike extends Component {
@@ -39,19 +41,38 @@ class PostLike extends Component {
             return (null);
         }
 
+        const { classes } = this.props;
+
         return (
             <IconButton
                 onClick={() => {this.onButtonClick()}}
+                className={classes.button}
             >
-                {this.state.isPostLiked ? <LikedIcon />: <UnlikedIcon />}
+                {this.state.isPostLiked ? <LikedIcon />: <UnlikedIcon className={classes.unlikedIcon} />}
             </IconButton>
         );
     }
 }
+
+PostLike.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+  
+const styles = (theme) => ({
+    button: {
+        width: 60,
+        height: 60,
+    },
+    unlikedIcon: {
+        opacity: 0.3
+    }
+});
 
 const mapDispatchToProps = {
     tryLikePost,
     tryUnlikePost
 }
 
-export default connect(null, mapDispatchToProps)(PostLike);
+export default withStyles(styles)(
+    connect(null, mapDispatchToProps)(PostLike)
+  )
