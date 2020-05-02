@@ -3,7 +3,6 @@ import { getPosts } from '../../../apis/post';
 
 export function loadInitialPosts() {
     return dispatch => {
-
         dispatch(loadPostsLoading());
 
         getPosts()
