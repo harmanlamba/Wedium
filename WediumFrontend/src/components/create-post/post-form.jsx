@@ -122,12 +122,12 @@ class PostForm extends Component {
     return (
       <div className={classes.container}>
         <Grid
+          className={classes.container}
           container
           spacing={3}
           direction="row"
           justify="center"
           alignItems="flex-start"
-          className={classes.container}
         >
           <Grid item xs={12}>
             <Typography variant="h6">Create Post</Typography>
@@ -141,6 +141,7 @@ class PostForm extends Component {
 
           <Grid item xs={12}>
             <TextField
+              className={classes.textField}
               id="titleField"
               label="Title"
               onChange={this.handleFieldChange}
@@ -151,7 +152,6 @@ class PostForm extends Component {
               inputProps={{
                 maxLength: TITLE_CHAR_LIMIT,
               }}
-              className={classes.textField}
             />
           </Grid>
 
@@ -191,7 +191,12 @@ class PostForm extends Component {
           </Grid>
 
           <Grid item xs={6}>
-            <Button variant="outlined">Cancel</Button>
+            <Button
+              onClick={() => this.props.history.go(-1)}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
           </Grid>
 
           <Grid

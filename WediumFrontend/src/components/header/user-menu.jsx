@@ -41,9 +41,9 @@ const UserMenu = (props) => {
   return (
     <div>
       <Button
+        className={classes.rightSpacing}
         variant="contained"
         color="primary"
-        className={classes.rightSpacing}
         onClick={handlePostRedirect}
         size="small"
       >
@@ -53,9 +53,9 @@ const UserMenu = (props) => {
       <Button onClick={handleMenuOpen}>
         {props.user.isAuthenticated ? (
           <Typography
+            className={classes.rightSpacing}
             variant="button"
             display="inline"
-            className={classes.rightSpacing}
           >
             {props.user.username}
           </Typography>

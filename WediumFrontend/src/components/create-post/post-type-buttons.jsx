@@ -24,21 +24,21 @@ function PostTypeButtons(props) {
 
   return (
     <ToggleButtonGroup
+      className={classes.toggleGroup}
       size="medium"
       value={postType}
       exclusive
       onChange={handlePostType}
       aria-label="text alignment"
       required
-      className={classes.toggleGroup}
     >
       {props.postTypes &&
         props.postTypes.map((postTypes) => (
           <ToggleButton
+            classes={{ root: classes.toggleButton, selected: classes.selected }}
             id="postTypeField"
             value={postTypes.postType}
             key={postTypes.postType}
-            classes={{ root: classes.toggleButton, selected: classes.selected }}
           >
             {postTypes.postType}
           </ToggleButton>

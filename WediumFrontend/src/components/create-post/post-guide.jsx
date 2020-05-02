@@ -14,12 +14,12 @@ function PostGuide(props) {
   return (
     <div className={classes.container}>
       <Grid
+        className={classes.container}
         container
         spacing={3}
         direction="row"
         justify="center"
         alignItems="flex-start"
-        className={classes.container}
       >
         <Grid item xs={12}>
           <Typography variant="h6">Post Guide</Typography>
