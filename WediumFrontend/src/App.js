@@ -4,39 +4,37 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 // Components
-import GoogleLoginButton from './components/google-login-button';
 import Home from './components/home';
 import CreatePost from './components/create-post';
 
 export const App = () => {
   return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/search">
-            <h1>Search Results Page</h1>
-          </Route>
-          <Route exact path="/create">
-            <CreatePost />
-          </Route>
-          <Route exact path="/post/:postType/:postID/:postTitle">
-            <h1>Post Page</h1>
-          </Route>
-          <Route exact path="/user/:username">
-            <h1>User Profile Page</h1>
-          </Route>
-          <Route exact path="/googleLogin">
-            <GoogleLoginButton />
-          </Route>
-          <Route path="*">
-            <h1>Page not found</h1>
-          </Route>
-        </Switch>
-      </Router>
-    </Provider>
+    <div>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/search">
+              <h1>Search Results Page</h1>
+            </Route>
+            <Route exact path="/create">
+              <CreatePost />
+            </Route>
+            <Route exact path="/post/:postType/:postID/:postTitle">
+              <h1>Post Page</h1>
+            </Route>
+            <Route exact path="/user/:username">
+              <h1>User Profile Page</h1>
+            </Route>
+            <Route path="*">
+              <h1>Page not found</h1>
+            </Route>
+          </Switch>
+        </Router>
+      </Provider>
+    </div>
   );
 };
 

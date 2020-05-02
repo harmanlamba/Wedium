@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -7,52 +10,74 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 // Components
+import Header from '../header';
 import PostTypes from './post-types'
 import PostFeed from '../post-feed'
 
 class Home extends Component {
 
-    componentDidMount() { }
+  componentDidMount() {
+    this.props.tryLogin();
+  }
 
-    render() {
-        const { classes } = this.props;
+  render() {
+    const { classes } = this.props;
 
-        return (
-            <div className={classes.root}>
-                <Grid
-                    container
-                    spacing={3} // This causes the horizontal scroll
-                    direction="row"
-                    justify="center"
-                    alignItems="flex-start">
+    const user = this.props.auth;
 
-                    <Grid item xs={8}>
-                        <Paper>Search</Paper>
-                    </Grid>
+    return (
+      <div>
+        <Header user={user} />
+        <Grid
+          className={classes.grid}
+          container
+          spacing={3}
+          direction="row"
+          justify="center"
+          alignItems="flex-start">
 
-                    <Grid item xs={6}>
-                        <Paper>Filter Bar</Paper>
-                        <br />
-                        <PostFeed />
-                    </Grid>
+          <Grid item xs={8}>
+            <Paper>Search</Paper>
+          </Grid>
 
-                    <Grid item xs={2}>
-                        <PostTypes />
-                    </Grid>
-                </Grid>
-            </div>
-        );
-    }
+          <Grid item xs={6}>
+            <Paper>Filter Bar</Paper>
+            <br />
+            <PostFeed />
+          </Grid>
+
+          <Grid item xs={2}>
+            <PostTypes />
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
 
-const styles = (theme) => ({
-    root: {
-        flexGrow: 1
-    },
-});
-
 Home.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Home);
+const styles = (theme) => ({
+  grid: {
+    flexGrow: 1,
+    margin: 0,
+    width: '100%',
+  }
+});
+
+// Redux
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = {
+  tryLogin
+}
+
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
+)
