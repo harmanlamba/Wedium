@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from "react-redux";
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,8 +49,6 @@ const PostCard = (props) => {
     );
 }
 
-export default PostCard;
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -67,3 +66,12 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 8,
     }
 }));
+
+// Redux
+const mapStateToProps = (state) => {
+    return {
+        posts: state.post.posts,
+    };
+};
+
+export default connect(mapStateToProps)(PostCard);
