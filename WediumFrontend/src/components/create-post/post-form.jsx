@@ -130,7 +130,7 @@ class PostForm extends Component {
           className={classes.container}
         >
           <Grid item xs={12}>
-            <Typography variant="h5">Create Post</Typography>
+            <Typography variant="h6">Create Post</Typography>
             <AlertDialog
               title={this.state.alertDialogMessageTitle}
               content={this.state.alertDialogMessageContent}

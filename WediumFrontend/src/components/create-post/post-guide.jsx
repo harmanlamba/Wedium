@@ -22,24 +22,39 @@ function PostGuide(props) {
         className={classes.container}
       >
         <Grid item xs={12}>
-          <Typography variant="h5">Post Guide</Typography>
+          <Typography variant="h6">Post Guide</Typography>
         </Grid>
         <Grid item xs={12}>
           <List>
             <ListItem button disableRipple={true}>
-              <ListItemText primary="🤠 Provide a descriptive title" />
+              <ListItemText
+                classes={{ primary: classes.listItemText }}
+                primary="🤠 Provide a descriptive title"
+              />
             </ListItem>
             <ListItem button disableRipple={true}>
-              <ListItemText primary="🔗 Make sure the URL is from Wikipedia" />
+              <ListItemText
+                classes={{ primary: classes.listItemText }}
+                primary="🔗 Make sure the URL is from Wikipedia"
+              />
             </ListItem>
             <ListItem button disableRipple={true}>
-              <ListItemText primary="🤓 Give some context and interesting facts about the article in the description" />
+              <ListItemText
+                classes={{ primary: classes.listItemText }}
+                primary="🤓 Give some context and interesting facts about the article in the description"
+              />
             </ListItem>
             <ListItem button disableRipple={true}>
-              <ListItemText primary="🦉 Choose a relevant post type that reflects the article subject" />
+              <ListItemText
+                classes={{ primary: classes.listItemText }}
+                primary="🦉 Choose a relevant post type that reflects the article subject"
+              />
             </ListItem>
             <ListItem button disableRipple={true}>
-              <ListItemText primary="😻 Be good :-)" />
+              <ListItemText
+                classes={{ primary: classes.listItemText }}
+                primary="😻 Be good :-)"
+              />
             </ListItem>
           </List>
         </Grid>
@@ -52,6 +67,9 @@ const styles = (theme) => ({
   container: {
     backgroundColor: '#fff',
     borderRadius: '10px',
+  },
+  listItemText: {
+    fontSize: '0.9em', //Insert your required size
   },
 });
 
