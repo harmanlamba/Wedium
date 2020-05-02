@@ -65,7 +65,7 @@ const UserMenu = (props) => {
             Sign In
           </Typography>
         )}
-        <Avatar src={props.user.pictureUri}/>
+        <Avatar className={classes.profileImage} src={props.user.pictureUri}/>
         <ExpandMoreIcon />
       </Button>
 
@@ -96,10 +96,13 @@ const UserMenu = (props) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: 32,
+    marginTop: 40,
   },
   rightSpacing: {
     marginRight: '10px',
+  },
+  profileImage: {
+    marginRight: '10px'
   },
 }));
 
