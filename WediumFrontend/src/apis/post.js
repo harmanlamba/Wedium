@@ -14,12 +14,19 @@ export function getPosts(postId) {
 export function createPost(postDto) {
     const endpoint = '/api/post/Post';
 
-    return axios.post(API_URL + endpoint, postDto)
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const tokenJSONConfig = {
+        headers: {
+            "Authorization": "Bearer " + storedUser.jwtToken
+        }
+    }
+
+    return axios.post(API_URL + endpoint, postDto, tokenJSONConfig)
         .then(response => {
             return response.status;
         })
         .catch(error => {
             console.log("Axios error message (createPosts): " + error.message)
-            return error.response.status;        
+            return error.response.status;
         });
 }
