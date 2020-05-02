@@ -13,7 +13,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
-    console.log('AH');
     this.props.loadInitialPosts();
   }
 

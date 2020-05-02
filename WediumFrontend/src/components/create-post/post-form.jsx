@@ -142,9 +142,11 @@ class PostForm extends Component {
           <Grid item xs={12}>
             <TextField
               className={classes.textField}
+              onChange={this.handleFieldChange}
               id="titleField"
               label="Title"
-              onChange={this.handleFieldChange}
+              autoComplete="off"
+              autoFocus={true}
               variant="outlined"
               fullWidth
               required
@@ -158,8 +160,9 @@ class PostForm extends Component {
           <Grid item xs={12}>
             <TextField
               id="wikipediaURLField"
-              label="Wikipedia URL"
               onChange={this.handleFieldChange}
+              label="Wikipedia URL"
+              autoComplete="off"
               variant="outlined"
               fullWidth
               required
@@ -169,8 +172,9 @@ class PostForm extends Component {
           <Grid item xs={12}>
             <TextField
               id="descriptionField"
-              label="Description (optional)"
               onChange={this.handleFieldChange}
+              label="Description (optional)"
+              autoComplete="off"
               variant="outlined"
               multiline
               rows={6}
@@ -208,10 +212,10 @@ class PostForm extends Component {
             direction="row"
           >
             <Button
-              variant="contained"
-              color="primary"
               onClick={this.handleSend}
               disabled={this.state.sendLoading}
+              variant="contained"
+              color="primary"
             >
               {this.state.sendLoading && (
                 <CircularProgress size={20} thickness={6} color="inherit" />

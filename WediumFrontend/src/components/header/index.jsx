@@ -24,7 +24,7 @@ const Header = (props) => {
           <Button
             className={classes.titleButton}
             size="large"
-            disableRipple="true"
+            disableRipple={true}
             onClick={() => props.history.push('/')}
           >
             Wedium

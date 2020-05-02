@@ -6,8 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function AlertDialog(props) {
-    
+const AlertDialog = (props) => {
   return (
     <div>
       <Dialog
@@ -30,4 +29,6 @@ export default function AlertDialog(props) {
       </Dialog>
     </div>
   );
-}
+};
+
+export default AlertDialog;

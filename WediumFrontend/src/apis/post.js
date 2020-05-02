@@ -7,7 +7,7 @@ export function getPosts(postId) {
     const endpoint = `/api/post/Get?limit=${LIMIT}` + (postId ? `&after_id=${postId}` : "");
     return axios.get(API_URL + endpoint)
         .then(response => {
-            return response.data
+            return response.data;
         })
 }
 

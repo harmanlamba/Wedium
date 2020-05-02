@@ -8,7 +8,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { withStyles } from '@material-ui/core/styles';
 
-function PostTypeButtons(props) {
+const PostTypeButtons = (props) => {
   const { classes } = props;
   const [postType, setPostType] = useState('');
 
@@ -45,7 +45,7 @@ function PostTypeButtons(props) {
         ))}
     </ToggleButtonGroup>
   );
-}
+};
 
 const styles = (theme) => ({
   toggleGroup: {

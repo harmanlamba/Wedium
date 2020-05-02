@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -10,35 +13,41 @@ import PostForm from './post-form';
 import PostGuide from './post-guide';
 import Header from '../header';
 
-function CreatePost(props) {
+const CreatePost = (props) => {
+  useEffect(() => {
+    props.tryLogin();
+  }, []);
+
   const { classes } = props;
-  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const user = props.auth;
 
   return (
     <div className={classes.root}>
-      <Header user={storedUser} />
-      {storedUser ? (
-        <Grid
-          className={classes.grid}
-          container
-          spacing={4}
-          direction="row"
-          justify="center"
-          alignItems="flex-start"
-        >
-          <Grid item xs={6}>
-            <PostForm />
+      {user.isAuthenticated ? (
+        <div>
+          <Header user={user} />
+          <Grid
+            className={classes.grid}
+            container
+            spacing={4}
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+          >
+            <Grid item xs={6}>
+              <PostForm />
+            </Grid>
+            <Grid item xs={3}>
+              <PostGuide />
+            </Grid>
           </Grid>
-          <Grid item xs={3}>
-            <PostGuide />
-          </Grid>
-        </Grid>
+        </div>
       ) : (
         <Redirect to="/" />
       )}
     </div>
   );
-}
+};
 
 const styles = (theme) => ({
   grid: {
@@ -54,4 +63,17 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(CreatePost);
+// Redux
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = {
+  tryLogin,
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(CreatePost))
+);

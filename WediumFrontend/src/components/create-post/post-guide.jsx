@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 
-function PostGuide(props) {
+const PostGuide = (props) => {
   const { classes } = props;
 
   return (
@@ -61,7 +61,7 @@ function PostGuide(props) {
       </Grid>
     </div>
   );
-}
+};
 
 const styles = (theme) => ({
   container: {
