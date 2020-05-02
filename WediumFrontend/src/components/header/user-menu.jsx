@@ -1,0 +1,91 @@
+import React, { useState } from 'react';
+import { connect } from "react-redux";
+import { logoutUser } from '../../redux/actions/thunk/auth-thunk';
+
+// Material UI
+import Button from '@material-ui/core/Button';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+
+// Components
+import GoogleLoginButton from './google-login-button';
+
+const UserMenu = (props) => {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    props.logoutUser();
+  };
+
+  return (
+    <div>
+      <Button onClick={handleMenuOpen}>
+        {props.user.isAuthenticated ? (
+          <Typography
+            variant="button"
+            display="inline"
+            className={classes.rightSpacing}
+          >
+            {props.user.username}
+          </Typography>
+        ) : (
+          <Typography variant="button" display="inline">
+            Sign In
+          </Typography>
+        )}
+        <AccountCircle className={classes.rightSpacing} />
+        <ExpandMoreIcon />
+      </Button>
+
+      <Menu
+        className={classes.root}
+        anchorEl={anchorEl}
+        getContentAnchorEl={null}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        {props.user.isAuthenticated ? (
+          <MenuItem onClick={handleLogout}>
+            <MeetingRoomIcon className={classes.rightSpacing} />
+            <Typography variant="subtitle2">Sign Out</Typography>
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={handleMenuClose}>
+            <GoogleLoginButton />
+          </MenuItem>
+        )}
+      </Menu>
+    </div>
+  );
+};
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 32,
+  },
+  rightSpacing: {
+    marginRight: '10px',
+  },
+}));
+
+const mapDispatchToProps = { logoutUser };
+
+export default connect(null, mapDispatchToProps)(UserMenu);

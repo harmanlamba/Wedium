@@ -23,6 +23,7 @@ function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
                 isAuthenticated: true
             };
             break;
+
         case LOGOUT:
             state = {
                 ...state,
@@ -30,6 +31,7 @@ function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
                 isAuthenticated: false
             };
             break;
+
         default:
             break;
     };

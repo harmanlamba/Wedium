@@ -1,15 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-export function UserIsValid(token) {
-    if (token.isAuthenticated) {
-        const decodedToken = jwt.decode(token.user);
-        const dateNow = new Date()
-
-        if (decodedToken.exp > dateNow.getTime() / 1000) {
-            return true;
-        } else {
-            return false;
-        }
+export function authTokenIsValid(token) {
+    if (token) {
+        const decodedToken = jwt.decode(token);
+        const dateNow = new Date().getTime();
+        return (decodedToken.exp > dateNow / 1000);
     }
 
     return false;
