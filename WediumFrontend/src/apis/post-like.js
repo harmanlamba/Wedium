@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { createHeader } from "./util/header-util"
+import { createHeader } from "./util/header-util";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -10,7 +10,7 @@ export const likePostRequest = (postId) => {
 
     const body = {
         postId
-    }
+    };
 
     return axios.post(endpoint, body, header)
         .then(response => { 
@@ -24,7 +24,7 @@ export const unlikePostRequest = (postId) => {
 
     const body = {
         postId
-    }
+    };
 
     return axios.post(endpoint, body, header)
         .then(response => { 
