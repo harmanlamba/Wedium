@@ -37,7 +37,10 @@ namespace WediumAPI.Services
 
             userId = user.UserId;
 
-            return UserMapper.ToDto(user);
+            UserDto userDto = UserMapper.ToDto(user);
+            userDto.PictureUri = payload.Picture;
+
+            return userDto;
         }
 
         public UserDto GetUser(int userId)

@@ -12,6 +12,7 @@ export function postOneTimeToken(tokenBlob) {
                 "firstName": response.data.firstName,
                 "lastName": response.data.lastName,
                 "username": response.data.username,
+                "pictureUri": response.data.pictureUri
             };
         })
         .catch(error => console.log("Axios error message (postToken): " + error.message));

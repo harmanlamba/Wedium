@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 // Material UI
 import Button from '@material-ui/core/Button';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import Avatar from '@material-ui/core/Avatar';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import CreateIcon from '@material-ui/icons/Create';
@@ -64,7 +64,7 @@ const UserMenu = (props) => {
             Sign In
           </Typography>
         )}
-        <AccountCircle className={classes.rightSpacing} />
+        <Avatar className={classes.profileImage} src={props.user.pictureUri}/>
         <ExpandMoreIcon />
       </Button>
 
@@ -95,10 +95,13 @@ const UserMenu = (props) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: 32,
+    marginTop: 40,
   },
   rightSpacing: {
     marginRight: '10px',
+  },
+  profileImage: {
+    marginRight: '10px'
   },
 }));
 

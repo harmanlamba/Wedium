@@ -8,6 +8,7 @@ const INIT_AUTH_REDUCER_STATE = ({
     firstName: null,
     lastName: null,
     username: null,
+    pictureUri: null,
     isAuthenticated: false
 });
 
@@ -20,6 +21,7 @@ function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
                 firstName: action.payload.firstName,
                 lastName: action.payload.lastName,
                 username: action.payload.username,
+                pictureUri: action.payload.pictureUri,
                 isAuthenticated: true
             };
             break;
