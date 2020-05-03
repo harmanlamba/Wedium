@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tryLikePost, tryUnlikePost } from '../../redux/actions/thunk/post-like-thunk';
@@ -9,8 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/Button';
 import LikedIcon from '@material-ui/icons/ThumbUp';
 import UnlikedIcon from '@material-ui/icons/ThumbUpTwoTone';
-import { red } from '@material-ui/core/colors';
-
 
 class PostLike extends Component {
 

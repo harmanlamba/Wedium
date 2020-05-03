@@ -1,4 +1,4 @@
-import { likePost, unlikePost, loadPostsError } from '../post-actions';
+import { likePost, unlikePost } from '../post-actions';
 import { likePostRequest, unlikePostRequest } from '../../../apis/post-like';
 
 export const tryLikePost = (postId, errorCallback) => {
