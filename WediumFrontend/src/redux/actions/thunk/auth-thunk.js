@@ -31,7 +31,10 @@ export function tryLogin(user) {
 export function logoutUser() {
     return dispatch => {
         localStorage.removeItem("user");
+        
         dispatch(logout());
+
+        window.location.reload();
     }
 }
 
@@ -51,6 +54,8 @@ export function sendTokenAndLogin(tokenBlob) {
                 localStorage.setItem("user", JSON.stringify(userInfo));
 
                 dispatch(login(userInfo));
+
+                window.location.reload();
             });
     }
 }
