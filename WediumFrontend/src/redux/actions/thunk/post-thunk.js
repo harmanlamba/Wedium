@@ -1,5 +1,11 @@
-import { loadPostsLoading, loadPostsSuccess, loadPostsError } from '../post-actions';
-import { getPosts } from '../../../apis/post';
+import {
+    loadPostsLoading,
+    loadPostsSuccess,
+    loadPostsError
+} from '../post-actions';
+import {
+    getPosts,
+} from '../../../apis/post';
 
 export function loadInitialPosts() {
     return dispatch => {

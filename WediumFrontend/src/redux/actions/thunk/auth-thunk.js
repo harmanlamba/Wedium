@@ -12,6 +12,7 @@ export function tryLogin(user) {
             "firstName": storedUser.firstName,
             "lastName": storedUser.lastName,
             "username": `${storedUser.firstName} ${storedUser.lastName}`,
+            "pictureUri": storedUser.pictureUri,
             "isAuthenticated": true,
         }
         return dispatch => {
@@ -43,6 +44,7 @@ export function sendTokenAndLogin(tokenBlob) {
                     "firstName": user.firstName,
                     "lastName": user.lastName,
                     "username": `${user.firstName} ${user.lastName}`,
+                    "pictureUri": user.pictureUri,
                     "isAuthenticated": true,
                 }
 
