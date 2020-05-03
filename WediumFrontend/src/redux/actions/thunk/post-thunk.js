@@ -9,7 +9,6 @@ import {
 
 export function loadInitialPosts() {
     return dispatch => {
-
         dispatch(loadPostsLoading());
 
         getPosts()
