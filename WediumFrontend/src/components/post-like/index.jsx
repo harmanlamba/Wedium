@@ -26,14 +26,33 @@ class PostLike extends Component {
         const isPostLiked = this.state.isPostLiked;
 
         if (isPostLiked) {
-            this.props.tryUnlikePost(this.props.postId);
+            this.props.tryUnlikePost(this.props.postId, this.unlikeErrorCallback.bind(null, this));
         } else {
-            this.props.tryLikePost(this.props.postId);
+            this.props.tryLikePost(this.props.postId, this.likeErrorCallback.bind(null, this));
         }
 
+        // Changes icon display immediately so user thinks it worked (and does not reclick) while api request being processed
         this.setState({
             isPostLiked: !isPostLiked
-        })
+        });
+    }
+
+    likeErrorCallback(thisObject) {
+        // API request returns error so need to change state back
+        thisObject.setState({
+            isPostLiked: !thisObject.state.isPostLiked
+        });
+
+        alert("error liking post"); // TODO: implement some better alert system
+    }
+
+    unlikeErrorCallback(thisObject) {
+        // API request returns error so need to change state back
+        thisObject.setState({
+            isPostLiked: !thisObject.state.isPostLiked
+        });
+
+        alert("error unliking post"); // TODO: implement some better alert system
     }
 
     render() {
@@ -75,4 +94,4 @@ const mapDispatchToProps = {
 
 export default withStyles(styles)(
     connect(null, mapDispatchToProps)(PostLike)
-  )
+)
