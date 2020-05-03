@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 
 // Material UI
 import Button from '@material-ui/core/Button';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Avatar from '@material-ui/core/Avatar';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
