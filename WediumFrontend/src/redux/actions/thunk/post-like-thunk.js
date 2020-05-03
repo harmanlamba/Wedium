@@ -1,5 +1,11 @@
-import { likePost, unlikePost } from '../post-actions';
-import { likePostRequest, unlikePostRequest } from '../../../apis/post-like';
+import { 
+    likePost, 
+    unlikePost 
+} from '../post-actions';
+import { 
+    likePostRequest, 
+    unlikePostRequest 
+} from '../../../apis/post-like';
 
 export const tryLikePost = (postId, errorCallback) => {
     return dispatch => {
@@ -19,7 +25,8 @@ export const tryLikePost = (postId, errorCallback) => {
 export const tryUnlikePost = (postId, errorCallback) => {
     return dispatch => {
         unlikePostRequest(postId)
-            .then(status => {
+            .then(
+                status => {
                     if (status === 200) {
                         dispatch(unlikePost(postId));
                     }
