@@ -10,40 +10,39 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 class PostTypes extends Component {
+  componentDidMount() {
+    this.props.loadPostTypes();
+  }
 
-    componentDidMount() {
-        this.props.loadPostTypes();
-    }
+  render() {
+    const listItems = this.props.postTypes.map((postTypes, i) => (
+      <ListItem dense button key={i}>
+        <Typography variant="body2"> {postTypes.postType}</Typography>
+      </ListItem>
+    ));
 
-    render() {
-        const listItems = this.props.postTypes.map((postTypes, i) =>
-            <ListItem dense button key={i}>
-                <Typography variant="body2"> {postTypes.postType}</Typography>
-            </ListItem>
-        );
-
-        return (
-            <div>
-                <Typography variant="body1">Article Categories</Typography>
-                <Divider />
-                <List>{listItems}</List>
-                <Divider />
-            </div>
-        );
-    }
+    return (
+      <div>
+        <Typography variant="body1">Article Categories</Typography>
+        <Divider />
+        <List>{listItems}</List>
+        <Divider />
+      </div>
+    );
+  }
 }
 
 // Redux
 const mapStateToProps = (state) => {
-    return {
-        postTypes: state.postType.postTypes,
-    };
+  return {
+    postTypes: state.postType.postTypes,
+  };
 };
 
 const mapDispatchToProps = {
-    loadPostTypes
-}
+  loadPostTypes,
+};
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(PostTypes)
+  connect(mapStateToProps, mapDispatchToProps)(PostTypes)
 );

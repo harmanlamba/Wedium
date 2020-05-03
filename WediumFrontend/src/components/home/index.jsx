@@ -11,11 +11,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 // Components
 import Header from '../header';
-import PostTypes from './post-types'
-import PostFeed from '../post-feed'
+import PostTypes from './post-types';
+import PostFeed from '../post-feed';
 
 class Home extends Component {
-
   componentDidMount() {
     this.props.tryLogin();
   }
@@ -34,8 +33,8 @@ class Home extends Component {
           spacing={3}
           direction="row"
           justify="center"
-          alignItems="flex-start">
-
+          alignItems="flex-start"
+        >
           <Grid item xs={8}>
             <Paper>Search</Paper>
           </Grid>
@@ -64,7 +63,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
-  }
+  },
 });
 
 // Redux
@@ -75,9 +74,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  tryLogin
-}
+  tryLogin,
+};
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(withRouter(Home))
-)
+);

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/thunk/auth-thunk';
+import { withRouter } from 'react-router-dom';
 
 // Material UI
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import CreateIcon from '@material-ui/icons/Create';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
@@ -32,14 +34,28 @@ const UserMenu = (props) => {
     props.logoutUser();
   };
 
+  const handlePostRedirect = () => {
+    props.history.push('/create');
+  };
+
   return (
     <div>
+      <Button
+        className={classes.rightSpacing}
+        variant="contained"
+        color="primary"
+        onClick={handlePostRedirect}
+        size="small"
+      >
+        <CreateIcon className={classes.rightSpacing} />
+        Post
+      </Button>
       <Button onClick={handleMenuOpen}>
         {props.user.isAuthenticated ? (
           <Typography
+            className={classes.rightSpacing}
             variant="button"
             display="inline"
-            className={classes.rightSpacing}
           >
             {props.user.username}
           </Typography>
@@ -88,4 +104,4 @@ const useStyles = makeStyles((theme) => ({
 
 const mapDispatchToProps = { logoutUser };
 
-export default connect(null, mapDispatchToProps)(UserMenu);
+export default connect(null, mapDispatchToProps)(withRouter(UserMenu));

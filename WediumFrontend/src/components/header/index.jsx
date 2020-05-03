@@ -1,12 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 
 // Material UI
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 // Components
+import Button from '@material-ui/core/Button';
 import GoogleLoginButton from './google-login-button';
 import UserMenu from './user-menu';
 
@@ -17,11 +18,18 @@ const Header = (props) => {
   const isAuth = user.isAuthenticated;
 
   return (
-    <AppBar color="transparent" position="static" className={classes.appBar}>
+    <AppBar className={classes.appBar} color="transparent" position="static">
       <Toolbar variant="dense">
-        <Typography variant="h6" className={classes.title}>
-          Wedium
-        </Typography>
+        <div className={classes.titleContainer}>
+          <Button
+            className={classes.titleButton}
+            size="large"
+            disableRipple={true}
+            onClick={() => props.history.push('/')}
+          >
+            Wedium
+          </Button>
+        </div>
         {!isAuth && <GoogleLoginButton />}
         {isAuth && <UserMenu user={user} />}
       </Toolbar>
@@ -33,13 +41,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  title: {
+  titleContainer: {
     marginLeft: theme.spacing(2),
     flexGrow: 1,
+  },
+  titleButton: {
+    fontSize: '1.25em',
+    fontWeight: 'bold',
+    backgroundColor: 'transparent !important',
   },
   appBar: {
     padding: '5px 0',
   },
 }));
 
-export default Header;
+export default withRouter(Header);

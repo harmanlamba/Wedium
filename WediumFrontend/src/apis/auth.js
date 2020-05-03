@@ -3,7 +3,9 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export function postOneTimeToken(tokenBlob) {
-    return axios.post(API_URL + "/api/user/google", tokenBlob)
+    const endpoint = "/api/user/google";
+
+    return axios.post(API_URL + endpoint, tokenBlob)
         .then(response => {
             return {
                 "jwtToken": response.data.jwtToken,
@@ -16,13 +18,14 @@ export function postOneTimeToken(tokenBlob) {
 }
 
 export function checkJWTToken(tokenJSON) {
+    const endpoint = "/api/user";
     const tokenJSONConfig = {
         headers: {
             "Authorization": "Bearer " + tokenJSON
         }
     }
 
-    return axios.get(API_URL + "/api/user", tokenJSONConfig)
+    return axios.get(API_URL + endpoint, tokenJSONConfig)
         .then(response => {
             console.log("Get Request with JWT Token Response");
             console.log(response);

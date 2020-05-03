@@ -1,14 +1,11 @@
 import React from 'react';
-import { 
-  BrowserRouter as Router, 
-  Route, 
-  Switch 
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
 // Components
 import Home from './components/home';
+import CreatePost from './components/create-post';
 
 export const App = () => {
   return (
@@ -23,7 +20,7 @@ export const App = () => {
               <h1>Search Results Page</h1>
             </Route>
             <Route exact path="/create">
-              <h1>Create a Post Page</h1>
+              <CreatePost />
             </Route>
             <Route exact path="/post/:postType/:postID/:postTitle">
               <h1>Post Page</h1>
