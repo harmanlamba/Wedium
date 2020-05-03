@@ -20,6 +20,7 @@ const PostTypeButtons = (props) => {
 
   useEffect(() => {
     props.loadPostTypes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

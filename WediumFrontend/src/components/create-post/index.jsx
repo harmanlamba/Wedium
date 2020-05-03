@@ -16,6 +16,7 @@ import Header from '../header';
 const CreatePost = (props) => {
   useEffect(() => {
     props.tryLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { classes } = props;

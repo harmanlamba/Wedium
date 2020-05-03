@@ -13,7 +13,7 @@ export const App = () => {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route exact path="/" component={() => <Home />}>
+            <Route exact path="/">
               <Home />
             </Route>
             <Route exact path="/search">
