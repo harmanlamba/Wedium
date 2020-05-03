@@ -30,7 +30,9 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
         
         case LIKE_POST:
             var editedLikedPosts = [...state.posts];
-            editedLikedPosts[editedLikedPosts.findIndex(p => p.postId === action.postId)].isPostLiked = true;
+            var likedPostIndex = editedLikedPosts.findIndex(p => p.postId === action.postId);
+            editedLikedPosts[likedPostIndex].isPostLiked = true;
+            editedLikedPosts[likedPostIndex].numberOfLikes += 1;
 
             return {
                 ...state,
@@ -39,7 +41,9 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
         
         case UNLIKE_POST:
             var editedUnlikedPosts = [...state.posts];
-            editedUnlikedPosts[editedUnlikedPosts.findIndex(p => p.postId === action.postId)].isPostLiked = false;
+            var unlikedPostIndex = editedUnlikedPosts.findIndex(p => p.postId === action.postId);
+            editedUnlikedPosts[unlikedPostIndex].isPostLiked = false;
+            editedUnlikedPosts[unlikedPostIndex].numberOfLikes -= 1;
 
             return {
                 ...state,
