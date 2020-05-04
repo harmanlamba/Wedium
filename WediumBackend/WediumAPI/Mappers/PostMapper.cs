@@ -24,6 +24,9 @@ namespace WediumAPI.Mappers
                 // Post Type
                 PostType = post.PostType.PostTypeValue,
 
+                //Post Wiki Article Image
+                ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
+
                 // PostLikes
                 NumberOfLikes = post.PostLike.Count,
                 IsPostLiked = userId.HasValue ? (bool?)post.PostLike.Any(pl => pl.UserId == userId.Value) : null,
@@ -44,7 +47,7 @@ namespace WediumAPI.Mappers
             postDto.ArticleBody = post.WikiArticle.ArticleBody;
             postDto.ArticleTitle = post.WikiArticle.ArticleTitle;
             postDto.ArticleUrl = post.WikiArticle.Url;
-            postDto.ArticleImageUrl = post.WikiArticle.ArticleImageUrl;
+            
 
             return postDto;
         }
