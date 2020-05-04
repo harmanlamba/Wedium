@@ -24,12 +24,6 @@ namespace WediumAPI.Mappers
                 // Post Type
                 PostType = post.PostType.PostTypeValue,
 
-                // Wiki Article
-                ArticleBody = post.WikiArticle.ArticleBody,
-                ArticleTitle = post.WikiArticle.ArticleTitle,
-                ArticleUrl = post.WikiArticle.Url,
-                ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
-
                 // PostLikes
                 NumberOfLikes = post.PostLike.Count,
                 IsPostLiked = userId.HasValue ? (bool?)post.PostLike.Any(pl => pl.UserId == userId.Value) : null,
@@ -40,6 +34,19 @@ namespace WediumAPI.Mappers
                 // For Pagination
                 HasMore = true
             };
+        }
+
+        public static PostDto ToDtoIncludeWikiArticle(Post post, int? userId)
+        {
+            PostDto postDto = ToDto(post, userId);
+
+            // Wiki Article
+            postDto.ArticleBody = post.WikiArticle.ArticleBody;
+            postDto.ArticleTitle = post.WikiArticle.ArticleTitle;
+            postDto.ArticleUrl = post.WikiArticle.Url;
+            postDto.ArticleImageUrl = post.WikiArticle.ArticleImageUrl;
+
+            return postDto;
         }
 
         public static IEnumerable<PostDto> ToDto(IEnumerable<Post> postList, int? userId)

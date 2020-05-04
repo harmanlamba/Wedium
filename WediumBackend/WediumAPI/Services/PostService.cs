@@ -100,7 +100,7 @@ namespace WediumAPI.Services
                 .Include(p => p.PostLike)
                 .FirstOrDefault(p => p.PostId == postId) ?? throw new PostNotFoundException();
            
-            return PostMapper.ToDto(post, userId);
+            return PostMapper.ToDtoIncludeWikiArticle(post, userId);
         }
 
 
