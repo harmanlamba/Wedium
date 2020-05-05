@@ -45,7 +45,7 @@ class Home extends Component {
             <PostFeed />
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid item xs={2} className={classes.sidebar}>
             <PostTypes />
           </Grid>
         </Grid>
@@ -64,6 +64,11 @@ const styles = (theme) => ({
     margin: 0,
     width: '100%',
   },
+  sidebar: {
+    position: '-webkit-sticky',
+    position: 'sticky',
+    top: 20,
+  }
 });
 
 // Redux
