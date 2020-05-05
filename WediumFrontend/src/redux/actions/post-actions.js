@@ -1,10 +1,10 @@
-import { LOAD_POSTS_LOADING, LOAD_POSTS_SUCCESS, LOAD_POSTS_ERROR, LIKE_POST, UNLIKE_POST } from '../action-types/action-types'
-
-export function loadPostsLoading() {
-    return {
-        type: LOAD_POSTS_LOADING,
-    }
-}
+import { 
+    LOAD_POSTS_SUCCESS, 
+    LOAD_POSTS_ERROR, 
+    NO_POSTS,
+    LIKE_POST, 
+    UNLIKE_POST 
+} from '../action-types/action-types'
 
 export function loadPostsSuccess(posts) {
     return {
@@ -17,6 +17,12 @@ export function loadPostsError(err) {
     return {
         type: LOAD_POSTS_ERROR,
         err
+    }
+}
+
+export function noPosts() {
+    return {
+        type: NO_POSTS
     }
 }
 

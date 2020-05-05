@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-  loadInitialPosts,
-  loadMorePosts,
+  loadPosts,
 } from '../../redux/actions/thunk/post-thunk';
 
 // Components
@@ -13,7 +12,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
-    this.props.loadInitialPosts();
+    this.props.loadPosts(null, this.props.postType);
   }
 
   getLastPost() {
@@ -21,7 +20,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.getLastPost().postId);
+    return this.props.loadPosts(this.getLastPost().postId, this.props.postType);
   }
 
   hasMore() {
@@ -30,13 +29,15 @@ class PostFeed extends Component {
 
   render() {
     var items = [];
-    this.props.posts.map((post, i) => {
-      return items.push(<PostCard post={post} key={i} />);
-    });
+    if (this.props.posts.length > 0) {
+      this.props.posts.map((post, i) => {
+        return items.push(<PostCard post={post} key={i} />);
+      });
+    }
 
     return (
       <div>
-        {items.length > 0 && (
+        {(items.length > 0 && 
           <InfiniteScroll
             pageStart={0}
             loadMore={this.loadMore.bind(this)}
@@ -46,7 +47,11 @@ class PostFeed extends Component {
           >
             {items}
           </InfiniteScroll>
-        )}
+        ) ||
+        (this.props.posts !== false &&
+          <LoadingPostCard />
+        ) ||
+        ("No Posts")}
       </div>
     );
   }
@@ -60,8 +65,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  loadInitialPosts,
-  loadMorePosts,
+  loadPosts,
 };
 
 export default withRouter(

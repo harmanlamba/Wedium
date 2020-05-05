@@ -1,7 +1,7 @@
 import {
-    LOAD_POSTS_LOADING,
     LOAD_POSTS_SUCCESS,
     LOAD_POSTS_ERROR,
+    NO_POSTS,
     LIKE_POST,
     UNLIKE_POST
 } from '../action-types/action-types';
@@ -12,10 +12,6 @@ const INIT_POST_REDUCER_STATE = ({
 
 export default function events(state = INIT_POST_REDUCER_STATE, action) {
     switch (action.type) {
-        case LOAD_POSTS_LOADING:
-            return {
-                ...state
-            };
         case LOAD_POSTS_SUCCESS:            
             return {
                 ...state,
@@ -27,6 +23,12 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
                 ...state,
                 posts: [...state.posts],
             };
+        
+        case NO_POSTS:
+            return {
+                ...state,
+                posts: false,
+            }
         
         case LIKE_POST:
             var editedLikedPosts = [...state.posts];

@@ -5,14 +5,28 @@ import { createHeader } from "./util/header-util"
 const API_URL = process.env.REACT_APP_API_URL;
 const LIMIT = 5;
 
-export function getPosts(postId) {
+export function getPosts(afterPostId, postType, searchString) {
     const header = createHeader();
-    const endpoint = `${API_URL}/api/post/Get?limit=${LIMIT}` + (postId ? `&after_id=${postId}` : "");
+    var queryString = `?limit=${LIMIT}`;
+    
+    if (afterPostId) {
+        queryString += `&after_id=${afterPostId}`;
+    }
+
+    if (postType) {
+        queryString += `&postType=${postType}`;
+    }
+
+    if (searchString) {
+        searchString += `&searchString=${searchString}`;
+    }
+
+    const endpoint = `${API_URL}/api/post/Get${queryString}`;
 
     return axios.get(endpoint, header)
         .then(response => { 
             return response.data 
-        })
+        });
 }
 
 export function createPost(postDto) {

@@ -1,29 +1,23 @@
 import {
-    loadPostsLoading,
     loadPostsSuccess,
-    loadPostsError
+    loadPostsError,
+    noPosts
 } from '../post-actions';
 import {
     getPosts,
 } from '../../../apis/post';
 
-export function loadInitialPosts() {
+export function loadPosts(afterPostId, postType, searchString) {
     return dispatch => {
-        dispatch(loadPostsLoading());
-
-        getPosts()
+        getPosts(afterPostId, postType, searchString)
             .then(
-                posts => dispatch(loadPostsSuccess(posts)),
-
-                error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
-    }
-}
-
-export function loadMorePosts(postId) {
-    return dispatch => {
-        getPosts(postId)
-            .then(
-                posts => dispatch(loadPostsSuccess(posts)),
+                posts => {
+                    if (!afterPostId && !posts.length) {
+                        dispatch(noPosts());
+                    } else {
+                        dispatch(loadPostsSuccess(posts));
+                    }
+                },
 
                 error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
     }
