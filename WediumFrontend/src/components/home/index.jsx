@@ -69,7 +69,7 @@ const styles = (theme) => ({
   sidebar: {
     position: '-webkit-sticky',
     position: 'sticky',
-    top: 20,
+    top: 40,
   }
 });
 

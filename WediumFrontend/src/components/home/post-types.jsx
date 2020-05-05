@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 class PostTypes extends Component {
   componentDidMount() {
-    if (!this.props.postTypes || this.props.postTypes.length <= 0) {
+    if (!this.props.postTypes || !this.props.postTypes.length) {
       this.props.loadPostTypes();
     }
   }
@@ -27,22 +27,24 @@ class PostTypes extends Component {
     const currentPostType = this.props.currentPostType;
 
     const listItems = this.props.postTypes.map((postTypes, i) => (
-      <ListItem dense button key={i} onClick={() => this.onClick(`/post/${postTypes.postType}`)} className={currentPostType === postTypes.postType ? classes.currentSelection : ""}>
+      <ListItem dense button key={i} onClick={() => this.onClick(`/post/${postTypes.postType}`)} className={`${classes.toggleButton} ${currentPostType === postTypes.postType ? classes.active : ""}`}>
         <Typography variant="body2"> {postTypes.postType}</Typography>
       </ListItem>
     ));
 
     listItems.unshift(
-      <ListItem dense button key="all" onClick={() => this.onClick("/")} className={currentPostType ? "" : classes.currentSelection}>
+      <ListItem dense button key="all" onClick={() => this.onClick("/")} className={`${classes.toggleButton} ${currentPostType ? "" : classes.active}`}>
         <Typography variant="body2">All</Typography>
       </ListItem>
     );
 
     return (
       <div>
-        <Typography variant="body1">Article Categories</Typography>
+        <br />
         <Divider />
-        <List>{listItems}</List>
+        <br />
+        <List className={classes.list}>{listItems}</List>
+        <br />
         <Divider />
       </div>
     );
@@ -50,8 +52,22 @@ class PostTypes extends Component {
 }
 
 const styles = (theme) => ({
-  currentSelection: {
-    background: 'rgba(0, 0, 0, 0.04)',
+  list: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    backgroundColor: 'transparent !important',
+    margin: '0 8px'
+  },
+  toggleButton: {
+    margin: '2px',
+    border: '1px solid #c4c4c4 !important',
+    borderRadius: '20px !important',
+    padding: '8px 16px',
+    width: 'fit-content',
+  },
+  active: {
+    backgroundColor: '#3f51b5 !important',
+    color: '#fff !important',
   },
 });
 

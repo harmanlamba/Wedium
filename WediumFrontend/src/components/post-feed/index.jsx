@@ -3,6 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
 
+// Material UI
+import Container from '@material-ui/core/Container';
+import { withStyles } from '@material-ui/core/styles';
+
 // Components
 import PostCard from './post-card';
 import LoadingPostCard from './loading-post-card';
@@ -36,6 +40,8 @@ class PostFeed extends Component {
   }
 
   render() {
+    const classes = this.props.classes;
+
     var items = [];
     if (this.props.posts.length > 0) {
       this.props.posts.map((post, i) => {
@@ -59,11 +65,22 @@ class PostFeed extends Component {
             {items}
           </InfiniteScroll>
         ) ||
-        ("No Posts")}
+        (<Container className={classes.notFound}>
+          No Posts Found 😿
+          </Container>)}
       </div>
     );
   }
 }
+
+const styles = (theme) => ({
+  notFound: {
+    textAlign: 'center',
+    color: '#bbbbbb',
+    fontSize: '1.4em',
+    margin: '80px 0'
+  }
+});
 
 // Redux
 const mapStateToProps = (state) => {
@@ -79,5 +96,7 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PostFeed)
+  withStyles(styles)(
+    connect(mapStateToProps, mapDispatchToProps)(PostFeed)
+  )
 );
