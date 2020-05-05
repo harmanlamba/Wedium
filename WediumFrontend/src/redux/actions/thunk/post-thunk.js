@@ -1,8 +1,8 @@
 import {
+    loadPostsLoading,
     loadPostsSuccess,
     loadMorePostsSuccess,
     loadPostsError,
-    noPosts
 } from '../post-actions';
 import {
     getPosts,
@@ -10,15 +10,11 @@ import {
 
 export function loadInitialPosts(postType, searchString) {
     return dispatch => {
+        dispatch(loadPostsLoading());
+
         getPosts(null, postType, searchString)
             .then(
-                posts => {
-                    if (!posts.length) {
-                        dispatch(noPosts());
-                    } else {
-                        dispatch(loadPostsSuccess(posts));
-                    }
-                },
+                posts => dispatch(loadPostsSuccess(posts)),
 
                 error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
     }

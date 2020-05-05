@@ -45,7 +45,10 @@ class PostFeed extends Component {
 
     return (
       <div>
-        {(items.length > 0 && 
+        {(this.props.postsLoading &&
+          <LoadingPostCard />
+        ) || 
+        (items.length > 0 && 
           <InfiniteScroll
             pageStart={0}
             loadMore={this.loadMore.bind(this)}
@@ -55,9 +58,6 @@ class PostFeed extends Component {
           >
             {items}
           </InfiniteScroll>
-        ) ||
-        (this.props.posts !== false &&
-          <LoadingPostCard />
         ) ||
         ("No Posts")}
       </div>
@@ -69,6 +69,7 @@ class PostFeed extends Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.post.posts,
+    postsLoading: state.post.initialPostsLoading,
   };
 };
 
