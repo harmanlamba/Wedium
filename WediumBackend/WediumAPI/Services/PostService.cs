@@ -70,21 +70,27 @@ namespace WediumAPI.Services
                     .Where(p => p.PostType.PostTypeValue.Equals(postType));
             }
 
+            // Adds 1 to limit to efficiently calculate hasMore of last element in list (while ensuring correctness if posttype/search filters present)
+            int limitApplied = (limit.HasValue ? limit.Value : _options.GetPostDefaultLimit) + 1;
+
             List<Post> postList = postListQuery
                 .OrderByDescending(p => p.Date)
-                .Take(limit.HasValue ? limit.Value : _options.GetPostDefaultLimit)
+                .Take(limitApplied)
                 .Include(p => p.User)
                 .Include(p => p.PostLike)
                 .Include(p => p.Favourite)
                 .ToList();
 
             IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList, userId).ToList();
-            
-            // Sets HasMore of last Post
-            if (postDtoList.Any())
+
+            if (postDtoList.Count() == limitApplied)
+            {
+                postDtoList = postDtoList.SkipLast(1);
+            }
+            else if (postDtoList.Any())
             {
                 PostDto lastPost = postDtoList.Last();
-                lastPost.HasMore = _db.Post.Any(p => p.Date < lastPost.Date);
+                lastPost.HasMore = false;
             }
 
             return postDtoList;
