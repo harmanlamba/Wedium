@@ -66,7 +66,7 @@ class PostFeed extends Component {
           </InfiniteScroll>
         ) ||
         (<Container className={classes.notFound}>
-          No Posts Found 😿
+          No Posts Found <span role="img" aria-label="sad cat">😿</span>
           </Container>)}
       </div>
     );

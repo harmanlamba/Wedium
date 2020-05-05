@@ -43,7 +43,7 @@ class PostTypes extends Component {
         <br />
         <Divider />
         <br />
-        <List className={classes.list}>{listItems}</List>
+        {listItems.length <= 1 ? "" : <List className={classes.list}>{listItems}</List>}
         <br />
         <Divider />
       </div>
@@ -64,6 +64,7 @@ const styles = (theme) => ({
     borderRadius: '20px !important',
     padding: '8px 16px',
     width: 'fit-content',
+    backgroundColor: '#ffffff',
   },
   active: {
     backgroundColor: '#3f51b5 !important',
