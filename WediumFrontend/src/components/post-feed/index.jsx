@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadPosts, clearAllPosts } from '../../redux/actions/thunk/post-thunk';
+import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
 
 // Components
 import PostCard from './post-card';
@@ -15,13 +15,12 @@ class PostFeed extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.postType !== prevProps.postType) {
-      this.props.clearAllPosts();
       this.loadInitial();
     }
   }
 
   loadInitial() {
-    this.props.loadPosts(null, this.props.postType);
+    this.props.loadInitialPosts(this.props.postType);
   }
 
   getLastPost() {
@@ -29,7 +28,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadPosts(this.getLastPost().postId, this.props.postType);
+    return this.props.loadMorePosts(this.getLastPost().postId, this.props.postType);
   }
 
   hasMore() {
@@ -74,8 +73,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  loadPosts,
-  clearAllPosts,
+  loadInitialPosts,
+  loadMorePosts,
 };
 
 export default withRouter(

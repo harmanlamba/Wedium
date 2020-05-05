@@ -1,21 +1,22 @@
 import { 
-    CLEAR_POSTS,
     LOAD_POSTS_SUCCESS, 
+    LOAD_MORE_POSTS_SUCCESS,
     LOAD_POSTS_ERROR, 
     NO_POSTS,
     LIKE_POST, 
     UNLIKE_POST 
 } from '../action-types/action-types'
 
-export function clearPosts() {
-    return {
-        type: CLEAR_POSTS,
-    }
-}
-
 export function loadPostsSuccess(posts) {
     return {
         type: LOAD_POSTS_SUCCESS,
+        posts,
+    }
+}
+
+export function loadMorePostsSuccess(posts) {
+    return {
+        type: LOAD_MORE_POSTS_SUCCESS,
         posts,
     }
 }
