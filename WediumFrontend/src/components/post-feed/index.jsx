@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  loadPosts,
-} from '../../redux/actions/thunk/post-thunk';
+import { loadPosts, clearAllPosts } from '../../redux/actions/thunk/post-thunk';
 
 // Components
 import PostCard from './post-card';
@@ -12,6 +10,17 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
+    this.loadInitial();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.postType !== prevProps.postType) {
+      this.props.clearAllPosts();
+      this.loadInitial();
+    }
+  }
+
+  loadInitial() {
     this.props.loadPosts(null, this.props.postType);
   }
 
@@ -66,6 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   loadPosts,
+  clearAllPosts,
 };
 
 export default withRouter(

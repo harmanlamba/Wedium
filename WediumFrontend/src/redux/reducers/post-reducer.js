@@ -1,4 +1,5 @@
 import {
+    CLEAR_POSTS,
     LOAD_POSTS_SUCCESS,
     LOAD_POSTS_ERROR,
     NO_POSTS,
@@ -12,6 +13,12 @@ const INIT_POST_REDUCER_STATE = ({
 
 export default function events(state = INIT_POST_REDUCER_STATE, action) {
     switch (action.type) {
+        case CLEAR_POSTS:
+            return {
+                ...state,
+                posts: [],
+            }
+
         case LOAD_POSTS_SUCCESS:            
             return {
                 ...state,

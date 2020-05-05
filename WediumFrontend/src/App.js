@@ -25,6 +25,7 @@ export const App = () => {
             <Route exact path="/post/:postType/:postID/:postTitle">
               <h1>Post Page</h1>
             </Route>
+            <Route exact path="/post/:postType" component={Home} />
             <Route exact path="/user/:username">
               <h1>User Profile Page</h1>
             </Route>

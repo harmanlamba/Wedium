@@ -1,4 +1,5 @@
 import {
+    clearPosts,
     loadPostsSuccess,
     loadPostsError,
     noPosts
@@ -20,5 +21,11 @@ export function loadPosts(afterPostId, postType, searchString) {
                 },
 
                 error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
+    }
+}
+
+export function clearAllPosts() {
+    return dispatch => {
+        dispatch(clearPosts());
     }
 }

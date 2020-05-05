@@ -24,6 +24,8 @@ class Home extends Component {
 
     const user = this.props.auth;
 
+    const currentPostType = this.props.match.params.postType
+
     return (
       <div>
         <Header user={user} />
@@ -42,11 +44,11 @@ class Home extends Component {
           <Grid item xs={6}>
             <Paper>Filter Bar</Paper>
             <br />
-            <PostFeed />
+            <PostFeed postType={currentPostType} />
           </Grid>
 
           <Grid item xs={2} className={classes.sidebar}>
-            <PostTypes />
+            <PostTypes currentPostType={currentPostType} />
           </Grid>
         </Grid>
       </div>
