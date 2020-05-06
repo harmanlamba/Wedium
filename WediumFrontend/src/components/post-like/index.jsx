@@ -11,39 +11,26 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Typography } from '@material-ui/core';
 
 const PostLike = (props) => {
-    const [isLiked, setIsLiked] = useState(null);
-    const [numberOfLikes, setNumberOfLikes] = useState(null);
     const { classes } = props;
 
-    useEffect(() => {
-        setIsLiked(props.isPostLiked);
-        setNumberOfLikes(props.numberOfLikes);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const onButtonClick = () => {
-        if (isLiked) {
+        if (props.isPostLiked) {
             props.tryUnlikePost(props.postId, errorCallback);
-            setNumberOfLikes(numberOfLikes - 1);
         } else {
             props.tryLikePost(props.postId, errorCallback);
-            setNumberOfLikes(numberOfLikes + 1);
         }
-        setIsLiked(!isLiked);
     }
 
     const errorCallback = () => {
-        setIsLiked(isLiked);
-        setNumberOfLikes(numberOfLikes);
         alert("error liking or unliking post"); // TODO: implement some better alert system
     }
 
     return (
-        isLiked !== null &&
+        props.isPostLiked !== null &&
         <div className={classes.root}>
-            <Typography className={classes.text} color='textSecondary'>{numberOfLikes}</Typography>
+            <Typography className={classes.text} color='textSecondary'>{props.numberOfLikes}</Typography>
             <IconButton onClick={() => onButtonClick()} >
-                {isLiked ?
+                {props.isPostLiked ?
                     <FavoriteIcon className={classes.likedIcon} />
                     : <FavoriteBorderIcon className={classes.unlikedIcon} />}
             </IconButton>

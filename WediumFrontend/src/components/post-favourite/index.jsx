@@ -10,32 +10,24 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 const PostFavourite = (props) => {
-  const [isFavourited, setIsFavourited] = useState(null);
   const { classes } = props;
 
-  useEffect(() => {
-    setIsFavourited(props.isFavourited);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const onButtonClick = () => {
-    if (isFavourited) {
+    if (props.isFavourited) {
       props.tryUnfavouritePost(props.postId, errorCallback);
     } else {
       props.tryFavouritePost(props.postId, errorCallback);
     }
-    setIsFavourited(!isFavourited);
   }
 
   const errorCallback = () => {
-    setIsFavourited(isFavourited);
     alert("Error favouriting or unfavouriting a post");  // TODO: implement some better alert system
   };
 
   return (
-    isFavourited !== null &&
+    props.isFavourited !== null &&
     <IconButton onClick={() => { onButtonClick() }}>
-      {isFavourited ?
+      {props.isFavourited ?
         <BookmarkIcon className={classes.favouritedIcon} />
         : <BookmarkBorderIcon className={classes.unfavouritedIcon} />}
     </IconButton>

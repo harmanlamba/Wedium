@@ -44,8 +44,10 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
         case LIKE_POST:
             const editedLikedPosts = [...state.posts];
             const likedPostIndex = editedLikedPosts.findIndex(p => p.postId === action.postId);
-            editedLikedPosts[likedPostIndex].isPostLiked = true;
-            editedLikedPosts[likedPostIndex].numberOfLikes += 1;
+            if (likedPostIndex !== -1 && editedLikedPosts.length && editedLikedPosts[likedPostIndex]) {
+                editedLikedPosts[likedPostIndex].isPostLiked = true;
+                editedLikedPosts[likedPostIndex].numberOfLikes += 1;
+            }
 
             return {
                 ...state,
@@ -55,8 +57,10 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
         case UNLIKE_POST:
             const editedUnlikedPosts = [...state.posts];
             const unlikedPostIndex = editedUnlikedPosts.findIndex(p => p.postId === action.postId);
-            editedUnlikedPosts[unlikedPostIndex].isPostLiked = false;
-            editedUnlikedPosts[unlikedPostIndex].numberOfLikes -= 1;
+            if (unlikedPostIndex !== -1 && editedUnlikedPosts.length && editedUnlikedPosts[unlikedPostIndex]) {
+                editedUnlikedPosts[unlikedPostIndex].isPostLiked = false;
+                editedUnlikedPosts[unlikedPostIndex].numberOfLikes -= 1;
+            }
 
             return {
                 ...state,
@@ -66,7 +70,9 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
             case FAVOURITE_POST:
             const editedFavouritedPosts = [...state.posts];
             const favouriteIndex = editedFavouritedPosts.findIndex(p => p.postId === action.postId);
-            editedFavouritedPosts[favouriteIndex].isFavourited = true;
+            if (favouriteIndex !== -1 && editedFavouritedPosts.length && editedFavouritedPosts[favouriteIndex]) {
+                editedFavouritedPosts[favouriteIndex].isFavourited = true;
+            }
 
             return {
                 ...state,
@@ -76,7 +82,9 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
         case UNFAVOURITE_POST:
             const editedUnfavouritedPosts = [...state.posts];
             const unfavouriteIndex = editedUnfavouritedPosts.findIndex(p => p.postId === action.postId);
-            editedUnfavouritedPosts[unfavouriteIndex].isFavourited = false;
+            if (unfavouriteIndex !== -1 && editedUnfavouritedPosts.length && editedUnfavouritedPosts[unfavouriteIndex]) {
+                editedUnfavouritedPosts[unfavouriteIndex].isFavourited = false;
+            }
 
             return {
                 ...state,
