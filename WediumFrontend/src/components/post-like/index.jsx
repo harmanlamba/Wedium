@@ -27,12 +27,12 @@ class PostLike extends Component {
         if (isPostLiked) {
             this.props.tryUnlikePost(this.props.postId, this.unlikeErrorCallback.bind(null, this));
             this.setState({
-                numberOfLikes: this.state.numberOfLikes - 1
+                numberOfLikes: this.state.numberOfLikes - 1,
             });
         } else {
             this.props.tryLikePost(this.props.postId, this.likeErrorCallback.bind(null, this));
             this.setState({
-                numberOfLikes: this.state.numberOfLikes + 1
+                numberOfLikes: this.state.numberOfLikes + 1,
             });
         }
 
@@ -45,7 +45,8 @@ class PostLike extends Component {
     likeErrorCallback(thisObject) {
         // API request returns error so need to change state back
         thisObject.setState({
-            isPostLiked: !thisObject.state.isPostLiked
+            isPostLiked: !thisObject.state.isPostLiked,
+            numberOfLikes: thisObject.state.numberOfLikes - 1,
         });
 
         alert("error liking post"); // TODO: implement some better alert system
@@ -54,7 +55,8 @@ class PostLike extends Component {
     unlikeErrorCallback(thisObject) {
         // API request returns error so need to change state back
         thisObject.setState({
-            isPostLiked: !thisObject.state.isPostLiked
+            isPostLiked: !thisObject.state.isPostLiked,
+            numberOfLikes: thisObject.state.numberOfLikes + 1,
         });
 
         alert("error unliking post"); // TODO: implement some better alert system
