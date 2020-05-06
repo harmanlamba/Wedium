@@ -28,7 +28,7 @@ const PostFavourite = (props) => {
   }
 
   const errorCallback = () => {
-    setIsFavourited(!isFavourited);
+    setIsFavourited(isFavourited);
     alert("Error favouriting or unfavouriting a post");  // TODO: implement some better alert system
   };
 
