@@ -36,12 +36,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: 24,
+    borderRadius: 0,
   },
   image: {
     width: 140,
     height: 128,
     border: '2px solid gainsboro',
     marginTop: 16,
-    marginRight: 8,
+    marginRight: 16,
   },
 }));

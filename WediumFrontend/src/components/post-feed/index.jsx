@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  loadInitialPosts,
-  loadMorePosts,
-} from '../../redux/actions/thunk/post-thunk';
+import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
+
+// Material UI
+import Container from '@material-ui/core/Container';
+import { withStyles } from '@material-ui/core/styles';
 
 // Components
 import PostCard from './post-card';
@@ -13,7 +14,17 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
-    this.props.loadInitialPosts();
+    this.loadInitial();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.postType !== prevProps.postType) {
+      this.loadInitial();
+    }
+  }
+
+  loadInitial() {
+    this.props.loadInitialPosts(this.props.postType);
   }
 
   getLastPost() {
@@ -21,7 +32,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.getLastPost().postId);
+    return this.props.loadMorePosts(this.getLastPost().postId, this.props.postType);
   }
 
   hasMore() {
@@ -29,6 +40,8 @@ class PostFeed extends Component {
   }
 
   render() {
+    const classes = this.props.classes;
+
     var items = [];
     this.props.posts.map((post, i) => {
       return items.push(<PostCard post={post} key={i} />);
@@ -36,7 +49,10 @@ class PostFeed extends Component {
 
     return (
       <div>
-        {items.length > 0 && (
+        {(this.props.postsLoading &&
+          <LoadingPostCard />
+        ) || 
+        (items.length > 0 && 
           <InfiniteScroll
             pageStart={0}
             loadMore={this.loadMore.bind(this)}
@@ -46,16 +62,29 @@ class PostFeed extends Component {
           >
             {items}
           </InfiniteScroll>
-        )}
+        ) ||
+        (<Container className={classes.notFound}>
+          No Posts Found <span role="img" aria-label="sad cat">😿</span>
+          </Container>)}
       </div>
     );
   }
 }
 
+const styles = (theme) => ({
+  notFound: {
+    textAlign: 'center',
+    color: '#bbbbbb',
+    fontSize: '1.4em',
+    margin: '80px 0'
+  }
+});
+
 // Redux
 const mapStateToProps = (state) => {
   return {
     posts: state.post.posts,
+    postsLoading: state.post.initialPostsLoading,
   };
 };
 
@@ -65,5 +94,7 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PostFeed)
+  withStyles(styles)(
+    connect(mapStateToProps, mapDispatchToProps)(PostFeed)
+  )
 );

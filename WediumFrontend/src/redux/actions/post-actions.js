@@ -1,4 +1,11 @@
-import { LOAD_POSTS_LOADING, LOAD_POSTS_SUCCESS, LOAD_POSTS_ERROR, LIKE_POST, UNLIKE_POST } from '../action-types/action-types'
+import { 
+    LOAD_POSTS_LOADING,
+    LOAD_POSTS_SUCCESS, 
+    LOAD_MORE_POSTS_SUCCESS,
+    LOAD_POSTS_ERROR, 
+    LIKE_POST, 
+    UNLIKE_POST, 
+} from '../action-types/action-types'
 
 export function loadPostsLoading() {
     return {
@@ -9,27 +16,34 @@ export function loadPostsLoading() {
 export function loadPostsSuccess(posts) {
     return {
         type: LOAD_POSTS_SUCCESS,
-        posts
+        posts,
+    }
+}
+
+export function loadMorePostsSuccess(posts) {
+    return {
+        type: LOAD_MORE_POSTS_SUCCESS,
+        posts,
     }
 }
 
 export function loadPostsError(err) {
     return {
         type: LOAD_POSTS_ERROR,
-        err
+        err,
     }
 }
 
 export function likePost(postId) {
     return {
         type: LIKE_POST,
-        postId
+        postId,
     }
 }
 
 export function unlikePost(postId) {
     return {
         type: UNLIKE_POST,
-        postId
+        postId,
     }
 }
