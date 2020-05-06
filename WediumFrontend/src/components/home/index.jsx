@@ -24,6 +24,8 @@ class Home extends Component {
 
     const user = this.props.auth;
 
+    const currentPostType = this.props.match.params.postType;
+
     return (
       <div>
         <Header user={user} />
@@ -42,11 +44,11 @@ class Home extends Component {
           <Grid item xs={6}>
             <Paper>Filter Bar</Paper>
             <br />
-            <PostFeed />
+            <PostFeed postType={currentPostType} />
           </Grid>
 
-          <Grid item xs={2}>
-            <PostTypes />
+          <Grid item xs={2} className={classes.sidebar}>
+            <PostTypes currentPostType={currentPostType} />
           </Grid>
         </Grid>
       </div>
@@ -63,6 +65,11 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
+  },
+  sidebar: {
+    position: '-webkit-sticky',
+    position: 'sticky',
+    top: 40,
   },
 });
 
