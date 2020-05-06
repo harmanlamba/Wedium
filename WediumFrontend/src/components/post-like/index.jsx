@@ -5,9 +5,9 @@ import { tryLikePost, tryUnlikePost } from '../../redux/actions/thunk/post-like-
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/Button';
-import LikedIcon from '@material-ui/icons/ThumbUp';
-import UnlikedIcon from '@material-ui/icons/ThumbUpTwoTone';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 class PostLike extends Component {
 
@@ -60,11 +60,10 @@ class PostLike extends Component {
         const { classes } = this.props;
 
         return (
-            <IconButton
-                onClick={() => {this.onButtonClick()}}
-                className={classes.button}
-            >
-                {this.state.isPostLiked ? <LikedIcon />: <UnlikedIcon className={classes.unlikedIcon} />}
+            <IconButton onClick={() => {this.onButtonClick()}} >
+                {this.state.isPostLiked ? 
+                <FavoriteIcon className={classes.likedIcon} />
+                : <FavoriteBorderIcon className={classes.unlikedIcon} />}
             </IconButton>
         );
     }
@@ -75,13 +74,12 @@ PostLike.propTypes = {
 };
   
 const styles = (theme) => ({
-    button: {
-        width: 60,
-        height: 60,
-    },
     unlikedIcon: {
         opacity: 0.3
-    }
+    },
+    likedIcon: {
+        opacity: 0.8
+    },
 });
 
 const mapDispatchToProps = {
