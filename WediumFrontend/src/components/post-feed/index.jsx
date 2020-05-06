@@ -29,25 +29,23 @@ class PostFeed extends Component {
   }
 
   render() {
-    var items = [];
+    const items = [];
     this.props.posts.map((post, i) => {
       return items.push(<PostCard post={post} key={i} />);
     });
 
     return (
-      <div>
-        {items.length > 0 && (
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadMore.bind(this)}
-            hasMore={this.hasMore()}
-            loader={<LoadingPostCard key={0} />}
-            threshold={400}
-          >
-            {items}
-          </InfiniteScroll>
-        )}
-      </div>
+      items.length > 0 && (
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={this.loadMore.bind(this)}
+          hasMore={this.hasMore()}
+          loader={<LoadingPostCard key={0} />}
+          threshold={400}
+        >
+          {items}
+        </InfiniteScroll>
+      )
     );
   }
 }
