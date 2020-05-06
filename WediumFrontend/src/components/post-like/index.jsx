@@ -26,14 +26,19 @@ const PostLike = (props) => {
     }
 
     return (
-        props.isPostLiked !== null &&
         <div className={classes.root}>
             <Typography className={classes.text} color='textSecondary'>{props.numberOfLikes}</Typography>
-            <IconButton onClick={() => onButtonClick()} >
-                {props.isPostLiked ?
-                    <FavoriteIcon className={classes.likedIcon} />
-                    : <FavoriteBorderIcon className={classes.unlikedIcon} />}
-            </IconButton>
+            {props.isPostLiked !== null ? (
+                <IconButton onClick={() => onButtonClick()} >
+                    {props.isPostLiked ?
+                        <FavoriteIcon className={classes.likedIcon} />
+                        : <FavoriteBorderIcon className={classes.unlikedIcon} />}
+                </IconButton>
+            ) : (
+                    <IconButton disabled >
+                        <FavoriteIcon />
+                    </IconButton>
+                )}
         </div>
     );
 }
