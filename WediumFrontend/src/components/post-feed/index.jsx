@@ -43,11 +43,9 @@ class PostFeed extends Component {
     const classes = this.props.classes;
 
     var items = [];
-    if (this.props.posts.length > 0) {
-      this.props.posts.map((post, i) => {
-        return items.push(<PostCard post={post} key={i} />);
-      });
-    }
+    this.props.posts.map((post, i) => {
+      return items.push(<PostCard post={post} key={i} />);
+    });
 
     return (
       <div>
