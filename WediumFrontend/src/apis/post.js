@@ -3,7 +3,7 @@ import axios from "axios";
 import { createHeader } from "./util/header-util"
 
 const API_URL = process.env.REACT_APP_API_URL;
-const LIMIT = 5;
+const LIMIT = 15;
 
 export function getPosts(afterPostId, postType, searchString) {
     const header = createHeader();
@@ -18,7 +18,7 @@ export function getPosts(afterPostId, postType, searchString) {
     }
 
     if (searchString) {
-        searchString += `&searchString=${searchString}`;
+        queryString += `&search=${searchString}`;
     }
 
     const endpoint = `${API_URL}/api/post/Get${queryString}`;

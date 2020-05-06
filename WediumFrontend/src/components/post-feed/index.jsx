@@ -18,13 +18,13 @@ class PostFeed extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.postType !== prevProps.postType) {
+    if (this.props.postType !== prevProps.postType || this.props.searchString !== prevProps.searchString) {
       this.loadInitial();
     }
   }
 
   loadInitial() {
-    this.props.loadInitialPosts(this.props.postType);
+    this.props.loadInitialPosts(this.props.postType, this.props.searchString);
   }
 
   getLastPost() {
@@ -32,7 +32,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.getLastPost().postId, this.props.postType);
+    return this.props.loadMorePosts(this.getLastPost().postId, this.props.postType, this.props.searchString);
   }
 
   hasMore() {

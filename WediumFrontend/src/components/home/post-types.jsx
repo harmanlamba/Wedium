@@ -18,7 +18,7 @@ class PostTypes extends Component {
   }
 
   onClick(redirectRoute) {
-    this.props.history.push(redirectRoute);
+    this.props.history.push(redirectRoute + this.props.location.search);
   }
 
   render() {
@@ -56,7 +56,6 @@ class PostTypes extends Component {
 
     return (
       <div>
-        <br />
         <Divider />
         <br />
         {listItems.length <= 1 ? (

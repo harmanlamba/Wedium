@@ -7,11 +7,15 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
 // Components
 import Header from '../header';
 import PostTypes from './post-types';
 import PostFeed from '../post-feed';
+
+const qs = require('query-string');
 
 class Home extends Component {
   componentDidMount() {
@@ -24,10 +28,11 @@ class Home extends Component {
     const user = this.props.auth;
 
     const currentPostType = this.props.match.params.postType;
+    const searchString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).search;
 
     return (
       <div>
-        <Header user={user} />
+        <Header user={user} showSearch={true} />
         <Grid
           className={classes.grid}
           container
@@ -36,9 +41,14 @@ class Home extends Component {
           justify="center"
           alignItems="flex-start"
         >
+          <Grid item xs={8}>
+            {searchString !== undefined && 
+            <Card className={classes.search}>
+              <Typography variant="h5">Search results for: {searchString}</Typography>
+            </Card>}
+          </Grid>
           <Grid item xs={6}>
-            <br />
-            <PostFeed postType={currentPostType} />
+            <PostFeed postType={currentPostType} searchString={searchString} />
           </Grid>
 
           <Grid item xs={2} className={classes.sidebar}>
@@ -59,6 +69,10 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
+  },
+  search: {
+    borderRadius: 0,
+    padding: 10,
   },
   sidebar: {
     position: '-webkit-sticky',

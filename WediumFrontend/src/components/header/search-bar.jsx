@@ -1,75 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import InputBase from '@material-ui/core/InputBase';
-import { fade } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+import TextField from "@material-ui/core/TextField";
+import { InputAdornment } from "@material-ui/core";
+import { Search } from "@material-ui/icons";
+import IconButton from "@material-ui/core/IconButton";
 
 const SearchBar = (props) => {
     const classes = useStyles();
+    const history = useHistory();
 
-    const handleMenuClose = () => {
+    const [searchText, setSearchText] = useState("");
+
+    const onTextChange = (e) => {
+      if (e.target.value === "") {
+        history.push("/");
+      }
+
+      setSearchText(e.target.value);
+    };
+
+    const searchOnEnter = (e) => {
+      if (e.which === 13 || e.keyCode === 13) {
+        if (searchText) {
+          history.push({
+            search: `?search=${searchText}`,
+          });
+        } else {
+          history.push({
+            search: "",
+          });
+        }
+      }
     };
 
     return (
-        <div className={classes.search}>
-            <div className={classes.searchIcon}>
-                <SearchIcon />
-            </div>
-            <InputBase
-                placeholder="Search…"
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-            />
-        </div>
+      <TextField
+        id="standard-search"
+        variant="outlined"
+        className={classes.root}
+        placeholder="Search…"
+        value={searchText}
+        onChange={onTextChange}
+        onKeyDown={searchOnEnter}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start" style={{ marginRight: 0 }}>
+              <IconButton disabled>
+                <Search />
+              </IconButton>
+            </InputAdornment>
+          ),
+          className: classes.input,
+        }}
+        type="search"
+      />
     );
 };
 
 const useStyles = makeStyles((theme) => ({
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.black, 0.05),
-        '&:hover': {
-          backgroundColor: fade(theme.palette.common.black, 0.1),
-        },
-        marginLeft: 0,
-        marginRight: theme.spacing(2),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          marginLeft: theme.spacing(1),
-          width: 'auto',
-        },
-      },
-      searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-      inputRoot: {
-        color: 'inherit',
-      },
-      inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          width: '12ch',
-          '&:focus': {
-            width: '20ch',
-          },
-        },
-      },
+  root: {
+    width: "40%",
+    borderRadius: "50px",
+    backgroundColor: "#ffffff",
+    borderBottom: "0px",
+    border: 0,
+  },
+  input: {
+    height: "45px",
+    borderRadius: "8px",
+    border: 0,
+    padding: 0,
+    paddingLeft: 5,
+    paddingRight: 10,
+  },
 }));
 
 export default SearchBar;
