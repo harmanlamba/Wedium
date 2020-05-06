@@ -24,7 +24,7 @@ class Home extends Component {
 
     const user = this.props.auth;
 
-    const currentPostType = this.props.match.params.postType
+    const currentPostType = this.props.match.params.postType;
 
     return (
       <div>
@@ -67,10 +67,10 @@ const styles = (theme) => ({
     width: '100%',
   },
   sidebar: {
-    position: '-webkit-sticky',
     position: 'sticky',
+    position: '-webkit-sticky', /* Safari */
     top: 40,
-  }
+  },
 });
 
 // Redux

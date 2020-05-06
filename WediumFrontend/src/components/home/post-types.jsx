@@ -27,13 +27,29 @@ class PostTypes extends Component {
     const currentPostType = this.props.currentPostType;
 
     const listItems = this.props.postTypes.map((postTypes, i) => (
-      <ListItem dense button key={i} onClick={() => this.onClick(`/post/${postTypes.postType}`)} className={`${classes.toggleButton} ${currentPostType === postTypes.postType ? classes.active : ""}`}>
+      <ListItem
+        dense
+        button
+        key={i}
+        onClick={() => this.onClick(`/post/${postTypes.postType}`)}
+        className={`${classes.toggleButton} ${
+          currentPostType === postTypes.postType ? classes.active : ''
+        }`}
+      >
         <Typography variant="body2"> {postTypes.postType}</Typography>
       </ListItem>
     ));
 
     listItems.unshift(
-      <ListItem dense button key="all" onClick={() => this.onClick("/")} className={`${classes.toggleButton} ${currentPostType ? "" : classes.active}`}>
+      <ListItem
+        dense
+        button
+        key="all"
+        onClick={() => this.onClick('/')}
+        className={`${classes.toggleButton} ${
+          currentPostType ? '' : classes.active
+        }`}
+      >
         <Typography variant="body2">All</Typography>
       </ListItem>
     );
@@ -43,7 +59,11 @@ class PostTypes extends Component {
         <br />
         <Divider />
         <br />
-        {listItems.length <= 1 ? "" : <List className={classes.list}>{listItems}</List>}
+        {listItems.length <= 1 ? (
+          ''
+        ) : (
+          <List className={classes.list}>{listItems}</List>
+        )}
         <br />
         <Divider />
       </div>
@@ -56,7 +76,8 @@ const styles = (theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     backgroundColor: 'transparent !important',
-    margin: '0 8px'
+    margin: '0 8px',
+    width: '105%',
   },
   toggleButton: {
     margin: '2px',
@@ -84,7 +105,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  withStyles(styles)(
-    connect(mapStateToProps, mapDispatchToProps)(PostTypes)
-  )
+  withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PostTypes))
 );
