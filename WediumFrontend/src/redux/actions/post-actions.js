@@ -4,7 +4,9 @@ import {
     LOAD_MORE_POSTS_SUCCESS,
     LOAD_POSTS_ERROR, 
     LIKE_POST, 
-    UNLIKE_POST, 
+    UNLIKE_POST,
+    FAVOURITE_POST, 
+    UNFAVOURITE_POST
 } from '../action-types/action-types'
 
 export function loadPostsLoading() {
@@ -45,5 +47,19 @@ export function unlikePost(postId) {
     return {
         type: UNLIKE_POST,
         postId,
+    }
+}
+
+export function favouritePost(postId) {
+    return {
+        type: FAVOURITE_POST,
+        postId
+    }
+}
+
+export function unfavouritePost(postId) {
+    return {
+        type: UNFAVOURITE_POST,
+        postId
     }
 }

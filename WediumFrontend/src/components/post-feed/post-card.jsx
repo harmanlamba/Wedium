@@ -10,6 +10,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
+import PostLike from '../post-like';
+import PostFavourite from '../post-favourite';
+
 const PostCard = (props) => {
     const post = props.post;
     const classes = useStyles();
@@ -36,7 +39,12 @@ const PostCard = (props) => {
                 </CardContent>
             </div>
 
-            <div>
+            <div className={classes.rightPanel}>
+                <div className={classes.buttonGroup}>
+                    <PostLike postId={post.postId} isPostLiked={post.isPostLiked} numberOfLikes={post.numberOfLikes} />
+                    <PostFavourite postId={post.postId} isFavourited={post.isFavourited} />
+                </div>
+
                 {post.articleImageUrl !== "" &&
                     <CardMedia
                         className={classes.image}
@@ -65,7 +73,16 @@ const useStyles = makeStyles((theme) => ({
     },
     articleLink: {
         marginLeft: 8,
-    }
+    },
+    rightPanel: {
+        display: 'flex',
+    },
+    buttonGroup: {
+        display: 'flex',
+        alignSelf: 'flex-end',
+        marginRight: 12,
+        marginBottom: 12
+    },
 }));
 
 // Redux
