@@ -6,7 +6,6 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 // Components
@@ -37,12 +36,7 @@ class Home extends Component {
           justify="center"
           alignItems="flex-start"
         >
-          <Grid item xs={8}>
-            <Paper>Search</Paper>
-          </Grid>
-
           <Grid item xs={6}>
-            <Paper>Filter Bar</Paper>
             <br />
             <PostFeed postType={currentPostType} />
           </Grid>

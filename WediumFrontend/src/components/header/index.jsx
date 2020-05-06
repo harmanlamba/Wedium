@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import GoogleLoginButton from './google-login-button';
 import UserMenu from './user-menu';
+import SearchBar from './search-bar';
 
 const Header = (props) => {
   const classes = useStyles();
@@ -30,6 +31,9 @@ const Header = (props) => {
             Wedium
           </Button>
         </div>
+
+        <SearchBar />
+        
         {!isAuth && <GoogleLoginButton />}
         {isAuth && <UserMenu user={user} />}
       </Toolbar>
