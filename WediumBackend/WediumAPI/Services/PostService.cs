@@ -93,6 +93,7 @@ namespace WediumAPI.Services
         public PostDto GetPost(int postId, int? userId)
         {
             Post post = _db.Post
+                .Where(p => p.PostId == postId)
                 .Include(p => p.PostType)
                 .Include(p => p.WikiArticle)
                 .Include(p => p.User)
@@ -102,7 +103,6 @@ namespace WediumAPI.Services
            
             return PostMapper.ToDtoIncludeWikiArticle(post, userId);
         }
-
 
         public bool CheckExists(int postId)
         {

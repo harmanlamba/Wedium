@@ -28,7 +28,6 @@ namespace WediumTestSuite
         private readonly int WIKI_ARTICLE_ID = 73;
         private readonly string ARTICLE_IMAGE_URL_COMMAND = "SELECT ArticleImageUrl, ArticleBody FROM WDM.[WikiArticle] where WikiArticleId = ";
 
-
         [OneTimeSetUp]
         public void Setup()
         {
@@ -125,7 +124,6 @@ namespace WediumTestSuite
             //Deleting the Recently Created Post
             HttpStatusCode statuscode = await DeletePostHelper(response.Result.Item2, USER_ID);
             Assert.AreEqual(HttpStatusCode.OK, statuscode);
-
         }
 
         [Test]
@@ -152,12 +150,10 @@ namespace WediumTestSuite
                     ArticleImageUrl = (string)dr["ArticleImageUrl"];
                     ArticleBody = (string)dr["ArticleBody"];
                 }
-         
             }
 
             Assert.AreEqual(ArticleImageUrl, postDto.ArticleImageUrl);
             Assert.AreEqual(ArticleBody, postDto.ArticleBody);
-          
         }
 
         [Test]
@@ -167,7 +163,6 @@ namespace WediumTestSuite
             HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Post/get/-1");
 
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
-
         }
 
         [Test]

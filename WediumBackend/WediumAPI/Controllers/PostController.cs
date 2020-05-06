@@ -34,7 +34,7 @@ namespace WediumAPI.Controllers
             }
 
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-            int? userId = tryGetUserId(identity);
+            int? userId = TryGetUserId(identity);
 
             try
             {
@@ -53,7 +53,7 @@ namespace WediumAPI.Controllers
         public ActionResult<PostDto> Get(int postId)
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-            int? userId = tryGetUserId(identity);
+            int? userId = TryGetUserId(identity);
 
             try
             {
@@ -63,10 +63,8 @@ namespace WediumAPI.Controllers
             catch (PostNotFoundException)
             {
                 return NotFound();
-            }
-            
+            } 
         }
-
 
         [Authorize]
         [HttpPost("Post")]
@@ -123,7 +121,7 @@ namespace WediumAPI.Controllers
             }
         }
 
-        private int? tryGetUserId(ClaimsIdentity identity)
+        private int? TryGetUserId(ClaimsIdentity identity)
         {
             Claim claim = identity.FindFirst(ClaimTypes.NameIdentifier);
             int? userId = claim == null ? null : (int?)int.Parse(claim.Value);

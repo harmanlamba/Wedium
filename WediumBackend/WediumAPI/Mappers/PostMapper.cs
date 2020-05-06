@@ -25,6 +25,8 @@ namespace WediumAPI.Mappers
                 PostType = post.PostType.PostTypeValue,
 
                 //Post Wiki Article Image
+                ArticleTitle = post.WikiArticle.ArticleTitle,
+                ArticleUrl = post.WikiArticle.Url,
                 ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
 
                 // PostLikes
@@ -45,9 +47,6 @@ namespace WediumAPI.Mappers
 
             // Wiki Article
             postDto.ArticleBody = post.WikiArticle.ArticleBody;
-            postDto.ArticleTitle = post.WikiArticle.ArticleTitle;
-            postDto.ArticleUrl = post.WikiArticle.Url;
-            
 
             return postDto;
         }
