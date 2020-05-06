@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { Typography } from '@material-ui/core';
 
 class PostLike extends Component {
 
@@ -15,7 +16,8 @@ class PostLike extends Component {
         super(props);
 
         this.state = {
-            isPostLiked: this.props.isPostLiked
+            isPostLiked: this.props.isPostLiked,
+            numberOfLikes: this.props.numberOfLikes
         };
     }
 
@@ -24,8 +26,14 @@ class PostLike extends Component {
 
         if (isPostLiked) {
             this.props.tryUnlikePost(this.props.postId, this.unlikeErrorCallback.bind(null, this));
+            this.setState({
+                numberOfLikes: this.state.numberOfLikes - 1
+            });
         } else {
             this.props.tryLikePost(this.props.postId, this.likeErrorCallback.bind(null, this));
+            this.setState({
+                numberOfLikes: this.state.numberOfLikes + 1
+            });
         }
 
         // Changes icon display immediately so user thinks it worked (and does not reclick) while api request being processed
@@ -60,11 +68,14 @@ class PostLike extends Component {
         const { classes } = this.props;
 
         return (
-            <IconButton onClick={() => {this.onButtonClick()}} >
-                {this.state.isPostLiked ? 
-                <FavoriteIcon className={classes.likedIcon} />
-                : <FavoriteBorderIcon className={classes.unlikedIcon} />}
-            </IconButton>
+            <div className={classes.root}>
+                <Typography className={classes.text} color='textSecondary'>{this.state.numberOfLikes}</Typography>
+                <IconButton onClick={() => { this.onButtonClick() }} >
+                    {this.state.isPostLiked ?
+                        <FavoriteIcon className={classes.likedIcon} />
+                        : <FavoriteBorderIcon className={classes.unlikedIcon} />}
+                </IconButton>
+            </div>
         );
     }
 }
@@ -72,8 +83,14 @@ class PostLike extends Component {
 PostLike.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-  
+
 const styles = (theme) => ({
+    root: {
+        display: 'flex',
+    },
+    text: {
+        alignSelf: 'center',
+    },
     unlikedIcon: {
         opacity: 0.3
     },
