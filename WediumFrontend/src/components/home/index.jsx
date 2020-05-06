@@ -67,8 +67,8 @@ const styles = (theme) => ({
     width: '100%',
   },
   sidebar: {
+    position: '-webkit-sticky',
     position: 'sticky',
-    position: '-webkit-sticky', /* Safari */
     top: 40,
   },
 });
