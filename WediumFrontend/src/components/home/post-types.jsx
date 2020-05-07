@@ -18,7 +18,7 @@ class PostTypes extends Component {
   }
 
   onClick(redirectRoute) {
-    this.props.history.push(redirectRoute + this.props.location.search);
+    this.props.history.push(redirectRoute);
   }
 
   render() {

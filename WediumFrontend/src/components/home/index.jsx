@@ -32,7 +32,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Header user={user} showSearch={true} />
+        <Header user={user} showSearch={true} postType={currentPostType} />
         <Grid
           className={classes.grid}
           container

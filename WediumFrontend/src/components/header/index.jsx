@@ -30,7 +30,7 @@ const Header = (props) => {
           Wedium
         </Button>
 
-        {props.showSearch && <SearchBar />}
+        {props.showSearch && <SearchBar postType={props.postType} />}
 
         {!isAuth && <GoogleLoginButton />}
         {isAuth && <UserMenu user={user} />}

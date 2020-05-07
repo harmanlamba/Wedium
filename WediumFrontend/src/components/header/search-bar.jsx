@@ -4,60 +4,61 @@ import { useHistory } from 'react-router-dom';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
-import { InputAdornment } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
-import IconButton from "@material-ui/core/IconButton";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const SearchBar = (props) => {
-    const classes = useStyles();
-    const history = useHistory();
+  const classes = useStyles();
+  const history = useHistory();
 
-    const [searchText, setSearchText] = useState("");
+  const [value, setValue] = useState(null);
 
-    const onTextChange = (e) => {
-      if (e.target.value === "") {
-        history.push("/");
-      }
-
-      setSearchText(e.target.value);
-    };
-
-    const searchOnEnter = (e) => {
-      if (e.which === 13 || e.keyCode === 13) {
-        if (searchText) {
-          history.push({
-            search: `?search=${searchText}`,
-          });
-        } else {
-          history.push({
-            search: "",
-          });
+  return (
+    <Autocomplete
+      value={value}
+      onChange={(event, newValue) => {
+        if (newValue && newValue.inputValue) {
+          return;
         }
-      }
-    };
 
-    return (
-      <TextField
-        id="standard-search"
-        variant="outlined"
-        className={classes.root}
-        placeholder="Search…"
-        value={searchText}
-        onChange={onTextChange}
-        onKeyDown={searchOnEnter}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start" style={{ marginRight: 0 }}>
-              <IconButton disabled>
-                <Search />
-              </IconButton>
-            </InputAdornment>
-          ),
-          className: classes.input,
-        }}
-        type="search"
-      />
-    );
+        setValue(newValue);
+      }}
+      filterOptions={(options, params) => {
+        const filtered = [];
+
+        if (params.inputValue !== '') {
+          filtered.push({
+            inputValue: params.inputValue,
+            postType: null,
+            title: `Search for "${params.inputValue}" in All`,
+          });
+
+          if (props.postType) {
+            filtered.push({
+              inputValue: params.inputValue,
+              postType: props.postType,
+              title: `Search for "${params.inputValue}" in ${props.postType}`,
+            });
+          }
+        }
+
+        return filtered;
+      }}
+      options={[]}
+      getOptionLabel={(option) => {
+        history.push(`${option.postType ? `/post/${option.postType}` : "/"}?search=${option.inputValue}`);
+        return option.inputValue; 
+      }}
+      selectOnFocus
+      autoHighlight={true}
+      clearOnBlur
+      className={classes.root}
+      renderOption={(option) => option.title}
+      freeSolo
+      renderInput={(params) => (
+        <TextField {...params} label="Search" variant="outlined" />
+      )}
+    />
+  );
 };
 
 const useStyles = makeStyles((theme) => ({
