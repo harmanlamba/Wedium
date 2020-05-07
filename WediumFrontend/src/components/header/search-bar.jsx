@@ -16,18 +16,10 @@ const SearchBar = (props) => {
 
   const [value, setValue] = useState(null);
 
-  const onChange = (event, newValue) => {
-    if (newValue && newValue.inputValue) {
-      return;
-    }
-
-    setValue(newValue);
-  }
-
   return (
     <Autocomplete
       value={value}
-      onChange={() => onChange }
+      onChange={(e) => e.target.blur()}
       filterOptions={(options, params) => {
         const filtered = [];
 
