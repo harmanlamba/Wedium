@@ -8,7 +8,7 @@ const INIT_POST_TYPE_REDUCER_STATE = ({
     postTypes: []
 });
 
-export default function events(state = INIT_POST_TYPE_REDUCER_STATE, action) {
+export default (state = INIT_POST_TYPE_REDUCER_STATE, action) => {
     switch (action.type) {
         case LOAD_POST_TYPES_LOADING:
             return {
