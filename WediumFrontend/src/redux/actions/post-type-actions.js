@@ -4,13 +4,13 @@ import {
     LOAD_POST_TYPES_ERROR
 } from '../action-types/action-types'
 
-export function loadPostTypesLoading() {
+export const loadPostTypesLoading = () => {
     return {
         type: LOAD_POST_TYPES_LOADING
     }
 }
 
-export function loadPostTypesSuccess(postTypes) {
+export const loadPostTypesSuccess = (postTypes) => {
 
     const storedPostTypes = JSON.parse(localStorage.getItem("postTypes"));
 
@@ -28,7 +28,7 @@ export function loadPostTypesSuccess(postTypes) {
     }
 }
 
-export function loadPostTypesError(err) {
+export const loadPostTypesError = (err) => {
     return {
         type: LOAD_POST_TYPES_ERROR,
         err

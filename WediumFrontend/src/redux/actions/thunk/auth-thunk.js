@@ -2,7 +2,7 @@ import { login, logout } from '../auth-actions';
 import { authTokenIsValid } from '../../../services/auth-service';
 import { postOneTimeToken } from "../../../apis/auth";
 
-export function tryLogin(user) {
+export const tryLogin = (user) => {
     // If a valid login session exists, dispatch login with the user information from local storage
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
@@ -28,7 +28,7 @@ export function tryLogin(user) {
     }
 }
 
-export function logoutUser() {
+export const logoutUser = () => {
     return dispatch => {
         localStorage.removeItem("user");
         
@@ -38,7 +38,7 @@ export function logoutUser() {
     }
 }
 
-export function sendTokenAndLogin(tokenBlob) {
+export const sendTokenAndLogin = (tokenBlob) => {
     return dispatch => {
         postOneTimeToken(tokenBlob)
             .then(user => {
