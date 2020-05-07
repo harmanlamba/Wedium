@@ -42,7 +42,7 @@ class Home extends Component {
         >
           <Grid item xs={6}>
             {searchString !== undefined &&
-              <SearchResultLabel searchString={searchString} />
+              <SearchResultLabel searchString={searchString} postType={currentPostType} />
             }
             <br />
             <PostFeed postType={currentPostType} searchString={searchString} />

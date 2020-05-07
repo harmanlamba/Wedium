@@ -14,6 +14,7 @@ import Card from '@material-ui/core/Card';
 
 const SearchResultLabel = (props) => {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <Card className={classes.search}>
@@ -24,6 +25,16 @@ const SearchResultLabel = (props) => {
         className={classes.searchString}>
         {props.searchString}
       </Typography>
+      { props.postType && <div>
+        <Typography variant="body1" display="inline">in</Typography>
+        <Typography variant="body1"
+        color="primary"
+        display="inline"
+        className={classes.postType}
+        onClick={() => history.push(`/post/${props.postType}`)}>
+        {props.postType}
+      </Typography></div>}
+    
     </Card>
 
   );
@@ -33,10 +44,14 @@ const useStyles = makeStyles((theme) => ({
   search: {
     borderRadius: 0,
     padding: 10,
-    display: 'flex'
+    display: 'flex',
   },
   searchString: {
-    marginLeft: 4
+    margin: '0 4px',
+  },
+  postType: {
+    margin: '0 4px',
+    cursor: 'pointer',
   },
 }));
 
