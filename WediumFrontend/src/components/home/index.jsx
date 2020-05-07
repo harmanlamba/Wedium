@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,44 +16,43 @@ import SearchResultLabel from './search-result-label';
 
 const qs = require('query-string');
 
-class Home extends Component {
-  componentDidMount() {
-    this.props.tryLogin();
-  }
+const Home = (props) => {
+  const { classes } = props;
+  
+  useEffect(() => {
+    props.tryLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
-    const { classes } = this.props;
+  const user = props.auth;
 
-    const user = this.props.auth;
+  const currentPostType = props.match.params.postType;
+  const searchString = qs.parse(props.location.search, { ignoreQueryPrefix: true }).search;
 
-    const currentPostType = this.props.match.params.postType;
-    const searchString = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).search;
-
-    return (
-      <div>
-        <Header user={user} showSearch={true} postType={currentPostType} />
-        <Grid
-          className={classes.grid}
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          alignItems="flex-start"
-        >
-          <Grid item xs={6}>
-            {searchString !== undefined &&
-              <SearchResultLabel searchString={searchString} postType={currentPostType} />
-            }
-            <PostFeed postType={currentPostType} searchString={searchString} />
-          </Grid>
-
-          <Grid item xs={2} className={classes.sidebar}>
-            <PostTypes currentPostType={currentPostType} />
-          </Grid>
+  return (
+    <div>
+      <Header user={user} showSearch={true} postType={currentPostType} />
+      <Grid
+        className={classes.grid}
+        container
+        spacing={3}
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+      >
+        <Grid item xs={6}>
+          {searchString !== undefined &&
+            <SearchResultLabel searchString={searchString} postType={currentPostType} />
+          }
+          <PostFeed postType={currentPostType} searchString={searchString} />
         </Grid>
-      </div>
-    );
-  }
+
+        <Grid item xs={2} className={classes.sidebar}>
+          <PostTypes currentPostType={currentPostType} />
+        </Grid>
+      </Grid>
+    </div>
+  );
 }
 
 Home.propTypes = {
