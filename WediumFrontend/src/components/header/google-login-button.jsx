@@ -35,7 +35,6 @@ const GoogleLoginButton = (props) => {
       </Button>
       )}
         clientId={GOOGLE_CLIENT_ID}
-        //buttonText="Sign in with Google"
         onSuccess={googleSuccessfulResponse}
         onFailure={googleFailureResponse}
       ></GoogleLogin>

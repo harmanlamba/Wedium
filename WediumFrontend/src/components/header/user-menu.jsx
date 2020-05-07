@@ -64,7 +64,7 @@ const UserMenu = (props) => {
             Sign In
           </Typography>
         )}
-        <Avatar size="small" className={classes.profileImage} src={props.user.pictureUri}/>
+        <Avatar className={classes.profileImage} src={props.user.pictureUri}/>
         <ExpandMoreIcon />
       </Button>
 
