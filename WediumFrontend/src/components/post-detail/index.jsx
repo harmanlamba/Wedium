@@ -7,6 +7,7 @@ import { postDetailDirectNavigation } from '../../redux/actions/post-actions'
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 
 // Components
@@ -19,6 +20,7 @@ class PostDetail extends Component {
     super(props);
     this.state = {
       post: null,
+      circularProgressRingState: true,
     };
   }
 
@@ -30,14 +32,13 @@ class PostDetail extends Component {
     getPostDetail(postId).then((post) => {
       this.setState({ post });
       if(this.props.reduxPosts.length === 0){
-        console.log("redux state is empty")
         this.props.postDetailDirectNavigation(post);
+        this.setState({circularProgressRingState: false });
       }else{
-        console.log("redux has posts")
         const postIndex = this.props.reduxPosts.findIndex(p => p.postId === post.postId);
-
         //Updating the post in the redux store with the article body
         this.props.reduxPosts[postIndex].articleBody = post.articleBody;
+        this.setState({circularProgressRingState: false });
       }
     });
   }
@@ -58,11 +59,12 @@ class PostDetail extends Component {
           justify="center"
           alignItems="flex-start"
         >
-          {this.props.reduxPosts.length > 0 ?  
+          
+          { (this.props.reduxPosts.length > 0) & !this.state.circularProgressRingState ?  
           <Grid item xs={8}>
             {this.state.post && <PostDetailInfo post={this.state.post} />}
           </Grid>
-          : null} 
+          : <div className={classes.progressRing}> <CircularProgress /> </div>} 
 
           <Grid item xs={8}>
             <PostCommentBox />
@@ -83,6 +85,12 @@ const styles = (theme) => ({
     position: '-webkit-sticky',
     position: 'sticky',
     top: 40,
+  },
+  progressRing:{
+    marginLeft: '50%',
+    paddingTop: '18px',
+    paddingBottom: '10px',
+    width: '100% !important',
   },
 });
 
