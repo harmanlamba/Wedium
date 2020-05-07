@@ -1,11 +1,11 @@
-import { 
+import {
     LOAD_POSTS_LOADING,
-    LOAD_POSTS_SUCCESS, 
+    LOAD_POSTS_SUCCESS,
     LOAD_MORE_POSTS_SUCCESS,
-    LOAD_POSTS_ERROR, 
-    LIKE_POST, 
+    LOAD_POSTS_ERROR,
+    LIKE_POST,
     UNLIKE_POST,
-    FAVOURITE_POST, 
+    FAVOURITE_POST,
     UNFAVOURITE_POST
 } from '../action-types/action-types'
 
