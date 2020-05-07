@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
         width: 140,
         height: 128,
         border: '2px solid gainsboro',
-        marginTop: 16,
+        alignSelf: 'center',
         marginRight: 16
     },
     articleLink: {
