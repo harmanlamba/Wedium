@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: 24,
+        marginBottom: 16,
         borderRadius: 0,
     },
     image: {

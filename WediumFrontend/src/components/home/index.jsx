@@ -44,7 +44,6 @@ class Home extends Component {
             {searchString !== undefined &&
               <SearchResultLabel searchString={searchString} postType={currentPostType} />
             }
-            <br />
             <PostFeed postType={currentPostType} searchString={searchString} />
           </Grid>
 
