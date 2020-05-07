@@ -17,20 +17,23 @@ import PostFavourite from '../post-favourite';
 const PostDetailInfo = (props) => {
   const post = props.post;
   const classes = useStyles();
+  const postIndex = props.posts.findIndex(p => p.postId === post.postId);
+  const reduxPosts = props.posts;
+  
 
   return (
     <div>
       <div className={classes.buttonGroup}>
         <PostLike
           className={classes.like}
-          postId={post.postId}
-          isPostLiked={post.isPostLiked}
-          numberOfLikes={post.numberOfLikes}
+          postId={reduxPosts[postIndex].postId}
+          isPostLiked={reduxPosts[postIndex].isPostLiked}
+          numberOfLikes={reduxPosts[postIndex].numberOfLikes}
         />
         <PostFavourite
           className={classes.favourite}
-          postId={post.postId}
-          isFavourited={post.isFavourited}
+          postId={reduxPosts[postIndex].postId}
+          isFavourited={reduxPosts[postIndex].isFavourited}
         />
       </div>
       <Card className={classes.cardRoot}>
