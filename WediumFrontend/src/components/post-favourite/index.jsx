@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { tryFavouritePost, tryUnfavouritePost } from '../../redux/actions/thunk/post-favourite-thunk';

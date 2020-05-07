@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tryLikePost, tryUnlikePost } from '../../redux/actions/thunk/post-like-thunk';
