@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Material UI
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Search from '@material-ui/icons/Search';
+
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -12,16 +16,18 @@ const SearchBar = (props) => {
 
   const [value, setValue] = useState(null);
 
+  const onChange = (event, newValue) => {
+    if (newValue && newValue.inputValue) {
+      return;
+    }
+
+    setValue(newValue);
+  }
+
   return (
     <Autocomplete
       value={value}
-      onChange={(event, newValue) => {
-        if (newValue && newValue.inputValue) {
-          return;
-        }
-
-        setValue(newValue);
-      }}
+      onChange={() => onChange }
       filterOptions={(options, params) => {
         const filtered = [];
 
@@ -46,7 +52,7 @@ const SearchBar = (props) => {
       options={[]}
       getOptionLabel={(option) => {
         history.push(`${option.postType ? `/post/${option.postType}` : "/"}?search=${option.inputValue}`);
-        return option.inputValue; 
+        return option.inputValue;
       }}
       selectOnFocus
       autoHighlight={true}
@@ -55,7 +61,20 @@ const SearchBar = (props) => {
       renderOption={(option) => option.title}
       freeSolo
       renderInput={(params) => (
-        <TextField {...params} label="Search" variant="outlined" />
+        <TextField {...params} label="Search" variant="outlined" /> 
+        
+        //<TextField {...params} className={classes.input} size="small" label="Search" variant="outlined" />
+
+        // <TextField {...params} className={classes.input} size="small" variant="outlined" placeholder="Search.."
+        //   InputProps={{
+        //     ...params.InputProps,
+        //     startAdornment: (
+        //       <InputAdornment position="start">
+        //         <Search className={classes.searchIcon} />
+        //       </InputAdornment>
+        //     ),
+        //   }} />
+
       )}
     />
   );
@@ -64,19 +83,24 @@ const SearchBar = (props) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "40%",
-    borderRadius: "50px",
-    backgroundColor: "#ffffff",
-    borderBottom: "0px",
-    border: 0,
+    borderRadius: 18,
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.black, 0.05),
+    },
+    backgroundColor: fade(theme.palette.common.black, 0.03),
   },
   input: {
-    height: "45px",
-    borderRadius: "8px",
-    border: 0,
-    padding: 0,
-    paddingLeft: 5,
-    paddingRight: 10,
+    [`& fieldset`]: {
+      borderRadius: 18,
+    },
+    '&:hover': {
+      borderColor: fade(theme.palette.common.black, 0.03),
+    },
   },
+  searchIcon: {
+    opacity: 0.5,
+    marginLeft: 8
+  }
 }));
 
 export default SearchBar;
