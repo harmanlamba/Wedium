@@ -7,13 +7,12 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
 
 // Components
 import Header from '../header';
 import PostTypes from './post-types';
 import PostFeed from '../post-feed';
+import SearchResultLabel from './search-result-label';
 
 const qs = require('query-string');
 
@@ -41,13 +40,11 @@ class Home extends Component {
           justify="center"
           alignItems="flex-start"
         >
-          <Grid item xs={8}>
-            {searchString !== undefined && 
-            <Card className={classes.search}>
-              <Typography variant="h5">Search results for: {searchString}</Typography>
-            </Card>}
-          </Grid>
           <Grid item xs={6}>
+            {searchString !== undefined &&
+              <SearchResultLabel searchString={searchString} />
+            }
+            <br />
             <PostFeed postType={currentPostType} searchString={searchString} />
           </Grid>
 
@@ -69,10 +66,6 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
-  },
-  search: {
-    borderRadius: 0,
-    padding: 10,
   },
   sidebar: {
     position: '-webkit-sticky',
