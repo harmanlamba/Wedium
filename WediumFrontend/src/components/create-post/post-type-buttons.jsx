@@ -19,7 +19,9 @@ const PostTypeButtons = (props) => {
   };
 
   useEffect(() => {
-    props.loadPostTypes();
+    if (!props.postTypes || !props.postTypes.length) {
+      props.loadPostTypes();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -73,7 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadPostTypes: () => dispatch(loadPostTypes()),
+    loadPostTypes,
   };
 };
 
