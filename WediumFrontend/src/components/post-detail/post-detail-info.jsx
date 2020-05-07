@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 // Material UI
@@ -152,4 +153,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default withRouter(PostDetailInfo);
+//Redux
+const mapStateToProps = (state) => {
+  return {
+    posts: state.post.posts,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(PostDetailInfo));

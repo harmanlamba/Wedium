@@ -6,7 +6,8 @@ import {
     LIKE_POST,
     UNLIKE_POST,
     FAVOURITE_POST,
-    UNFAVOURITE_POST
+    UNFAVOURITE_POST,
+    POST_DETAIL_DIRECT_NAVIGATION,
 } from '../action-types/action-types';
 
 const INIT_POST_REDUCER_STATE = ({
@@ -52,6 +53,12 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
             return {
                 ...state,
                 posts: editedLikedPosts
+            }
+
+        case POST_DETAIL_DIRECT_NAVIGATION:
+            return {
+                ...state,
+                posts: [...state.posts, action.post]
             }
         
         case UNLIKE_POST:

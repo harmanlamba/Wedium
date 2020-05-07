@@ -6,7 +6,8 @@ import {
     LIKE_POST,
     UNLIKE_POST,
     FAVOURITE_POST,
-    UNFAVOURITE_POST
+    UNFAVOURITE_POST,
+    POST_DETAIL_DIRECT_NAVIGATION,
 } from '../action-types/action-types'
 
 export function loadPostsLoading() {
@@ -40,6 +41,13 @@ export function likePost(postId) {
     return {
         type: LIKE_POST,
         postId,
+    }
+}
+
+export function postDetailDirectNavigation(post){
+    return{
+        type: POST_DETAIL_DIRECT_NAVIGATION,
+        post
     }
 }
 

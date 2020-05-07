@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 import { getPostDetail } from '../../apis/post';
+import { postDetailDirectNavigation } from '../../redux/actions/post-actions'
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -26,10 +27,16 @@ class PostDetail extends Component {
 
     // Get postId from URL
     const postId = this.props.match.params.postId;
-    console.log(postId);
     getPostDetail(postId).then((post) => {
       this.setState({ post });
-      console.log(this.state.post);
+      if(this.props.reduxPosts.length === 0){
+        this.props.postDetailDirectNavigation(post);
+      }else{
+        const postIndex = this.props.reduxPosts.findIndex(p => p.postId === post.postId);
+
+        //Updating the post in the redux store with the article body
+        this.props.reduxPosts[postIndex].articleBody = post.articleBody;
+      }
     });
   }
 
@@ -49,9 +56,11 @@ class PostDetail extends Component {
           justify="center"
           alignItems="flex-start"
         >
+          {this.props.reduxPosts && 
           <Grid item xs={8}>
             {this.state.post && <PostDetailInfo post={this.state.post} />}
           </Grid>
+          } 
 
           <Grid item xs={8}>
             <PostCommentBox />
@@ -79,11 +88,13 @@ const styles = (theme) => ({
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    reduxPosts: state.post.posts,
   };
 };
 
 const mapDispatchToProps = {
   tryLogin,
+  postDetailDirectNavigation,
 };
 
 export default withStyles(styles)(
