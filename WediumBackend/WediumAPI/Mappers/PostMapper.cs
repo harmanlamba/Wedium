@@ -24,8 +24,7 @@ namespace WediumAPI.Mappers
                 // Post Type
                 PostType = post.PostType.PostTypeValue,
 
-                // Wiki Article
-                ArticleBody = post.WikiArticle.ArticleBody,
+                //Post Wiki Article Image
                 ArticleTitle = post.WikiArticle.ArticleTitle,
                 ArticleUrl = post.WikiArticle.Url,
                 ArticleImageUrl = post.WikiArticle.ArticleImageUrl,
@@ -40,6 +39,16 @@ namespace WediumAPI.Mappers
                 // For Pagination
                 HasMore = true
             };
+        }
+
+        public static PostDto ToDtoIncludeWikiArticle(Post post, int? userId)
+        {
+            PostDto postDto = ToDto(post, userId);
+
+            // Wiki Article
+            postDto.ArticleBody = post.WikiArticle.ArticleBody;
+
+            return postDto;
         }
 
         public static IEnumerable<PostDto> ToDto(IEnumerable<Post> postList, int? userId)

@@ -96,6 +96,20 @@ namespace WediumAPI.Services
             return postDtoList;
         }
 
+        public PostDto GetPost(int postId, int? userId)
+        {
+            Post post = _db.Post
+                .Where(p => p.PostId == postId)
+                .Include(p => p.PostType)
+                .Include(p => p.WikiArticle)
+                .Include(p => p.User)
+                .Include(p => p.Favourite)
+                .Include(p => p.PostLike)
+                .FirstOrDefault(p => p.PostId == postId) ?? throw new PostNotFoundException();
+           
+            return PostMapper.ToDtoIncludeWikiArticle(post, userId);
+        }
+
         public bool CheckExists(int postId)
         {
             return _db.Post
