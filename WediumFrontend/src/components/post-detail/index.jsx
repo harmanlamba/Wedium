@@ -22,9 +22,11 @@ class PostDetail extends Component {
       postId: this.props.match.params.postId,
       circularProgressRingState: true,
     };
+
+    this.commentRef = React.createRef();
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.tryLogin();
 
     const postId = this.state.postId;
@@ -32,6 +34,9 @@ class PostDetail extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+    const user = this.props.auth;
+
     const reduxPosts = this.props.reduxPosts;
     let postIndex = -1;
 
@@ -39,8 +44,16 @@ class PostDetail extends Component {
       postIndex = reduxPosts.findIndex((p) => p.postId == this.state.postId);
     }
 
-    const { classes } = this.props;
-    const user = this.props.auth;
+    // Scroll to comment on comment-button click
+    const handleCommentButton = () => {
+      console.log(this.myRef);
+      console.log('hello');
+      this.commentRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    };
+
     return (
       <div>
         <Header user={user} />
@@ -55,9 +68,12 @@ class PostDetail extends Component {
             alignItems="flex-start"
           >
             <Grid item xs={7}>
-              {<PostDetailInfo post={reduxPosts[postIndex]} />}
+              <PostDetailInfo
+                post={reduxPosts[postIndex]}
+                handleCommentButton={handleCommentButton}
+              />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={7} ref={this.commentRef}>
               <PostCommentBox />
             </Grid>
           </Grid>

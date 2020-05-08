@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PostLike from '../post-like';
 import PostFavourite from '../post-favourite';
 import ArticleInfo from './article-info';
+import CommentButton from './comment-button';
 
 const PostDetailInfo = (props) => {
   const post = props.post;
@@ -24,17 +25,17 @@ const PostDetailInfo = (props) => {
     <div>
       <div className={classes.buttonGroup}>
         <PostLike
-          className={classes.like}
           postId={reduxPosts[postIndex].postId}
           isPostLiked={reduxPosts[postIndex].isPostLiked}
           numberOfLikes={reduxPosts[postIndex].numberOfLikes}
         />
         <PostFavourite
-          className={classes.favourite}
           postId={reduxPosts[postIndex].postId}
           isFavourited={reduxPosts[postIndex].isFavourited}
         />
+        <CommentButton handleCommentButton={props.handleCommentButton} />
       </div>
+
       <Card className={classes.cardRoot}>
         <Card className={classes.root} elevation={0}>
           <CardContent>
