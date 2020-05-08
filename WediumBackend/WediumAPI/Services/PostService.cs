@@ -144,7 +144,7 @@ namespace WediumAPI.Services
             {
                 Url = postDto.ArticleUrl,
                 ArticleDate = _wikiMediaApiService.GetWikiLatestDateAsync(postDto.ArticleTitle).Result,
-                ArticleBody = _wikiMediaApiService.GetWikiContentAsync(postDto.ArticleTitle).Result.Query.Pages.First().Extract,
+                ArticleBody = _wikiMediaApiService.GetWikiContentAsync(postDto.ArticleTitle).Result.Query.Pages.Values.First().Extract,
                 ArticleTitle = postDto.ArticleTitle,
                 ArticleImageUrl = articleImageUrl
             };
