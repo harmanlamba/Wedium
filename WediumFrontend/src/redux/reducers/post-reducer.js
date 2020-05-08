@@ -67,7 +67,7 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
                 posts: editedUnlikedPosts
             }
 
-            case FAVOURITE_POST:
+        case FAVOURITE_POST:
             const editedFavouritedPosts = [...state.posts];
             const favouriteIndex = editedFavouritedPosts.findIndex(p => p.postId === action.postId);
             if (favouriteIndex !== -1 && editedFavouritedPosts.length && editedFavouritedPosts[favouriteIndex]) {
