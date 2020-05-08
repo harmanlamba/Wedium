@@ -7,7 +7,9 @@ import {
     UNLIKE_POST,
     FAVOURITE_POST,
     UNFAVOURITE_POST,
-    POST_DETAIL_DIRECT_NAVIGATION,
+    POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
+    POST_DETAIL_DIRECT_NAVIGATION_ERROR,
+    POST_DETAIL_DIRECT_NAVIGATION_LOADING
 } from '../action-types/action-types'
 
 export function loadPostsLoading() {
@@ -44,10 +46,24 @@ export function likePost(postId) {
     }
 }
 
-export function postDetailDirectNavigation(post){
+
+export function postDetailDirectNavigationLoading() {
+    return {
+        type: POST_DETAIL_DIRECT_NAVIGATION_LOADING,
+    }
+}
+
+export function postDetailDirectNavigationSuccess(post){
     return{
-        type: POST_DETAIL_DIRECT_NAVIGATION,
-        post
+        type: POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
+        post,
+    }
+}
+
+export function postDetailDirectNavigationError(err){
+    return{
+        type: POST_DETAIL_DIRECT_NAVIGATION_ERROR,
+        err,
     }
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
-import { getPostDetail } from '../../apis/post';
+import { fetchPostDetails } from '../../redux/actions/thunk/post-thunk'
 import { postDetailDirectNavigation } from '../../redux/actions/post-actions'
 
 // Material UI
@@ -19,35 +19,28 @@ class PostDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      post: null,
+      postId: this.props.match.params.postId,
       circularProgressRingState: true,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.tryLogin();
 
-    // Get postId from URL
-    const postId = this.props.match.params.postId;
-    getPostDetail(postId).then((post) => {
-      this.setState({ post });
-      if(this.props.reduxPosts.length === 0){
-        this.props.postDetailDirectNavigation(post);
-        this.setState({circularProgressRingState: false });
-      }else{
-        const postIndex = this.props.reduxPosts.findIndex(p => p.postId === post.postId);
-        //Updating the post in the redux store with the article body
-        this.props.reduxPosts[postIndex].articleBody = post.articleBody;
-        this.setState({circularProgressRingState: false });
-      }
-    });
+    const postId = this.state.postId;
+    this.props.fetchPostDetails(postId);
   }
 
   render() {
+    const reduxPosts = this.props.reduxPosts;
+    var postIndex = -1;
+
+    if(reduxPosts.length > 0){
+      postIndex = reduxPosts.findIndex(p => p.postId == this.state.postId)
+    }
     const { classes } = this.props;
 
     const user = this.props.auth;
-
     return (
       <div>
         <Header user={user} />
@@ -60,9 +53,9 @@ class PostDetail extends Component {
           alignItems="flex-start"
         >
           
-          { (this.props.reduxPosts.length > 0) & !this.state.circularProgressRingState ?  
+          {this.props.isLoadingDetails == false ?  
           <Grid item xs={8}>
-            {this.state.post && <PostDetailInfo post={this.state.post} />}
+            {<PostDetailInfo post={reduxPosts[postIndex]} />}
           </Grid>
           : <div className={classes.progressRing}> <CircularProgress /> </div>} 
 
@@ -99,12 +92,13 @@ const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     reduxPosts: state.post.posts,
+    isLoadingDetails: state.post.loadingPostDetails
   };
 };
 
 const mapDispatchToProps = {
   tryLogin,
-  postDetailDirectNavigation,
+  fetchPostDetails,
 };
 
 export default withStyles(styles)(

@@ -7,7 +7,9 @@ import {
     UNLIKE_POST,
     FAVOURITE_POST,
     UNFAVOURITE_POST,
-    POST_DETAIL_DIRECT_NAVIGATION,
+    POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
+    POST_DETAIL_DIRECT_NAVIGATION_ERROR,
+    POST_DETAIL_DIRECT_NAVIGATION_LOADING,
 } from '../action-types/action-types';
 
 const INIT_POST_REDUCER_STATE = ({
@@ -55,12 +57,40 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
                 posts: editedLikedPosts
             }
 
-        case POST_DETAIL_DIRECT_NAVIGATION:
+        case POST_DETAIL_DIRECT_NAVIGATION_SUCCESS:
+            const reduxStorePostLength = [...state.posts].length;
+            const editedPosts = [...state.posts]
+            if(reduxStorePostLength === 0){
+                return {
+                    ...state,
+                    posts: [...state.posts, action.post],
+                    loadingPostDetails: false
+                }
+            }else{
+                const postIndex = editedPosts.findIndex(p => p.postId === action.post.postId)
+                editedPosts[postIndex].articleBody = action.post.articleBody;
+                return{
+                    ...state,
+                    posts: editedPosts,
+                    loadingPostDetails: false
+                }
+            }
+
+           
+
+        case POST_DETAIL_DIRECT_NAVIGATION_ERROR:
             return {
                 ...state,
-                posts: [...state.posts, action.post]
+                posts: [...state.posts],
+                loadingPostDetails: false
             }
         
+        case POST_DETAIL_DIRECT_NAVIGATION_LOADING:
+            return {
+                ...state,
+                loadingPostDetails: true,
+            }
+
         case UNLIKE_POST:
             const editedUnlikedPosts = [...state.posts];
             const unlikedPostIndex = editedUnlikedPosts.findIndex(p => p.postId === action.postId);
