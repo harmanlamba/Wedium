@@ -45,19 +45,46 @@ class PostCommentBox extends Component {
           </Typography>
         </Grid>
 
-        <Grid className={classes.grid} item xs={12}>
+        {this.props.user.isAuthenticated ? (
+          <Grid item xs={12}>
+            <Grid className={classes.grid} item xs={12}>
+              <TextField
+                id="commentField"
+                className={classes.textField}
+                onChange={this.handleCommentChange}
+                autoComplete="off"
+                variant="outlined"
+                placeholder="Write your comment here..."
+                multiline
+                rows={2}
+                rowsMax={20}
+                fullWidth
+                helperText={`${this.state.comment.length}/${COMMENT_CHAR_LIMIT}`}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ChatBubbleOutlineIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                inputProps={{ maxLength: COMMENT_CHAR_LIMIT }}
+              />
+            </Grid>
+
+            <Grid className={classes.grid} item xs={12} align="right">
+              <Button variant="contained" color="primary">
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        ) : (
           <TextField
-            id="commentField"
-            className={classes.textField}
-            onChange={this.handleCommentChange}
             autoComplete="off"
             variant="outlined"
-            placeholder="Write your comment here..."
-            multiline
+            placeholder="Log in to write a comment..."
             rows={2}
-            rowsMax={20}
             fullWidth
-            helperText={`${this.state.comment.length}/${COMMENT_CHAR_LIMIT}`}
+            disabled
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -65,15 +92,8 @@ class PostCommentBox extends Component {
                 </InputAdornment>
               ),
             }}
-            inputProps={{ maxLength: COMMENT_CHAR_LIMIT }}
           />
-        </Grid>
-
-        <Grid className={classes.grid} item xs={12} align="right">
-          <Button variant="contained" color="primary">
-            Submit
-          </Button>
-        </Grid>
+        )}
       </Grid>
     );
   }

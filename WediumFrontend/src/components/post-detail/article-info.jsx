@@ -5,6 +5,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+const MISSING_IMAGE_URL = 'https://image.flaticon.com/icons/svg/570/570975.svg';
+
 const ArticleInfo = (props) => {
   const post = props.post;
   const classes = useStyles();
@@ -12,13 +14,13 @@ const ArticleInfo = (props) => {
   return (
     <div>
       <div className={classes.imageCard}>
-        {post.articleImageUrl && (
+        {post.articleImageUrl !== MISSING_IMAGE_URL ? (
           <CardMedia
             className={classes.image}
             component="img"
             src={post.articleImageUrl}
           />
-        )}
+        ) : null}
       </div>
 
       <div className={classes.article}>
@@ -34,7 +36,7 @@ const ArticleInfo = (props) => {
           variant="body2"
           color="textPrimary"
         >
-          <div dangerouslySetInnerHTML={{ __html: post.articleBody }} />
+          {<div dangerouslySetInnerHTML={{ __html: post.articleBody }} />}
         </Typography>
       </div>
     </div>

@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 import { fetchPostDetails } from '../../redux/actions/thunk/post-thunk';
-import { postDetailDirectNavigation } from '../../redux/actions/post-actions';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -74,7 +73,7 @@ class PostDetail extends Component {
               />
             </Grid>
             <Grid item xs={7} ref={this.commentRef}>
-              <PostCommentBox />
+              <PostCommentBox user={user} />
             </Grid>
           </Grid>
         ) : (
