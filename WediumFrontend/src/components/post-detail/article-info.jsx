@@ -13,15 +13,15 @@ const ArticleInfo = (props) => {
 
   return (
     <div>
-      <div className={classes.imageCard}>
-        {post.articleImageUrl !== MISSING_IMAGE_URL ? (
+      {post.articleImageUrl !== MISSING_IMAGE_URL ? (
+        <div className={classes.imageCard}>
           <CardMedia
             className={classes.image}
             component="img"
             src={post.articleImageUrl}
           />
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       <div className={classes.article}>
         <Typography

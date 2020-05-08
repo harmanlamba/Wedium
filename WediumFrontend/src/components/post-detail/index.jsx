@@ -99,7 +99,7 @@ const styles = (theme) => ({
   },
   progressRing: {
     marginLeft: '50%',
-    paddingTop: '18px',
+    paddingTop: '200px',
     paddingBottom: '10px',
     width: '100% !important',
   },
