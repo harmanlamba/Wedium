@@ -44,32 +44,33 @@ class PostCommentBox extends Component {
             Comments
           </Typography>
         </Grid>
+
         <Grid className={classes.grid} item xs={12}>
           <TextField
             id="commentField"
             className={classes.textField}
             onChange={this.handleCommentChange}
-            label="Leave a comment here..."
             autoComplete="off"
             variant="outlined"
             multiline
             rows={2}
-            rowsMax={9}
+            rowsMax={20}
             fullWidth
             helperText={`${this.state.comment.length}/${COMMENT_CHAR_LIMIT}`}
-            inputProps={{
-              endAdornment: (
+            InputProps={{
+              startAdornment: (
                 <InputAdornment position="start">
                   <ChatBubbleOutlineIcon />
                 </InputAdornment>
               ),
-              maxLength: COMMENT_CHAR_LIMIT,
             }}
+            inputProps={{ maxLength: COMMENT_CHAR_LIMIT }}
           />
         </Grid>
+
         <Grid className={classes.grid} item xs={12} align="right">
           <Button variant="contained" color="primary">
-            Comment
+            Submit
           </Button>
         </Grid>
       </Grid>

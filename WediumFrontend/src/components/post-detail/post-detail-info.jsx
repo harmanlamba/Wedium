@@ -38,8 +38,8 @@ const PostDetailInfo = (props) => {
       <Card className={classes.cardRoot}>
         <Card className={classes.root} elevation={0}>
           <CardContent>
-            <Typography variant="subtitle1">
-              {post.postType} -
+            <Typography variant="caption">
+              <span className={classes.postType}>{post.postType}</span> -
               <Link
                 className={classes.articleLink}
                 href={post.articleUrl}
@@ -48,54 +48,47 @@ const PostDetailInfo = (props) => {
                 {post.articleTitle}
               </Link>
             </Typography>
-
-            <Typography variant="h6">{post.title}</Typography>
-            <br />
-
-            <Link
-              className={classes.username}
-              variant="subtitle2"
-              color="textSecondary"
-            >
-              {post.username}
-            </Link>
-
-            <Typography variant="subtitle2" color="textSecondary">
-              {moment(post.date).format('DD MMM')} -{' '}
-              {moment(post.date).fromNow()}
-            </Typography>
-          </CardContent>
-
-          <div className={classes.rightPanel}>
-            {post.articleImageUrl !== '' && (
-              <CardMedia
-                className={classes.image}
-                component="img"
-                src={post.articleImageUrl}
-              />
-            )}
-          </div>
-        </Card>
-
-        {post.description && (
-          <Card className={classes.postDescription} elevation={0}>
-            <div>
+            <Typography variant="h5">{post.title}</Typography>
+            {post.description && (
               <Typography
-                variant="subtitle2"
+                variant="subtitle1"
                 color="textSecondary"
                 align="justify"
               >
                 {post.description}
               </Typography>
-            </div>
-          </Card>
-        )}
+            )}
+            <Typography
+              className={classes.username}
+              variant="caption"
+              color="textSecondary"
+            >
+              {post.username}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {moment(post.date).format('DD MMM')} -{' '}
+              {moment(post.date).fromNow()}
+            </Typography>
+          </CardContent>
+        </Card>
+
+        <div className={classes.imageCard}>
+          {post.articleImageUrl !== '' && (
+            <CardMedia
+              className={classes.image}
+              component="img"
+              src={post.articleImageUrl}
+            />
+          )}
+        </div>
 
         <Card className={classes.article} elevation={0}>
           <div>
-            <Typography className={classes.separator}> . . . </Typography>
-
-            <Typography variant="h6" color="textPrimary">
+            <Typography
+              variant="h6"
+              color="textPrimary"
+              className={classes.articleTitle}
+            >
               {post.articleTitle}
             </Typography>
 
@@ -116,14 +109,25 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: -5,
     borderRadius: 0,
+    paddingBottom: 0,
+  },
+  postType: {
+    backgroundColor: '#3f51b5',
+    color: '#fff',
+    padding: '1px 3px',
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  imageCard: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 20,
   },
   image: {
-    width: 140,
-    height: 128,
-    marginTop: 16,
-    marginRight: 16,
+    width: 200,
+    height: 200,
+    borderRadius: 25,
   },
   articleLink: {
     marginLeft: 8,
@@ -134,24 +138,21 @@ const useStyles = makeStyles((theme) => ({
   buttonGroup: {
     display: 'flex',
     alignSelf: 'flex-end',
-    marginLeft: '10px',
+    marginLeft: 10,
   },
   username: {
-    marginTop: '-20px',
+    marginTop: 20,
+    marginRight: 15,
   },
   postDescription: {
-    padding: 15,
     marginBottom: -5,
   },
   article: {
     padding: '0 60px 50px 60px',
     marginBottom: -5,
   },
-  separator: {
-    margin: '10px 0 10px 0',
+  articleTitle: {
     textAlign: 'center',
-    fontSize: '20px',
-    fontWeight: 'bold',
   },
 }));
 
