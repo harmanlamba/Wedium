@@ -6,6 +6,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const COMMENT_CHAR_LIMIT = 500;
@@ -38,6 +39,11 @@ class PostCommentBox extends Component {
         justify="center"
         alignItems="flex-start"
       >
+        <Grid className={classes.grid} item xs={12}>
+          <Typography className={classes.commentTitle} variant="h6">
+            Comments
+          </Typography>
+        </Grid>
         <Grid className={classes.grid} item xs={12}>
           <TextField
             id="commentField"
@@ -87,6 +93,9 @@ const styles = (theme) => ({
     '& p': {
       textAlign: 'right !important',
     },
+  },
+  commentTitle: {
+    marginBottom: 5,
   },
 });
 

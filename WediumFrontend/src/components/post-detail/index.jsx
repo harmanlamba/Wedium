@@ -33,39 +33,39 @@ class PostDetail extends Component {
 
   render() {
     const reduxPosts = this.props.reduxPosts;
-    var postIndex = -1;
+    let postIndex = -1;
 
     if (reduxPosts.length > 0) {
       postIndex = reduxPosts.findIndex((p) => p.postId == this.state.postId);
     }
-    const { classes } = this.props;
 
+    const { classes } = this.props;
     const user = this.props.auth;
     return (
       <div>
         <Header user={user} />
-        <Grid
-          className={classes.grid}
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          alignItems="flex-start"
-        >
-          {this.props.isLoadingDetails == false ? (
+
+        {this.props.isLoadingDetails == false ? (
+          <Grid
+            className={classes.grid}
+            container
+            spacing={3}
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+          >
             <Grid item xs={7}>
               {<PostDetailInfo post={reduxPosts[postIndex]} />}
             </Grid>
-          ) : (
-            <div className={classes.progressRing}>
-              <CircularProgress />
-            </div>
-          )}
-
-          <Grid item xs={7}>
-            <PostCommentBox />
+            <Grid item xs={7}>
+              <PostCommentBox />
+            </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <div className={classes.progressRing}>
+            <CircularProgress />
+          </div>
+        )}
       </div>
     );
   }
