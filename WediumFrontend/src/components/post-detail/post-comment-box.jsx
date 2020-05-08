@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 // Material UI
 import Button from '@material-ui/core/Button';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -45,11 +47,16 @@ class PostCommentBox extends Component {
             autoComplete="off"
             variant="outlined"
             multiline
-            rows={5}
+            rows={2}
             rowsMax={9}
             fullWidth
             helperText={`${this.state.comment.length}/${COMMENT_CHAR_LIMIT}`}
             inputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <ChatBubbleOutlineIcon />
+                </InputAdornment>
+              ),
               maxLength: COMMENT_CHAR_LIMIT,
             }}
           />
@@ -70,7 +77,7 @@ const styles = (theme) => ({
     justifyContent: 'space-between',
     marginBottom: -5,
     borderRadius: 0,
-    padding: '0 120px 50px 120px',
+    padding: '0 150px 50px 150px',
   },
   grid: {
     marginTop: '5px !important',

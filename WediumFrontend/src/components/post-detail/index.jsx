@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
-import { fetchPostDetails } from '../../redux/actions/thunk/post-thunk'
-import { postDetailDirectNavigation } from '../../redux/actions/post-actions'
+import { fetchPostDetails } from '../../redux/actions/thunk/post-thunk';
+import { postDetailDirectNavigation } from '../../redux/actions/post-actions';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -35,8 +35,8 @@ class PostDetail extends Component {
     const reduxPosts = this.props.reduxPosts;
     var postIndex = -1;
 
-    if(reduxPosts.length > 0){
-      postIndex = reduxPosts.findIndex(p => p.postId == this.state.postId)
+    if (reduxPosts.length > 0) {
+      postIndex = reduxPosts.findIndex((p) => p.postId == this.state.postId);
     }
     const { classes } = this.props;
 
@@ -52,14 +52,17 @@ class PostDetail extends Component {
           justify="center"
           alignItems="flex-start"
         >
-          
-          {this.props.isLoadingDetails == false ?  
-          <Grid item xs={8}>
-            {<PostDetailInfo post={reduxPosts[postIndex]} />}
-          </Grid>
-          : <div className={classes.progressRing}> <CircularProgress /> </div>} 
+          {this.props.isLoadingDetails == false ? (
+            <Grid item xs={7}>
+              {<PostDetailInfo post={reduxPosts[postIndex]} />}
+            </Grid>
+          ) : (
+            <div className={classes.progressRing}>
+              <CircularProgress />
+            </div>
+          )}
 
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <PostCommentBox />
           </Grid>
         </Grid>
@@ -79,7 +82,7 @@ const styles = (theme) => ({
     position: 'sticky',
     top: 40,
   },
-  progressRing:{
+  progressRing: {
     marginLeft: '50%',
     paddingTop: '18px',
     paddingBottom: '10px',
@@ -92,7 +95,7 @@ const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     reduxPosts: state.post.posts,
-    isLoadingDetails: state.post.loadingPostDetails
+    isLoadingDetails: state.post.loadingPostDetails,
   };
 };
 

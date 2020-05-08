@@ -17,9 +17,8 @@ import PostFavourite from '../post-favourite';
 const PostDetailInfo = (props) => {
   const post = props.post;
   const classes = useStyles();
-  const postIndex = props.posts.findIndex(p => p.postId === post.postId);
+  const postIndex = props.posts.findIndex((p) => p.postId === post.postId);
   const reduxPosts = props.posts;
-  
 
   return (
     <div>
@@ -145,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: -5,
   },
   article: {
-    padding: '0 60px 30px 60px',
+    padding: '0 60px 50px 60px',
     marginBottom: -5,
   },
   separator: {

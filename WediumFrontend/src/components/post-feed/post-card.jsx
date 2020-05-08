@@ -38,6 +38,7 @@ const PostCard = (props) => {
               className={classes.articleLink}
               href={post.articleUrl}
               target="_blank"
+              onClick={(event) => event.stopPropagation()}
             >
               {post.articleTitle}
             </Link>
@@ -57,7 +58,10 @@ const PostCard = (props) => {
       </div>
 
       <div className={classes.rightPanel}>
-        <div className={classes.buttonGroup}>
+        <div
+          className={classes.buttonGroup}
+          onClick={(event) => event.stopPropagation()}
+        >
           <PostLike
             postId={post.postId}
             isPostLiked={post.isPostLiked}
@@ -87,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     marginBottom: 24,
     borderRadius: 0,
+    cursor: 'pointer',
   },
   image: {
     width: 140,
