@@ -92,9 +92,7 @@ const PostDetailInfo = (props) => {
               {post.articleTitle}
             </Typography>
 
-            <Typography variant="subtitle2" color="textPrimary" align="justify">
-              {post.articleBody}
-            </Typography>
+            {post.articleBody}
           </div>
         </Card>
       </Card>
