@@ -52,6 +52,7 @@ class PostCommentBox extends Component {
             onChange={this.handleCommentChange}
             autoComplete="off"
             variant="outlined"
+            placeholder="Write your comment here..."
             multiline
             rows={2}
             rowsMax={20}

@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 // Material UI
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
 import PostLike from '../post-like';
 import PostFavourite from '../post-favourite';
+import ArticleInfo from './article-info';
 
 const PostDetailInfo = (props) => {
   const post = props.post;
@@ -39,7 +39,7 @@ const PostDetailInfo = (props) => {
         <Card className={classes.root} elevation={0}>
           <CardContent>
             <Typography variant="caption">
-              <span className={classes.postType}>{post.postType}</span> -
+              <span className={classes.postType}>{post.postType}</span>
               <Link
                 className={classes.articleLink}
                 href={post.articleUrl}
@@ -48,7 +48,9 @@ const PostDetailInfo = (props) => {
                 {post.articleTitle}
               </Link>
             </Typography>
-            <Typography variant="h5">{post.title}</Typography>
+            <Typography variant="h5" className={classes.postTitle}>
+              {post.title}
+            </Typography>
             {post.description && (
               <Typography
                 variant="subtitle1"
@@ -72,29 +74,7 @@ const PostDetailInfo = (props) => {
           </CardContent>
         </Card>
 
-        <div className={classes.imageCard}>
-          {post.articleImageUrl !== '' && (
-            <CardMedia
-              className={classes.image}
-              component="img"
-              src={post.articleImageUrl}
-            />
-          )}
-        </div>
-
-        <Card className={classes.article} elevation={0}>
-          <div>
-            <Typography
-              variant="h6"
-              color="textPrimary"
-              className={classes.articleTitle}
-            >
-              {post.articleTitle}
-            </Typography>
-
-            {post.articleBody}
-          </div>
-        </Card>
+        <ArticleInfo post={post} />
       </Card>
     </div>
   );
@@ -117,18 +97,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 5,
     marginBottom: 5,
   },
-  imageCard: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: 25,
-  },
   articleLink: {
-    marginLeft: 8,
+    marginLeft: 6,
   },
   rightPanel: {
     display: 'flex',
@@ -142,15 +112,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 20,
     marginRight: 15,
   },
+  postTitle: {
+    marginTop: 4,
+  },
   postDescription: {
     marginBottom: -5,
-  },
-  article: {
-    padding: '0 60px 50px 60px',
-    marginBottom: -5,
-  },
-  articleTitle: {
-    textAlign: 'center',
   },
 }));
 
