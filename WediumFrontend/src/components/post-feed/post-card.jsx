@@ -61,14 +61,14 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: 24,
+        marginBottom: 16,
         borderRadius: 0,
     },
     image: {
         width: 140,
         height: 128,
         border: '2px solid gainsboro',
-        marginTop: 16,
+        alignSelf: 'center',
         marginRight: 16
     },
     articleLink: {

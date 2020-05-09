@@ -13,7 +13,7 @@ const INIT_POST_REDUCER_STATE = ({
     posts: []
 });
 
-export default function events(state = INIT_POST_REDUCER_STATE, action) {
+export default (state = INIT_POST_REDUCER_STATE, action) => {
     switch (action.type) {
         case LOAD_POSTS_LOADING:
             return {
@@ -67,7 +67,7 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
                 posts: editedUnlikedPosts
             }
 
-            case FAVOURITE_POST:
+        case FAVOURITE_POST:
             const editedFavouritedPosts = [...state.posts];
             const favouriteIndex = editedFavouritedPosts.findIndex(p => p.postId === action.postId);
             if (favouriteIndex !== -1 && editedFavouritedPosts.length && editedFavouritedPosts[favouriteIndex]) {

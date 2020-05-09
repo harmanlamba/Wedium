@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     width: 140,
     height: 128,
     border: '2px solid gainsboro',
-    marginTop: 16,
-    marginRight: 16,
+    margin: '12px 16px 12px 0',
   },
 }));

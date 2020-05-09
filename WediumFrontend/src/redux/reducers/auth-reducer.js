@@ -12,7 +12,7 @@ const INIT_AUTH_REDUCER_STATE = ({
     isAuthenticated: false
 });
 
-function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
+export default (state = INIT_AUTH_REDUCER_STATE, action) => {
     switch (action.type) {
         case LOGIN:
             state = {
@@ -39,5 +39,3 @@ function authReducer(state = INIT_AUTH_REDUCER_STATE, action) {
     };
     return state;
 }
-
-export default authReducer;
