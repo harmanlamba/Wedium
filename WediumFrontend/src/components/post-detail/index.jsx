@@ -45,8 +45,6 @@ class PostDetail extends Component {
 
     // Scroll to comment on comment-button click
     const handleCommentButton = () => {
-      console.log(this.myRef);
-      console.log('hello');
       this.commentRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',

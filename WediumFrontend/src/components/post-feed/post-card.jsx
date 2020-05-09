@@ -31,9 +31,9 @@ const PostCard = (props) => {
   return (
     <Card className={classes.root} onClick={() => handleClickPostDetail()}>
       <div>
-        <CardContent>
-          <Typography variant="subtitle1">
-            {post.postType} -
+        <CardContent className={classes.cardContent}>
+          <Typography variant="subtitle2">
+            <span className={classes.postType}>{post.postType}</span>
             <Link
               className={classes.articleLink}
               href={post.articleUrl}
@@ -46,7 +46,6 @@ const PostCard = (props) => {
 
           <Typography variant="h6">{post.title}</Typography>
           <br />
-
           <Link variant="subtitle2" color="textSecondary">
             {post.username}
           </Link>
@@ -89,16 +88,26 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: 24,
-    borderRadius: 0,
+    marginBottom: 20,
+    borderRadius: 5,
     cursor: 'pointer',
+  },
+  cardContent: {
+    paddingBottom: '0px !important',
+  },
+  postType: {
+    backgroundColor: '#3f51b5',
+    color: '#fff',
+    padding: '1px 3px',
+    borderRadius: 5,
   },
   image: {
     width: 140,
     height: 128,
-    border: '2px solid gainsboro',
     marginTop: 16,
     marginRight: 16,
+    marginBottom: 16,
+    borderRadius: 5,
   },
   articleLink: {
     marginLeft: 8,

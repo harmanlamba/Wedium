@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   articleTitle: {
     textAlign: 'center',
+    marginLeft: 20,
   },
   articleBody: {
     borderLeft: '#3f51b5 solid 3px',

@@ -74,9 +74,7 @@ export default function events(state = INIT_POST_REDUCER_STATE, action) {
                     posts: editedPosts,
                     loadingPostDetails: false
                 }
-            }
-
-           
+            }    
 
         case POST_DETAIL_DIRECT_NAVIGATION_ERROR:
             return {

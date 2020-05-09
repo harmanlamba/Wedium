@@ -72,7 +72,7 @@ class PostCommentBox extends Component {
             </Grid>
 
             <Grid className={classes.grid} item xs={12} align="right">
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" size="small">
                 Submit
               </Button>
             </Grid>
