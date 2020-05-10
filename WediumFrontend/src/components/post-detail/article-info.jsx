@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Material UI
 import CardMedia from '@material-ui/core/CardMedia';
@@ -10,6 +10,22 @@ const MISSING_IMAGE_URL = 'https://image.flaticon.com/icons/svg/570/570975.svg';
 const ArticleInfo = (props) => {
   const post = props.post;
   const classes = useStyles();
+
+  const [showingAll, setShowingAll] = useState(false);
+
+  var articleBody = null;
+  if (post.articleBody) {
+    if (showingAll) {
+      articleBody = post.articleBody.indexOf('<h2><span id="References">References</span></h2>') !== -1 ? 
+        post.articleBody.substr(0, post.articleBody.indexOf('<h2><span id="References">References</span></h2>')) : post.articleBody;
+    } else {
+      if (post.articleBody.indexOf('<h2>') === -1) {
+        setShowingAll(true);
+      } else {
+        articleBody = post.articleBody.substr(0, post.articleBody.indexOf("<h2>"));
+      }
+    }
+  }
 
   return (
     <div>
@@ -31,13 +47,12 @@ const ArticleInfo = (props) => {
         >
           {post.articleTitle}
         </Typography>
-        <Typography
-          className={classes.articleBody}
-          variant="body2"
-          color="textPrimary"
-        >
-          {<div dangerouslySetInnerHTML={{ __html: post.articleBody }} />}
-        </Typography>
+          {<div dangerouslySetInnerHTML={{ __html: articleBody }} className={classes.articleBody} />}
+          {!showingAll && <Typography
+              className={classes.showAllButton}
+              variant="caption"
+              color="textSecondary"
+            ><div onClick={() => {setShowingAll(true) }}>-  Read More -</div></Typography>}
       </div>
     </div>
   );
@@ -66,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: '#3f51b5 solid 3px',
     paddingLeft: 20,
   },
+  showAllButton: {
+    textAlign: 'center',
+    cursor: 'pointer',
+  }
 }));
 
 export default ArticleInfo;
