@@ -28,8 +28,19 @@ const PostCard = (props) => {
     });
   };
 
+  const mouseDownEvent = (e) => {
+    if (e.button  === 1 ) {
+      const postType = post.postType;
+      const postId = post.postId;
+      const postTitle = post.title;
+
+      window.open(`/post/${postType}/${postId}/${postTitle}`, "_blank");
+      window.focus();
+    }
+  } 
+
   return (
-    <Card className={classes.root} onClick={() => handleClickPostDetail()}>
+    <Card className={classes.root} onClick={() => handleClickPostDetail()} onMouseDown={(e) => mouseDownEvent(e)}>
       <div>
         <CardContent className={classes.cardContent}>
           <Typography variant="subtitle2">
