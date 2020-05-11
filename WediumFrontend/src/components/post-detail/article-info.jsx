@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // Material UI
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import SubjectIcon from '@material-ui/icons/Subject';
 import { makeStyles } from '@material-ui/core/styles';
 
 const MISSING_IMAGE_URL = 'https://image.flaticon.com/icons/svg/570/570975.svg';
@@ -16,13 +17,25 @@ const ArticleInfo = (props) => {
   var articleBody = null;
   if (post.articleBody) {
     if (showingAll) {
-      articleBody = post.articleBody.indexOf('<h2><span id="References">References</span></h2>') !== -1 ? 
-        post.articleBody.substr(0, post.articleBody.indexOf('<h2><span id="References">References</span></h2>')) : post.articleBody;
+      articleBody =
+        post.articleBody.indexOf(
+          '<h2><span id="References">References</span></h2>'
+        ) !== -1
+          ? post.articleBody.substr(
+              0,
+              post.articleBody.indexOf(
+                '<h2><span id="References">References</span></h2>'
+              )
+            )
+          : post.articleBody;
     } else {
       if (post.articleBody.indexOf('<h2>') === -1) {
         setShowingAll(true);
       } else {
-        articleBody = post.articleBody.substr(0, post.articleBody.indexOf("<h2>"));
+        articleBody = post.articleBody.substr(
+          0,
+          post.articleBody.indexOf('<h2>')
+        );
       }
     }
   }
@@ -47,12 +60,25 @@ const ArticleInfo = (props) => {
         >
           {post.articleTitle}
         </Typography>
-          {<div dangerouslySetInnerHTML={{ __html: articleBody }} className={classes.articleBody} />}
-          {!showingAll && <Typography
-              className={classes.showAllButton}
-              variant="caption"
-              color="textSecondary"
-            ><div onClick={() => {setShowingAll(true) }}>-  Read More -</div></Typography>}
+        {
+          <div
+            dangerouslySetInnerHTML={{ __html: articleBody }}
+            className={classes.articleBody}
+          />
+        }
+        {!showingAll && (
+          <div className={classes.showAllButton}>
+            <span
+              className={classes.showAllTag}
+              onClick={() => {
+                setShowingAll(true);
+              }}
+            >
+              <SubjectIcon className={classes.tagIcon} fontSize="small" />
+              Read More
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -70,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 25,
   },
   article: {
-    padding: '0 60px 50px 40px',
+    padding: '0 60px 30px 40px',
     marginBottom: -5,
   },
   articleTitle: {
@@ -83,8 +109,23 @@ const useStyles = makeStyles((theme) => ({
   },
   showAllButton: {
     textAlign: 'center',
+  },
+  showAllTag: {
+    backgroundColor: '#3f51b5',
+    color: '#fff',
+    fontSize: '0.85em',
+    padding: '1px 5px 3px 5px',
+    borderRadius: 5,
+    marginBottom: 5,
     cursor: 'pointer',
-  }
+    '&:hover': {
+      backgroundColor: '#303f9f',
+    },
+  },
+  tagIcon: {
+    marginBottom: -5,
+    marginRight: 3,
+  },
 }));
 
 export default ArticleInfo;

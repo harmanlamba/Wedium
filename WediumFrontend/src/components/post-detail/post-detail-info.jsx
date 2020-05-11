@@ -24,19 +24,21 @@ const PostDetailInfo = (props) => {
   return (
     <div>
       <div className={classes.buttonGroup}>
-        <PostLike
-          postId={reduxPosts[postIndex].postId}
-          isPostLiked={reduxPosts[postIndex].isPostLiked}
-          numberOfLikes={reduxPosts[postIndex].numberOfLikes}
-        />
-        <PostFavourite
-          postId={reduxPosts[postIndex].postId}
-          isFavourited={reduxPosts[postIndex].isFavourited}
-        />
-        <CommentButton handleCommentButton={props.handleCommentButton} />
+        <div className={classes.test}>
+          <PostLike
+            postId={reduxPosts[postIndex].postId}
+            isPostLiked={reduxPosts[postIndex].isPostLiked}
+            numberOfLikes={reduxPosts[postIndex].numberOfLikes}
+          />
+          <PostFavourite
+            postId={reduxPosts[postIndex].postId}
+            isFavourited={reduxPosts[postIndex].isFavourited}
+          />
+          <CommentButton handleCommentButton={props.handleCommentButton} />
+        </div>
       </div>
 
-      <Card className={classes.cardRoot}>
+      <Card className={classes.postHeader}>
         <Card className={classes.root} elevation={0}>
           <CardContent>
             <Typography variant="caption">
@@ -82,14 +84,14 @@ const PostDetailInfo = (props) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  cardRoot: {
-    padding: '10px 30px 10px 30px',
-  },
   root: {
     display: 'flex',
     justifyContent: 'space-between',
     borderRadius: 0,
     paddingBottom: 0,
+  },
+  postHeader: {
+    padding: '10px 30px 10px 30px',
   },
   postType: {
     backgroundColor: '#3f51b5',
@@ -105,9 +107,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   buttonGroup: {
+    position: 'relative',
+    paddingBottom: '3em',
+  },
+  test: {
     display: 'flex',
     alignSelf: 'flex-end',
-    marginLeft: 10,
+    position: 'absolute',
+    right: 0,
   },
   username: {
     marginTop: 20,

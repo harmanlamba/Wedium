@@ -12,7 +12,7 @@ const LoadingPostCard = () => {
   return (
     <Card className={classes.root}>
       <div>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Skeleton variant="text" width={130} />
           <Skeleton variant="text" width={150} height={40} />
           <br />
@@ -35,14 +35,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: 24,
-    borderRadius: 0,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+  cardContent: {
+    paddingBottom: '0px !important',
   },
   image: {
     width: 140,
     height: 128,
-    border: '2px solid gainsboro',
     marginTop: 16,
     marginRight: 16,
+    marginBottom: 16,
+    borderRadius: 5,
   },
 }));

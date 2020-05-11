@@ -46,22 +46,21 @@ export function likePost(postId) {
     }
 }
 
-
 export function postDetailDirectNavigationLoading() {
     return {
         type: POST_DETAIL_DIRECT_NAVIGATION_LOADING,
     }
 }
 
-export function postDetailDirectNavigationSuccess(post){
-    return{
+export function postDetailDirectNavigationSuccess(post) {
+    return {
         type: POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
         post,
     }
 }
 
-export function postDetailDirectNavigationError(err){
-    return{
+export function postDetailDirectNavigationError(err) {
+    return {
         type: POST_DETAIL_DIRECT_NAVIGATION_ERROR,
         err,
     }
