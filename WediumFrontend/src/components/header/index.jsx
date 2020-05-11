@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import GoogleLoginButton from './google-login-button';
 import UserMenu from './user-menu';
+import SearchBar from './search-bar';
 
 const Header = (props) => {
   const classes = useStyles();
@@ -19,17 +20,18 @@ const Header = (props) => {
 
   return (
     <AppBar className={classes.appBar} color="transparent" position="static">
-      <Toolbar variant="dense">
-        <div className={classes.titleContainer}>
-          <Button
-            className={classes.titleButton}
-            size="large"
-            disableRipple={true}
-            onClick={() => props.history.push('/')}
-          >
-            Wedium
-          </Button>
-        </div>
+      <Toolbar variant="dense" className={classes.root}>
+        <Button
+          className={classes.titleButton}
+          size="large"
+          disableRipple={true}
+          onClick={() => props.history.push('/')}
+        >
+          Wedium
+        </Button>
+
+        {props.showSearch && <SearchBar postType={props.postType} />}
+
         {!isAuth && <GoogleLoginButton />}
         {isAuth && <UserMenu user={user} />}
       </Toolbar>
@@ -39,11 +41,8 @@ const Header = (props) => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-  },
-  titleContainer: {
-    marginLeft: theme.spacing(2),
-    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   titleButton: {
     fontSize: '1.25em',

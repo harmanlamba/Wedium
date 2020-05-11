@@ -45,11 +45,11 @@ const UserMenu = (props) => {
         variant="contained"
         color="primary"
         onClick={handlePostRedirect}
-        size="small"
+        startIcon={<CreateIcon />}
       >
-        <CreateIcon className={classes.rightSpacing} />
         Post
       </Button>
+
       <Button onClick={handleMenuOpen}>
         {props.user.isAuthenticated ? (
           <Typography
@@ -69,7 +69,7 @@ const UserMenu = (props) => {
       </Button>
 
       <Menu
-        className={classes.root}
+        className={classes.menuDropdown}
         anchorEl={anchorEl}
         getContentAnchorEl={null}
         open={Boolean(anchorEl)}
@@ -93,7 +93,7 @@ const UserMenu = (props) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  menuDropdown: {
     flexGrow: 1,
     marginTop: 40,
   },

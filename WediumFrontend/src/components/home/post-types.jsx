@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadPostTypes } from '../../redux/actions/thunk/post-type-thunk';
@@ -10,65 +10,61 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
-class PostTypes extends Component {
-  componentDidMount() {
-    if (!this.props.postTypes || !this.props.postTypes.length) {
-      this.props.loadPostTypes();
+const PostTypes = (props) => {
+  const { classes, postTypes, currentPostType } = props;
+
+  useEffect(() => {
+    if (!postTypes || !postTypes.length) {
+      props.loadPostTypes();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onClick = (redirectRoute) => {
+    props.history.push(redirectRoute);
   }
 
-  onClick(redirectRoute) {
-    this.props.history.push(redirectRoute);
-  }
+  const listItems = props.postTypes.map((postTypes, i) => (
+    <ListItem
+      dense
+      button
+      key={i}
+      onClick={() => onClick(`/post/${postTypes.postType}`)}
+      className={`${classes.toggleButton} ${
+        currentPostType === postTypes.postType ? classes.active : ''
+      }`}
+    >
+      <Typography variant="body2"> {postTypes.postType}</Typography>
+    </ListItem>
+  ));
 
-  render() {
-    const { classes } = this.props;
+  listItems.unshift(
+    <ListItem
+      dense
+      button
+      key="all"
+      onClick={() => onClick('/')}
+      className={`${classes.toggleButton} ${
+        currentPostType ? '' : classes.active
+      }`}
+    >
+      <Typography variant="body2">All</Typography>
+    </ListItem>
+  );
 
-    const currentPostType = this.props.currentPostType;
-
-    const listItems = this.props.postTypes.map((postTypes, i) => (
-      <ListItem
-        dense
-        button
-        key={i}
-        onClick={() => this.onClick(`/post/${postTypes.postType}`)}
-        className={`${classes.toggleButton} ${
-          currentPostType === postTypes.postType ? classes.active : ''
-        }`}
-      >
-        <Typography variant="body2"> {postTypes.postType}</Typography>
-      </ListItem>
-    ));
-
-    listItems.unshift(
-      <ListItem
-        dense
-        button
-        key="all"
-        onClick={() => this.onClick('/')}
-        className={`${classes.toggleButton} ${
-          currentPostType ? '' : classes.active
-        }`}
-      >
-        <Typography variant="body2">All</Typography>
-      </ListItem>
-    );
-
-    return (
-      <div>
-        <br />
-        <Divider />
-        <br />
-        {listItems.length <= 1 ? (
-          ''
-        ) : (
-          <List className={classes.list}>{listItems}</List>
-        )}
-        <br />
-        <Divider />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Divider />
+      <br />
+      {listItems.length <= 1 ? (
+        ''
+      ) : (
+        <List className={classes.list}>{listItems}</List>
+      )}
+      <br />
+      <Divider />
+    </div>
+  );
 }
 
 const styles = (theme) => ({

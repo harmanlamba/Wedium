@@ -17,9 +17,6 @@ export const App = () => {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/search">
-              <h1>Search Results Page</h1>
-            </Route>
             <Route exact path="/create">
               <CreatePost />
             </Route>

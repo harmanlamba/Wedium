@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export function postOneTimeToken(tokenBlob) {
+export const postOneTimeToken = (tokenBlob) => {
     const endpoint = "/api/user/google";
 
     return axios.post(API_URL + endpoint, tokenBlob)
@@ -18,7 +18,7 @@ export function postOneTimeToken(tokenBlob) {
         .catch(error => console.log("Axios error message (postToken): " + error.message));
 }
 
-export function checkJWTToken(tokenJSON) {
+export const checkJWTToken = (tokenJSON) => {
     const endpoint = "/api/user";
     const tokenJSONConfig = {
         headers: {

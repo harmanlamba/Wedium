@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -6,55 +6,59 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 // Components
 import Header from '../header';
 import PostTypes from './post-types';
 import PostFeed from '../post-feed';
+import SearchResultLabel from './search-result-label';
 
-class Home extends Component {
-  componentDidMount() {
-    this.props.tryLogin();
-  }
+const qs = require('query-string');
 
-  render() {
-    const { classes } = this.props;
+const Home = (props) => {
+  const { classes } = props;
 
-    const user = this.props.auth;
+  useEffect(() => {
+    props.tryLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    const currentPostType = this.props.match.params.postType;
+  const user = props.auth;
 
-    return (
-      <div>
-        <Header user={user} />
-        <Grid
-          className={classes.grid}
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          alignItems="flex-start"
-        >
-          <Grid item xs={8}>
-            <Paper>Search</Paper>
-          </Grid>
+  const currentPostType = props.match.params.postType;
+  const searchString = qs.parse(props.location.search, {
+    ignoreQueryPrefix: true,
+  }).search;
 
-          <Grid item xs={6}>
-            <Paper>Filter Bar</Paper>
-            <br />
-            <PostFeed postType={currentPostType} />
-          </Grid>
-
-          <Grid item xs={2} className={classes.sidebar}>
-            <PostTypes currentPostType={currentPostType} />
-          </Grid>
+  return (
+    <div>
+      <Header user={user} showSearch={true} postType={currentPostType} />
+      <Grid
+        className={classes.grid}
+        container
+        spacing={3}
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+      >
+        <Grid item xs={6}>
+          {searchString !== undefined && (
+            <SearchResultLabel
+              searchString={searchString}
+              postType={currentPostType}
+            />
+          )}
+          <PostFeed postType={currentPostType} searchString={searchString} />
         </Grid>
-      </div>
-    );
-  }
-}
+
+        <Grid item xs={2} className={classes.sidebar}>
+          <PostTypes currentPostType={currentPostType} />
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -65,6 +69,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
+    paddingTop: '20px !important',
   },
   sidebar: {
     position: '-webkit-sticky',

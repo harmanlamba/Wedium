@@ -12,75 +12,75 @@ import {
     POST_DETAIL_DIRECT_NAVIGATION_LOADING
 } from '../action-types/action-types'
 
-export function loadPostsLoading() {
+export const loadPostsLoading = () => {
     return {
         type: LOAD_POSTS_LOADING,
     }
 }
 
-export function loadPostsSuccess(posts) {
+export const loadPostsSuccess = (posts) => {
     return {
         type: LOAD_POSTS_SUCCESS,
         posts,
     }
 }
 
-export function loadMorePostsSuccess(posts) {
+export const loadMorePostsSuccess = (posts) => {
     return {
         type: LOAD_MORE_POSTS_SUCCESS,
         posts,
     }
 }
 
-export function loadPostsError(err) {
+export const loadPostsError = (err) => {
     return {
         type: LOAD_POSTS_ERROR,
         err,
     }
 }
 
-export function likePost(postId) {
+export const likePost = (postId) => {
     return {
         type: LIKE_POST,
         postId,
     }
 }
 
-export function postDetailDirectNavigationLoading() {
+export const postDetailDirectNavigationLoading = () => {
     return {
         type: POST_DETAIL_DIRECT_NAVIGATION_LOADING,
     }
 }
 
-export function postDetailDirectNavigationSuccess(post) {
+export const postDetailDirectNavigationSuccess = (post) => {
     return {
         type: POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
         post,
     }
 }
 
-export function postDetailDirectNavigationError(err) {
+export const postDetailDirectNavigationError = (err) => {
     return {
         type: POST_DETAIL_DIRECT_NAVIGATION_ERROR,
         err,
     }
 }
 
-export function unlikePost(postId) {
+export const unlikePost = (postId) => {
     return {
         type: UNLIKE_POST,
         postId,
     }
 }
 
-export function favouritePost(postId) {
+export const favouritePost = (postId) => {
     return {
         type: FAVOURITE_POST,
         postId
     }
 }
 
-export function unfavouritePost(postId) {
+export const unfavouritePost = (postId) => {
     return {
         type: UNFAVOURITE_POST,
         postId

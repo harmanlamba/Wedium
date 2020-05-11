@@ -12,7 +12,7 @@ import {
     getPostDetail,
 } from '../../../apis/post';
 
-export function loadInitialPosts(postType, searchString) {
+export const loadInitialPosts = (postType, searchString) => {
     return dispatch => {
         dispatch(loadPostsLoading());
 
@@ -24,7 +24,7 @@ export function loadInitialPosts(postType, searchString) {
     }
 }
 
-export function loadMorePosts(afterPostId, postType, searchString) {
+export const loadMorePosts = (afterPostId, postType, searchString) => {
     return dispatch => {
         getPosts(afterPostId, postType, searchString)
             .then(

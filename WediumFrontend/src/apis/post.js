@@ -5,9 +5,9 @@ import {
 } from "./util/header-util"
 
 const API_URL = process.env.REACT_APP_API_URL;
-const LIMIT = 5;
+const LIMIT = 15;
 
-export function getPosts(afterPostId, postType, searchString) {
+export const getPosts = (afterPostId, postType, searchString) => {
     const header = createHeader();
     var queryString = `?limit=${LIMIT}`;
 
@@ -20,7 +20,7 @@ export function getPosts(afterPostId, postType, searchString) {
     }
 
     if (searchString) {
-        searchString += `&searchString=${searchString}`;
+        queryString += `&search=${searchString}`;
     }
 
     const endpoint = `${API_URL}/api/post/Get${queryString}`;
@@ -31,7 +31,7 @@ export function getPosts(afterPostId, postType, searchString) {
         });
 }
 
-export function createPost(postDto) {
+export const createPost = (postDto) => {
     const header = createHeader();
     const endpoint = `${API_URL}/api/post/Post`;
 

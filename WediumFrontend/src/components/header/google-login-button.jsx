@@ -1,7 +1,9 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import { GoogleLogin } from 'react-google-login';
 import { sendTokenAndLogin } from '../../redux/actions/thunk/auth-thunk';
 import { useDispatch } from 'react-redux';
+import GoogleIcon from '../../assets/google-icon';
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -24,8 +26,15 @@ const GoogleLoginButton = (props) => {
   return (
     <div>
       <GoogleLogin
+      render={renderProps => (
+        <Button
+        onClick={renderProps.onClick}
+        startIcon={<GoogleIcon />}
+      >
+        Sign in 
+      </Button>
+      )}
         clientId={GOOGLE_CLIENT_ID}
-        buttonText="Sign in with Google"
         onSuccess={googleSuccessfulResponse}
         onFailure={googleFailureResponse}
       ></GoogleLogin>

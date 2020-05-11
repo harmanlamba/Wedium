@@ -7,7 +7,7 @@ import {
     getPostTypes
 } from '../../../apis/post-type';
 
-export function loadPostTypes() {
+export const loadPostTypes = () => {
     return dispatch => {
 
         dispatch(loadPostTypesLoading());
