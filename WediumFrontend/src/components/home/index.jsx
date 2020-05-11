@@ -18,7 +18,7 @@ const qs = require('query-string');
 
 const Home = (props) => {
   const { classes } = props;
-  
+
   useEffect(() => {
     props.tryLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,7 +27,9 @@ const Home = (props) => {
   const user = props.auth;
 
   const currentPostType = props.match.params.postType;
-  const searchString = qs.parse(props.location.search, { ignoreQueryPrefix: true }).search;
+  const searchString = qs.parse(props.location.search, {
+    ignoreQueryPrefix: true,
+  }).search;
 
   return (
     <div>
@@ -41,9 +43,12 @@ const Home = (props) => {
         alignItems="flex-start"
       >
         <Grid item xs={6}>
-          {searchString !== undefined &&
-            <SearchResultLabel searchString={searchString} postType={currentPostType} />
-          }
+          {searchString !== undefined && (
+            <SearchResultLabel
+              searchString={searchString}
+              postType={currentPostType}
+            />
+          )}
           <PostFeed postType={currentPostType} searchString={searchString} />
         </Grid>
 
@@ -53,7 +58,7 @@ const Home = (props) => {
       </Grid>
     </div>
   );
-}
+};
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -64,6 +69,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
+    paddingTop: '20px !important',
   },
   sidebar: {
     position: '-webkit-sticky',

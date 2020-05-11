@@ -1,12 +1,15 @@
-import { 
+import {
     LOAD_POSTS_LOADING,
-    LOAD_POSTS_SUCCESS, 
+    LOAD_POSTS_SUCCESS,
     LOAD_MORE_POSTS_SUCCESS,
-    LOAD_POSTS_ERROR, 
-    LIKE_POST, 
+    LOAD_POSTS_ERROR,
+    LIKE_POST,
     UNLIKE_POST,
-    FAVOURITE_POST, 
-    UNFAVOURITE_POST
+    FAVOURITE_POST,
+    UNFAVOURITE_POST,
+    POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
+    POST_DETAIL_DIRECT_NAVIGATION_ERROR,
+    POST_DETAIL_DIRECT_NAVIGATION_LOADING
 } from '../action-types/action-types'
 
 export const loadPostsLoading = () => {
@@ -40,6 +43,26 @@ export const likePost = (postId) => {
     return {
         type: LIKE_POST,
         postId,
+    }
+}
+
+export const postDetailDirectNavigationLoading = () => {
+    return {
+        type: POST_DETAIL_DIRECT_NAVIGATION_LOADING,
+    }
+}
+
+export const postDetailDirectNavigationSuccess = (post) => {
+    return {
+        type: POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
+        post,
+    }
+}
+
+export const postDetailDirectNavigationError = (err) => {
+    return {
+        type: POST_DETAIL_DIRECT_NAVIGATION_ERROR,
+        err,
     }
 }
 

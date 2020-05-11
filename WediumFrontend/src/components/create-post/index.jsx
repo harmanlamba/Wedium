@@ -55,7 +55,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
-    paddingTop: '1%',
+    paddingTop: '25px !important',
   },
   root: {
     width: '100%',

@@ -35,24 +35,24 @@ namespace WediumAPI.Services
             WIKIMEDIA_GET_THUMBNAIL_ENDPOINT = GetThumbnailSettings.Value;
             WIKIMEDIA_GET_LATEST_DATE_ENDPOINT = GetLatestDateSettings.Value;
         }
-        public async Task<WikiMediaContentDto> GetWikiContentAsync(string title)
+        public async Task<WikiMediaMetaDataDto> GetWikiContentAsync(string title)
         {
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage response = await httpClient.GetAsync($"{WIKIMEDIA_GET_CONTENT_ENDPOINT}&titles={title}");
 
-            WikiMediaContentDto wikiMediaDto = await response.Content.ReadAsAsync<WikiMediaContentDto>();
+            WikiMediaMetaDataDto wikiMediaDto = await response.Content.ReadAsAsync<WikiMediaMetaDataDto>();
 
             long pageId;
             try
             {
-                pageId = wikiMediaDto.Query.Pages.First().PageId;
+                pageId = wikiMediaDto.Query.Pages.Values.First().PageId;
             }
             catch (NullReferenceException)
             {
                 throw new WikiArticleNotFoundException();
             }
 
-            if (pageId == 0 || string.IsNullOrEmpty(wikiMediaDto.Query.Pages.First().Extract) || response.StatusCode != HttpStatusCode.OK)
+            if (pageId == 0 || string.IsNullOrEmpty(wikiMediaDto.Query.Pages.Values.First().Extract) || response.StatusCode != HttpStatusCode.OK)
             {
                 throw new WikiArticleNotFoundException();
             }

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-import { createHeader } from "./util/header-util"
+import {
+    createHeader
+} from "./util/header-util"
 
 const API_URL = process.env.REACT_APP_API_URL;
 const LIMIT = 15;
@@ -8,7 +10,7 @@ const LIMIT = 15;
 export const getPosts = (afterPostId, postType, searchString) => {
     const header = createHeader();
     var queryString = `?limit=${LIMIT}`;
-    
+
     if (afterPostId) {
         queryString += `&after_id=${afterPostId}`;
     }
@@ -24,8 +26,8 @@ export const getPosts = (afterPostId, postType, searchString) => {
     const endpoint = `${API_URL}/api/post/Get${queryString}`;
 
     return axios.get(endpoint, header)
-        .then(response => { 
-            return response.data 
+        .then(response => {
+            return response.data
         });
 }
 
@@ -52,10 +54,10 @@ export const favouritePostRequest = (postId) => {
     };
 
     return axios.post(endpoint, body, header)
-        .then(response => { 
-            return response.status 
+        .then(response => {
+            return response.status
         });
-} 
+}
 
 export const unfavouritePostRequest = (postId) => {
     const header = createHeader();
@@ -66,7 +68,21 @@ export const unfavouritePostRequest = (postId) => {
     };
 
     return axios.post(endpoint, body, header)
-        .then(response => { 
-            return response.status 
+        .then(response => {
+            return response.status
+        });
+}
+
+export const getPostDetail = (postId) => {
+    const header = createHeader();
+    const endpoint = `${API_URL}/api/post/Get/${postId}`;
+
+    return axios.get(endpoint, header)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.log("Axios error message (getPostDetailRequest): " + error.message)
+            return error.response.status;
         });
 }

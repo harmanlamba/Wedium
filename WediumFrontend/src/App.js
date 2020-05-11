@@ -6,6 +6,7 @@ import store from './redux/store';
 // Components
 import Home from './components/home';
 import CreatePost from './components/create-post';
+import PostDetail from './components/post-detail';
 
 export const App = () => {
   return (
@@ -19,8 +20,8 @@ export const App = () => {
             <Route exact path="/create">
               <CreatePost />
             </Route>
-            <Route exact path="/post/:postType/:postID/:postTitle">
-              <h1>Post Page</h1>
+            <Route exact path="/post/:postType/:postId/:postTitle">
+              <PostDetail />
             </Route>
             <Route exact path="/post/:postType" component={Home} />
             <Route exact path="/user/:username">

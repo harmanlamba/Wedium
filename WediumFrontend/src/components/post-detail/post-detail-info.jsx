@@ -1,0 +1,138 @@
+import React from 'react';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+// Material UI
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
+import PostLike from '../post-like';
+import PostFavourite from '../post-favourite';
+import ArticleInfo from './article-info';
+import CommentButton from './comment-button';
+
+const PostDetailInfo = (props) => {
+  const post = props.post;
+  const classes = useStyles();
+  const postIndex = props.posts.findIndex((p) => p.postId === post.postId);
+  const reduxPosts = props.posts;
+
+  return (
+    <div>
+      <div className={classes.buttonGroup}>
+        <div className={classes.test}>
+          <PostLike
+            postId={reduxPosts[postIndex].postId}
+            isPostLiked={reduxPosts[postIndex].isPostLiked}
+            numberOfLikes={reduxPosts[postIndex].numberOfLikes}
+          />
+          <PostFavourite
+            postId={reduxPosts[postIndex].postId}
+            isFavourited={reduxPosts[postIndex].isFavourited}
+          />
+          <CommentButton handleCommentButton={props.handleCommentButton} />
+        </div>
+      </div>
+
+      <Card className={classes.postHeader}>
+        <Card className={classes.root} elevation={0}>
+          <CardContent>
+            <Typography variant="caption">
+              <span className={classes.postType}>{post.postType}</span>
+              <Link
+                className={classes.articleLink}
+                href={post.articleUrl}
+                target="_blank"
+              >
+                {post.articleTitle}
+              </Link>
+            </Typography>
+            <Typography variant="h5" className={classes.postTitle}>
+              {post.title}
+            </Typography>
+            {post.description && (
+              <Typography
+                variant="subtitle1"
+                color="textSecondary"
+                align="justify"
+              >
+                {post.description}
+              </Typography>
+            )}
+            <Typography
+              className={classes.username}
+              variant="caption"
+              color="textSecondary"
+            >
+              {post.username}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {moment(post.date).format('DD MMM')} -{' '}
+              {moment(post.date).fromNow()}
+            </Typography>
+          </CardContent>
+        </Card>
+
+        <ArticleInfo post={post} />
+      </Card>
+    </div>
+  );
+};
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderRadius: 0,
+    paddingBottom: 0,
+  },
+  postHeader: {
+    padding: '10px 30px 10px 30px',
+  },
+  postType: {
+    backgroundColor: '#3f51b5',
+    color: '#fff',
+    padding: '1px 3px',
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  articleLink: {
+    marginLeft: 6,
+  },
+  rightPanel: {
+    display: 'flex',
+  },
+  buttonGroup: {
+    position: 'relative',
+    paddingBottom: '3em',
+  },
+  test: {
+    display: 'flex',
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    right: 0,
+  },
+  username: {
+    marginTop: 20,
+    marginRight: 15,
+  },
+  postTitle: {
+    marginTop: 4,
+  },
+  postDescription: {
+    marginBottom: -5,
+  },
+}));
+
+//Redux
+const mapStateToProps = (state) => {
+  return {
+    posts: state.post.posts,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(PostDetailInfo));
