@@ -1,67 +1,53 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useRef, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { withStyles } from '@material-ui/core/styles';
 
-class RichTextBox extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentTextLength: 0,
-        };
-        this.quillRef = null;
-        this.reactQuillRef = null;
-    }
+const RichTextBox = (props) => {
+    const [currentTextLength, setCurrentTextLength] = useState(null);
+    let reactQuillRef = useRef();
+    let quillRef = useRef();
+    const { classes } = props;
 
-    componentDidMount() {
-        this.setState({
-            currentTextLength: 0
-        });
-        this.attachQuillRefs();
-    }
+    useEffect(() => {
+        props.quotedText ? setCurrentTextLength(props.quotedText.length) : setCurrentTextLength(0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
 
-    componentDidUpdate() {
-        this.attachQuillRefs();
-    }
+    useEffect(() => {
+        if (typeof reactQuillRef.getEditor !== 'function') {
+            return;
+        }
+        quillRef = reactQuillRef.getEditor();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
 
-    attachQuillRefs = () => {
-        if (typeof this.reactQuillRef.getEditor !== 'function') return;
-        this.quillRef = this.reactQuillRef.getEditor();
-    }
+    const onChange = (htmlText) => {
+        setCurrentTextLength(quillRef.getLength() - 1);
 
-    onChange = (htmlText) => {
-        this.setState({
-            currentTextLength: this.quillRef.getLength() - 1
-        });
-
-        if (this.quillRef.getText().trim() === "") {
-            this.props.onChange("");
+        if (quillRef.getText().trim() === "") {
+            props.onChange("");
         } else {
-            this.props.onChange(htmlText);
+            props.onChange(htmlText);
         }
     }
 
-    render() {
-        const { classes } = this.props;
-        const isOverflow = this.state.currentTextLength > this.props.maxLength;
-
-        return (
-            <div>
-                <ReactQuill className={classes.quill}
-                    ref={(el) => { this.reactQuillRef = el }}
-                    theme={'snow'}
-                    onChange={this.onChange}
-                    modules={RichTextBox.modules}
-                    formats={RichTextBox.formats}
-                    defaultValue={this.props.quotedText ? `<blockquote>${this.props.quotedText}</blockquote>` : ""}
-                    placeholder={this.props.placeholder}
-                />
-                <div className={`${classes.textLimit} ${isOverflow ? classes.textLimitOverflow : ""}`}>
-                    {this.state.currentTextLength}/{this.props.maxLength}
-                </div>
+    return (
+        <div>
+            <ReactQuill className={classes.quill}
+                ref={(el) => { reactQuillRef = el }}
+                theme={'snow'}
+                onChange={onChange}
+                modules={RichTextBox.modules}
+                formats={RichTextBox.formats}
+                defaultValue={props.quotedText ? `<blockquote>${props.quotedText}</blockquote>` : ""}
+                placeholder={props.placeholder}
+            />
+            <div className={`${classes.textLimit} ${currentTextLength > props.maxLength ? classes.textLimitOverflow : ""}`}>
+                {currentTextLength}/{props.maxLength}
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 const styles = (theme) => ({
