@@ -1,8 +1,8 @@
 ---
 name: Refactor request
 about: Refactoring existing functionality in the project
-title: "[REFACTOR]"
-labels: refactor
+title: ''
+labels: refactor, waiting for approval
 assignees: ''
 
 ---
