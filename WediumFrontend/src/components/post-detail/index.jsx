@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from '../header';
 import PostDetailInfo from './post-detail-info';
 import PostCommentBox from './post-comment-box';
+// import RichTextBox from '../rich-text-box';
 
 class PostDetail extends Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class PostDetail extends Component {
       <div>
         <Header user={user} />
 
-        {this.props.isLoadingDetails == false ? (
+        {this.props.isLoadingDetails === false ? (
           <Grid
             className={classes.grid}
             container
@@ -71,6 +72,7 @@ class PostDetail extends Component {
               />
             </Grid>
             <Grid item xs={7} ref={this.commentRef}>
+              {/* <RichTextBox placeholder={"Write comment..."} quotedText={"blahblah"} maxLength={500} onChange={(htmlText) => { console.log(htmlText)}} /> */}
               <PostCommentBox user={user} />
             </Grid>
           </Grid>
