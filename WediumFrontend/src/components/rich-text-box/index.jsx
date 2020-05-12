@@ -1,17 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Card from '@material-ui/core/card';
 import { withStyles } from '@material-ui/core/styles';
 
 class RichTextBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentTextLength: 0
+            currentTextLength: 0,
         };
-        this.quillRef = null;      // Quill instance
-        this.reactQuillRef = null; // ReactQuill component
+        this.quillRef = null;
+        this.reactQuillRef = null;
     }
 
     componentDidMount() {
@@ -30,10 +29,16 @@ class RichTextBox extends React.Component {
         this.quillRef = this.reactQuillRef.getEditor();
     }
 
-    onChange = () => {
+    onChange = (htmlText) => {
         this.setState({
             currentTextLength: this.quillRef.getLength() - 1
         });
+
+        if (this.quillRef.getText().trim() === "") {
+            this.props.onChange("");
+        } else {
+            this.props.onChange(htmlText);
+        }
     }
 
     render() {
@@ -60,24 +65,29 @@ class RichTextBox extends React.Component {
 const styles = (theme) => ({
     textLimit: {
         color: 'grey',
-        fontSize: 12,
+        fontSize: '0.75rem',
         textAlign: 'right',
-        marginTop: 4,
-        marginRight: 16
+        marginTop: 3,
+        marginRight: 14,
+        letterSpacing: '0.03333em',
+        fontWeight: 400,
+        lineHeight: 1.66,
     },
     textLimitOverflow: {
         color: 'red'
     },
     quill: {
         '& .ql-toolbar': {
-            'border-top-left-radius': '0.5em',
-            'border-top-right-radius': '0.5em',
+            'border-top-left-radius': 4,
+            'border-top-right-radius': 4,
             background: '#fefcfc',
         },
         '& .ql-container': {
-            'border-bottom-left-radius': '0.5em',
-            'border-bottom-right-radius': '0.5em',
+            'border-bottom-left-radius': 4,
+            'border-bottom-right-radius': 4,
             background: 'white',
+            'min-height': 80,
+            font: 'inherit',
         }
     }
 });
