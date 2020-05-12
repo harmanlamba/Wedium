@@ -1,8 +1,8 @@
 ---
 name: Documentation Update
 about: Updates to any documentation or administrative aspects of the project
-title: "[DOC]"
-labels: documentation
+title: ''
+labels: documentation, waiting for approval
 assignees: ''
 
 ---

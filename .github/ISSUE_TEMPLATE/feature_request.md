@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: feature, waiting for approval
 assignees: ''
 
 ---
@@ -13,7 +13,8 @@ assignees: ''
 **Acceptance Criteria:**
 <!-- Bullet point acceptance criteria of the feature here -->
 
-**Additional Notes:**
+<!-- **Additional Notes:**
+Specify additional information if any -->
 
 ---
 

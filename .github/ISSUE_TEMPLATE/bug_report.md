@@ -1,8 +1,8 @@
 ---
 name: Bug report
 about: Create a report to help us improve this project
-title: Title-Here [Low/Medium/High Priority]
-labels: bug
+title: [Low/Medium/High Priority]
+labels: bug, waiting for approval
 assignees: ''
 
 ---
@@ -46,5 +46,5 @@ assignees: ''
 
 ---
 
-**Additional Context:**
-<!-- Add any other context about the problem here -->
+<!-- **Additional Context:**
+Add any other context about the problem here if any -->
