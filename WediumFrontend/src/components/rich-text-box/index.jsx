@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { withStyles } from '@material-ui/core/styles';
 
-class RichTextBox extends React.Component {
+class RichTextBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,11 +17,11 @@ class RichTextBox extends React.Component {
         this.setState({
             currentTextLength: 0
         });
-        this.attachQuillRefs()
+        this.attachQuillRefs();
     }
 
     componentDidUpdate() {
-        this.attachQuillRefs()
+        this.attachQuillRefs();
     }
 
     attachQuillRefs = () => {
@@ -53,6 +53,8 @@ class RichTextBox extends React.Component {
                     onChange={this.onChange}
                     modules={RichTextBox.modules}
                     formats={RichTextBox.formats}
+                    defaultValue={this.props.quotedText ? `<blockquote>${this.props.quotedText}</blockquote>` : ""}
+                    placeholder={this.props.placeholder}
                 />
                 <div className={`${classes.textLimit} ${isOverflow ? classes.textLimitOverflow : ""}`}>
                     {this.state.currentTextLength}/{this.props.maxLength}

@@ -72,7 +72,7 @@ class PostDetail extends Component {
               />
             </Grid>
             <Grid item xs={7} ref={this.commentRef}>
-              {/* <RichTextBox maxLength={500} onChange={(htmlText) => { console.log(htmlText)}} /> */}
+              {/* <RichTextBox placeholder={"Write comment..."} quotedText={"blahblah"} maxLength={500} onChange={(htmlText) => { console.log(htmlText)}} /> */}
               <PostCommentBox user={user} />
             </Grid>
           </Grid>
