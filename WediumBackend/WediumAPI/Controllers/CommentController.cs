@@ -55,8 +55,7 @@ namespace WediumAPI.Controllers
             PostDto postDto = null;
             try
             {
-                commentId = _service.CreateComment(commentDto, userId).Item1;
-                postDto = _service.CreateComment(commentDto, userId).Item2;
+                (commentId,postDto) = _service.CreateComment(commentDto, userId);
             }
             catch (PostNotFoundException)
             {
