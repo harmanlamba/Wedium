@@ -13,6 +13,11 @@ import UserMenu from './user-menu';
 import SearchBar from './search-bar';
 
 const Header = (props) => {
+  const goHome = () => {
+    props.history.push('/');
+    window.location.reload();
+  }
+
   const classes = useStyles();
 
   const user = props.user;
@@ -25,7 +30,7 @@ const Header = (props) => {
           className={classes.titleButton}
           size="large"
           disableRipple={true}
-          onClick={() => props.history.push('/')}
+          onClick={goHome}
         >
           Wedium
         </Button>
