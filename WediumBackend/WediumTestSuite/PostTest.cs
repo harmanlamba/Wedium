@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace WediumTestSuite
     class PostTest
     {
         private TestServerHandler _testServer;
+        private DbContextOptions<WediumContext> _wediumContextOptions;
         private WediumContext _db;
 
         private string _apiEndpoint;
@@ -29,16 +31,23 @@ namespace WediumTestSuite
         private readonly string ARTICLE_IMAGE_URL_COMMAND = "SELECT ArticleImageUrl, ArticleBody FROM WDM.[WikiArticle] where WikiArticleId = ";
 
         [OneTimeSetUp]
-        public void Setup()
+        public void OneTimeSetup()
         {
-            _testServer = new TestServerHandler();
             _db = DatabaseContextResolver.GetDatabaseContext();
 
             _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
         }
 
+        [SetUp]
+        public void Setup()
+        {
+            _testServer = new TestServerHandler();
+
+            _wediumContextOptions = _testServer.getWediumContextOptions();
+        }
+
         [Test]
-        public async Task GetPost_PostIdInvalid()
+        public async Task GetPostInvalidPostId()
         {
             HttpClient client = _testServer.CreateClient();
 
@@ -51,7 +60,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            int limit1 = 5;
+            int limit1 = 2;
 
             HttpResponseMessage limit1Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit1}");
             Assert.AreEqual(HttpStatusCode.OK, limit1Response.StatusCode);
@@ -59,7 +68,7 @@ namespace WediumTestSuite
             List<PostDto> limit1Content = await limit1Response.Content.ReadAsAsync<List<PostDto>>();
             Assert.AreEqual(limit1, limit1Content.Count);
 
-            int limit2 = 10;
+            int limit2 = 3;
 
             HttpResponseMessage limit2Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit2}");
             Assert.AreEqual(HttpStatusCode.OK, limit2Response.StatusCode);
@@ -84,7 +93,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            int limit = 5;
+            int limit = 2;
 
             HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit}");
             Assert.AreEqual(HttpStatusCode.OK, firstBatchResponse.StatusCode);
