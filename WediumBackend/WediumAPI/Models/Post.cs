@@ -7,6 +7,7 @@ namespace WediumAPI.Models
     {
         public Post()
         {
+            Comment = new HashSet<Comment>();
             Favourite = new HashSet<Favourite>();
             PostLike = new HashSet<PostLike>();
         }
@@ -22,6 +23,7 @@ namespace WediumAPI.Models
         public virtual PostType PostType { get; set; }
         public virtual User User { get; set; }
         public virtual WikiArticle WikiArticle { get; set; }
+        public virtual ICollection<Comment> Comment { get; set; }
         public virtual ICollection<Favourite> Favourite { get; set; }
         public virtual ICollection<PostLike> PostLike { get; set; }
     }

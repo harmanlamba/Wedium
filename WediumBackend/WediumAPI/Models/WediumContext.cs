@@ -60,6 +60,12 @@ namespace WediumAPI.Models
                     .HasForeignKey(d => d.ParentCommentId)
                     .HasConstraintName("FK_Comment_Comment");
 
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Comment)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_Post");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comment)
                     .HasForeignKey(d => d.UserId)
@@ -227,19 +233,13 @@ namespace WediumAPI.Models
             {
                 entity.ToTable("Settings", "WDM");
 
-                entity.HasIndex(e => e.Key)
-                    .HasName("UQ_Settings_Key")
-                    .IsUnique();
-
                 entity.Property(e => e.SettingsId).HasColumnName("SettingsID");
 
                 entity.Property(e => e.Key)
                     .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
                     .HasMaxLength(100);
+
+                entity.Property(e => e.Value).IsRequired();
             });
 
             modelBuilder.Entity<TestTable>(entity =>
