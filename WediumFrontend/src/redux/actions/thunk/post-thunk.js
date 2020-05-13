@@ -6,6 +6,7 @@ import {
     postDetailDirectNavigationSuccess,
     postDetailDirectNavigationError,
     postDetailDirectNavigationLoading,
+    filtersUpdate,
 } from '../post-actions';
 import {
     getPosts,
@@ -34,7 +35,7 @@ export const loadMorePosts = (afterPostId, postType, searchString) => {
     }
 }
 
-export function fetchPostDetails(postId){
+export const fetchPostDetails = (postId) => {
     return (dispatch) => {
 
         dispatch(postDetailDirectNavigationLoading());
@@ -43,5 +44,11 @@ export function fetchPostDetails(postId){
            
            error => dispatch(postDetailDirectNavigationError(error.message || "Unexpected error occured")),
         );
+    }
+}
+
+export const updateFilters = (postType, searchString) => {
+    return (dispatch) => {
+        dispatch(filtersUpdate(postType, searchString));
     }
 }

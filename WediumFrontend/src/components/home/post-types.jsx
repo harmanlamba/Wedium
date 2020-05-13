@@ -29,6 +29,7 @@ const PostTypes = (props) => {
       dense
       button
       key={i}
+      disabled={props.postsLoading}
       onClick={() => onClick(`/post/${postTypes.postType}`)}
       className={`${classes.toggleButton} ${
         currentPostType === postTypes.postType ? classes.active : ''
@@ -43,6 +44,7 @@ const PostTypes = (props) => {
       dense
       button
       key="all"
+      disabled={props.postsLoading}
       onClick={() => onClick('/')}
       className={`${classes.toggleButton} ${
         currentPostType ? '' : classes.active
@@ -93,6 +95,7 @@ const styles = (theme) => ({
 const mapStateToProps = (state) => {
   return {
     postTypes: state.postType.postTypes,
+    postsLoading: state.post.initialPostsLoading,
   };
 };
 
