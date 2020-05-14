@@ -37,6 +37,16 @@ namespace WediumTestSuite.Helper
                     db.Post.Add(post);
                 }
 
+                foreach (CommentType commentType in InitializeCommentTypes())
+                {
+                    db.CommentType.Add(commentType);
+                }
+
+                foreach (Comment comment in InitializeComments())
+                {
+                    db.Comment.Add(comment);
+                }
+
                 db.SaveChanges();
             }
         }
@@ -202,6 +212,35 @@ namespace WediumTestSuite.Helper
                     Title = "TitleTest5",
                     Description = "DescriptionTest5",
                     PostTypeId = 1
+                }
+            };
+        }
+
+        public static CommentType[] InitializeCommentTypes()
+        {
+            return new CommentType[]
+            {
+                new CommentType()
+                {
+                    CommentTypeId = 1,
+                    CommentTypeValue = "Statement"
+                }
+            };
+        }
+
+        public static Comment[] InitializeComments()
+        {
+            return new Comment[]
+            {
+                new Comment()
+                {
+                    CommentId = 1,
+                    PostId = 1,
+                    UserId = 1,
+                    Date = DateTime.Now,
+                    ParentCommentId = null,
+                    Body = "Hi",
+                    CommentTypeId = 1
                 }
             };
         }

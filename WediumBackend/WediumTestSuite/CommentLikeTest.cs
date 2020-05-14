@@ -17,21 +17,25 @@ namespace WediumTestSuite
         private string _apiEndpoint;
 
         [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+        }
+
+        [SetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
-
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
         }
 
         [Test]
         public async Task LikingAndUnlikingCommentTest()
         {
-            HttpClient client = _testServer.CreateClient(136);
+            HttpClient client = _testServer.CreateClient(1);
 
             CommentLikeDto commentLikeDto = new CommentLikeDto
             {
-                CommentId = 5
+                CommentId = 1
             };
 
             HttpResponseMessage createResponse = await client.PostAsync(_apiEndpoint + "api/commentLike/post", commentLikeDto, new JsonMediaTypeFormatter());
@@ -50,7 +54,7 @@ namespace WediumTestSuite
         [Test]
         public async Task LikeInvalidCommentIdTest()
         {
-            HttpClient client = _testServer.CreateClient(136);
+            HttpClient client = _testServer.CreateClient(1);
 
             CommentLikeDto commentLikeDto = new CommentLikeDto
             {
@@ -64,7 +68,7 @@ namespace WediumTestSuite
         [Test]
         public async Task UnlikeInvalidCommentIdTest()
         {
-            HttpClient client = _testServer.CreateClient(136);
+            HttpClient client = _testServer.CreateClient(1);
 
             CommentLikeDto commentLikeDto = new CommentLikeDto
             {
