@@ -9,7 +9,8 @@ import {
     UNFAVOURITE_POST,
     POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
     POST_DETAIL_DIRECT_NAVIGATION_ERROR,
-    POST_DETAIL_DIRECT_NAVIGATION_LOADING
+    POST_DETAIL_DIRECT_NAVIGATION_LOADING,
+    UPDATE_FILTERS
 } from '../action-types/action-types'
 
 export const loadPostsLoading = () => {
@@ -84,5 +85,13 @@ export const unfavouritePost = (postId) => {
     return {
         type: UNFAVOURITE_POST,
         postId
+    }
+}
+
+export const filtersUpdate = (postType, searchString) => {
+    return {
+        type: UPDATE_FILTERS,
+        postType,
+        searchString
     }
 }

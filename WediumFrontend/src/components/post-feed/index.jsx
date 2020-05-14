@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
+import { loadInitialPosts, loadMorePosts, updateFilters } from '../../redux/actions/thunk/post-thunk';
 
 // Material UI
 import Container from '@material-ui/core/Container';
@@ -14,17 +14,20 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
-    this.loadInitial();
+    if (!this.props.posts.length || this.props.postType !== this.props.previousPostType || this.props.searchString !== this.props.previousSearchString) {
+      this.loadInitial();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.postType !== prevProps.postType || this.props.searchString !== prevProps.searchString) {
+    if (this.props.postType !== this.props.previousPostType || this.props.searchString !== this.props.previousSearchString) {
       this.loadInitial();
     }
   }
 
   loadInitial() {
     this.props.loadInitialPosts(this.props.postType, this.props.searchString);
+    this.props.updateFilters(this.props.postType, this.props.searchString);
   }
 
   getLastPost() {
@@ -58,7 +61,7 @@ class PostFeed extends Component {
             loadMore={this.loadMore.bind(this)}
             hasMore={this.hasMore()}
             loader={<LoadingPostCard key={0} />}
-            threshold={400}
+            threshold={1000}
           >
             {items}
           </InfiniteScroll>
@@ -85,12 +88,15 @@ const mapStateToProps = (state) => {
   return {
     posts: state.post.posts,
     postsLoading: state.post.initialPostsLoading,
+    previousPostType: state.post.postTypeFilter,
+    previousSearchString: state.post.searchStringFilter,
   };
 };
 
 const mapDispatchToProps = {
   loadInitialPosts,
   loadMorePosts,
+  updateFilters,
 };
 
 export default withRouter(

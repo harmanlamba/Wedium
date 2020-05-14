@@ -17,12 +17,14 @@ namespace WediumTestSuite
 {
     public class ORMTest
     {
-        private WediumContext _db;
+        private DbContextOptions<WediumContext> _wediumContextOptions;
 
         [SetUp]
         public void SetUp()
         {
-            _db = DatabaseContextResolver.GetDatabaseContext();
+            TestServerHandler server = new TestServerHandler();
+
+            _wediumContextOptions = server.getWediumContextOptions();
         }
 
         [Test]
@@ -36,32 +38,35 @@ namespace WediumTestSuite
                 Email = "test@user.com"
             };
 
-            try
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
             {
-                _db.User.Add(testUser);
-                _db.SaveChanges();
-               
-                var user = _db.User.FirstOrDefault(u => u.FirstName == "Test");
-                Assert.AreEqual(testUser.FirstName, user.FirstName);
-                Assert.AreEqual(testUser.LastName, user.LastName);
-                Assert.AreEqual(testUser.Email, user.Email);
-                
-                user.FirstName = "Updated Firstname";
-                user.LastName = "Updated Lastname";
-                
-                _db.SaveChanges();
-                
-                Assert.AreEqual("Updated Firstname", user.FirstName);
-                Assert.AreEqual("Updated Lastname", user.LastName);
-            }
-            finally
-            {
-                // Deleting the User from the database
-                _db.User.Remove(testUser);
-                _db.SaveChanges();
+                try
+                {
+                    db.User.Add(testUser);
+                    db.SaveChanges();
 
-                var removedUser = _db.User.FirstOrDefault(u => u.FirstName == "Test user");
-                Assert.AreEqual(null, removedUser);
+                    var user = db.User.FirstOrDefault(u => u.FirstName == "Test");
+                    Assert.AreEqual(testUser.FirstName, user.FirstName);
+                    Assert.AreEqual(testUser.LastName, user.LastName);
+                    Assert.AreEqual(testUser.Email, user.Email);
+
+                    user.FirstName = "Updated Firstname";
+                    user.LastName = "Updated Lastname";
+
+                    db.SaveChanges();
+
+                    Assert.AreEqual("Updated Firstname", user.FirstName);
+                    Assert.AreEqual("Updated Lastname", user.LastName);
+                }
+                finally
+                {
+                    // Deleting the User from the database
+                    db.User.Remove(testUser);
+                    db.SaveChanges();
+
+                    var removedUser = db.User.FirstOrDefault(u => u.FirstName == "Test user");
+                    Assert.AreEqual(null, removedUser);
+                }
             }
         }
 
@@ -83,55 +88,46 @@ namespace WediumTestSuite
                 ArticleTitle = "Test Title"
             };
 
-            var postType = _db.PostType.First();
-
-            Post testPost = new Post
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
             {
-                Date = DateTime.Now,
-                Title = "Urzababa The Great",
-                Description = "The Life of Urzababa",
-                PostTypeId = postType.PostTypeId
-            };
+                var postType = db.PostType.First();
 
-            Favourite testFavourite = new Favourite
-            {
-                Date = DateTime.Now
-            };
+                Post testPost = new Post
+                {
+                    Date = DateTime.Now,
+                    Title = "Urzababa The Great",
+                    Description = "The Life of Urzababa",
+                    PostTypeId = postType.PostTypeId
+                };
 
-            try
-            {
-                _db.User.Add(testUser);
-                _db.WikiArticle.Add(testArticle);
-                _db.SaveChanges();
+                Favourite testFavourite = new Favourite
+                {
+                    Date = DateTime.Now
+                };
 
-                WikiArticle wikiArticle = _db.WikiArticle.First(wa => wa.ArticleDate == testArticle.ArticleDate);
+                db.User.Add(testUser);
+                db.WikiArticle.Add(testArticle);
+                db.SaveChanges();
+
+                WikiArticle wikiArticle = db.WikiArticle.First(wa => wa.ArticleDate == testArticle.ArticleDate);
                 testPost.WikiArticleId = wikiArticle.WikiArticleId;
 
-                User user = _db.User.First(u => u.Email == testUser.Email);
+                User user = db.User.First(u => u.Email == testUser.Email);
                 testPost.UserId = user.UserId;
 
-                _db.Post.Add(testPost);
-                _db.SaveChanges();
+                db.Post.Add(testPost);
+                db.SaveChanges();
 
-                Post post = _db.Post.First(p => p.Title == testPost.Title);
+                Post post = db.Post.First(p => p.Title == testPost.Title);
                 testFavourite.PostId = post.PostId;
                 testFavourite.UserId = user.UserId;
 
-                _db.Favourite.Add(testFavourite);
-                _db.SaveChanges();
+                db.Favourite.Add(testFavourite);
+                db.SaveChanges();
 
-                Favourite favourite = _db.Favourite.First(f => f.Date == testFavourite.Date);
+                Favourite favourite = db.Favourite.First(f => f.Date == testFavourite.Date);
                 Assert.AreEqual(testUser.UserId, favourite.UserId);
                 Assert.AreEqual(testPost.PostId, favourite.PostId);
-            }
-            finally
-            {
-                // Deleting created data
-                _db.Favourite.Remove(testFavourite);
-                _db.Post.Remove(testPost);
-                _db.User.Remove(testUser);
-                _db.WikiArticle.Remove(testArticle);
-                _db.SaveChanges();
             }
         }
     }

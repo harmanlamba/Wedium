@@ -15,11 +15,15 @@ namespace WediumTestSuite
         private string _apiEndpoint;
 
         [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+        }
+
+        [SetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
-
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
         }
 
         [Test]
@@ -31,7 +35,7 @@ namespace WediumTestSuite
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
                 List<PostTypeDto> content = await response.Content.ReadAsAsync<List<PostTypeDto>>();
-                Assert.AreEqual(13, content.Count);
+                Assert.AreEqual(MockDBContextInitializer.InitialPostTypes().Length, content.Count);
             }
         }
     }
