@@ -68,5 +68,29 @@ namespace WediumAPI.Controllers
                 return NotFound();
             }
         }
+
+        [Authorize]
+        [HttpGet("Get")]
+        public ActionResult<List<PostDto>> Get(int? limit = null, int? after_id = null)
+        {
+            if (limit.HasValue && limit.Value < 0)
+            {
+                return BadRequest();
+            }
+
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            try
+            {
+                IEnumerable<PostDto> postDtoList = _service.GetFavouritedPosts(userId, limit, after_id);
+
+                return Ok(postDtoList);
+            }
+            catch (PostNotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
