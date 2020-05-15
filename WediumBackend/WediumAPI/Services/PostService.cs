@@ -116,7 +116,7 @@ namespace WediumAPI.Services
                 .Any(p => p.PostId == postId);
         }
 
-        public (int, String) CreatePost(PostDto postDto, int userId)
+        public (int, string) CreatePost(PostDto postDto, int userId)
         {
             WikiArticle wikiArticle;
             string articleImageUrl = null;
