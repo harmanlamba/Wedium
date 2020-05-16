@@ -37,11 +37,12 @@ namespace WediumTestSuite.Helper
                     db.Post.Add(post);
                 }
 
-<<<<<<< HEAD
                 foreach (Favourite favourite in InitializeFavourites())
                 {
                     db.Favourite.Add(favourite);
-=======
+
+                }
+
                 foreach (CommentType commentType in InitializeCommentTypes())
                 {
                     db.CommentType.Add(commentType);
@@ -50,7 +51,6 @@ namespace WediumTestSuite.Helper
                 foreach (Comment comment in InitializeComments())
                 {
                     db.Comment.Add(comment);
->>>>>>> master
                 }
 
                 db.SaveChanges();
@@ -222,7 +222,6 @@ namespace WediumTestSuite.Helper
             };
         }
 
-<<<<<<< HEAD
         public static Favourite[] InitializeFavourites()
         {
             return new Favourite[]
@@ -268,7 +267,10 @@ namespace WediumTestSuite.Helper
                     UserId = 2,
                     PostId = 3,
                     Date = DateTime.Now
-=======
+                }
+            };
+        }
+
         public static CommentType[] InitializeCommentTypes()
         {
             return new CommentType[]
@@ -294,7 +296,6 @@ namespace WediumTestSuite.Helper
                     ParentCommentId = null,
                     Body = "CommentTest1",
                     CommentTypeId = 1
->>>>>>> master
                 }
             };
         }
