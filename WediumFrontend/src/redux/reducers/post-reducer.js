@@ -10,6 +10,7 @@ import {
   POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
   POST_DETAIL_DIRECT_NAVIGATION_ERROR,
   POST_DETAIL_DIRECT_NAVIGATION_LOADING,
+  UPDATE_FILTERS,
 } from '../action-types/action-types';
 
 const INIT_POST_REDUCER_STATE = {
@@ -158,6 +159,13 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
           ...state,
           posts: editedUnfavouritedPosts,
         };
+
+      case UPDATE_FILTERS:
+        return {
+          ...state,
+          postTypeFilter: action.postType,
+          searchStringFilter: action.searchString,
+        }
 
       default:
         return state;

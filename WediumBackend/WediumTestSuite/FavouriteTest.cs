@@ -17,21 +17,25 @@ namespace WediumTestSuite
         private string _apiEndpoint;
 
         [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+        }
+
+        [SetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
-
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
         }
 
         [Test]
         public async Task FavouriteAndUnfavouritePostTest()
         {
-            HttpClient client = _testServer.CreateClient(139);
+            HttpClient client = _testServer.CreateClient(2);
 
             FavouriteDto postLikeDto = new FavouriteDto
             {
-                PostId = 77
+                PostId = 1
             };
 
             HttpResponseMessage createResponse = await client.PostAsync(_apiEndpoint + "api/favourite/post", postLikeDto, new JsonMediaTypeFormatter());
@@ -50,7 +54,7 @@ namespace WediumTestSuite
         [Test]
         public async Task FavouriteInvalidPostIdTest()
         {
-            HttpClient client = _testServer.CreateClient(139);
+            HttpClient client = _testServer.CreateClient(2);
 
             FavouriteDto favouriteDto = new FavouriteDto
             {
@@ -64,7 +68,7 @@ namespace WediumTestSuite
         [Test]
         public async Task RemoveFavouriteInvalidPostIdTest()
         {
-            HttpClient client = _testServer.CreateClient(139);
+            HttpClient client = _testServer.CreateClient(2);
 
             FavouriteDto favouriteDto= new FavouriteDto
             {

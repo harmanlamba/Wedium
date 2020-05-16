@@ -20,11 +20,15 @@ namespace WediumTestSuite
         private string _apiEndpoint;
 
         [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+        }
+
+        [SetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
-
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
         }
 
         [Test]
@@ -54,10 +58,7 @@ namespace WediumTestSuite
         [Test]
         public async Task CheckAuthenticatedUserAccessOfAuthenticateEndpointTest()
         {
-            WediumContext db = DatabaseContextResolver.GetDatabaseContext();
-
-            User user = db.User
-                .First(u => u.UserId == 136);
+            User user = MockDBContextInitializer.InitialUsers()[0];
 
             HttpClient client = _testServer.CreateClient(user.UserId);
 

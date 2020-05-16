@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -19,26 +20,25 @@ namespace WediumTestSuite
     class PostTest
     {
         private TestServerHandler _testServer;
-        private WediumContext _db;
-
+        private DbContextOptions<WediumContext> _wediumContextOptions;
         private string _apiEndpoint;
 
-        private readonly int USER_ID = 139;
-        private readonly int POST_ID = 70;
-        private readonly int WIKI_ARTICLE_ID = 73;
-        private readonly string ARTICLE_IMAGE_URL_COMMAND = "SELECT ArticleImageUrl, ArticleBody FROM WDM.[WikiArticle] where WikiArticleId = ";
-
         [OneTimeSetUp]
-        public void Setup()
+        public void OneTimeSetup()
         {
-            _testServer = new TestServerHandler();
-            _db = DatabaseContextResolver.GetDatabaseContext();
-
             _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
         }
 
+        [SetUp]
+        public void Setup()
+        {
+            _testServer = new TestServerHandler();
+
+            _wediumContextOptions = _testServer.getWediumContextOptions();
+        }
+
         [Test]
-        public async Task GetPost_PostIdInvalid()
+        public async Task GetPostInvalidPostId()
         {
             HttpClient client = _testServer.CreateClient();
 
@@ -51,7 +51,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            int limit1 = 5;
+            int limit1 = 2;
 
             HttpResponseMessage limit1Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit1}");
             Assert.AreEqual(HttpStatusCode.OK, limit1Response.StatusCode);
@@ -59,7 +59,7 @@ namespace WediumTestSuite
             List<PostDto> limit1Content = await limit1Response.Content.ReadAsAsync<List<PostDto>>();
             Assert.AreEqual(limit1, limit1Content.Count);
 
-            int limit2 = 10;
+            int limit2 = 3;
 
             HttpResponseMessage limit2Response = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit2}");
             Assert.AreEqual(HttpStatusCode.OK, limit2Response.StatusCode);
@@ -84,7 +84,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient();
 
-            int limit = 5;
+            int limit = 2;
 
             HttpResponseMessage firstBatchResponse = await client.GetAsync(_apiEndpoint + $"api/Post/Get?limit={limit}");
             Assert.AreEqual(HttpStatusCode.OK, firstBatchResponse.StatusCode);
@@ -105,55 +105,29 @@ namespace WediumTestSuite
         [Test]
         public async Task GetSingularPostWithID()
         {
-            HttpClient client = _testServer.CreateClient(USER_ID);
-            Task<(HttpStatusCode, PostDto)> response = CreatePost(client);
+            HttpClient client = _testServer.CreateClient(1);
 
-            Assert.AreEqual(HttpStatusCode.Created, response.Result.Item1);
+            Post post;
+            WikiArticle wikiArticle;
+            PostType postType;
 
-            Post post = _db.Post.First(p => p.Title.Equals(response.Result.Item2.Title) && p.UserId == USER_ID);
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
+            {
+                post = db.Post.Where(p => p.PostId == 1).Include(p => p.WikiArticle).Include(p => p.PostType).First<Post>();
+                wikiArticle = post.WikiArticle;
+                postType = post.PostType;
+            }
 
-            HttpResponseMessage httpResponse = await client.GetAsync(_apiEndpoint + $"api/Post/get/{post.PostId}");
-            Assert.AreEqual(HttpStatusCode.OK, httpResponse.StatusCode);
-
-            PostDto postDto = await httpResponse.Content.ReadAsAsync<PostDto>();
-            Assert.AreEqual(response.Result.Item2.Title, postDto.Title);
-            Assert.AreEqual(response.Result.Item2.ArticleTitle, postDto.ArticleTitle);
-            Assert.AreEqual(response.Result.Item2.PostType, postDto.PostType);
-            Assert.AreEqual(response.Result.Item2.ArticleUrl, postDto.ArticleUrl);
-
-            //Deleting the Recently Created Post
-            HttpStatusCode statuscode = await DeletePostHelper(response.Result.Item2, USER_ID);
-            Assert.AreEqual(HttpStatusCode.OK, statuscode);
-        }
-
-        [Test]
-        public async Task GetSingularPostWithIDCheckWikiArticleData()
-        {
-            HttpClient client = _testServer.CreateClient();
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Post/get/{POST_ID}");
-
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Post/get/{post.PostId}");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
             PostDto postDto = await response.Content.ReadAsAsync<PostDto>();
-
-            string ArticleImageUrl = "";
-            string ArticleBody = "";
-
-            using (SqlConnection connection = new SqlConnection(DatabaseContextResolver.GetConnectionString()))
-            {
-                SqlCommand command = new SqlCommand(ARTICLE_IMAGE_URL_COMMAND + WIKI_ARTICLE_ID, connection);
-                connection.Open();
-                SqlDataReader dr = command.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    ArticleImageUrl = (string)dr["ArticleImageUrl"];
-                    ArticleBody = (string)dr["ArticleBody"];
-                }
-            }
-
-            Assert.AreEqual(ArticleImageUrl, postDto.ArticleImageUrl);
-            Assert.AreEqual(ArticleBody, postDto.ArticleBody);
+            Assert.AreEqual(post.Title, postDto.Title);
+            Assert.AreEqual(wikiArticle.ArticleTitle, postDto.ArticleTitle);
+            Assert.AreEqual(postType.PostTypeValue, postDto.PostType);
+            Assert.AreEqual(wikiArticle.Url, postDto.ArticleUrl);
+            Assert.AreEqual(wikiArticle.ArticleImageUrl, postDto.ArticleImageUrl);
+            Assert.AreEqual(wikiArticle.ArticleBody, postDto.ArticleBody);
         }
 
         [Test]
@@ -166,22 +140,26 @@ namespace WediumTestSuite
         }
 
         [Test]
-        public async Task CreatePost_SuccessfulCreate()
+        public async Task CreatePostSuccessfully()
         {
-            HttpClient client = _testServer.CreateClient(USER_ID);
-            Task<(HttpStatusCode,PostDto)> response = CreatePost(client);
-            
-            Assert.AreEqual(HttpStatusCode.Created, response.Result.Item1);
+            HttpClient client = _testServer.CreateClient(1);
 
-            //Deleting the Recently Created Post
-            HttpStatusCode statuscode = await DeletePostHelper(response.Result.Item2, USER_ID);
-            Assert.AreEqual(HttpStatusCode.OK, statuscode);
+            PostDto postDto = new PostDto
+            {
+                ArticleTitle = "Bugatti",
+                Title = "Bugatti or Shucatti",
+                PostType = "Culture",
+                ArticleUrl = "https://en.wikipedia.org/wiki/Bugatti"
+            };
+
+            HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
         [Test]
-        public async Task CreatePost_WikiArticleNotFound()
+        public async Task CreatePostWhenWikiArticleNotFound()
         {
-            HttpClient client = _testServer.CreateClient(USER_ID);
+            HttpClient client = _testServer.CreateClient(1);
 
             PostDto postDto = new PostDto
             {
@@ -196,9 +174,9 @@ namespace WediumTestSuite
         }
 
         [Test]
-        public async Task CreatePost_WikiArticleThumbnailNotFound()
+        public async Task CreatePostWhenWikiArticleThumbnailNotFound()
         {
-            HttpClient client = _testServer.CreateClient(USER_ID);
+            HttpClient client = _testServer.CreateClient(1);
 
             PostDto postDto = new PostDto
             {
@@ -210,114 +188,42 @@ namespace WediumTestSuite
 
             HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-
-            // Deleting the Recently Created Post
-            HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
-            Assert.AreEqual(HttpStatusCode.OK, statuscode);
         }
 
         [Test]
-        public async Task DeletePost_SuccessfulDelete()
+        public async Task DeletePostSuccessfully()
         {
-            HttpClient client = _testServer.CreateClient(USER_ID);
-
-            // Create post
-            PostDto postDto = new PostDto
+            Post post;
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
             {
-                ArticleTitle = "Bugatti",
-                Title = "Bugatti or Shucatti",
-                PostType = "Culture",
-                ArticleUrl = "https://en.wikipedia.org/wiki/Bugatti"
-            };
+                post = db.Post.First();
+            }
 
-            HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            HttpClient client = _testServer.CreateClient(post.UserId);
 
-            // Deleting the Recently Created Post
-            HttpStatusCode statuscode = await DeletePostHelper(postDto, USER_ID);
-            Assert.AreEqual(HttpStatusCode.OK, statuscode);
+            HttpResponseMessage response = await client.DeleteAsync(_apiEndpoint + "api/Post/Delete/1");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+            HttpResponseMessage getResponse = await client.GetAsync(_apiEndpoint + $"api/Post/get/1");
+            Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
         }
 
         [Test]
-        public async Task DeletePost_UnsuccessfulDelete()
+        public async Task DeletePostUnauthorized()
         {
-            HttpClient client = _testServer.CreateClient(USER_ID);
-            
-            // Create post
-            PostDto postDto = new PostDto
+            Post post;
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
             {
-                ArticleTitle = "Bugatti",
-                Title = "Bugatti or Shucatti",
-                PostType = "Culture",
-                ArticleUrl = "https://en.wikipedia.org/wiki/Bugatti"
-            };
-
-            HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-
-            // Delete unsuccessful 
-            HttpStatusCode uncessfulStatusCode = await DeletePostHelper(postDto);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, uncessfulStatusCode);
-
-            // Deleting the Recently Created Post Sucessfully
-            HttpStatusCode statusCode = await DeletePostHelper(postDto, USER_ID);
-            Assert.AreEqual(HttpStatusCode.OK, statusCode);
-        }
-
-        private async Task<HttpStatusCode> DeletePostHelper(PostDto postDto, int? userId = null)
-        {
-            if (userId == null)
-            {
-                return HttpStatusCode.Unauthorized;
+                post = db.Post.First();
             }
 
-            HttpClient client = _testServer.CreateClient(userId);
+            HttpClient client = _testServer.CreateClient();
+            HttpResponseMessage response = await client.DeleteAsync(_apiEndpoint + "api/Post/Delete/1");
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
 
-            Post post = _db.Post.First(p => p.Title.Equals(postDto.Title) && p.UserId == userId);
-            int wikiArticleId = post.WikiArticleId;
-
-            HttpRequestMessage request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri(_apiEndpoint + $"api/Post/Delete/{post.PostId}"),
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            RemoveWikiArticle(wikiArticleId);
-
-            return response.StatusCode;
-        }
-
-        // Method usees manual SQl query to delete WikiArticle for testing purposes. 
-        // Since we do not want to Cascade delete due to our FK relation
-        // and buisness logic, EF Core is not able to delete the entities. 
-        // Thus, manual SQL queries have to be used. 
-        public void RemoveWikiArticle(int wikiArticleId)
-        {
-            string deleteCommand = "DELETE FROM WDM.[WikiArticle] where WikiArticleId =";
-            
-            using (SqlConnection connection = new SqlConnection(DatabaseContextResolver.GetConnectionString()))
-            {
-                SqlCommand command = new SqlCommand(deleteCommand + wikiArticleId, connection);
-                connection.Open();
-                command.BeginExecuteNonQuery();
-            }
-        }
-
-        private async Task<(HttpStatusCode,PostDto)> CreatePost(HttpClient client)
-        {
-            PostDto postDto = new PostDto
-            {
-                ArticleTitle = "Bugatti",
-                Title = "Bugatti or Shucatti",
-                PostType = "Culture",
-                ArticleUrl = "https://en.wikipedia.org/wiki/Bugatti"
-            };
-
-            HttpResponseMessage response = await client.PostAsync(_apiEndpoint + "api/Post/Post", postDto, new JsonMediaTypeFormatter());
-
-            return (response.StatusCode,postDto);
+            _testServer.AuthenticateClient(client, 1);
+            HttpResponseMessage successfulResponse = await client.DeleteAsync(_apiEndpoint + "api/Post/Delete/1");
+            Assert.AreEqual(HttpStatusCode.OK, successfulResponse.StatusCode);
         }
     }
 }
