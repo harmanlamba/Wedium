@@ -9,6 +9,6 @@ namespace WediumAPI.Services
     public interface ICommentService
     {
         public IEnumerable<CommentDto> GetCommentsForPost(int postId);
-        public Tuple<int,PostDto> CreateComment(CommentDto commentDto, int? userId);
+        public (int,PostDto) CreateComment(CommentDto commentDto, int? userId);
     }
 }

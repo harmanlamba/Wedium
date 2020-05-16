@@ -24,7 +24,6 @@ namespace WediumAPI.Controllers
             _service = commentService;
         }
 
-
         [AllowAnonymous]
         [HttpGet("Get/{postId}")]
         public ActionResult<IEnumerable<CommentDto>> GetCommentsForPost(int postId)
@@ -41,7 +40,6 @@ namespace WediumAPI.Controllers
             }
 
             return Ok(comments);
-            
         }
 
         [Authorize]
@@ -64,7 +62,5 @@ namespace WediumAPI.Controllers
 
             return Created($"/post/{postDto.PostType}/{postDto.PostId}/{postDto.Title}", commentId);
         }
-
-
     }
 }

@@ -21,32 +21,28 @@ namespace WediumAPI.Services
 
         public IEnumerable<CommentDto> GetCommentsForPost(int postId)
         {
-            
             Post post = _db.Post.FirstOrDefault(p => p.PostId == postId) ?? throw new PostNotFoundException();
-            
-            IQueryable<Comment> commentListQuery = _db.Comment
-                .AsQueryable();
 
-            commentListQuery = commentListQuery.Where(c => c.PostId == postId);
+            IQueryable<Comment> commentListQuery = _db.Comment
+                .AsQueryable()
+                .Where(c => c.PostId == postId);
 
             return CommentMapper.ToDto(commentListQuery.ToList());
         }
 
-
-        public Tuple<int,PostDto> CreateComment(CommentDto commentDto, int? userId)
+        public (int,PostDto) CreateComment(CommentDto commentDto, int? userId)
         {
-          
             Post post = _db.Post
                 .Where(p => p.PostId == commentDto.PostId)
                 .Include(p => p.PostType)
-                .FirstOrDefault(p => p.PostId == commentDto.PostId) ?? throw new PostNotFoundException();
+                .FirstOrDefault() ?? throw new PostNotFoundException();
 
             Comment comment = CommentMapper.FromDto(commentDto);
          
             _db.Comment.Add(comment);
             _db.SaveChanges();
           
-            return new Tuple<int, PostDto> (comment.CommentId, PostMapper.ToDtoPostUrl(post));
+            return (comment.CommentId, PostMapper.ToDtoPostUrl(post));
         }
     }
 }
