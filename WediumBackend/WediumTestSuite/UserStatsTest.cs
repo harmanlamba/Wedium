@@ -31,7 +31,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient(1);
 
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/user/stats");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/user/Stats");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
             UserStatsDto content = await response.Content.ReadAsAsync<UserStatsDto>();
@@ -44,7 +44,7 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient(3);
 
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/user/stats");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/user/Stats");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
             UserStatsDto content = await response.Content.ReadAsAsync<UserStatsDto>();

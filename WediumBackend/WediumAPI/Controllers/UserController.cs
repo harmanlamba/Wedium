@@ -63,7 +63,7 @@ namespace WediumAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("stats")]
+        [HttpGet("Stats")]
         public ActionResult<UserStatsDto> GetUserStats()
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;

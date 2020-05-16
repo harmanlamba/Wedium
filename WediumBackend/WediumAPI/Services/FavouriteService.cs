@@ -113,7 +113,6 @@ namespace WediumAPI.Services
 
             IEnumerable<PostDto> postDtoList = PostMapper.ToDto(orderedPosts.ToList(), userId).ToList();
 
-
             if (postDtoList.Count() == limitApplied)
             {
                 postDtoList = postDtoList.SkipLast(1);
@@ -126,6 +125,5 @@ namespace WediumAPI.Services
 
             return postDtoList;
         }
-
     }
 }

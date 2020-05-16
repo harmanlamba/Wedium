@@ -40,7 +40,6 @@ namespace WediumTestSuite.Helper
                 foreach (Favourite favourite in InitializeFavourites())
                 {
                     db.Favourite.Add(favourite);
-
                 }
 
                 foreach (CommentType commentType in InitializeCommentTypes())
