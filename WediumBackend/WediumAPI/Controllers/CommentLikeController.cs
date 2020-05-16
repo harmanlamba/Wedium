@@ -14,32 +14,33 @@ namespace WediumAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostLikeController : ControllerBase
+    public class CommentLikeController : ControllerBase
     {
-        private readonly IPostLikeService _service;
+        private readonly ICommentLikeService _service;
 
-        public PostLikeController(IPostLikeService service)
+        public CommentLikeController(ICommentLikeService service)
         {
             _service = service;
         }
 
         [Authorize]
         [HttpPost("Post")]
-        public IActionResult Create([FromBody]PostLikeDto postLikeDto)
+        public IActionResult Create([FromBody]CommentLikeDto commentLikeDto)
         {
             try
             {
                 ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
                 int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                _service.CreatePostLike(userId, postLikeDto.PostId);
+                _service.CreateCommentLike(userId, commentLikeDto.CommentId);
 
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch(PostLikeAlreadyExistsException){
+            catch (CommentLikeAlreadyExistsException)
+            {
                 return Ok();
             }
-            catch (PostNotFoundException)
+            catch (CommentNotFoundException)
             {
                 return NotFound();
             }
@@ -47,22 +48,22 @@ namespace WediumAPI.Controllers
 
         [Authorize]
         [HttpPost("Delete")]
-        public IActionResult Delete([FromBody]PostLikeDto postLikeDto)
+        public IActionResult Delete([FromBody]CommentLikeDto commentLikeDto)
         {
             try
             {
                 ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
                 int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-                _service.DeletePostLike(userId, postLikeDto.PostId);
+                _service.DeleteCommentLike(userId, commentLikeDto.CommentId);
 
                 return Ok();
             }
-            catch (PostLikeNotFoundException)
+            catch (CommentLikeNotFoundException)
             {
                 return NoContent();
             }
-            catch (PostNotFoundException)
+            catch (CommentNotFoundException)
             {
                 return NotFound();
             }

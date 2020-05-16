@@ -21,15 +21,19 @@ const PostForm = (props) => {
   const { classes } = props;
   const history = useHistory();
 
-  const [title, setTitle] = useState("");
-  const [wikipediaURL, setWikipediaURL] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [wikipediaURL, setWikipediaURL] = useState('');
+  const [description, setDescription] = useState('');
   const [postType, setPostType] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
   const [alertDialogOpenState, setAlertDialogOpenState] = useState(false);
-  const [alertDialogMessageTitle, setAlertDialogMessageTitle] = useState("Title");
-  const [alertDialogMessageContent, setAlertDialogMessageContent] = useState("Content");
-  
+  const [alertDialogMessageTitle, setAlertDialogMessageTitle] = useState(
+    'Title'
+  );
+  const [alertDialogMessageContent, setAlertDialogMessageContent] = useState(
+    'Content'
+  );
+
   const handleFieldChange = (event) => {
     switch (event.target.id) {
       case 'titleField':
@@ -55,18 +59,22 @@ const PostForm = (props) => {
 
   const checkPostDto = (postDto) => {
     if (postDto.Title === '') {
-      setAlertDialogMessageTitle("Missing Title");
-      setAlertDialogMessageContent("Please enter a title for your post!");
+      setAlertDialogMessageTitle('Missing Title');
+      setAlertDialogMessageContent('Please enter a title for your post!');
       setAlertDialogOpenState(true);
       return false;
     } else if (postDto.ArticleUrl === '') {
-      setAlertDialogMessageTitle("Missing Wikipedia Url");
-      setAlertDialogMessageContent("Please ensure that you have entered a Wikipedia URL");
+      setAlertDialogMessageTitle('Missing Wikipedia Url');
+      setAlertDialogMessageContent(
+        'Please ensure that you have entered a Wikipedia URL'
+      );
       setAlertDialogOpenState(true);
       return false;
     } else if (postDto.PostType === null || postDto.PostType === '') {
-      setAlertDialogMessageTitle("Missing Post Type");
-      setAlertDialogMessageContent("Please ensure that you pick a post type that best suits your post!");
+      setAlertDialogMessageTitle('Missing Post Type');
+      setAlertDialogMessageContent(
+        'Please ensure that you pick a post type that best suits your post!'
+      );
       setAlertDialogOpenState(true);
       return false;
     } else {
@@ -89,13 +97,15 @@ const PostForm = (props) => {
 
     if (checkPostDto(postDto)) {
       setSendLoading(true); // Start loading
-      createPost(postDto).then((response) => {
-        if (response === 201) {
+      createPost(postDto).then(({ status, UriLocation }) => {
+        if (status === 201) {
           setSendLoading(false); // Set loading stopped
-          history.push('/');
-        } else if (response === 404) {
-          setAlertDialogMessageTitle("Wikipedia Article Not Found");
-          setAlertDialogMessageContent("Please verify the Wikipedia Article URL and retry the operation");
+          history.push(`${UriLocation}`);
+        } else if (status === 404) {
+          setAlertDialogMessageTitle('Wikipedia Article Not Found');
+          setAlertDialogMessageContent(
+            'Please verify the Wikipedia Article URL and retry the operation'
+          );
           setAlertDialogOpenState(true);
           setSendLoading(false); // Set loading stopped
         }
@@ -179,10 +189,7 @@ const PostForm = (props) => {
         </Grid>
 
         <Grid item xs={6}>
-          <Button
-            onClick={() => history.go(-1)}
-            variant="outlined"
-          >
+          <Button onClick={() => history.go(-1)} variant="outlined">
             Cancel
           </Button>
         </Grid>
@@ -210,7 +217,7 @@ const PostForm = (props) => {
       </Grid>
     </div>
   );
-}
+};
 
 const styles = (theme) => ({
   container: {

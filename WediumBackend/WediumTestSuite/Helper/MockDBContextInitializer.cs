@@ -37,9 +37,20 @@ namespace WediumTestSuite.Helper
                     db.Post.Add(post);
                 }
 
+<<<<<<< HEAD
                 foreach (Favourite favourite in InitializeFavourites())
                 {
                     db.Favourite.Add(favourite);
+=======
+                foreach (CommentType commentType in InitializeCommentTypes())
+                {
+                    db.CommentType.Add(commentType);
+                }
+
+                foreach (Comment comment in InitializeComments())
+                {
+                    db.Comment.Add(comment);
+>>>>>>> master
                 }
 
                 db.SaveChanges();
@@ -50,22 +61,22 @@ namespace WediumTestSuite.Helper
         {
             return new Settings[]
             {
-                new Settings()
+                new Settings
                 {
                     Key = "WIKIMEDIA_GET_CONTENT_ENDPOINT",
                     Value = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts"
                 },
-                new Settings()
+                new Settings
                 {
                     Key = "WIKIMEDIA_GET_THUMBNAIL_ENDPOINT",
                     Value = "https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&pithumbsize=300"
                 },
-                new Settings()
+                new Settings
                 {
                     Key = "WIKIMEDIA_GET_LATEST_DATE_ENDPOINT",
                     Value = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvlimit=1&rvprop=timestamp&rvdir=older&format=json"
                 },
-                new Settings()
+                new Settings
                 {
                     Key = "WIKIARTICLE_DEFAULT_THUMBNAIL",
                     Value = "https://image.flaticon.com/icons/svg/570/570975.svg"
@@ -77,12 +88,12 @@ namespace WediumTestSuite.Helper
         {
             return new PostType[]
             {
-                new PostType()
+                new PostType
                 {
                     PostTypeId = 1,
                     PostTypeValue = "Culture"
                 },
-                new PostType()
+                new PostType
                 {
                     PostTypeId = 2,
                     PostTypeValue = "Nature"
@@ -94,14 +105,14 @@ namespace WediumTestSuite.Helper
         {
             return new User[]
             {
-                new User()
+                new User
                 {
                     UserId = 1,
                     FirstName = "FirstNameTest1",
                     LastName = "LastNameTest1",
                     Email = "EmailTest1"
                 },
-                new User()
+                new User
                 {
                     UserId = 2,
                     FirstName = "FirstNameTest2",
@@ -115,7 +126,7 @@ namespace WediumTestSuite.Helper
         {
             return new WikiArticle[]
             {
-                new WikiArticle()
+                new WikiArticle
                 {
                     WikiArticleId = 1,
                     Url = "URLTest1",
@@ -124,7 +135,7 @@ namespace WediumTestSuite.Helper
                     ArticleTitle = "TitleTest1",
                     ArticleImageUrl = "ImageTest1"
                 },
-                new WikiArticle()
+                new WikiArticle
                 {
                     WikiArticleId = 2,
                     Url = "URLTest2",
@@ -133,7 +144,7 @@ namespace WediumTestSuite.Helper
                     ArticleTitle = "TitleTest2",
                     ArticleImageUrl = "ImageTest2"
                 },
-                new WikiArticle()
+                new WikiArticle
                 {
                     WikiArticleId = 3,
                     Url = "URLTest3",
@@ -142,7 +153,7 @@ namespace WediumTestSuite.Helper
                     ArticleTitle = "TitleTest3",
                     ArticleImageUrl = "ImageTest3"
                 },
-                new WikiArticle()
+                new WikiArticle
                 {
                     WikiArticleId = 4,
                     Url = "URLTest4",
@@ -158,7 +169,7 @@ namespace WediumTestSuite.Helper
         {
             return new Post[]
             {
-                new Post()
+                new Post
                 {
                     PostId = 1,
                     UserId = 1,
@@ -168,7 +179,7 @@ namespace WediumTestSuite.Helper
                     Description = "DescriptionTest1",
                     PostTypeId = 1
                 },
-                new Post()
+                new Post
                 {
                     PostId = 2,
                     UserId = 1,
@@ -178,7 +189,7 @@ namespace WediumTestSuite.Helper
                     Description = "DescriptionTest2",
                     PostTypeId = 2
                 },
-                new Post()
+                new Post
                 {
                     PostId = 3,
                     UserId = 2,
@@ -188,7 +199,7 @@ namespace WediumTestSuite.Helper
                     Description = "DescriptionTest3",
                     PostTypeId = 1
                 },
-                new Post()
+                new Post
                 {
                     PostId = 4,
                     UserId = 2,
@@ -198,7 +209,7 @@ namespace WediumTestSuite.Helper
                     Description = "DescriptionTest4",
                     PostTypeId = 1
                 },
-                new Post()
+                new Post
                 {
                     PostId = 5,
                     UserId = 1,
@@ -211,6 +222,7 @@ namespace WediumTestSuite.Helper
             };
         }
 
+<<<<<<< HEAD
         public static Favourite[] InitializeFavourites()
         {
             return new Favourite[]
@@ -256,6 +268,33 @@ namespace WediumTestSuite.Helper
                     UserId = 2,
                     PostId = 3,
                     Date = DateTime.Now
+=======
+        public static CommentType[] InitializeCommentTypes()
+        {
+            return new CommentType[]
+            {
+                new CommentType
+                {
+                    CommentTypeId = 1,
+                    CommentTypeValue = "Statement"
+                }
+            };
+        }
+
+        public static Comment[] InitializeComments()
+        {
+            return new Comment[]
+            {
+                new Comment
+                {
+                    CommentId = 1,
+                    PostId = 1,
+                    UserId = 1,
+                    Date = DateTime.Now,
+                    ParentCommentId = null,
+                    Body = "CommentTest1",
+                    CommentTypeId = 1
+>>>>>>> master
                 }
             };
         }
