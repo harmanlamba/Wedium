@@ -76,9 +76,9 @@ namespace WediumAPI.Controllers
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError; 
             try
             {
-                _service.CreatePost(postDto, userId);
+                (int postId, string Uri) = _service.CreatePost(postDto, userId);
 
-                return StatusCode(StatusCodes.Status201Created);
+                return Created(Uri, postId);
             }
             catch (AggregateException e)
             {
