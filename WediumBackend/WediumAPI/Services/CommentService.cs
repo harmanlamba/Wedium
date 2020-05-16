@@ -38,6 +38,7 @@ namespace WediumAPI.Services
                 .FirstOrDefault() ?? throw new PostNotFoundException();
 
             Comment comment = CommentMapper.FromDto(commentDto);
+            comment.UserId = (int) userId;
          
             _db.Comment.Add(comment);
             _db.SaveChanges();
