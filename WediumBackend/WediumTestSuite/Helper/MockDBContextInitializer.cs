@@ -37,6 +37,11 @@ namespace WediumTestSuite.Helper
                     db.Post.Add(post);
                 }
 
+                foreach (Comment comment in InitializeComments())
+                {
+                    db.Comment.Add(comment);
+                }
+
                 db.SaveChanges();
             }
         }
@@ -205,5 +210,22 @@ namespace WediumTestSuite.Helper
                 }
             };
         }
+
+        public static Comment[] InitializeComments()
+        {
+            return new Comment[]
+            {
+                new Comment
+                {
+                    CommentId = 1,
+                    PostId = 2,
+                    UserId = 1,
+                    ParentCommentId = null,
+                    Body = "Test comment!",
+                    CommentTypeId = 1,
+                }
+            };
+        }
+        
     }
 }

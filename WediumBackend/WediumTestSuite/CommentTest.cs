@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 using WediumAPI.Dto;
+using WediumAPI.Models;
 using WediumTestSuite.Helper;
 
 namespace WediumTestSuite
@@ -16,18 +18,23 @@ namespace WediumTestSuite
     public class CommentTest
     {
         private TestServerHandler _testServer;
+        private DbContextOptions<WediumContext> _wediumContextOptions;
         private string _apiEndpoint;
 
-        private readonly int POST_ID = 70;
-        private readonly string POST_TYPE = "Technology";
-        private readonly string POST_TITLE = "Best type of engineering all time?";
+
 
         [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+        }
+
+        [SetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
 
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+            _wediumContextOptions = _testServer.getWediumContextOptions();
         }
 
         [Test]
@@ -46,7 +53,7 @@ namespace WediumTestSuite
             HttpClient client = _testServer.CreateClient();
 
             // Test post with no comments
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Comment/Get/69");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Comment/Get/1");
             IEnumerable<CommentDto> comments = await response.Content.ReadAsAsync<IEnumerable<CommentDto>>();
 
             Assert.NotNull(comments);
@@ -58,37 +65,40 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient(139);
 
-            // Create comments 
-            CommentDto commentDto = new CommentDto
-            {
-                PostId = 70,
-                UserId = 139,
-                ParentCommentId = 6,
-                Body = "Test comment!",
-                CommentTypeId = 1,
-            };
-            HttpResponseMessage responseCreate = await client.PostAsync(_apiEndpoint + $"api/Comment/Post/", commentDto, new JsonMediaTypeFormatter());
-            int commentId = await responseCreate.Content.ReadAsAsync<int>();
-
-            Assert.AreEqual(HttpStatusCode.Created, responseCreate.StatusCode);
-            Assert.AreEqual($"/post/{POST_TYPE}/{POST_ID}/{POST_TITLE}", responseCreate.Headers.Location.ToString());
-
             // Test post with single comment
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Comment/Get/{POST_ID}");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Comment/Get/2");
             IEnumerable<CommentDto> comments = await response.Content.ReadAsAsync<IEnumerable<CommentDto>>();
 
             Assert.NotNull(comments);
             Assert.AreEqual(1, comments.Count());
+            Assert.AreEqual(2, comments.First().PostId);
+            Assert.AreEqual(1, comments.First().UserId);
+            Assert.AreEqual("Test comment!", comments.First().Body);
+            Assert.AreEqual(1, comments.First().CommentId);
+            Assert.Null(comments.First().ParentCommentId);
 
-            // Delete comment
-            string deleteCommand = $"DELETE FROM WDM.[Comment] where CommentId ={commentId}";
+        }
 
-            using (SqlConnection connection = new SqlConnection(DatabaseContextResolver.GetConnectionString()))
+        [Test]
+        public async Task CreateComment()
+        {
+            // Create comments 
+            CommentDto commentDto = new CommentDto
             {
-                SqlCommand command = new SqlCommand(deleteCommand, connection);
-                connection.Open();
-                command.BeginExecuteNonQuery();
-            }
+                PostId = 2,
+                UserId = 1,
+                ParentCommentId = 1,
+                Body = "Test comment 2!",
+                CommentTypeId = 1,
+            };
+
+            HttpClient client = _testServer.CreateClient(1);
+
+            HttpResponseMessage responseCreate = await client.PostAsync(_apiEndpoint + $"api/Comment/Post/", commentDto, new JsonMediaTypeFormatter());
+            int commentId = await responseCreate.Content.ReadAsAsync<int>();
+
+            Assert.AreEqual(HttpStatusCode.Created, responseCreate.StatusCode);
+            Assert.AreEqual($"/post/Nature/2/TitleTest2", responseCreate.Headers.Location.ToString());
         }
     }
 }
