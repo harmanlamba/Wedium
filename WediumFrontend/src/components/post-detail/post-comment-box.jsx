@@ -6,6 +6,7 @@ import RichTextBox from '../rich-text-box/index';
 // Material UI
 import Button from '@material-ui/core/Button';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -43,12 +44,13 @@ const PostCommentBox = (props) => {
     };
 
     if (checkCommentDto(commentDto)) {
+      setSendLoading(true); // Start loading
       commentPostRequest(commentDto).then((response) => {
-        // Set loading start
         if (response === 201) {
-          // Set loading finished
           // Show in UI
         }
+
+        setSendLoading(false); // Set loading stopped
       });
     }
   };
@@ -85,7 +87,10 @@ const PostCommentBox = (props) => {
               color="primary"
               size="small"
             >
-              Comment
+              {sendLoading && (
+                <CircularProgress size={20} thickness={6} color="inherit" />
+              )}
+              {!sendLoading && 'Send'}
             </Button>
           </Grid>
         </Grid>
@@ -116,7 +121,7 @@ const styles = (theme) => ({
     justifyContent: 'space-between',
     marginBottom: -5,
     borderRadius: 0,
-    padding: '0 150px 50px 150px',
+    padding: '0 150px 0px 150px',
   },
   grid: {
     marginTop: '5px !important',

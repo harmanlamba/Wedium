@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from '../header';
 import PostDetailInfo from './post-detail-info';
 import PostCommentBox from './post-comment-box';
-// import RichTextBox from '../rich-text-box';
+import PostCommentFeed from './post-comment-feed';
 
 class PostDetail extends Component {
   constructor(props) {
@@ -75,6 +75,9 @@ class PostDetail extends Component {
               {/* <RichTextBox placeholder={"Write comment..."} quotedText={"blahblah"} maxLength={500} onChange={(htmlText) => { console.log(htmlText)}} /> */}
               <PostCommentBox user={user} />
             </Grid>
+            <Grid item xs={7}>
+              <PostCommentFeed user={user} />
+            </Grid>
           </Grid>
         ) : (
           <div className={classes.progressRing}>
@@ -101,7 +104,6 @@ const styles = (theme) => ({
     marginLeft: '50%',
     paddingTop: '200px',
     paddingBottom: '10px',
-    width: '100% !important',
   },
 });
 
