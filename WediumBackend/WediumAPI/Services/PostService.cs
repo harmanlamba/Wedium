@@ -116,7 +116,7 @@ namespace WediumAPI.Services
                 .Any(p => p.PostId == postId);
         }
 
-        public (int, string) CreatePost(PostDto postDto, int userId)
+        public PostDto CreatePost(PostDto postDto, int userId)
         {
             WikiArticle wikiArticle;
             string articleImageUrl = null;
@@ -166,7 +166,7 @@ namespace WediumAPI.Services
             _db.Post.Add(post);
             _db.SaveChanges();
 
-            return (post.PostId, $"/post/{post.PostType.PostTypeValue}/{post.PostId}/{post.Title}");
+            return PostMapper.ToDtoPostUrl(post);
         }
 
         public void DeletePost(int postId, int userId)
