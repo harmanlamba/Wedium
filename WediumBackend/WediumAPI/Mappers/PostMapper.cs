@@ -51,6 +51,16 @@ namespace WediumAPI.Mappers
             return postDto;
         }
 
+        public static PostDto ToDtoPostUrl(Post post)
+        {
+            return new PostDto
+            {
+                PostType = post.PostType.PostTypeValue,
+                PostId = post.PostId,
+                Title = post.Title
+            };
+        }
+
         public static IEnumerable<PostDto> ToDto(IEnumerable<Post> postList, int? userId)
         {
             return postList.Select(p => ToDto(p, userId));

@@ -32,6 +32,15 @@ namespace WediumAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("location"));
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
             if(!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
@@ -42,13 +51,6 @@ namespace WediumAPI
             services.AddDbContext<WediumContext>(options =>
                     options.UseSqlServer(connectionString));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
 
             
             if (!EnvironmentSettingsResolver.TryGetJWTSecretFromEnvironment(out string jwtSecret))
@@ -97,6 +99,8 @@ namespace WediumAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CorsPolicy");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -105,11 +109,6 @@ namespace WediumAPI
 
             app.UseAuthorization();
 
-            app.UseCors(x => x
-               .SetIsOriginAllowed(_ => true)
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials());
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
