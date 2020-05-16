@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WediumAPI.Dto;
 using WediumAPI.Helper;
+using WediumAPI.Service;
 using WediumAPI.Services;
 
 namespace WediumAPI.Controllers
@@ -20,11 +20,13 @@ namespace WediumAPI.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _service;
+        private IUserStatsService _statsService;
         private Options _options;
   
-        public UserController(IUserService service, IOptions<Options> options)
+        public UserController(IUserService service, IUserStatsService statsService, IOptions<Options> options)
         {
             _service = service;
+            _statsService = statsService;
             _options = options.Value;
         }
 
@@ -56,6 +58,17 @@ namespace WediumAPI.Controllers
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
             UserDto user = _service.GetUser(userId);
+
+            return Ok(user);
+        }
+
+        [Authorize]
+        [HttpGet("stats")]
+        public ActionResult<UserStatsDto> GetUserStats()
+        {
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            UserStatsDto user = _statsService.GetUserStats(userId);
 
             return Ok(user);
         }

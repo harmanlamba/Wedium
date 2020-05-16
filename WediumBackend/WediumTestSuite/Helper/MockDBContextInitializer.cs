@@ -118,6 +118,13 @@ namespace WediumTestSuite.Helper
                     FirstName = "FirstNameTest2",
                     LastName = "LastNameTest2",
                     Email = "EmailTest2"
+                },
+                new User
+                {
+                    UserId = 3,
+                    FirstName = "FirstNameTest3",
+                    LastName = "LastNameTest3",
+                    Email = "EmailTest3"
                 }
             };
         }
