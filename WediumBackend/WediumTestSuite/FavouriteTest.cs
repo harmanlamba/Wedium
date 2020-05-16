@@ -16,21 +16,18 @@ namespace WediumTestSuite
     class FavouriteTest
     {
         private TestServerHandler _testServer;
-        private DbContextOptions<WediumContext> _wediumContextOptions;
         private string _apiEndpoint;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+            _apiEndpoint = AppSettingsResolver.GetAPIEndpointURI();
         }
 
         [SetUp]
         public void Setup()
         {
             _testServer = new TestServerHandler();
-
-            _wediumContextOptions = _testServer.getWediumContextOptions();
         }
 
         [Test]

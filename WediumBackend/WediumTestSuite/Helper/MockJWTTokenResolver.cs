@@ -16,7 +16,7 @@ namespace WediumTestSuite.Helper
 
             if (!EnvironmentSettingsResolver.TryGetJWTSecretFromEnvironment(out string jwtSecret))
             {
-                jwtSecret = AppSettingsResolver.GetSetting<string>("Options:JwtSecret");
+                jwtSecret = AppSettingsResolver.GetJwtSecret();
             }
 
             byte[] key = Encoding.ASCII.GetBytes(jwtSecret);

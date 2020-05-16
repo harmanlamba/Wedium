@@ -16,9 +16,14 @@ namespace WediumTestSuite.Helper
             return config;
         }
 
-        public static T GetSetting<T>(string key)
+        public static string GetAPIEndpointURI()
         {
-            return (T)Convert.ChangeType(InitConfiguration().GetSection(key).Value, typeof(T));
+            return InitConfiguration().GetSection("APIEndpointURI").Value;
+        }
+
+        public static string GetJwtSecret()
+        {
+            return InitConfiguration().GetSection("Options:JwtSecret").Value;
         }
     }
 }
