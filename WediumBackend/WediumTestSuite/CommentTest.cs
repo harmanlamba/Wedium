@@ -21,8 +21,6 @@ namespace WediumTestSuite
         private DbContextOptions<WediumContext> _wediumContextOptions;
         private string _apiEndpoint;
 
-
-
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
@@ -53,7 +51,7 @@ namespace WediumTestSuite
             HttpClient client = _testServer.CreateClient();
 
             // Test post with no comments
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Comment/Get/1");
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Comment/Get/2");
             IEnumerable<CommentDto> comments = await response.Content.ReadAsAsync<IEnumerable<CommentDto>>();
 
             Assert.NotNull(comments);
@@ -65,18 +63,23 @@ namespace WediumTestSuite
         {
             HttpClient client = _testServer.CreateClient(139);
 
+            Comment comment;
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
+            {
+                comment = db.Comment.First();
+            }
+
             // Test post with single comment
-            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Comment/Get/2");
-            IEnumerable<CommentDto> comments = await response.Content.ReadAsAsync<IEnumerable<CommentDto>>();
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + $"api/Comment/Get/{comment.PostId}");
+            IEnumerable<CommentDto> responseComments = await response.Content.ReadAsAsync<IEnumerable<CommentDto>>();
 
-            Assert.NotNull(comments);
-            Assert.AreEqual(1, comments.Count());
-            Assert.AreEqual(2, comments.First().PostId);
-            Assert.AreEqual(1, comments.First().UserId);
-            Assert.AreEqual("Test comment!", comments.First().Body);
-            Assert.AreEqual(1, comments.First().CommentId);
-            Assert.Null(comments.First().ParentCommentId);
-
+            Assert.NotNull(responseComments);
+            Assert.AreEqual(1, responseComments.Count());
+            Assert.AreEqual(comment.PostId, responseComments.First().PostId);
+            Assert.AreEqual(comment.CommentId, responseComments.First().CommentId);
+            Assert.AreEqual(comment.UserId, responseComments.First().UserId);
+            Assert.AreEqual(comment.Body, responseComments.First().Body);
+            Assert.AreEqual(comment.ParentCommentId, responseComments.First().ParentCommentId);
         }
 
         [Test]

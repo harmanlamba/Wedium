@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ namespace WediumAPI.Services
     public class CommentService : ICommentService
     {
         private WediumContext _db;
+        
         public CommentService(WediumContext database)
         {
             _db = database;
@@ -23,14 +24,13 @@ namespace WediumAPI.Services
         {
             Post post = _db.Post.FirstOrDefault(p => p.PostId == postId) ?? throw new PostNotFoundException();
 
-            IQueryable<Comment> commentListQuery = _db.Comment
-                .AsQueryable()
+            IEnumerable<Comment> commentListQuery = _db.Comment
                 .Where(c => c.PostId == postId);
 
-            return CommentMapper.ToDto(commentListQuery.ToList());
+            return CommentMapper.ToDto(commentListQuery);
         }
 
-        public (int,PostDto) CreateComment(CommentDto commentDto, int? userId)
+        public (int commentId, PostDto post) CreateComment(CommentDto commentDto, int? userId)
         {
             Post post = _db.Post
                 .Where(p => p.PostId == commentDto.PostId)
@@ -43,6 +43,12 @@ namespace WediumAPI.Services
             _db.SaveChanges();
           
             return (comment.CommentId, PostMapper.ToDtoPostUrl(post));
+        }
+
+        public bool CheckExists(int commentId)
+        {
+            return _db.Comment
+                .Any(c => c.CommentId == commentId);
         }
     }
 }
