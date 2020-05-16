@@ -80,7 +80,7 @@ namespace WediumAPI.Services
 
                 if (queryInputPost == null)
                 {
-                    throw new PostNotFoundException(); //todo change to favourited post not found
+                    throw new PostNotFoundException();
                 }
 
                 // Gets all posts in the order they were favourited after after_id (newest to oldest)
