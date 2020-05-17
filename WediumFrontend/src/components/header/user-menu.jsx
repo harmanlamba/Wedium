@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/thunk/auth-thunk';
 import { withRouter } from 'react-router-dom';
@@ -20,12 +21,15 @@ import GoogleLoginButton from './google-login-button';
 const UserMenu = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [expanded, setExpanded] = useState(false);
 
   const handleMenuOpen = (event) => {
+    setExpanded(!expanded);
     setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
+    setExpanded(!expanded);
     setAnchorEl(null);
   };
 
@@ -64,8 +68,12 @@ const UserMenu = (props) => {
             Sign In
           </Typography>
         )}
-        <Avatar className={classes.profileImage} src={props.user.pictureUri}/>
-        <ExpandMoreIcon />
+        <Avatar className={classes.profileImage} src={props.user.pictureUri} />
+        <ExpandMoreIcon
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+        />
       </Button>
 
       <Menu
@@ -93,6 +101,16 @@ const UserMenu = (props) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
   menuDropdown: {
     flexGrow: 1,
     marginTop: 40,
@@ -101,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '10px',
   },
   profileImage: {
-    marginRight: '10px'
+    marginRight: '10px',
   },
 }));
 

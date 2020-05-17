@@ -18,7 +18,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const CommentCard = (props) => {
   const { classes } = props;
-
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -26,7 +25,7 @@ const CommentCard = (props) => {
   };
 
   return (
-    <Card className={classes.commentCard} key={props.key}>
+    <Card className={classes.commentCard} square={true}>
       <CardContent className={classes.contentCard}>
         <Grid className={classes.header} item xs={12}>
           {props.value.userId}
@@ -43,23 +42,33 @@ const CommentCard = (props) => {
         <IconButton aria-label="Like button">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="Comment button">
-          <ChatBubbleOutlineIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="Show comments"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        {props.value.parentCommentId === null ? (
+          <IconButton aria-label="Comment button">
+            <ChatBubbleOutlineIcon />
+          </IconButton>
+        ) : null}
+        {props.value.inverseParentComment.length !== 0 ? (
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="Show comments"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        ) : null}
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>Replies</CardContent>
+        {props.value.parentCommentId === null
+          ? props.value.inverseParentComment.map((value) => {
+              return (
+                <CommentCard value={value} key={value.commentId} classes />
+              );
+            })
+          : null}
       </Collapse>
     </Card>
   );
@@ -78,6 +87,7 @@ const styles = (theme) => ({
   },
   commentCard: {
     marginBottom: 15,
+    borderRadius: 4,
   },
   contentCard: {
     paddingBottom: '0px !important',
@@ -86,7 +96,9 @@ const styles = (theme) => ({
     overflowWrap: 'break-word',
     wordWrap: 'breakWord',
     hyphens: 'auto',
-    margin: '5px 0 !important',
+    '& p': {
+      margin: '10px 0 !important',
+    },
   },
 });
 

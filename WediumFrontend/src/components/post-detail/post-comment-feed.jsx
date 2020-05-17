@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CommentCard from './comment-card';
-import { commentGetRequest } from '../../apis/comment';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loadComments } from '../../redux/actions/thunk/comment-thunk';
+import CommentCard from './comment-card';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -10,13 +11,10 @@ import { withStyles } from '@material-ui/core/styles';
 const PostCommentFeed = (props) => {
   const { classes } = props;
 
-  const [comments, setComments] = useState([]);
-
   useEffect(() => {
     let postId = parseInt(props.match.params.postId);
-    commentGetRequest(postId).then((response) => {
-      setComments(response);
-    });
+    props.loadComments(postId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -29,9 +27,9 @@ const PostCommentFeed = (props) => {
       alignItems="flex-start"
     >
       <Grid className={classes.grid} item xs={12}>
-        {comments != []
-          ? comments.map((value, key) => {
-              return <CommentCard value={value} key={key} />;
+        {props.comments != []
+          ? props.comments.map((value) => {
+              return <CommentCard value={value} key={value.commentId} />;
             })
           : null}
       </Grid>
@@ -45,7 +43,7 @@ const styles = (theme) => ({
     justifyContent: 'space-between',
     marginBottom: -5,
     borderRadius: 0,
-    padding: '0 160px 50px 160px',
+    padding: '0 110px 50px 110px',
   },
   grid: {
     marginTop: '5px !important',
@@ -69,4 +67,20 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(withRouter(PostCommentFeed));
+// Redux
+const mapStateToProps = (state) => {
+  return {
+    comments: state.comment.comments,
+  };
+};
+
+const mapDispatchToProps = {
+  loadComments,
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(PostCommentFeed))
+);

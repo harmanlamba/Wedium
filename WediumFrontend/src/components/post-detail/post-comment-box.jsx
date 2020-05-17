@@ -121,7 +121,7 @@ const styles = (theme) => ({
     justifyContent: 'space-between',
     marginBottom: -5,
     borderRadius: 0,
-    padding: '0 150px 0px 150px',
+    padding: '0 100px 0px 100px',
   },
   grid: {
     marginTop: '5px !important',
