@@ -19,7 +19,8 @@ namespace WediumAPI.Mappers
                 Date = comment.Date,
                 ParentCommentId = comment.ParentCommentId,
                 Body = comment.Body,
-                CommentTypeId = comment.CommentTypeId
+                CommentTypeId = comment.CommentTypeId,
+                InverseParentComment = ToDto(comment.InverseParentComment)
             };
         }
 

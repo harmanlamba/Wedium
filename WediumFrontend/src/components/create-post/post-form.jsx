@@ -100,8 +100,8 @@ const PostForm = (props) => {
       createPost(postDto).then(({ status, UriLocation }) => {
         if (status === 201) {
           setSendLoading(false); // Set loading stopped
-          history.push('/');
-        } else if (response === 404) {
+          history.push(UriLocation);
+        } else if (status === 404) {
           setAlertDialogMessageTitle('Wikipedia Article Not Found');
           setAlertDialogMessageContent(
             'Please verify the Wikipedia Article URL and retry the operation'

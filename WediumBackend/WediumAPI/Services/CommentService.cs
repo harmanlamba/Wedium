@@ -25,7 +25,9 @@ namespace WediumAPI.Services
             Post post = _db.Post.FirstOrDefault(p => p.PostId == postId) ?? throw new PostNotFoundException();
 
             IEnumerable<Comment> commentListQuery = _db.Comment
-                .Where(c => c.PostId == postId);
+                .Where(c => c.PostId == postId & c.ParentCommentId == null)
+                .Include(c => c.InverseParentComment)
+                .Include(c => c.CommentType);
 
             return CommentMapper.ToDto(commentListQuery);
         }

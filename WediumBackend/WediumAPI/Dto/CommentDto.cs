@@ -14,5 +14,6 @@ namespace WediumAPI.Dto
         public int? ParentCommentId { get; set; }
         public string Body { get; set; }
         public int CommentTypeId { get; set; }
+        public IEnumerable<CommentDto> InverseParentComment { get; set; }
     }
 }
