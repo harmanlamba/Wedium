@@ -69,7 +69,8 @@ namespace WediumAPI.Services
         public IEnumerable<PostDto> GetFavouritedPosts(int userId, int? limit, int? afterId)
         {
             IQueryable<Favourite> favouriteListQuery = _db.Favourite
-                .Where(p => p.UserId == userId);
+                .Where(f => f.UserId == userId)
+                .OrderByDescending(f => f.Date);
 
             // Applies afterId query if present
             if (afterId.HasValue)
