@@ -31,8 +31,12 @@ const PostCommentFeed = (props) => {
         {props.comments != []
           ? props.comments.map((comment) => {
               return (
-                <Card className={classes.commentCard} square={true}>
-                  <CommentCard comment={comment} key={comment.commentId} />
+                <Card
+                  className={classes.commentCard}
+                  key={comment.commentId}
+                  square={true}
+                >
+                  <CommentCard comment={comment} />
                 </Card>
               );
             })
