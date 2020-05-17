@@ -92,27 +92,16 @@ namespace WediumAPI.Services
             // Adds 1 to limit to efficiently calculate hasMore of last element in list
             int limitApplied = (limit.HasValue ? limit.Value : _options.GetPostDefaultLimit) + 1;
 
-            List<int> orderedFavouritedPostIds = favouriteListQuery
+            IEnumerable<Post> favouritePosts = favouriteListQuery
                 .Take(limitApplied)
-                .OrderByDescending(p => p.Date)
-                .Select(p => p.PostId)
-                .ToList();
+                .Include(f => f.Post)
+                .Include(f => f.Post.PostType)
+                .Include(f => f.Post.WikiArticle)
+                .Include(f => f.Post.User)
+                .Include(f => f.Post.PostLike)
+                .Select(f => f.Post);
 
-            IEnumerable<Post> posts = _db.Post
-                .Where(p => orderedFavouritedPostIds.Contains(p.PostId))
-                .Include(p => p.PostType)
-                .Include(p => p.WikiArticle)
-                .Include(p => p.User)
-                .Include(p => p.PostLike)
-                .Include(p => p.Favourite)
-                .AsEnumerable();
-
-            IEnumerable<Post> orderedPosts = (from id in orderedFavouritedPostIds
-                                              join post in posts
-                                              on id equals post.PostId
-                                              select post);
-
-            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(orderedPosts.ToList(), userId).ToList();
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(favouritePosts, userId).ToList();
 
             if (postDtoList.Count() == limitApplied)
             {
