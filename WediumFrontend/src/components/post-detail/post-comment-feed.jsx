@@ -5,6 +5,7 @@ import { loadComments } from '../../redux/actions/thunk/comment-thunk';
 import CommentCard from './comment-card';
 
 // Material UI
+import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -28,8 +29,12 @@ const PostCommentFeed = (props) => {
     >
       <Grid className={classes.grid} item xs={12}>
         {props.comments != []
-          ? props.comments.map((value) => {
-              return <CommentCard value={value} key={value.commentId} />;
+          ? props.comments.map((comment) => {
+              return (
+                <Card className={classes.commentCard} square={true}>
+                  <CommentCard comment={comment} key={comment.commentId} />
+                </Card>
+              );
             })
           : null}
       </Grid>
@@ -60,10 +65,8 @@ const styles = (theme) => ({
     transform: 'rotate(180deg)',
   },
   commentCard: {
-    marginTop: 10,
-  },
-  contentCard: {
-    paddingBottom: '0px !important',
+    marginBottom: 15,
+    borderRadius: 4,
   },
 });
 

@@ -106,6 +106,10 @@ const useStyles = makeStyles((theme) => ({
   articleBody: {
     borderLeft: '#3f51b5 solid 3px',
     paddingLeft: 20,
+    '& blockquote': {
+      borderLeft: '#919191 solid 3px',
+      paddingLeft: 10,
+    },
   },
   showAllButton: {
     textAlign: 'center',

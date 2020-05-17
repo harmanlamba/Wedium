@@ -72,7 +72,6 @@ const styles = (theme) => ({
   textLimit: {
     color: 'grey',
     fontSize: '0.75rem',
-    textAlign: 'right',
     marginTop: 3,
     marginRight: 14,
     letterSpacing: '0.03333em',

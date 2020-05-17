@@ -15,7 +15,6 @@ export const loadComments = (postId) => {
             .then(
                 comments => {
                     dispatch(loadCommentsSuccess(comments));
-                    console.log(comments);
                 },
 
                 error => dispatch(loadCommentsError(error.message || 'Unexpected error occured.')));

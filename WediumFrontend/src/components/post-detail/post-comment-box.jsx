@@ -82,6 +82,7 @@ const PostCommentBox = (props) => {
 
           <Grid className={classes.grid} item xs={12} align="right">
             <Button
+              className={classes.sendButton}
               onClick={handleSendParent}
               variant="contained"
               color="primary"
@@ -90,7 +91,7 @@ const PostCommentBox = (props) => {
               {sendLoading && (
                 <CircularProgress size={20} thickness={6} color="inherit" />
               )}
-              {!sendLoading && 'Send'}
+              {!sendLoading && 'Comment'}
             </Button>
           </Grid>
         </Grid>
@@ -119,7 +120,7 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: -5,
+    marginBottom: -10,
     borderRadius: 0,
     padding: '0 100px 0px 100px',
   },
@@ -134,6 +135,9 @@ const styles = (theme) => ({
   },
   commentTitle: {
     marginBottom: 5,
+  },
+  sendButton: {
+    marginTop: '-35px',
   },
 });
 

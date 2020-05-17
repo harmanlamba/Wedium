@@ -72,7 +72,6 @@ class PostDetail extends Component {
               />
             </Grid>
             <Grid item xs={7} ref={this.commentRef}>
-              {/* <RichTextBox placeholder={"Write comment..."} quotedText={"blahblah"} maxLength={500} onChange={(htmlText) => { console.log(htmlText)}} /> */}
               <PostCommentBox user={user} />
             </Grid>
             <Grid item xs={7}>
@@ -94,6 +93,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
+    marginTop: 20,
   },
   sidebar: {
     position: '-webkit-sticky',

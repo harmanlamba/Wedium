@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import moment from 'moment';
+import parse, { domToReact } from 'html-react-parser';
 import clsx from 'clsx';
 
 // Material UI
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -17,6 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const CommentCard = (props) => {
+  const comment = props.comment;
   const { classes } = props;
   const [expanded, setExpanded] = useState(false);
 
@@ -24,30 +26,39 @@ const CommentCard = (props) => {
     setExpanded(!expanded);
   };
 
+  console.log(props);
+
   return (
-    <Card className={classes.commentCard} square={true}>
+    <div>
       <CardContent className={classes.contentCard}>
         <Grid className={classes.header} item xs={12}>
-          {props.value.userId}
+          <Typography
+            className={classes.username}
+            variant="caption"
+            color="textSecondary"
+          >
+            {comment.userId}
+          </Typography>
+          <Typography variant="caption" color="textSecondary">
+            {moment(comment.date).format('DD MMM')} -{' '}
+            {moment(comment.date).fromNow()}
+          </Typography>
         </Grid>
         <Grid className={classes.content} item xs={12}>
-          <div
-            dangerouslySetInnerHTML={{ __html: props.value.body }}
-            className={classes.replyBody}
-          />
+          {parse(comment.body)}
         </Grid>
       </CardContent>
 
-      <CardActions disableSpacing>
+      <CardActions className={classes.actions} disableSpacing>
         <IconButton aria-label="Like button">
           <FavoriteIcon />
         </IconButton>
-        {props.value.parentCommentId === null ? (
+        {comment.parentCommentId === null ? (
           <IconButton aria-label="Comment button">
             <ChatBubbleOutlineIcon />
           </IconButton>
         ) : null}
-        {props.value.inverseParentComment.length !== 0 ? (
+        {comment.inverseParentComment.length !== 0 ? (
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -62,15 +73,20 @@ const CommentCard = (props) => {
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        {props.value.parentCommentId === null
-          ? props.value.inverseParentComment.map((value) => {
+        {comment.parentCommentId === null
+          ? comment.inverseParentComment.map((comment) => {
               return (
-                <CommentCard value={value} key={value.commentId} classes />
+                <CommentCard
+                  className={classes.childComment}
+                  comment={comment}
+                  key={comment.commentId}
+                  classes={classes}
+                />
               );
             })
           : null}
       </Collapse>
-    </Card>
+    </div>
   );
 };
 
@@ -85,11 +101,8 @@ const styles = (theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  commentCard: {
-    marginBottom: 15,
-    borderRadius: 4,
-  },
   contentCard: {
+    paddingTop: '8px !important',
     paddingBottom: '0px !important',
   },
   replyBody: {
@@ -97,8 +110,27 @@ const styles = (theme) => ({
     wordWrap: 'breakWord',
     hyphens: 'auto',
     '& p': {
-      margin: '10px 0 !important',
+      margin: '0px !important',
     },
+  },
+  content: {
+    '& p': {
+      margin: '0px !important',
+    },
+    '& blockquote': {
+      borderLeft: '#3f51b5 solid 3px',
+      paddingLeft: 10,
+      margin: '5px 10px',
+    },
+  },
+  username: {
+    marginRight: 20,
+  },
+  actions: {
+    padding: '0 8px !important',
+  },
+  childComment: {
+    paddingLeft: 30,
   },
 });
 
