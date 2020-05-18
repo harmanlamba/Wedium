@@ -1,7 +1,7 @@
 import {
     loadCommentsLoading,
     loadCommentsSuccess,
-    loadCommentsError
+    loadCommentsError,
 } from '../comment-actions';
 import {
     commentGetRequest
@@ -18,6 +18,5 @@ export const loadComments = (postId) => {
                 },
 
                 error => dispatch(loadCommentsError(error.message || 'Unexpected error occured.')));
-
     }
 }

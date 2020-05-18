@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { commentPostRequest } from '../../apis/comment';
 import { withRouter } from 'react-router-dom';
+import { commentPostRequest } from '../../apis/comment';
 import RichTextBox from '../rich-text-box/index';
 
 // Material UI
@@ -45,9 +45,10 @@ const PostCommentBox = (props) => {
 
     if (checkCommentDto(commentDto)) {
       setSendLoading(true); // Start loading
-      commentPostRequest(commentDto).then((response) => {
-        if (response === 201) {
-          // Show in UI
+      commentPostRequest(commentDto).then(({ status, UriLocation }) => {
+        if (status === 201) {
+          props.history.push(UriLocation);
+          window.location.reload();
         }
 
         setSendLoading(false); // Set loading stopped
@@ -97,6 +98,7 @@ const PostCommentBox = (props) => {
         </Grid>
       ) : (
         <TextField
+          className={classes.disabledComment}
           autoComplete="off"
           variant="outlined"
           placeholder="Log in to write a comment..."
@@ -137,8 +139,11 @@ const styles = (theme) => ({
     marginBottom: 5,
   },
   sendButton: {
-    marginTop: '-35px',
+    marginTop: -40,
+  },
+  disabledComment: {
+    marginBottom: 10,
   },
 });
 
-export default withStyles(styles)(withRouter(PostCommentBox));
+export default withRouter(withStyles(styles)(withRouter(PostCommentBox)));

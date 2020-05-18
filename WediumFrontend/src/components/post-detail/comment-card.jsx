@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
+import { commentPostRequest } from '../../apis/comment';
+import RichTextBox from '../rich-text-box/index';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -13,26 +15,41 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-import ChatBubbleOutlineIcon from '@material-ui/icons/InsertComment';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 
+const COMMENT_CHAR_LIMIT = 350;
+
 const CommentCard = (props) => {
   const comment = props.comment;
   const { classes } = props;
-  const [expanded, setExpanded] = useState(false);
-  const [isChild, setChild] = useState(false);
+  const [isexpanded, setIsExpanded] = useState(false);
+  const [isChild, setIsChild] = useState(false);
+  const [isReply, setIsReply] = useState(false);
+  const [reply, setReply] = useState('');
 
   useEffect(() => {
     if (comment.parentCommentId !== null) {
-      setChild(true);
+      setIsChild(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleCommentChange = (event) => {
+    setReply(event);
+  };
+
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    setIsExpanded(!isexpanded);
+    setIsReply(false);
+  };
+
+  const handleReplyClick = () => {
+    setIsReply(!isReply);
+    setIsExpanded(false);
   };
 
   return (
@@ -41,19 +58,33 @@ const CommentCard = (props) => {
         [classes.child]: isChild,
       })}
     >
-      {comment.commentTypeId === 2 && comment.parentCommentId === null ? (
-        <div className={classes.commentType}>
-          <span>
-            <Typography variant="caption" color="textSecondary">
-              QUESTION
-            </Typography>
-            <FeedbackIcon className={classes.questionIcon} />
-          </span>
-        </div>
-      ) : null}
+      <div className={classes.iconButtons}>
+        {comment.parentCommentId === null ? (
+          <IconButton
+            onClick={handleReplyClick}
+            aria-label="Comment button"
+            size="small"
+          >
+            {isReply ? (
+              <ChatBubbleIcon
+                className={classes.commentButtonEnabled}
+                fontSize="small"
+              />
+            ) : (
+              <ChatBubbleOutlineIcon
+                className={classes.commentButton}
+                fontSize="small"
+              />
+            )}
+          </IconButton>
+        ) : null}
+        <IconButton aria-label="Like button" size="small">
+          <FavoriteIcon fontSize="small" />
+        </IconButton>
+      </div>
 
       <CardContent className={classes.contentCard}>
-        <Grid className={classes.header} item xs={12}>
+        <Grid className={classes.header} item xs={10}>
           <Typography
             className={classes.username}
             variant="caption"
@@ -66,25 +97,46 @@ const CommentCard = (props) => {
             {moment(comment.date).fromNow()}
           </Typography>
         </Grid>
-        <Grid className={classes.content} item xs={12}>
+
+        <Grid className={classes.content} item xs={10}>
           {parse(comment.body)}
         </Grid>
+
+        <Collapse in={isReply} timeout="auto" unmountOnExit>
+          <div className={classes.replyBox}>
+            <RichTextBox
+              onChange={handleCommentChange}
+              placeholder="Write a comment here..."
+              maxLength={COMMENT_CHAR_LIMIT}
+            />
+            <Button
+              className={classes.replyButton}
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              REPLY
+            </Button>
+          </div>
+        </Collapse>
       </CardContent>
 
       <CardActions className={classes.actions} disableSpacing>
-        <IconButton aria-label="Like button">
-          <FavoriteIcon />
-        </IconButton>
-        {comment.parentCommentId === null ? (
-          <IconButton aria-label="Comment button">
-            <ChatBubbleOutlineIcon />
-          </IconButton>
+        {comment.commentTypeId === 2 && comment.parentCommentId === null ? (
+          <div className={classes.commentType}>
+            <span>
+              <Typography variant="caption" color="textSecondary">
+                QUESTION
+              </Typography>
+              <FeedbackIcon className={classes.questionIcon} />
+            </span>
+          </div>
         ) : null}
         {comment.inverseParentComment.length !== 0 ? (
           <Button
             className={classes.expandButton}
             onClick={handleExpandClick}
-            aria-expanded={expanded}
+            aria-expanded={isexpanded}
             aria-label="Show comments"
           >
             <Typography variant="caption">
@@ -92,7 +144,7 @@ const CommentCard = (props) => {
             </Typography>
             <ExpandMoreIcon
               className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
+                [classes.expandOpen]: isexpanded,
               })}
             />
           </Button>
@@ -101,12 +153,12 @@ const CommentCard = (props) => {
 
       <Collapse
         className={classes.childContainer}
-        in={expanded}
+        in={isexpanded}
         timeout="auto"
         unmountOnExit
       >
         {comment.parentCommentId === null
-          ? comment.inverseParentComment.map((comment) => {
+          ? comment.inverseParentComment.reverse().map((comment) => {
               return (
                 <CommentCard
                   comment={comment}
@@ -137,6 +189,7 @@ const styles = (theme) => ({
   contentCard: {
     paddingTop: '8px !important',
     paddingBottom: '0px !important',
+    marginBottom: 5,
   },
   replyBody: {
     overflowWrap: 'break-word',
@@ -148,7 +201,7 @@ const styles = (theme) => ({
   },
   content: {
     '& p': {
-      margin: '10px 0 !important',
+      margin: '2px 0 !important',
     },
     '& blockquote': {
       borderLeft: '#3f51b5 solid 3px',
@@ -160,19 +213,35 @@ const styles = (theme) => ({
     marginRight: 20,
   },
   actions: {
-    padding: '0 8px !important',
+    padding: '0 3px 0 8px !important',
+    position: 'relative',
   },
-  childContainer: {
-    paddingLeft: '3em',
+  iconButtons: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
   },
-  child: {},
+  commentButton: {
+    opacity: 0.4,
+  },
+  commentButtonEnabled: {
+    opacity: 1,
+  },
   parent: {
     position: 'relative',
+    paddingBottom: 8,
+  },
+  child: {
+    padding: '5px 0',
+    borderLeft: '3px solid #3f51b5',
+  },
+  childContainer: {
+    paddingLeft: '3.5em',
   },
   commentType: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    bottom: 7,
+    left: 15,
     '& span': {
       backgroundColor: '#3f51b5',
       color: '#fff',
@@ -183,6 +252,16 @@ const styles = (theme) => ({
   questionIcon: {
     marginBottom: '-7px',
     width: '0.7em',
+  },
+  replyBox: {
+    position: 'relative',
+    padding: '20px 0 10px 0',
+    marginBottom: 10,
+  },
+  replyButton: {
+    position: 'absolute',
+    right: 0,
+    marginTop: '-17px',
   },
 });
 

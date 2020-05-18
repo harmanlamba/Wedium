@@ -61,7 +61,7 @@ namespace WediumAPI.Controllers
                 return Conflict();
             }
 
-            return Created($"/post/{postDto.PostType}/{postDto.PostId}/{postDto.Title}", commentId);
+            return Created($"/post/{postDto.PostType}/{postDto.PostId}/{postDto.Title}#{commentId}", commentId);
         }
     }
 }

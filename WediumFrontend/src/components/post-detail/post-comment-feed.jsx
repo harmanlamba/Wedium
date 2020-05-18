@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadComments } from '../../redux/actions/thunk/comment-thunk';
@@ -18,6 +18,8 @@ const PostCommentFeed = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(props);
+
   return (
     <Grid
       className={classes.root}
@@ -29,12 +31,13 @@ const PostCommentFeed = (props) => {
     >
       <Grid className={classes.grid} item xs={12}>
         {props.comments != []
-          ? props.comments.map((comment) => {
+          ? props.comments.reverse().map((comment) => {
               return (
                 <Card
                   className={classes.commentCard}
                   key={comment.commentId}
                   square={true}
+                  href={comment.commentId}
                 >
                   <CommentCard comment={comment} />
                 </Card>
