@@ -29,7 +29,6 @@ const PostCommentBox = (props) => {
 
   const checkCommentDto = (commentDto) => {
     if (commentDto.Body === '') {
-      // handle comment body missing popup
       return false;
     }
 
@@ -45,18 +44,12 @@ const PostCommentBox = (props) => {
     };
 
     setIsEmptyNow(true);
-    props.postComment(commentDto);
-
-    // if (checkCommentDto(commentDto)) {
-    //   setSendLoading(true); // Start loading
-    //   commentPostRequest(commentDto).then(({ status, UriLocation }) => {
-    //     if (status === 201) {
-    //       props.history.push(UriLocation);
-    //       window.location.reload();
-    //     }
-    //     setSendLoading(false); // Set loading stopped
-    //   });
-    // }
+    if (checkCommentDto(commentDto)) {
+      props.postComment(commentDto);
+    } else {
+      alert('BAM BAM');
+      //Send warning message
+    }
   };
 
   return (

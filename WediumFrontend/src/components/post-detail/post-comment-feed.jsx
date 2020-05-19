@@ -37,7 +37,7 @@ const PostCommentFeed = (props) => {
                   square={true}
                   href={comment.commentId}
                 >
-                  <CommentCard comment={comment} />
+                  <CommentCard comment={comment} user={props.user} />
                 </Card>
               );
             })

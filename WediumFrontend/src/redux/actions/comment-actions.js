@@ -4,6 +4,7 @@ import {
     LOAD_COMMENTS_ERROR,
     ADD_COMMENT,
     LOAD_ADD_COMMENT,
+    LOAD_ADD_REPLY,
 } from '../action-types/action-types'
 
 export const loadCommentsLoading = () => {
@@ -36,5 +37,11 @@ export const addComment = (comment) => {
 export const loadAddComment = () => {
     return {
         type: LOAD_ADD_COMMENT,
+    }
+}
+
+export const loadAddReply = () => {
+    return {
+        type: LOAD_ADD_REPLY,
     }
 }

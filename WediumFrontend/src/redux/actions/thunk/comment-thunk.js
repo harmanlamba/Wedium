@@ -4,6 +4,7 @@ import {
     loadCommentsError,
     addComment,
     loadAddComment,
+    loadAddReply,
 } from '../comment-actions';
 import {
     commentGetRequest,
@@ -26,7 +27,11 @@ export const loadComments = (postId) => {
 
 export const postComment = (comment) => {
     return dispatch => {
-        dispatch(loadAddComment());
+        if (comment.ParentCommentId === null) {
+            dispatch(loadAddComment());
+        } else {
+            dispatch(loadAddReply());
+        }
 
         commentPostRequest(comment)
             .then(

@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
-import { commentPostRequest } from '../../apis/comment';
+import { connect } from 'react-redux';
+import { postComment } from '../../redux/actions/thunk/comment-thunk';
 import RichTextBox from '../rich-text-box/index';
 
 // Material UI
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +28,8 @@ const COMMENT_CHAR_LIMIT = 350;
 const CommentCard = (props) => {
   const comment = props.comment;
   const { classes } = props;
-  const [isexpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isEmptyNow, setIsEmptyNow] = useState(false);
   const [isChild, setIsChild] = useState(false);
   const [isReply, setIsReply] = useState(false);
   const [reply, setReply] = useState('');
@@ -43,13 +46,38 @@ const CommentCard = (props) => {
   };
 
   const handleExpandClick = () => {
-    setIsExpanded(!isexpanded);
+    setIsExpanded(!isExpanded);
     setIsReply(false);
   };
 
   const handleReplyClick = () => {
     setIsReply(!isReply);
     setIsExpanded(false);
+  };
+
+  const checkCommentDto = (commentDto) => {
+    if (commentDto.Body === '') {
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSendReply = () => {
+    const commentDto = {
+      PostId: comment.postId,
+      ParentCommentId: comment.commentId,
+      Body: reply,
+      CommentTypeId: 1,
+    };
+
+    setIsEmptyNow(true);
+    if (checkCommentDto(commentDto)) {
+      props.postComment(commentDto);
+    } else {
+      alert('BAM BAM');
+      //Send warning message
+    }
   };
 
   return (
@@ -59,7 +87,7 @@ const CommentCard = (props) => {
       })}
     >
       <div className={classes.iconButtons}>
-        {comment.parentCommentId === null ? (
+        {comment.parentCommentId === null && props.user.isAuthenticated ? (
           <IconButton
             onClick={handleReplyClick}
             aria-label="Comment button"
@@ -106,16 +134,22 @@ const CommentCard = (props) => {
           <div className={classes.replyBox}>
             <RichTextBox
               onChange={handleCommentChange}
-              placeholder="Write a comment here..."
+              placeholder="Write a reply here..."
               maxLength={COMMENT_CHAR_LIMIT}
+              setIsEmptyNow={setIsEmptyNow}
+              isEmptyNow={isEmptyNow}
             />
             <Button
               className={classes.replyButton}
+              onClick={handleSendReply}
               variant="contained"
               color="primary"
               size="small"
             >
-              REPLY
+              {props.isLoadingAddReply && (
+                <CircularProgress size={20} thickness={6} color="inherit" />
+              )}
+              {!props.isLoadingAddReply && 'Reply'}
             </Button>
           </div>
         </Collapse>
@@ -136,7 +170,7 @@ const CommentCard = (props) => {
           <Button
             className={classes.expandButton}
             onClick={handleExpandClick}
-            aria-expanded={isexpanded}
+            aria-expanded={isExpanded}
             aria-label="Show comments"
           >
             <Typography variant="caption">
@@ -144,7 +178,7 @@ const CommentCard = (props) => {
             </Typography>
             <ExpandMoreIcon
               className={clsx(classes.expand, {
-                [classes.expandOpen]: isexpanded,
+                [classes.expandOpen]: isExpanded,
               })}
             />
           </Button>
@@ -153,7 +187,7 @@ const CommentCard = (props) => {
 
       <Collapse
         className={classes.childContainer}
-        in={isexpanded}
+        in={isExpanded}
         timeout="auto"
         unmountOnExit
       >
@@ -265,4 +299,19 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(CommentCard);
+// Redux
+const mapStateToProps = (state) => {
+  return {
+    comments: state.comment.comments,
+    isLoadingAddComment: state.comment.isLoadingAddComment,
+    isLoadingAddReply: state.comment.isLoadingAddReply,
+  };
+};
+
+const mapDispatchToProps = {
+  postComment,
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(CommentCard)
+);
