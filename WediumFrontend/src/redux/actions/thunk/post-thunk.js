@@ -13,11 +13,11 @@ import {
     getPostDetail,
 } from '../../../apis/post';
 
-export const loadInitialPosts = (cancelToken, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly) => {
+export const loadInitialPosts = (cancelToken, postType, searchString, profileFilter) => {
     return dispatch => {
-        dispatch(loadPostsLoading(postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly));
+        dispatch(loadPostsLoading(postType, searchString, profileFilter));
 
-        getPosts(cancelToken, null, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly)
+        getPosts(cancelToken, null, postType, searchString, profileFilter)
             .then(
                 posts => dispatch(loadPostsSuccess(posts)),
 
@@ -30,9 +30,9 @@ export const loadInitialPosts = (cancelToken, postType, searchString, getFavouri
     }
 }
 
-export const loadMorePosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly) => {
+export const loadMorePosts = (cancelToken, afterPostId, postType, searchString, profileFilter) => {
     return dispatch => {
-        getPosts(cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly)
+        getPosts(cancelToken, afterPostId, postType, searchString, profileFilter)
             .then(
                 posts => dispatch(loadMorePostsSuccess(posts)),
 

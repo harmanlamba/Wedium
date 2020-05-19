@@ -81,13 +81,13 @@ const Profile = (props) => {
             <Tab label="Liked Posts" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={tabValue} index={0}>
-            <PostFeed getCreatedOnly />
+            <PostFeed profileFilter={{getCreatedOnly: true}} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <PostFeed getFavouritesOnly />
+            <PostFeed profileFilter={{getFavouritesOnly: true}} />
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
-            <PostFeed getPostLikesOnly />
+            <PostFeed profileFilter={{getPostLikesOnly: true}} />
           </TabPanel>
         </Grid>
         <Grid item xs={2} className={classes.sidebar}>
