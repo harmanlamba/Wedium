@@ -13,10 +13,11 @@ import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
 import FavouritesIcon from '@material-ui/icons/BookmarksOutlined';
+import LikedIcon from '@material-ui/icons/FavoriteBorder';
 import { Typography } from '@material-ui/core';
 
 const UserPanel = (props) => {
-    const { classes, createPostCount, favouritePostCount} = props;
+    const { classes, createPostCount, favouritePostCount, postLikeCount, userStatsLoading} = props;
 
     useEffect(() => {
         props.loadUserStats();
@@ -26,7 +27,7 @@ const UserPanel = (props) => {
     const user = props.user;
 
     return (
-        <div>
+        !userStatsLoading && <div>
             <Divider />
             <br />
             <Grid
@@ -66,6 +67,12 @@ const UserPanel = (props) => {
                     </Typography>
                     <FavouritesIcon />
                 </div>
+                <div className={classes.iconAndText}>
+                    <Typography variant="subtitle2" className={classes.rightSpacing}>
+                        {postLikeCount} posts liked
+                    </Typography>
+                    <LikedIcon />
+                </div>
             </Grid>
             <br />
             <Divider />
@@ -95,6 +102,7 @@ const mapStateToProps = (state) => {
     return {
       createPostCount: state.userStats.createPostCount,
       favouritePostCount: state.userStats.favouritePostCount,
+      postLikeCount: state.userStats.postLikeCount,
       userStatsLoading: state.userStats.userStatsLoading,
     };
   };

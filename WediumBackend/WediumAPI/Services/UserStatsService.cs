@@ -20,11 +20,13 @@ namespace WediumAPI.Services
         {
             int createPostCount = _wediumContext.Post.Count(p => p.UserId == userId);
             int favouritePostCount = _wediumContext.Favourite.Count(p => p.UserId == userId);
+            int postLikeCount = _wediumContext.PostLike.Count(p => p.UserId == userId);
 
             return new UserStatsDto
             {
                 CreatePostCount = createPostCount,
-                FavouritePostCount = favouritePostCount
+                FavouritePostCount = favouritePostCount,
+                PostLikeCount = postLikeCount
             };
         }
     }

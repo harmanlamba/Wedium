@@ -17,7 +17,8 @@ class PostFeed extends Component {
   componentDidMount() {
     if (!this.props.posts.length || this.props.postType !== this.props.previousPostType
       || this.props.searchString !== this.props.previousSearchString
-      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly) {
+      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly
+      || this.props.getPostLikesOnly !== this.props.previousGetPostLikesOnly) {
 
       this.loadInitial();
     }
@@ -26,7 +27,8 @@ class PostFeed extends Component {
   componentDidUpdate() {
     if (this.props.postType !== this.props.previousPostType
       || this.props.searchString !== this.props.previousSearchString
-      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly) {
+      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly
+      || this.props.getPostLikesOnly !== this.props.previousGetPostLikesOnly) {
 
         if (this.state && this.state.cancelToken) {
           this.state.cancelToken.cancel();
@@ -43,7 +45,7 @@ class PostFeed extends Component {
       cancelToken,
     });
 
-    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.getFavouritesOnly);
+    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.getFavouritesOnly, this.props.getPostLikesOnly);
   }
 
   componentWillUnmount() {
@@ -57,7 +59,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.getFavouritesOnly);
+    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.getFavouritesOnly, this.props.getPostLikesOnly);
   }
 
   hasMore() {
@@ -112,7 +114,8 @@ const mapStateToProps = (state) => {
     postsLoading: state.post.initialPostsLoading,
     previousPostType: state.post.postTypeFilter,
     previousSearchString: state.post.searchStringFilter,
-    previousGetFavouritesOnly: state.post.getFavouritesOnly
+    previousGetFavouritesOnly: state.post.getFavouritesOnly,
+    previousGetPostLikesOnly: state.post.getPostLikesOnly,
   };
 };
 

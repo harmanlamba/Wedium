@@ -22,6 +22,7 @@ export default (state = INIT_USER_STATS_REDUCER_STATE, action) => {
                 userStatsLoading: false,
                 createPostCount: action.userStats.createPostCount,
                 favouritePostCount: action.userStats.favouritePostCount,
+                postLikeCount: action.userStats.postLikeCount,
             };
 
         case LOAD_USER_STATS_ERROR:

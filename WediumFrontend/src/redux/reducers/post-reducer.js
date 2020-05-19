@@ -25,7 +25,8 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
         posts: [],
         postTypeFilter: action.postType,
         searchStringFilter: action.searchString,
-        getFavouritesOnly: action.getFavouritesOnly
+        getFavouritesOnly: action.getFavouritesOnly,
+        getPostLikesOnly: action.getPostLikesOnly
       };
 
     case LOAD_POSTS_SUCCESS:

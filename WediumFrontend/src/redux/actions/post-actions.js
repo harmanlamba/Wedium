@@ -12,12 +12,13 @@ import {
     POST_DETAIL_DIRECT_NAVIGATION_LOADING,
 } from '../action-types/action-types'
 
-export const loadPostsLoading = (postType, searchString, getFavouritesOnly) => {
+export const loadPostsLoading = (postType, searchString, getFavouritesOnly, getPostLikesOnly) => {
     return {
         type: LOAD_POSTS_LOADING,
         postType,
         searchString,
         getFavouritesOnly,
+        getPostLikesOnly,
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -6,19 +6,51 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
-import FavouritesIcon from '@material-ui/icons/BookmarksOutlined';
-import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 // Components
 import Header from '../header';
 import UserPanel from './user-panel';
 import PostFeed from '../post-feed';
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
 const Profile = (props) => {
   const { classes } = props;
   const history = useHistory();
+
+  const [tabValue, setTabValue] = useState(0);
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
 
   useEffect(() => {
     props.tryLogin();
@@ -40,13 +72,20 @@ const Profile = (props) => {
         alignItems="flex-start"
       >
         <Grid item xs={6}>
-          <Card className={classes.title}>       
-            <FavouritesIcon className={classes.favouritesIcon} />
-            <Typography variant="h6">
-              Saved Posts
-            </Typography>
-          </Card>
-          <PostFeed getFavouritesOnly={true} />
+          <Tabs 
+            value={tabValue} 
+            onChange={(event, newValue) => setTabValue(newValue)}
+            indicatorColor="primary"
+            className={classes.tabs}>
+            <Tab label="Saved Posts" {...a11yProps(0)} />
+            <Tab label="Liked Posts" {...a11yProps(1)} />
+          </Tabs>
+          <TabPanel value={tabValue} index={0}>
+            <PostFeed getFavouritesOnly={true} />
+          </TabPanel>
+          <TabPanel value={tabValue} index={1}>
+          <PostFeed getPostLikesOnly={true} />
+          </TabPanel>
         </Grid>
         <Grid item xs={2} className={classes.sidebar}>
           <UserPanel user={user} />
@@ -71,17 +110,11 @@ const styles = (theme) => ({
     position: 'sticky',
     top: 40,
   },
-  title: {
+  tabs: {
     borderRadius: 0,
     padding: 10,
-    display: 'flex',
-    fontWeight: 200,
     marginBottom: 16,
-    fontWeight: 500,
-    alignItems: 'center',
-  },
-  favouritesIcon: {
-    marginRight: 10
+    backgroundColor: 'white',
   },
 });
 
