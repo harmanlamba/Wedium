@@ -24,7 +24,7 @@ namespace WediumTestSuite
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _apiEndpoint = AppSettingsResolver.GetSetting<string>("APIEndpointURI");
+            _apiEndpoint = AppSettingsResolver.GetAPIEndpointURI();
         }
 
         [SetUp]

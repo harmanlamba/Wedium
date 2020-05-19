@@ -10,7 +10,7 @@ namespace WediumAPI.Services
 {
     public class UserService : IUserService
     {
-        private WediumContext _wediumContext;
+        private readonly WediumContext _wediumContext;
 
         public UserService(WediumContext wediumContext)
         {
