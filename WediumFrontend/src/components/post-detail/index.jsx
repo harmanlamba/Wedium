@@ -113,11 +113,6 @@ const styles = (theme) => ({
     width: '100%',
     marginTop: 20,
   },
-  sidebar: {
-    position: '-webkit-sticky',
-    position: 'sticky',
-    top: 40,
-  },
   progressRing: {
     marginLeft: '50%',
     paddingTop: '200px',

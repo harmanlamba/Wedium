@@ -20,5 +20,10 @@ namespace WediumTestSuite.Helper
         {
             return (T)Convert.ChangeType(InitConfiguration().GetSection(key).Value, typeof(T));
         }
+
+        public static string GetAPIEndpointURI()
+        {
+            return InitConfiguration().GetSection("APIEndpointURI").Value;
+        }
     }
 }

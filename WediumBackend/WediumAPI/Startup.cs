@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using WediumAPI.Helper;
 using WediumAPI.Models;
+using WediumAPI.Service;
 using WediumAPI.Services;
 
 namespace WediumAPI
@@ -91,6 +92,7 @@ namespace WediumAPI
             services.AddScoped<IWikiMediaApiService, WikiMediaApiService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentLikeService, CommentLikeService>();
+            services.AddScoped<IUserStatsService, UserStatsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

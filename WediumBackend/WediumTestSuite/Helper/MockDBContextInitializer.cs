@@ -37,6 +37,11 @@ namespace WediumTestSuite.Helper
                     db.Post.Add(post);
                 }
 
+                foreach (Favourite favourite in InitializeFavourites())
+                {
+                    db.Favourite.Add(favourite);
+                }
+
                 foreach (CommentType commentType in InitializeCommentTypes())
                 {
                     db.CommentType.Add(commentType);
@@ -112,6 +117,13 @@ namespace WediumTestSuite.Helper
                     FirstName = "FirstNameTest2",
                     LastName = "LastNameTest2",
                     Email = "EmailTest2"
+                },
+                new User
+                {
+                    UserId = 3,
+                    FirstName = "FirstNameTest3",
+                    LastName = "LastNameTest3",
+                    Email = "EmailTest3"
                 }
             };
         }
@@ -212,6 +224,55 @@ namespace WediumTestSuite.Helper
                     Title = "TitleTest5",
                     Description = "DescriptionTest5",
                     PostTypeId = 1
+                }
+            };
+        }
+
+        public static Favourite[] InitializeFavourites()
+        {
+            return new Favourite[]
+            {
+                new Favourite()
+                {
+                    UserId = 2,
+                    PostId = 5,
+                    Date = DateTime.Now
+                },
+                new Favourite()
+                {
+                    UserId = 1,
+                    PostId = 1,
+                    Date = DateTime.Now
+                },
+                new Favourite()
+                {
+                    UserId = 1,
+                    PostId = 2,
+                    Date = DateTime.Now
+                },
+                new Favourite()
+                {
+                    UserId = 2,
+                    PostId = 2,
+                    Date = DateTime.Now
+                },
+                new Favourite()
+                {
+                    UserId = 2,
+                    PostId = 4,
+                    Date = DateTime.Now
+                },
+                new Favourite()
+                {
+                    UserId = 1,
+                    PostId = 3,
+                    Date = DateTime.Now
+                },
+                new Favourite()
+                {
+                    UserId = 2,
+                    PostId = 3,
+                    Date = DateTime.Now
                 }
             };
         }
