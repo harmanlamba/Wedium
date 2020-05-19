@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -8,12 +8,15 @@ import {
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const PostFavourite = (props) => {
   const { classes } = props;
+  const [isOpenSnack, setIsOpenSnack] = useState(false);
 
   const onButtonClick = () => {
     if (props.isFavourited) {
@@ -24,22 +27,34 @@ const PostFavourite = (props) => {
   };
 
   const errorCallback = () => {
-    alert('Error favouriting or unfavouriting a post'); // TODO: implement some better alert system
+    setIsOpenSnack(true);
   };
 
   return (
     props.isFavourited !== null && (
-      <IconButton
-        onClick={() => {
-          onButtonClick();
-        }}
-      >
-        {props.isFavourited ? (
-          <BookmarkIcon className={classes.favouritedIcon} />
-        ) : (
-          <BookmarkBorderIcon className={classes.unfavouritedIcon} />
-        )}
-      </IconButton>
+      <div>
+        <IconButton
+          onClick={() => {
+            onButtonClick();
+          }}
+        >
+          {props.isFavourited ? (
+            <BookmarkIcon className={classes.favouritedIcon} />
+          ) : (
+            <BookmarkBorderIcon className={classes.unfavouritedIcon} />
+          )}
+        </IconButton>
+
+        <Snackbar
+          open={isOpenSnack}
+          autoHideDuration={2000}
+          onClose={() => setIsOpenSnack(false)}
+        >
+          <Alert onClose={() => setIsOpenSnack(false)} severity="warning">
+            Cannot favourite/unfavourite post!
+          </Alert>
+        </Snackbar>
+      </div>
     )
   );
 };

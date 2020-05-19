@@ -6,13 +6,13 @@ import { postComment } from '../../redux/actions/thunk/comment-thunk';
 import RichTextBox from '../rich-text-box/index';
 
 // Material UI
+import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -78,6 +78,7 @@ const PostCommentBox = (props) => {
           Comment is empty!
         </Alert>
       </Snackbar>
+
       <Grid className={classes.grid} item xs={12}>
         <Typography className={classes.commentTitle} variant="h6">
           Comments

@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 // Material UI
 import Card from '@material-ui/core/Card';
@@ -60,7 +61,7 @@ const PostDetailInfo = (props) => {
                 color="textSecondary"
                 align="justify"
               >
-                {post.description}
+                {parse(post.description)}
               </Typography>
             )}
             <Typography

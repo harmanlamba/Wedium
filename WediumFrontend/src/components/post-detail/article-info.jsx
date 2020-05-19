@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import HighlightPop from 'react-highlight-pop';
+import parse from 'html-react-parser';
 
 // Material UI
 import CardMedia from '@material-ui/core/CardMedia';
@@ -77,10 +78,7 @@ const ArticleInfo = (props) => {
               </Fragment>
             )}
           >
-            <div
-              dangerouslySetInnerHTML={{ __html: articleBody }}
-              className={classes.articleBody}
-            />
+            <div className={classes.articleBody}>{parse(articleBody)}</div>
           </HighlightPop>
         }
         {!showingAll && (

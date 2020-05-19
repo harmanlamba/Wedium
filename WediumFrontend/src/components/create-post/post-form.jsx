@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createPost } from '../../apis/post';
 import AlertDialog from '../create-post/alert-dialog';
 import { withRouter, useHistory } from 'react-router-dom';
+import RichTextBox from '../rich-text-box/index';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -15,7 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PostTypeButtons from './post-type-buttons';
 
 const TITLE_CHAR_LIMIT = 100;
-const DESCRIPTION_CHAR_LIMIT = 500;
+const DESCRIPTION_CHAR_LIMIT = 350;
 
 const PostForm = (props) => {
   const { classes } = props;
@@ -41,9 +42,6 @@ const PostForm = (props) => {
         break;
       case 'wikipediaURLField':
         setWikipediaURL(event.target.value);
-        break;
-      case 'descriptionField':
-        setDescription(event.target.value);
         break;
       default:
     }
@@ -164,21 +162,10 @@ const PostForm = (props) => {
         </Grid>
 
         <Grid item xs={12}>
-          <TextField
-            id="descriptionField"
-            onChange={handleFieldChange}
-            label="Description (optional)"
-            autoComplete="off"
-            variant="outlined"
-            multiline
-            rows={6}
-            rowsMax={10}
-            fullWidth
-            helperText={`${description.length}/${DESCRIPTION_CHAR_LIMIT}`}
-            inputProps={{
-              maxLength: DESCRIPTION_CHAR_LIMIT,
-            }}
-            className={classes.textField}
+          <RichTextBox
+            onChange={setDescription}
+            placeholder="Write a description about the article..."
+            maxLength={DESCRIPTION_CHAR_LIMIT}
           />
         </Grid>
 
