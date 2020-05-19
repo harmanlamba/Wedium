@@ -6,6 +6,7 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
 import FavouritesIcon from '@material-ui/icons/BookmarksOutlined';
 import { Typography } from '@material-ui/core';
@@ -39,24 +40,17 @@ const Profile = (props) => {
         alignItems="flex-start"
       >
         <Grid item xs={6}>
-          <Grid
-            container
-            spacing={3}
-            direction="row"
-            justify="flex-start"
-            alignItems="center"
-            className={classes.title}
-          >
-            <Typography variant="h6">Saved Posts</Typography>
-            <FavouritesIcon />
-          </Grid>
+          <Card className={classes.title}>       
+            <FavouritesIcon className={classes.favouritesIcon} />
+            <Typography variant="h6">
+              Saved Posts
+            </Typography>
+          </Card>
           <PostFeed getFavouritesOnly={true} />
         </Grid>
-
         <Grid item xs={2} className={classes.sidebar}>
           <UserPanel user={user} />
         </Grid>
-
       </Grid>
     </div>
   );
@@ -78,9 +72,17 @@ const styles = (theme) => ({
     top: 40,
   },
   title: {
-    marginRight: theme.spacing(1),
-    marginBottom: 12,
-  }
+    borderRadius: 0,
+    padding: 10,
+    display: 'flex',
+    fontWeight: 200,
+    marginBottom: 16,
+    fontWeight: 500,
+    alignItems: 'center',
+  },
+  favouritesIcon: {
+    marginRight: 10
+  },
 });
 
 // Redux
