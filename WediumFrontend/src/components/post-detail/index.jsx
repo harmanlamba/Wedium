@@ -55,6 +55,7 @@ class PostDetail extends Component {
     };
 
     const handleTextHighlight = (text) => {
+      handleCommentButton();
       this.setState({ isHighlighted: true });
       this.setState({ highlightText: text });
     };
