@@ -17,6 +17,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -33,6 +35,7 @@ const CommentCard = (props) => {
   const [isChild, setIsChild] = useState(false);
   const [isReply, setIsReply] = useState(false);
   const [reply, setReply] = useState('');
+  const [isOpenSnack, setIsOpenSnack] = useState(false);
 
   useEffect(() => {
     if (comment.parentCommentId !== null) {
@@ -75,8 +78,7 @@ const CommentCard = (props) => {
     if (checkCommentDto(commentDto)) {
       props.postComment(commentDto);
     } else {
-      alert('BAM BAM');
-      //Send warning message
+      setIsOpenSnack(true);
     }
   };
 
@@ -154,6 +156,16 @@ const CommentCard = (props) => {
           </div>
         </Collapse>
       </CardContent>
+
+      <Snackbar
+        open={isOpenSnack}
+        autoHideDuration={2000}
+        onClose={() => setIsOpenSnack(false)}
+      >
+        <Alert onClose={() => setIsOpenSnack(false)} severity="warning">
+          Reply is empty!
+        </Alert>
+      </Snackbar>
 
       <CardActions
         className={clsx(classes.actions, {

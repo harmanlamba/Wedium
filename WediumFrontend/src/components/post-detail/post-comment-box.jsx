@@ -12,6 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,6 +26,7 @@ const PostCommentBox = (props) => {
   const [comment, setComment] = useState('');
   const [commentTypeId, setCommentTypeId] = useState(1);
   const [isEmptyNow, setIsEmptyNow] = useState(false);
+  const [isOpenSnack, setIsOpenSnack] = useState(false);
 
   const handleCommentChange = (event) => {
     setComment(event);
@@ -53,8 +56,7 @@ const PostCommentBox = (props) => {
     if (checkCommentDto(commentDto)) {
       props.postComment(commentDto);
     } else {
-      alert('BAM BAM');
-      //Send warning message
+      setIsOpenSnack(true);
     }
   };
 
@@ -67,6 +69,15 @@ const PostCommentBox = (props) => {
       justify="center"
       alignItems="flex-start"
     >
+      <Snackbar
+        open={isOpenSnack}
+        autoHideDuration={2000}
+        onClose={() => setIsOpenSnack(false)}
+      >
+        <Alert onClose={() => setIsOpenSnack(false)} severity="warning">
+          Comment is empty!
+        </Alert>
+      </Snackbar>
       <Grid className={classes.grid} item xs={12}>
         <Typography className={classes.commentTitle} variant="h6">
           Comments
