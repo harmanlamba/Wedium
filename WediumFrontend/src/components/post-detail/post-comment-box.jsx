@@ -72,7 +72,6 @@ const PostCommentBox = (props) => {
           Comments
         </Typography>
       </Grid>
-
       {props.user.isAuthenticated ? (
         <Grid item xs={12}>
           <Grid className={classes.grid} item xs={12}>
@@ -82,6 +81,9 @@ const PostCommentBox = (props) => {
               setIsEmptyNow={setIsEmptyNow}
               placeholder="Write a comment here..."
               maxLength={COMMENT_CHAR_LIMIT}
+              quotedText={props.highlightText}
+              isHighlighted={props.isHighlighted}
+              handleIsHighlighted={props.handleIsHighlighted}
             />
             <Button
               className={clsx(classes.commentTypeButton, {

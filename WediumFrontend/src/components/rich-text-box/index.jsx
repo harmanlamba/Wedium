@@ -28,6 +28,12 @@ const RichTextBox = (props) => {
       quillRef.setContents([{ insert: '\n' }]);
       props.setIsEmptyNow(!props.isEmptyNow);
     }
+
+    if (props.isHighlighted) {
+      quillRef.setContents([{ insert: '\n' }]);
+      quillRef.insertText(0, `${props.quotedText}\n`, 'blockquote', true);
+      props.handleIsHighlighted(false);
+    }
   });
 
   const onChange = (htmlText) => {

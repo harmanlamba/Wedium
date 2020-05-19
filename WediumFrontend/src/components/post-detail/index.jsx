@@ -21,6 +21,8 @@ class PostDetail extends Component {
     this.state = {
       postId: this.props.match.params.postId,
       circularProgressRingState: true,
+      highlightText: '',
+      isHighlighted: false,
     };
 
     this.commentRef = React.createRef();
@@ -52,6 +54,15 @@ class PostDetail extends Component {
       });
     };
 
+    const handleTextHighlight = (text) => {
+      this.setState({ isHighlighted: true });
+      this.setState({ highlightText: text });
+    };
+
+    const handleIsHighlighted = (boolean) => {
+      this.setState({ isHighlighted: boolean });
+    };
+
     return (
       <div>
         <Header user={user} />
@@ -67,12 +78,18 @@ class PostDetail extends Component {
           >
             <Grid item xs={7}>
               <PostDetailInfo
+                handleTextHighlight={handleTextHighlight}
                 post={reduxPosts[postIndex]}
                 handleCommentButton={handleCommentButton}
               />
             </Grid>
             <Grid item xs={7} ref={this.commentRef}>
-              <PostCommentBox user={user} />
+              <PostCommentBox
+                user={user}
+                highlightText={this.state.highlightText}
+                isHighlighted={this.state.isHighlighted}
+                handleIsHighlighted={handleIsHighlighted}
+              />
             </Grid>
             <Grid item xs={7}>
               <PostCommentFeed user={user} />

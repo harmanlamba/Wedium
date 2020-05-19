@@ -77,7 +77,10 @@ const PostDetailInfo = (props) => {
           </CardContent>
         </Card>
 
-        <ArticleInfo post={post} />
+        <ArticleInfo
+          handleTextHighlight={props.handleTextHighlight}
+          post={post}
+        />
       </Card>
     </div>
   );
