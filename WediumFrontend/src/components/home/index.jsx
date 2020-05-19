@@ -33,7 +33,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <Header user={user} showSearch={true} postType={currentPostType} />
+      <Header user={user} showSearch postType={currentPostType} />
       <Grid
         className={classes.grid}
         container
