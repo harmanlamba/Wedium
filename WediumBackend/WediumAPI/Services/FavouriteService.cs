@@ -99,6 +99,7 @@ namespace WediumAPI.Services
                 .Include(f => f.Post.WikiArticle)
                 .Include(f => f.Post.User)
                 .Include(f => f.Post.PostLike)
+                .Include(f => f.Post.Favourite)
                 .Select(f => f.Post);
 
             IEnumerable<PostDto> postDtoList = PostMapper.ToDto(favouritePosts, userId).ToList();

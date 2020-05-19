@@ -55,7 +55,7 @@ const PostCard = (props) => {
               target="_blank"
               onClick={(event) => event.stopPropagation()}
             >
-              {post.articleTitle}
+              {decodeURIComponent(post.articleTitle)}
             </Link>
           </Typography>
 

@@ -5,23 +5,34 @@ import { createHeader } from './util/header-util';
 const API_URL = process.env.REACT_APP_API_URL;
 const LIMIT = 15;
 
-export const getPosts = (afterPostId, postType, searchString) => {
+export const getPosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly) => {
   const header = createHeader();
   var queryString = `?limit=${LIMIT}`;
+
+  if (cancelToken) {
+    header.headers.cancelToken = cancelToken;
+  }
+  console.log(header);
 
   if (afterPostId) {
     queryString += `&after_id=${afterPostId}`;
   }
 
-  if (postType) {
+  if (postType && !getFavouritesOnly) {
     queryString += `&postType=${postType}`;
   }
 
-  if (searchString) {
+  if (searchString && !getFavouritesOnly) {
     queryString += `&search=${searchString}`;
   }
 
-  const endpoint = `${API_URL}/api/post/Get${queryString}`;
+  let endpoint;
+
+  if (getFavouritesOnly) {
+    endpoint = `${API_URL}/api/favourite/Get${queryString}`;
+  } else {
+    endpoint = `${API_URL}/api/post/Get${queryString}`;
+  }
 
   return axios.get(endpoint, header).then((response) => {
     return response.data;

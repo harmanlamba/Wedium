@@ -49,7 +49,7 @@ const Home = (props) => {
               postType={currentPostType}
             />
           )}
-          <PostFeed postType={currentPostType} searchString={searchString} />
+          <PostFeed postType={currentPostType} searchString={searchString} getFavouritesOnly={false} />
         </Grid>
 
         <Grid item xs={2} className={classes.sidebar}>

@@ -13,6 +13,7 @@ import { Typography } from '@material-ui/core';
 // Components
 import Header from '../header';
 import UserPanel from './user-panel';
+import PostFeed from '../post-feed';
 
 const Profile = (props) => {
   const { classes } = props;
@@ -48,6 +49,7 @@ const Profile = (props) => {
             <Typography variant="h6" className={classes.rightSpacing}>Saved Posts</Typography>
             <FavouritesIcon />
           </Grid>
+          <PostFeed getFavouritesOnly={true} />
         </Grid>
 
         <Grid item xs={2} className={classes.sidebar}>

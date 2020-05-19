@@ -6,18 +6,17 @@ import {
     postDetailDirectNavigationSuccess,
     postDetailDirectNavigationError,
     postDetailDirectNavigationLoading,
-    filtersUpdate,
 } from '../post-actions';
 import {
     getPosts,
     getPostDetail,
 } from '../../../apis/post';
 
-export const loadInitialPosts = (postType, searchString) => {
+export const loadInitialPosts = (cancelToken, postType, searchString, getFavouritesOnly) => {
     return dispatch => {
-        dispatch(loadPostsLoading());
+        dispatch(loadPostsLoading(postType, searchString, getFavouritesOnly));
 
-        getPosts(null, postType, searchString)
+        getPosts(cancelToken, null, postType, searchString, getFavouritesOnly)
             .then(
                 posts => dispatch(loadPostsSuccess(posts)),
 
@@ -25,9 +24,9 @@ export const loadInitialPosts = (postType, searchString) => {
     }
 }
 
-export const loadMorePosts = (afterPostId, postType, searchString) => {
+export const loadMorePosts = (afterPostId, postType, searchString, getFavouritesOnly) => {
     return dispatch => {
-        getPosts(afterPostId, postType, searchString)
+        getPosts(null,afterPostId, postType, searchString, getFavouritesOnly)
             .then(
                 posts => dispatch(loadMorePostsSuccess(posts)),
 
@@ -44,11 +43,5 @@ export const fetchPostDetails = (postId) => {
            
            error => dispatch(postDetailDirectNavigationError(error.message || "Unexpected error occured")),
         );
-    }
-}
-
-export const updateFilters = (postType, searchString) => {
-    return (dispatch) => {
-        dispatch(filtersUpdate(postType, searchString));
     }
 }
