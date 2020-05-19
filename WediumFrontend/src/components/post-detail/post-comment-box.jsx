@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import clsx from 'clsx';
 import { postComment } from '../../redux/actions/thunk/comment-thunk';
 import RichTextBox from '../rich-text-box/index';
 
@@ -8,8 +9,9 @@ import RichTextBox from '../rich-text-box/index';
 import Button from '@material-ui/core/Button';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import FeedbackIcon from '@material-ui/icons/Feedback';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -25,6 +27,10 @@ const PostCommentBox = (props) => {
 
   const handleCommentChange = (event) => {
     setComment(event);
+  };
+
+  const handleQuestionType = (event) => {
+    commentTypeId === 1 ? setCommentTypeId(2) : setCommentTypeId(1);
   };
 
   const checkCommentDto = (commentDto) => {
@@ -77,6 +83,17 @@ const PostCommentBox = (props) => {
               placeholder="Write a comment here..."
               maxLength={COMMENT_CHAR_LIMIT}
             />
+            <Button
+              className={clsx(classes.commentTypeButton, {
+                [classes.commentTypeButtonSelected]: commentTypeId === 2,
+              })}
+              onClick={handleQuestionType}
+              disableRipple={true}
+              size="small"
+            >
+              QUESTION
+              <FeedbackIcon className={classes.commentTypeIcon} />
+            </Button>
           </Grid>
 
           <Grid className={classes.grid} item xs={12} align="right">
@@ -125,6 +142,7 @@ const styles = (theme) => ({
     padding: '0 100px 0px 100px',
   },
   grid: {
+    position: 'relative',
     marginTop: '5px !important',
     padding: '0px !important',
   },
@@ -141,6 +159,19 @@ const styles = (theme) => ({
   },
   disabledComment: {
     marginBottom: 10,
+  },
+  commentTypeButton: {
+    opacity: 0.7,
+    position: 'absolute',
+    top: 5,
+    right: 5,
+  },
+  commentTypeButtonSelected: {
+    opacity: 1,
+    color: '#3f51b5',
+  },
+  commentTypeIcon: {
+    marginLeft: 5,
   },
 });
 

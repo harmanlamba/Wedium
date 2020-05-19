@@ -155,7 +155,12 @@ const CommentCard = (props) => {
         </Collapse>
       </CardContent>
 
-      <CardActions className={classes.actions} disableSpacing>
+      <CardActions
+        className={clsx(classes.actions, {
+          [classes.actionsExpanded]: comment.commentTypeId === 2,
+        })}
+        disableSpacing
+      >
         {comment.commentTypeId === 2 && comment.parentCommentId === null ? (
           <div className={classes.commentType}>
             <span>
@@ -208,6 +213,13 @@ const CommentCard = (props) => {
 };
 
 const styles = (theme) => ({
+  actions: {
+    padding: '0 3px 0 8px !important',
+    position: 'relative',
+  },
+  actionsExpanded: {
+    height: 35,
+  },
   expandButton: {
     marginLeft: 'auto',
   },
@@ -245,10 +257,6 @@ const styles = (theme) => ({
   },
   username: {
     marginRight: 20,
-  },
-  actions: {
-    padding: '0 3px 0 8px !important',
-    position: 'relative',
   },
   iconButtons: {
     position: 'absolute',
