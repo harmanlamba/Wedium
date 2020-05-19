@@ -33,7 +33,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <Header user={user} showSearch={true} postType={currentPostType} />
+      <Header user={user} showSearch postType={currentPostType} />
       <Grid
         className={classes.grid}
         container
@@ -49,7 +49,7 @@ const Home = (props) => {
               postType={currentPostType}
             />
           )}
-          <PostFeed postType={currentPostType} searchString={searchString} />
+          <PostFeed postType={currentPostType} searchString={searchString} getFavouritesOnly={false} />
         </Grid>
 
         <Grid item xs={2} className={classes.sidebar}>

@@ -73,7 +73,7 @@ namespace WediumAPI.Controllers
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
             
-            HttpStatusCode statusCode = HttpStatusCode.InternalServerError; 
+            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             try
             {
                 (int postId, string Uri) = _service.CreatePost(postDto, userId);

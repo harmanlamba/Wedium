@@ -5,7 +5,7 @@ import {
 import {
     favouritePostRequest,
     unfavouritePostRequest
-} from '../../../apis/post';
+} from '../../../apis/post-favourite';
 
 export const tryFavouritePost = (postId, errorCallback) => {
     return dispatch => {

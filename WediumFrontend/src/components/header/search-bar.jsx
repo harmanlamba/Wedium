@@ -48,7 +48,7 @@ const SearchBar = (props) => {
       options={[]}
       getOptionLabel={getOptionsLabel}
       selectOnFocus
-      autoHighlight={true}
+      autoHighlight
       clearOnBlur
       className={classes.root}
       renderOption={(option) => option.title}

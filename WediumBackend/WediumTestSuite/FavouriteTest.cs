@@ -159,7 +159,5 @@ namespace WediumTestSuite
             List<PostDto> responseContent = await getAllResponse.Content.ReadAsAsync<List<PostDto>>();
             Assert.AreEqual(favouritedPosts, responseContent.Count);
         }
-
-
     }
 }

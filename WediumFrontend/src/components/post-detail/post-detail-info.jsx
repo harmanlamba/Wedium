@@ -48,7 +48,7 @@ const PostDetailInfo = (props) => {
                 href={post.articleUrl}
                 target="_blank"
               >
-                {post.articleTitle}
+                {decodeURIComponent(post.articleTitle)}
               </Link>
             </Typography>
             <Typography variant="h5" className={classes.postTitle}>
