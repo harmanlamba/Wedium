@@ -28,7 +28,10 @@ class PostFeed extends Component {
       || this.props.searchString !== this.props.previousSearchString
       || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly) {
 
-        this.state.cancelToken.cancel();
+        if (this.state && this.state.cancelToken) {
+          this.state.cancelToken.cancel();
+        }
+        
         this.loadInitial();
     }
   }
