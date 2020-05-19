@@ -22,6 +22,7 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
       return {
         ...state,
         initialPostsLoading: true,
+        posts: [],
         postTypeFilter: action.postType,
         searchStringFilter: action.searchString,
         getFavouritesOnly: action.getFavouritesOnly

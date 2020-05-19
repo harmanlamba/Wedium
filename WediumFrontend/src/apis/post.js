@@ -10,9 +10,8 @@ export const getPosts = (cancelToken, afterPostId, postType, searchString, getFa
   var queryString = `?limit=${LIMIT}`;
 
   if (cancelToken) {
-    header.headers.cancelToken = cancelToken;
+    header.cancelToken = cancelToken;
   }
-  console.log(header);
 
   if (afterPostId) {
     queryString += `&after_id=${afterPostId}`;
@@ -34,9 +33,10 @@ export const getPosts = (cancelToken, afterPostId, postType, searchString, getFa
     endpoint = `${API_URL}/api/post/Get${queryString}`;
   }
 
-  return axios.get(endpoint, header).then((response) => {
-    return response.data;
-  });
+  return axios.get(endpoint, header)
+    .then((response) => {
+      return response.data;
+    });
 };
 
 export const createPost = (postDto) => {

@@ -28,22 +28,25 @@ class PostFeed extends Component {
       || this.props.searchString !== this.props.previousSearchString
       || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly) {
 
-        this.state.source.cancel();
+        this.state.cancelToken.cancel();
         this.loadInitial();
     }
   }
 
   loadInitial() {
-    const cancelToken = axios.CancelToken;
+    const cancelToken = axios.CancelToken.source();
+    
     this.setState({
-      cancelToken: cancelToken,
-      source: cancelToken.source(),
+      cancelToken,
     });
-    this.props.loadInitialPosts(cancelToken.source().token, this.props.postType, this.props.searchString, this.props.getFavouritesOnly);
+
+    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.getFavouritesOnly);
   }
 
   componentWillUnmount() {
-    this.state.source.cancel();
+    if (this.state && this.state.cancelToken) {
+      this.state.cancelToken.cancel();
+    }
   }
 
   getLastPost() {
@@ -51,7 +54,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.getFavouritesOnly);
+    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.getFavouritesOnly);
   }
 
   hasMore() {

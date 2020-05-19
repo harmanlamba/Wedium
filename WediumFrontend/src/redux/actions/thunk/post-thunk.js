@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
     loadPostsLoading,
     loadPostsSuccess,
@@ -20,17 +21,27 @@ export const loadInitialPosts = (cancelToken, postType, searchString, getFavouri
             .then(
                 posts => dispatch(loadPostsSuccess(posts)),
 
-                error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
+                error => {
+                    if (!axios.isCancel(error)) {
+                        dispatch(loadPostsError(error.message || 'Unexpected error occured.'))
+                    }
+                }
+            );
     }
 }
 
-export const loadMorePosts = (afterPostId, postType, searchString, getFavouritesOnly) => {
+export const loadMorePosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly) => {
     return dispatch => {
-        getPosts(null,afterPostId, postType, searchString, getFavouritesOnly)
+        getPosts(cancelToken, afterPostId, postType, searchString, getFavouritesOnly)
             .then(
                 posts => dispatch(loadMorePostsSuccess(posts)),
 
-                error => dispatch(loadPostsError(error.message || 'Unexpected error occured.')));
+                error =>  {
+                    if (!axios.isCancel(error)) {
+                        dispatch(loadPostsError(error.message || 'Unexpected error occured.'))
+                    }
+                }
+            );
     }
 }
 
