@@ -45,8 +45,9 @@ const Profile = (props) => {
             direction="row"
             justify="flex-start"
             alignItems="center"
+            className={classes.title}
           >
-            <Typography variant="h6" className={classes.rightSpacing}>Saved Posts</Typography>
+            <Typography variant="h6">Saved Posts</Typography>
             <FavouritesIcon />
           </Grid>
           <PostFeed getFavouritesOnly={true} />
@@ -76,8 +77,9 @@ const styles = (theme) => ({
     position: 'sticky',
     top: 40,
   },
-  rightSpacing: {
+  title: {
     marginRight: theme.spacing(1),
+    marginBottom: 12,
   }
 });
 
