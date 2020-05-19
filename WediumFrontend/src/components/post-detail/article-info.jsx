@@ -58,7 +58,7 @@ const ArticleInfo = (props) => {
           variant="h5"
           color="textPrimary"
         >
-          {post.articleTitle}
+          {decodeURIComponent(post.articleTitle)}
         </Typography>
         {
           <div
