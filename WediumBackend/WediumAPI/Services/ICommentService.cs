@@ -10,6 +10,6 @@ namespace WediumAPI.Services
     {
         public bool CheckExists(int commentId);
         public IEnumerable<CommentDto> GetCommentsForPost(int postId);
-        public (int commentId, PostDto post) CreateComment(CommentDto commentDto, int? userId);
+        public (CommentDto commentDto, PostDto post) CreateComment(CommentDto commentDto, int? userId);
     }
 }

@@ -15,7 +15,7 @@ export const commentPostRequest = (commentDto) => {
         .then((response) => {
             return {
                 status: response.status,
-                UriLocation: response.headers.location,
+                commentDto: response.data
             };
         })
         .catch((error) => {

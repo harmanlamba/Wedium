@@ -2,6 +2,8 @@ import {
     LOAD_COMMENTS_LOADING,
     LOAD_COMMENTS_SUCCESS,
     LOAD_COMMENTS_ERROR,
+    ADD_COMMENT,
+    LOAD_ADD_COMMENT,
 } from '../action-types/action-types';
 
 const INIT_COMMENT_REDUCER_STATE = ({
@@ -27,7 +29,21 @@ export default (state = INIT_COMMENT_REDUCER_STATE, action) => {
                 comments: [],
             };
 
-        default:
-            return state;
+        case ADD_COMMENT:
+            return {
+                ...state,
+                comments: [action.comment, ...state.comments],
+                    isLoadingAddComment: false,
+
+            };
+
+        case LOAD_ADD_COMMENT:
+            return {
+                ...state,
+                isLoadingAddComment: true,
+            }
+
+            default:
+                return state;
     }
 }

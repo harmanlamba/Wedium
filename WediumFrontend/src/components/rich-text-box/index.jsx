@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const RichTextBox = (props) => {
   const [currentTextLength, setCurrentTextLength] = useState(null);
+
   let reactQuillRef = useRef();
   let quillRef = useRef();
   const { classes } = props;
@@ -22,6 +23,11 @@ const RichTextBox = (props) => {
     }
     quillRef = reactQuillRef.getEditor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    if (props.isEmptyNow) {
+      quillRef.setContents([{ insert: '\n' }]);
+      props.setIsEmptyNow(!props.isEmptyNow);
+    }
   });
 
   const onChange = (htmlText) => {

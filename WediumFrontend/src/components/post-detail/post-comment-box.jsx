@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { commentPostRequest } from '../../apis/comment';
+import { connect } from 'react-redux';
+import { postComment } from '../../redux/actions/thunk/comment-thunk';
 import RichTextBox from '../rich-text-box/index';
 
 // Material UI
@@ -20,7 +21,7 @@ const PostCommentBox = (props) => {
 
   const [comment, setComment] = useState('');
   const [commentTypeId, setCommentTypeId] = useState(1);
-  const [sendLoading, setSendLoading] = useState(false);
+  const [isEmptyNow, setIsEmptyNow] = useState(false);
 
   const handleCommentChange = (event) => {
     setComment(event);
@@ -43,17 +44,19 @@ const PostCommentBox = (props) => {
       CommentTypeId: commentTypeId,
     };
 
-    if (checkCommentDto(commentDto)) {
-      setSendLoading(true); // Start loading
-      commentPostRequest(commentDto).then(({ status, UriLocation }) => {
-        if (status === 201) {
-          props.history.push(UriLocation);
-          window.location.reload();
-        }
+    setIsEmptyNow(true);
+    props.postComment(commentDto);
 
-        setSendLoading(false); // Set loading stopped
-      });
-    }
+    // if (checkCommentDto(commentDto)) {
+    //   setSendLoading(true); // Start loading
+    //   commentPostRequest(commentDto).then(({ status, UriLocation }) => {
+    //     if (status === 201) {
+    //       props.history.push(UriLocation);
+    //       window.location.reload();
+    //     }
+    //     setSendLoading(false); // Set loading stopped
+    //   });
+    // }
   };
 
   return (
@@ -76,6 +79,8 @@ const PostCommentBox = (props) => {
           <Grid className={classes.grid} item xs={12}>
             <RichTextBox
               onChange={handleCommentChange}
+              isEmptyNow={isEmptyNow}
+              setIsEmptyNow={setIsEmptyNow}
               placeholder="Write a comment here..."
               maxLength={COMMENT_CHAR_LIMIT}
             />
@@ -89,10 +94,10 @@ const PostCommentBox = (props) => {
               color="primary"
               size="small"
             >
-              {sendLoading && (
+              {props.isLoadingAddComment && (
                 <CircularProgress size={20} thickness={6} color="inherit" />
               )}
-              {!sendLoading && 'Comment'}
+              {!props.isLoadingAddComment && 'Comment'}
             </Button>
           </Grid>
         </Grid>
@@ -146,4 +151,20 @@ const styles = (theme) => ({
   },
 });
 
-export default withRouter(withStyles(styles)(withRouter(PostCommentBox)));
+// Redux
+const mapStateToProps = (state) => {
+  return {
+    comments: state.comment.comments,
+    isLoadingAddComment: state.comment.isLoadingAddComment,
+  };
+};
+
+const mapDispatchToProps = {
+  postComment,
+};
+
+export default withRouter(
+  withStyles(styles)(
+    connect(mapStateToProps, mapDispatchToProps)(PostCommentBox)
+  )
+);

@@ -158,7 +158,7 @@ const CommentCard = (props) => {
         unmountOnExit
       >
         {comment.parentCommentId === null
-          ? comment.inverseParentComment.reverse().map((comment) => {
+          ? comment.inverseParentComment.map((comment) => {
               return (
                 <CommentCard
                   comment={comment}

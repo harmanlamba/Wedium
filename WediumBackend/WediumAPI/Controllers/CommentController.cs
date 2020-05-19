@@ -39,7 +39,7 @@ namespace WediumAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(comments);
+            return Ok(comments.Reverse());
         }
 
         [Authorize]
@@ -49,19 +49,19 @@ namespace WediumAPI.Controllers
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
             int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            int commentId = -1;
             PostDto postDto = null;
+            CommentDto serviceCommentDto = null;
 
             try
             {
-                (commentId, postDto) = _service.CreateComment(commentDto, userId);
+                (serviceCommentDto, postDto) = _service.CreateComment(commentDto, userId);
             }
             catch (PostNotFoundException)
             {
                 return Conflict();
             }
 
-            return Created($"/post/{postDto.PostType}/{postDto.PostId}/{postDto.Title}#{commentId}", commentId);
+            return Created($"/post/{postDto.PostType}/{postDto.PostId}/{postDto.Title}#{serviceCommentDto.CommentId}", serviceCommentDto);
         }
     }
 }

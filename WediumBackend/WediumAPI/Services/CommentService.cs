@@ -34,7 +34,7 @@ namespace WediumAPI.Services
             return CommentMapper.ToDto(commentListQuery);
         }
 
-        public (int commentId, PostDto post) CreateComment(CommentDto commentDto, int? userId)
+        public (CommentDto commentDto, PostDto post) CreateComment(CommentDto commentDto, int? userId)
         {
             Post post = _db.Post
                 .Where(p => p.PostId == commentDto.PostId)
@@ -46,8 +46,14 @@ namespace WediumAPI.Services
          
             _db.Comment.Add(comment);
             _db.SaveChanges();
+
+            Comment commentWithJoin = _db.Comment
+                .Where(c => c.CommentId == comment.CommentId)
+                .Include(c => c.User)
+                .Include(c => c.CommentType)
+                .First();
           
-            return (comment.CommentId, PostMapper.ToDtoPostUrl(post));
+            return (CommentMapper.ToDto(commentWithJoin), PostMapper.ToDtoPostUrl(post));
         }
 
         public bool CheckExists(int commentId)

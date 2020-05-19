@@ -18,8 +18,6 @@ const PostCommentFeed = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props);
-
   return (
     <Grid
       className={classes.root}
@@ -31,7 +29,7 @@ const PostCommentFeed = (props) => {
     >
       <Grid className={classes.grid} item xs={12}>
         {props.comments != []
-          ? props.comments.reverse().map((comment) => {
+          ? props.comments.map((comment) => {
               return (
                 <Card
                   className={classes.commentCard}
