@@ -13,11 +13,11 @@ import {
     getPostDetail,
 } from '../../../apis/post';
 
-export const loadInitialPosts = (cancelToken, postType, searchString, getFavouritesOnly, getPostLikesOnly) => {
+export const loadInitialPosts = (cancelToken, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly) => {
     return dispatch => {
-        dispatch(loadPostsLoading(postType, searchString, getFavouritesOnly, getPostLikesOnly));
+        dispatch(loadPostsLoading(postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly));
 
-        getPosts(cancelToken, null, postType, searchString, getFavouritesOnly, getPostLikesOnly)
+        getPosts(cancelToken, null, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly)
             .then(
                 posts => dispatch(loadPostsSuccess(posts)),
 
@@ -30,9 +30,9 @@ export const loadInitialPosts = (cancelToken, postType, searchString, getFavouri
     }
 }
 
-export const loadMorePosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly) => {
+export const loadMorePosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly) => {
     return dispatch => {
-        getPosts(cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly)
+        getPosts(cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly, getCreatedOnly)
             .then(
                 posts => dispatch(loadMorePostsSuccess(posts)),
 
