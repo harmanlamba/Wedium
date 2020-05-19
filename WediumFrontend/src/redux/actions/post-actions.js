@@ -10,12 +10,15 @@ import {
     POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
     POST_DETAIL_DIRECT_NAVIGATION_ERROR,
     POST_DETAIL_DIRECT_NAVIGATION_LOADING,
-    UPDATE_FILTERS
 } from '../action-types/action-types'
 
-export const loadPostsLoading = () => {
+export const loadPostsLoading = (postType, searchString, getFavouritesOnly, getPostLikesOnly) => {
     return {
         type: LOAD_POSTS_LOADING,
+        postType,
+        searchString,
+        getFavouritesOnly,
+        getPostLikesOnly,
     }
 }
 
@@ -26,7 +29,7 @@ export const loadPostsSuccess = (posts) => {
     }
 }
 
-export const loadMorePostsSuccess = (posts) => {
+export const loadMorePostsSuccess = (posts,) => {
     return {
         type: LOAD_MORE_POSTS_SUCCESS,
         posts,
@@ -85,13 +88,5 @@ export const unfavouritePost = (postId) => {
     return {
         type: UNFAVOURITE_POST,
         postId
-    }
-}
-
-export const filtersUpdate = (postType, searchString) => {
-    return {
-        type: UPDATE_FILTERS,
-        postType,
-        searchString
     }
 }

@@ -42,6 +42,11 @@ namespace WediumTestSuite.Helper
                     db.Favourite.Add(favourite);
                 }
 
+                foreach (PostLike postLike in InitializePostLikes())
+                {
+                    db.PostLike.Add(postLike);
+                }
+
                 foreach (CommentType commentType in InitializeCommentTypes())
                 {
                     db.CommentType.Add(commentType);
@@ -232,43 +237,92 @@ namespace WediumTestSuite.Helper
         {
             return new Favourite[]
             {
-                new Favourite()
+                new Favourite
                 {
                     UserId = 2,
                     PostId = 5,
                     Date = DateTime.Now
                 },
-                new Favourite()
+                new Favourite
                 {
                     UserId = 1,
                     PostId = 1,
                     Date = DateTime.Now
                 },
-                new Favourite()
+                new Favourite
                 {
                     UserId = 1,
                     PostId = 2,
                     Date = DateTime.Now
                 },
-                new Favourite()
+                new Favourite
                 {
                     UserId = 2,
                     PostId = 2,
                     Date = DateTime.Now
                 },
-                new Favourite()
+                new Favourite
                 {
                     UserId = 2,
                     PostId = 4,
                     Date = DateTime.Now
                 },
-                new Favourite()
+                new Favourite
                 {
                     UserId = 1,
                     PostId = 3,
                     Date = DateTime.Now
                 },
-                new Favourite()
+                new Favourite
+                {
+                    UserId = 2,
+                    PostId = 3,
+                    Date = DateTime.Now
+                }
+            };
+        }
+
+        public static PostLike[] InitializePostLikes()
+        {
+            return new PostLike[]
+            {
+                new PostLike
+                {
+                    UserId = 2,
+                    PostId = 5,
+                    Date = DateTime.Now
+                },
+                new PostLike
+                {
+                    UserId = 1,
+                    PostId = 1,
+                    Date = DateTime.Now
+                },
+                new PostLike
+                {
+                    UserId = 1,
+                    PostId = 2,
+                    Date = DateTime.Now
+                },
+                new PostLike
+                {
+                    UserId = 2,
+                    PostId = 2,
+                    Date = DateTime.Now
+                },
+                new PostLike
+                {
+                    UserId = 2,
+                    PostId = 4,
+                    Date = DateTime.Now
+                },
+                new PostLike
+                {
+                    UserId = 1,
+                    PostId = 3,
+                    Date = DateTime.Now
+                },
+                new PostLike
                 {
                     UserId = 2,
                     PostId = 3,

@@ -11,7 +11,7 @@ export const createHeader = () => {
 
     return {
         headers: {
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
         }
     };
 }

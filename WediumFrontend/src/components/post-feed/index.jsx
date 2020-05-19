@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadInitialPosts, loadMorePosts, updateFilters } from '../../redux/actions/thunk/post-thunk';
+import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
+import axios from 'axios';
 
 // Material UI
 import Container from '@material-ui/core/Container';
@@ -14,20 +15,43 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
-    if (!this.props.posts.length || this.props.postType !== this.props.previousPostType || this.props.searchString !== this.props.previousSearchString) {
+    if (!this.props.posts.length || this.props.postType !== this.props.previousPostType
+      || this.props.searchString !== this.props.previousSearchString
+      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly
+      || this.props.getPostLikesOnly !== this.props.previousGetPostLikesOnly) {
+
       this.loadInitial();
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.postType !== this.props.previousPostType || this.props.searchString !== this.props.previousSearchString) {
-      this.loadInitial();
+  componentDidUpdate() {
+    if (this.props.postType !== this.props.previousPostType
+      || this.props.searchString !== this.props.previousSearchString
+      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly
+      || this.props.getPostLikesOnly !== this.props.previousGetPostLikesOnly) {
+
+        if (this.state && this.state.cancelToken) {
+          this.state.cancelToken.cancel();
+        }
+        
+        this.loadInitial();
     }
   }
 
   loadInitial() {
-    this.props.loadInitialPosts(this.props.postType, this.props.searchString);
-    this.props.updateFilters(this.props.postType, this.props.searchString);
+    const cancelToken = axios.CancelToken.source();
+    
+    this.setState({
+      cancelToken,
+    });
+
+    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.getFavouritesOnly, this.props.getPostLikesOnly);
+  }
+
+  componentWillUnmount() {
+    if (this.state && this.state.cancelToken) {
+      this.state.cancelToken.cancel();
+    }
   }
 
   getLastPost() {
@@ -35,7 +59,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.getLastPost().postId, this.props.postType, this.props.searchString);
+    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.getFavouritesOnly, this.props.getPostLikesOnly);
   }
 
   hasMore() {
@@ -54,20 +78,20 @@ class PostFeed extends Component {
       <div>
         {(this.props.postsLoading &&
           <LoadingPostCard />
-        ) || 
-        (items.length > 0 && 
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadMore.bind(this)}
-            hasMore={this.hasMore()}
-            loader={<LoadingPostCard key={0} />}
-            threshold={1000}
-          >
-            {items}
-          </InfiniteScroll>
         ) ||
-        (<Container className={classes.notFound}>
-          No Posts Found <span role="img" aria-label="sad cat">😿</span>
+          (items.length > 0 &&
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.loadMore.bind(this)}
+              hasMore={this.hasMore()}
+              loader={<LoadingPostCard key={0} />}
+              threshold={1000}
+            >
+              {items}
+            </InfiniteScroll>
+          ) ||
+          (<Container className={classes.notFound}>
+            No Posts Found <span role="img" aria-label="sad cat">😿</span>
           </Container>)}
       </div>
     );
@@ -90,13 +114,14 @@ const mapStateToProps = (state) => {
     postsLoading: state.post.initialPostsLoading,
     previousPostType: state.post.postTypeFilter,
     previousSearchString: state.post.searchStringFilter,
+    previousGetFavouritesOnly: state.post.getFavouritesOnly,
+    previousGetPostLikesOnly: state.post.getPostLikesOnly,
   };
 };
 
 const mapDispatchToProps = {
   loadInitialPosts,
   loadMorePosts,
-  updateFilters,
 };
 
 export default withRouter(

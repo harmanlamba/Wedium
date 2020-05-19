@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/thunk/auth-thunk';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import CreateIcon from '@material-ui/icons/Create';
+import PersonIcon from '@material-ui/icons/Person';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,6 +23,7 @@ const UserMenu = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [expanded, setExpanded] = useState(false);
+  const history = useHistory();
 
   const handleMenuOpen = (event) => {
     setExpanded(!expanded);
@@ -38,8 +40,12 @@ const UserMenu = (props) => {
     props.logoutUser();
   };
 
+  const handleProfile = () => {
+    history.push('/profile');
+  };
+
   const handlePostRedirect = () => {
-    props.history.push('/create');
+    history.push('/create');
   };
 
   return (
@@ -86,10 +92,16 @@ const UserMenu = (props) => {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         {props.user.isAuthenticated ? (
-          <MenuItem onClick={handleLogout}>
-            <MeetingRoomIcon className={classes.rightSpacing} />
-            <Typography variant="subtitle2">Sign Out</Typography>
-          </MenuItem>
+          <div>
+            <MenuItem onClick={handleProfile}>
+              <PersonIcon className={classes.rightSpacing} />
+              <Typography variant="subtitle2">My Profile</Typography>
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <MeetingRoomIcon className={classes.rightSpacing} />
+              <Typography variant="subtitle2">Sign Out</Typography>
+            </MenuItem>
+          </div>
         ) : (
           <MenuItem onClick={handleMenuClose}>
             <GoogleLoginButton />

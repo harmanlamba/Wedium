@@ -5,27 +5,39 @@ import { createHeader } from './util/header-util';
 const API_URL = process.env.REACT_APP_API_URL;
 const LIMIT = 15;
 
-export const getPosts = (afterPostId, postType, searchString) => {
+export const getPosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly) => {
   const header = createHeader();
   var queryString = `?limit=${LIMIT}`;
+  let endpoint;
+
+  if (cancelToken) {
+    header.cancelToken = cancelToken;
+  }
 
   if (afterPostId) {
     queryString += `&after_id=${afterPostId}`;
   }
 
-  if (postType) {
-    queryString += `&postType=${postType}`;
+  if (getFavouritesOnly) {
+    endpoint = `${API_URL}/api/favourite/Get`;
+  } else if (getPostLikesOnly) {
+    endpoint = `${API_URL}/api/postlike/Get`;
+  } else {
+    endpoint = `${API_URL}/api/post/Get`;
+
+    if (postType) {
+      queryString += `&postType=${postType}`;
+    }
+  
+    if (searchString) {
+      queryString += `&search=${searchString}`;
+    }
   }
 
-  if (searchString) {
-    queryString += `&search=${searchString}`;
-  }
-
-  const endpoint = `${API_URL}/api/post/Get${queryString}`;
-
-  return axios.get(endpoint, header).then((response) => {
-    return response.data;
-  });
+  return axios.get(`${endpoint}${queryString}`, header)
+    .then((response) => {
+      return response.data;
+    });
 };
 
 export const createPost = (postDto) => {
@@ -44,32 +56,6 @@ export const createPost = (postDto) => {
       console.log('Axios error message (createPosts): ' + error.message);
       return error.response.status;
     });
-};
-
-export const favouritePostRequest = (postId) => {
-  const header = createHeader();
-  const endpoint = `${API_URL}/api/favourite/post`;
-
-  const body = {
-    postId,
-  };
-
-  return axios.post(endpoint, body, header).then((response) => {
-    return response.status;
-  });
-};
-
-export const unfavouritePostRequest = (postId) => {
-  const header = createHeader();
-  const endpoint = `${API_URL}/api/favourite/delete`;
-
-  const body = {
-    postId,
-  };
-
-  return axios.post(endpoint, body, header).then((response) => {
-    return response.status;
-  });
 };
 
 export const getPostDetail = (postId) => {

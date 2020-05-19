@@ -10,7 +10,6 @@ import {
   POST_DETAIL_DIRECT_NAVIGATION_SUCCESS,
   POST_DETAIL_DIRECT_NAVIGATION_ERROR,
   POST_DETAIL_DIRECT_NAVIGATION_LOADING,
-  UPDATE_FILTERS,
 } from '../action-types/action-types';
 
 const INIT_POST_REDUCER_STATE = {
@@ -23,13 +22,18 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
       return {
         ...state,
         initialPostsLoading: true,
+        posts: [],
+        postTypeFilter: action.postType,
+        searchStringFilter: action.searchString,
+        getFavouritesOnly: action.getFavouritesOnly,
+        getPostLikesOnly: action.getPostLikesOnly
       };
 
     case LOAD_POSTS_SUCCESS:
       return {
         ...state,
         posts: [...action.posts],
-          initialPostsLoading: false,
+        initialPostsLoading: false,
       };
 
     case LOAD_MORE_POSTS_SUCCESS:
@@ -42,7 +46,7 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
       return {
         ...state,
         posts: [...state.posts],
-          initialPostsLoading: false,
+        initialPostsLoading: false,
       };
 
     case LIKE_POST:
@@ -92,82 +96,75 @@ export default (state = INIT_POST_REDUCER_STATE, action) => {
         };
       }
 
-      case POST_DETAIL_DIRECT_NAVIGATION_ERROR:
-        return {
-          ...state,
-          posts: [...state.posts],
-            loadingPostDetails: false,
-        };
+    case POST_DETAIL_DIRECT_NAVIGATION_ERROR:
+      return {
+        ...state,
+        posts: [...state.posts],
+        loadingPostDetails: false,
+      };
 
-      case POST_DETAIL_DIRECT_NAVIGATION_LOADING:
-        return {
-          ...state,
-          loadingPostDetails: true,
-        };
+    case POST_DETAIL_DIRECT_NAVIGATION_LOADING:
+      return {
+        ...state,
+        loadingPostDetails: true,
+      };
 
-      case UNLIKE_POST:
-        const editedUnlikedPosts = [...state.posts];
-        const unlikedPostIndex = editedUnlikedPosts.findIndex(
-          (p) => p.postId === action.postId
-        );
-        if (
-          unlikedPostIndex !== -1 &&
-          editedUnlikedPosts.length &&
-          editedUnlikedPosts[unlikedPostIndex]
-        ) {
-          editedUnlikedPosts[unlikedPostIndex].isPostLiked = false;
-          editedUnlikedPosts[unlikedPostIndex].numberOfLikes -= 1;
-        }
+    case UNLIKE_POST:
+      const editedUnlikedPosts = [...state.posts];
+      const unlikedPostIndex = editedUnlikedPosts.findIndex(
+        (p) => p.postId === action.postId
+      );
+      if (
+        unlikedPostIndex !== -1 &&
+        editedUnlikedPosts.length &&
+        editedUnlikedPosts[unlikedPostIndex]
+      ) {
+        editedUnlikedPosts[unlikedPostIndex].isPostLiked = false;
+        editedUnlikedPosts[unlikedPostIndex].numberOfLikes -= 1;
+      }
 
-        return {
-          ...state,
-          posts: editedUnlikedPosts,
-        };
+      return {
+        ...state,
+        posts: editedUnlikedPosts,
+      };
 
-      case FAVOURITE_POST:
-        const editedFavouritedPosts = [...state.posts];
-        const favouriteIndex = editedFavouritedPosts.findIndex(
-          (p) => p.postId === action.postId
-        );
-        if (
-          favouriteIndex !== -1 &&
-          editedFavouritedPosts.length &&
-          editedFavouritedPosts[favouriteIndex]
-        ) {
-          editedFavouritedPosts[favouriteIndex].isFavourited = true;
-        }
+    case FAVOURITE_POST:
+      const editedFavouritedPosts = [...state.posts];
+      const favouriteIndex = editedFavouritedPosts.findIndex(
+        (p) => p.postId === action.postId
+      );
+      if (
+        favouriteIndex !== -1 &&
+        editedFavouritedPosts.length &&
+        editedFavouritedPosts[favouriteIndex]
+      ) {
+        editedFavouritedPosts[favouriteIndex].isFavourited = true;
+      }
 
-        return {
-          ...state,
-          posts: editedFavouritedPosts,
-        };
+      return {
+        ...state,
+        posts: editedFavouritedPosts,
+      };
 
-      case UNFAVOURITE_POST:
-        const editedUnfavouritedPosts = [...state.posts];
-        const unfavouriteIndex = editedUnfavouritedPosts.findIndex(
-          (p) => p.postId === action.postId
-        );
-        if (
-          unfavouriteIndex !== -1 &&
-          editedUnfavouritedPosts.length &&
-          editedUnfavouritedPosts[unfavouriteIndex]
-        ) {
-          editedUnfavouritedPosts[unfavouriteIndex].isFavourited = false;
-        }
+    case UNFAVOURITE_POST:
+      const editedUnfavouritedPosts = [...state.posts];
+      const unfavouriteIndex = editedUnfavouritedPosts.findIndex(
+        (p) => p.postId === action.postId
+      );
+      if (
+        unfavouriteIndex !== -1 &&
+        editedUnfavouritedPosts.length &&
+        editedUnfavouritedPosts[unfavouriteIndex]
+      ) {
+        editedUnfavouritedPosts[unfavouriteIndex].isFavourited = false;
+      }
 
-        return {
-          ...state,
-          posts: editedUnfavouritedPosts,
-        };
+      return {
+        ...state,
+        posts: editedUnfavouritedPosts,
+      };
 
-      case UPDATE_FILTERS:
-        return {
-          ...state,
-          postTypeFilter: action.postType,
-          searchStringFilter: action.searchString,
-        }
-
-      default:
-        return state;
+    default:
+      return state;
   }
 }

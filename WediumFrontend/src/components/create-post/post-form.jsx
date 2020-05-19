@@ -138,7 +138,7 @@ const PostForm = (props) => {
             id="titleField"
             label="Title"
             autoComplete="off"
-            autoFocus={true}
+            autoFocus
             variant="outlined"
             fullWidth
             required
