@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loadUserStats } from '../../redux/actions/thunk/user-stats-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -13,16 +16,14 @@ import FavouritesIcon from '@material-ui/icons/BookmarksOutlined';
 import { Typography } from '@material-ui/core';
 
 const UserPanel = (props) => {
-    const { classes } = props;
+    const { classes, createPostCount, favouritePostCount} = props;
 
     useEffect(() => {
-
+        props.loadUserStats();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const user = props.user;
-    const numPosts = 5;
-    const numPostsFaved = 15;
 
     return (
         <div>
@@ -41,27 +42,27 @@ const UserPanel = (props) => {
                 <br />
 
                 <div>
-                    {numPosts < 5 && <StarBorderIcon />}
-                    {numPosts >= 5 && numPosts < 15 && <StarHalfIcon />}
-                    {numPosts >= 15 && <StarIcon />}
+                    {createPostCount < 5 && <StarBorderIcon />}
+                    {createPostCount >= 5 && createPostCount < 15 && <StarHalfIcon />}
+                    {createPostCount >= 15 && <StarIcon />}
 
                     <Typography variant="subtitle1" color="textSecondary">
-                        {numPosts < 5 && "NEWBIE"}
-                        {numPosts >= 5 && numPosts < 15 && "RISING STAR"}
-                        {numPosts >= 15 && "STAR POSTER"}
+                        {createPostCount < 5 && "NEWBIE"}
+                        {createPostCount >= 5 && createPostCount < 15 && "RISING STAR"}
+                        {createPostCount >= 15 && "SUPERSTAR"}
                     </Typography>
                 </div>
                 <br />
 
                 <div className={classes.iconAndText}>
                     <Typography variant="subtitle2" className={classes.rightSpacing}>
-                        {numPosts} posts created
+                        {createPostCount} posts created
                     </Typography>
                     <CreateIcon />
                 </div>
                 <div className={classes.iconAndText}>
                     <Typography variant="subtitle2" className={classes.rightSpacing}>
-                        {numPostsFaved} posts saved
+                        {favouritePostCount} posts saved
                     </Typography>
                     <FavouritesIcon />
                 </div>
@@ -89,4 +90,20 @@ const styles = (theme) => ({
     }
 });
 
-export default withStyles(styles)(UserPanel);
+// Redux
+const mapStateToProps = (state) => {
+    return {
+      createPostCount: state.userStats.createPostCount,
+      favouritePostCount: state.userStats.favouritePostCount,
+      userStatsLoading: state.userStats.userStatsLoading,
+    };
+  };
+  
+  const mapDispatchToProps = {
+    loadUserStats,
+  };
+  
+  export default withRouter(
+    withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(UserPanel))
+  );
+  

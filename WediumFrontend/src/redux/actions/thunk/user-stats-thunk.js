@@ -2,7 +2,7 @@ import {
     loadUserStatsLoading,
     loadUserStatsSuccess,
     loadUserStatsError
-} from '../post-type-actions';
+} from '../user-stats-actions';
 
 import {
     getUserStats
