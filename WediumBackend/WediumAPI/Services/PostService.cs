@@ -73,13 +73,12 @@ namespace WediumAPI.Services
             // Adds 1 to limit to efficiently calculate hasMore of last element in list (while ensuring correctness if posttype/search filters present)
             int limitApplied = (limit.HasValue ? limit.Value : _options.GetPostDefaultLimit) + 1;
 
-            List<Post> postList = postListQuery
+            IEnumerable<Post> postList = postListQuery
                 .OrderByDescending(p => p.Date)
                 .Take(limitApplied)
                 .Include(p => p.User)
                 .Include(p => p.PostLike)
-                .Include(p => p.Favourite)
-                .ToList();
+                .Include(p => p.Favourite);
 
             IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList, userId).ToList();
 
@@ -187,6 +186,55 @@ namespace WediumAPI.Services
             {
                 throw new PostNotValidUserException();
             }
+        }
+
+        public IEnumerable<PostDto> GetCreatedPosts(int userId, int? limit, int? afterId)
+        {
+            IQueryable<Post> postQuery = _db.Post
+                .Where(p => p.UserId == userId)
+                .OrderByDescending(p => p.Date);
+
+            // Applies afterId query if present
+            if (afterId.HasValue)
+            {
+                // Check post with after_id as the id value exists
+                Post queryInputPost = postQuery
+                    .FirstOrDefault(p => p.PostId == afterId);
+
+                if (queryInputPost == null)
+                {
+                    throw new PostNotFoundException();
+                }
+
+                // Gets all posts in the order they were postliked after after_id (newest to oldest)
+                postQuery = postQuery
+                    .Where(p => p.Date < queryInputPost.Date);
+            }
+
+            // Adds 1 to limit to efficiently calculate hasMore of last element in list
+            int limitApplied = (limit.HasValue ? limit.Value : _options.GetPostDefaultLimit) + 1;
+
+            IEnumerable<Post> likedPosts = postQuery
+                .Take(limitApplied)
+                .Include(p => p.User)
+                .Include(p => p.PostType)
+                .Include(p => p.WikiArticle)
+                .Include(p => p.PostLike)
+                .Include(p => p.Favourite);
+
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(likedPosts, userId).ToList();
+
+            if (postDtoList.Count() == limitApplied)
+            {
+                postDtoList = postDtoList.SkipLast(1);
+            }
+            else if (postDtoList.Any())
+            {
+                PostDto lastPost = postDtoList.Last();
+                lastPost.HasMore = false;
+            }
+
+            return postDtoList;
         }
     }
 }
