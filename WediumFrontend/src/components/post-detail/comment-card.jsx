@@ -90,7 +90,7 @@ const CommentCard = (props) => {
             variant="caption"
             color="textSecondary"
           >
-            {comment.userId}
+            {comment.userName}
           </Typography>
           <Typography variant="caption" color="textSecondary">
             {moment(comment.date).format('DD MMM')} -{' '}

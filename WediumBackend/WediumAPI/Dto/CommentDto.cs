@@ -10,6 +10,7 @@ namespace WediumAPI.Dto
         public int CommentId { get; set; }
         public int PostId { get; set; }
         public int UserId { get; set; }
+        public string UserName { get; set; }
         public DateTime Date { get; set; }
         public int? ParentCommentId { get; set; }
         public string Body { get; set; }

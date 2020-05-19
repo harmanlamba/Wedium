@@ -16,6 +16,7 @@ namespace WediumAPI.Mappers
                 CommentId = comment.CommentId,
                 PostId = comment.PostId,
                 UserId = comment.UserId,
+                UserName = comment.User.FirstName + " " + comment.User.LastName,
                 Date = comment.Date,
                 ParentCommentId = comment.ParentCommentId,
                 Body = comment.Body,

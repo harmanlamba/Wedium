@@ -26,7 +26,9 @@ namespace WediumAPI.Services
 
             IEnumerable<Comment> commentListQuery = _db.Comment
                 .Where(c => c.PostId == postId & c.ParentCommentId == null)
+                .Include(c => c.User)
                 .Include(c => c.InverseParentComment)
+                .ThenInclude(c => c.User)
                 .Include(c => c.CommentType);
 
             return CommentMapper.ToDto(commentListQuery);
