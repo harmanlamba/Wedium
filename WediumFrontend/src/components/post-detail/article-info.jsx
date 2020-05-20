@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
+import HighlightPop from 'react-highlight-pop';
+import parse from 'html-react-parser';
 
 // Material UI
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import SubjectIcon from '@material-ui/icons/Subject';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -61,10 +64,22 @@ const ArticleInfo = (props) => {
           {decodeURIComponent(post.articleTitle)}
         </Typography>
         {
-          <div
-            dangerouslySetInnerHTML={{ __html: articleBody }}
-            className={classes.articleBody}
-          />
+          <HighlightPop
+            popoverItems={(itemClass) => (
+              <Fragment>
+                <span
+                  className={itemClass}
+                  onClick={() => {
+                    props.handleTextHighlight(window.getSelection().toString());
+                  }}
+                >
+                  <RateReviewIcon />
+                </span>
+              </Fragment>
+            )}
+          >
+            <div className={classes.articleBody}>{parse(articleBody)}</div>
+          </HighlightPop>
         }
         {!showingAll && (
           <div className={classes.showAllButton}>
@@ -106,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
   articleBody: {
     borderLeft: '#3f51b5 solid 3px',
     paddingLeft: 20,
+    '& blockquote': {
+      borderLeft: '#919191 solid 3px',
+      paddingLeft: 10,
+    },
   },
   showAllButton: {
     textAlign: 'center',

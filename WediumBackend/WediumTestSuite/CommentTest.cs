@@ -98,10 +98,10 @@ namespace WediumTestSuite
             HttpClient client = _testServer.CreateClient(1);
 
             HttpResponseMessage responseCreate = await client.PostAsync(_apiEndpoint + $"api/Comment/Post/", commentDto, new JsonMediaTypeFormatter());
-            int commentId = await responseCreate.Content.ReadAsAsync<int>();
+            CommentDto commentDtResulto = await responseCreate.Content.ReadAsAsync<CommentDto>();
 
             Assert.AreEqual(HttpStatusCode.Created, responseCreate.StatusCode);
-            Assert.AreEqual($"/post/Nature/2/TitleTest2", responseCreate.Headers.Location.ToString());
+            Assert.AreEqual($"/post/Nature/2/TitleTest2#2", responseCreate.Headers.Location.ToString());
         }
     }
 }

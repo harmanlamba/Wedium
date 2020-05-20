@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 // Material UI
 import Card from '@material-ui/core/Card';
@@ -24,7 +25,7 @@ const PostDetailInfo = (props) => {
   return (
     <div>
       <div className={classes.buttonGroup}>
-        <div className={classes.test}>
+        <div className={classes.buttonGroupFlex}>
           <PostLike
             postId={reduxPosts[postIndex].postId}
             isPostLiked={reduxPosts[postIndex].isPostLiked}
@@ -60,7 +61,7 @@ const PostDetailInfo = (props) => {
                 color="textSecondary"
                 align="justify"
               >
-                {post.description}
+                {parse(post.description)}
               </Typography>
             )}
             <Typography
@@ -77,7 +78,10 @@ const PostDetailInfo = (props) => {
           </CardContent>
         </Card>
 
-        <ArticleInfo post={post} />
+        <ArticleInfo
+          handleTextHighlight={props.handleTextHighlight}
+          post={post}
+        />
       </Card>
     </div>
   );
@@ -91,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
   },
   postHeader: {
-    padding: '10px 30px 10px 30px',
+    padding: '5px 30px 10px 30px',
   },
   postType: {
     backgroundColor: '#3f51b5',
@@ -108,16 +112,16 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonGroup: {
     position: 'relative',
-    paddingBottom: '3em',
   },
-  test: {
+  buttonGroupFlex: {
     display: 'flex',
     alignSelf: 'flex-end',
     position: 'absolute',
-    right: 0,
+    right: 10,
+    top: 5,
   },
   username: {
-    marginTop: 20,
+    marginTop: 10,
     marginRight: 15,
   },
   postTitle: {

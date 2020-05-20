@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from '../header';
 import PostDetailInfo from './post-detail-info';
 import PostCommentBox from './post-comment-box';
-// import RichTextBox from '../rich-text-box';
+import PostCommentFeed from './post-comment-feed';
 
 class PostDetail extends Component {
   constructor(props) {
@@ -21,6 +21,8 @@ class PostDetail extends Component {
     this.state = {
       postId: this.props.match.params.postId,
       circularProgressRingState: true,
+      highlightText: '',
+      isHighlighted: false,
     };
 
     this.commentRef = React.createRef();
@@ -52,6 +54,16 @@ class PostDetail extends Component {
       });
     };
 
+    const handleTextHighlight = (text) => {
+      handleCommentButton();
+      this.setState({ isHighlighted: true });
+      this.setState({ highlightText: text });
+    };
+
+    const handleIsHighlighted = (boolean) => {
+      this.setState({ isHighlighted: boolean });
+    };
+
     return (
       <div>
         <Header user={user} />
@@ -67,13 +79,21 @@ class PostDetail extends Component {
           >
             <Grid item xs={7}>
               <PostDetailInfo
+                handleTextHighlight={handleTextHighlight}
                 post={reduxPosts[postIndex]}
                 handleCommentButton={handleCommentButton}
               />
             </Grid>
             <Grid item xs={7} ref={this.commentRef}>
-              {/* <RichTextBox placeholder={"Write comment..."} quotedText={"blahblah"} maxLength={500} onChange={(htmlText) => { console.log(htmlText)}} /> */}
-              <PostCommentBox user={user} />
+              <PostCommentBox
+                user={user}
+                highlightText={this.state.highlightText}
+                isHighlighted={this.state.isHighlighted}
+                handleIsHighlighted={handleIsHighlighted}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <PostCommentFeed user={user} />
             </Grid>
           </Grid>
         ) : (
@@ -91,12 +111,12 @@ const styles = (theme) => ({
     flexGrow: 1,
     margin: 0,
     width: '100%',
+    marginTop: 20,
   },
   progressRing: {
     marginLeft: '50%',
     paddingTop: '200px',
     paddingBottom: '10px',
-    width: '100% !important',
   },
 });
 

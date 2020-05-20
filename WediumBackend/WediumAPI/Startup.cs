@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using WediumAPI.Helper;
 using WediumAPI.Models;
 using WediumAPI.Service;
@@ -42,9 +43,10 @@ namespace WediumAPI
                     .WithExposedHeaders("location"));
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            
-            if(!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            if (!EnvironmentSettingsResolver.TryGetConnectionStringFromEnvironment(out string connectionString))
             {
                 connectionString = Configuration.GetConnectionString("WediumDatabase");
             }
