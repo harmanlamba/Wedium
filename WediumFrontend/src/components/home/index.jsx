@@ -72,7 +72,6 @@ const styles = (theme) => ({
     paddingTop: '20px !important',
   },
   sidebar: {
-    position: '-webkit-sticky',
     position: 'sticky',
     top: 40,
   },

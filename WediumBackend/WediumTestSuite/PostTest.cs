@@ -225,5 +225,22 @@ namespace WediumTestSuite
             HttpResponseMessage successfulResponse = await client.DeleteAsync(_apiEndpoint + "api/Post/Delete/1");
             Assert.AreEqual(HttpStatusCode.OK, successfulResponse.StatusCode);
         }
+
+        public async Task GetCreatedPostInvalidPostId()
+        {
+            HttpClient client = _testServer.CreateClient(2);
+
+            int count = 0;
+            using (WediumContext db = new WediumContext(_wediumContextOptions))
+            {
+                count = db.Post.Count(p => p.UserId == 2);
+            }
+
+            HttpResponseMessage response = await client.GetAsync(_apiEndpoint + "api/Post/GetCreated?");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+            List<PostDto> content = await response.Content.ReadAsAsync<List<PostDto>>();
+            Assert.AreEqual(count, content.Count);
+        }
     }
 }

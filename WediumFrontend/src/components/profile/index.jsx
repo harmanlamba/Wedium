@@ -7,8 +7,6 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
@@ -77,14 +75,19 @@ const Profile = (props) => {
             onChange={(event, newValue) => setTabValue(newValue)}
             indicatorColor="primary"
             className={classes.tabs}>
-            <Tab label="Saved Posts" {...a11yProps(0)} />
-            <Tab label="Liked Posts" {...a11yProps(1)} />
+            
+            <Tab label="Created Posts" {...a11yProps(0)} />
+            <Tab label="Saved Posts" {...a11yProps(1)} />
+            <Tab label="Liked Posts" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={tabValue} index={0}>
-            <PostFeed getFavouritesOnly />
+            <PostFeed profileFilter={{getCreatedOnly: true}} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-          <PostFeed getPostLikesOnly />
+            <PostFeed profileFilter={{getFavouritesOnly: true}} />
+          </TabPanel>
+          <TabPanel value={tabValue} index={2}>
+            <PostFeed profileFilter={{getPostLikesOnly: true}} />
           </TabPanel>
         </Grid>
         <Grid item xs={2} className={classes.sidebar}>

@@ -17,9 +17,7 @@ class PostFeed extends Component {
   componentDidMount() {
     if (!this.props.posts.length || this.props.postType !== this.props.previousPostType
       || this.props.searchString !== this.props.previousSearchString
-      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly
-      || this.props.getPostLikesOnly !== this.props.previousGetPostLikesOnly) {
-
+      || this.props.profileFilter !== this.props.previousProfileFilter) {
       this.loadInitial();
     }
   }
@@ -27,8 +25,7 @@ class PostFeed extends Component {
   componentDidUpdate() {
     if (this.props.postType !== this.props.previousPostType
       || this.props.searchString !== this.props.previousSearchString
-      || this.props.getFavouritesOnly !== this.props.previousGetFavouritesOnly
-      || this.props.getPostLikesOnly !== this.props.previousGetPostLikesOnly) {
+      || this.props.profileFilter !== this.props.previousProfileFilter) {
 
         if (this.state && this.state.cancelToken) {
           this.state.cancelToken.cancel();
@@ -44,8 +41,8 @@ class PostFeed extends Component {
     this.setState({
       cancelToken,
     });
-
-    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.getFavouritesOnly, this.props.getPostLikesOnly);
+    console.log(this.props.getCreatedOnly)
+    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.profileFilter);
   }
 
   componentWillUnmount() {
@@ -59,7 +56,7 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.getFavouritesOnly, this.props.getPostLikesOnly);
+    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.profileFilter);
   }
 
   hasMore() {
@@ -116,6 +113,8 @@ const mapStateToProps = (state) => {
     previousSearchString: state.post.searchStringFilter,
     previousGetFavouritesOnly: state.post.getFavouritesOnly,
     previousGetPostLikesOnly: state.post.getPostLikesOnly,
+    previousGetCreatedOnly: state.post.getCreatedOnly,
+    previousProfileFilter: state.post.profileFilter,
   };
 };
 

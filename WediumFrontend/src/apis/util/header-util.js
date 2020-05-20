@@ -1,17 +1,15 @@
 export const createHeader = () => {
-    if (!localStorage.getItem("user")) {
-        return null;
-    }
-
-    const token = JSON.parse(localStorage.getItem("user")).jwtToken;
-
-    if (!token) {
-        return null;
-    }
-
-    return {
-        headers: {
-            "Authorization": "Bearer " + token,
-        }
+    let config = {
+        headers: {}
     };
+
+    if (localStorage.getItem("user")) {
+        const token = JSON.parse(localStorage.getItem("user")).jwtToken;
+
+        if (token) {
+            config.headers.Authorization = "Bearer " + token;
+        }
+    }
+
+    return config;
 }

@@ -11,5 +11,6 @@ namespace WediumAPI.Services
         public bool CheckExists(int postId);
         public PostDto CreatePost(PostDto postDto, int userId);
         public void DeletePost(int post, int userId);
+        public IEnumerable<PostDto> GetCreatedPosts(int userId, int? limit, int? afterId);
     }
 }

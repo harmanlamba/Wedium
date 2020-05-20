@@ -121,6 +121,30 @@ namespace WediumAPI.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("GetCreated")]
+        public ActionResult<List<PostDto>> GetCreatedPosts(int? limit = null, int? after_id = null)
+        {
+            if (limit.HasValue && limit.Value < 0)
+            {
+                return BadRequest();
+            }
+
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            try
+            {
+                IEnumerable<PostDto> postDtoList = _service.GetCreatedPosts(userId, limit, after_id);
+
+                return Ok(postDtoList);
+            }
+            catch (PostNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
         private int? TryGetUserId(ClaimsIdentity identity)
         {
             Claim claim = identity.FindFirst(ClaimTypes.NameIdentifier);

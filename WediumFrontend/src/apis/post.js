@@ -5,7 +5,7 @@ import { createHeader } from './util/header-util';
 const API_URL = process.env.REACT_APP_API_URL;
 const LIMIT = 15;
 
-export const getPosts = (cancelToken, afterPostId, postType, searchString, getFavouritesOnly, getPostLikesOnly) => {
+export const getPosts = (cancelToken, afterPostId, postType, searchString, profileFilter) => {
   const header = createHeader();
   var queryString = `?limit=${LIMIT}`;
   let endpoint;
@@ -18,10 +18,12 @@ export const getPosts = (cancelToken, afterPostId, postType, searchString, getFa
     queryString += `&after_id=${afterPostId}`;
   }
 
-  if (getFavouritesOnly) {
+  if (profileFilter && profileFilter.getFavouritesOnly) {
     endpoint = `${API_URL}/api/favourite/Get`;
-  } else if (getPostLikesOnly) {
+  } else if (profileFilter && profileFilter.getPostLikesOnly) {
     endpoint = `${API_URL}/api/postlike/Get`;
+  } else if (profileFilter && profileFilter.getCreatedOnly) {
+    endpoint = `${API_URL}/api/post/GetCreated`;
   } else {
     endpoint = `${API_URL}/api/post/Get`;
 
