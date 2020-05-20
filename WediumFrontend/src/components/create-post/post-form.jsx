@@ -64,26 +64,22 @@ const PostForm = (props) => {
 
   const checkPostDto = (postDto) => {
     if (postDto.Title === '') {
-      setAlertDialogMessageTitle('Missing Title');
       setAlertDialogMessageContent('Please enter a title for your post!');
       setAlertDialogOpenState(true);
       return false;
     } else if (postDto.ArticleUrl === '') {
-      setAlertDialogMessageTitle('Missing Wikipedia Url');
       setAlertDialogMessageContent(
         'Please ensure that you have entered a Wikipedia URL'
       );
       setAlertDialogOpenState(true);
       return false;
     } else if (!checkPrefix(postDto.ArticleUrl)) {
-      setAlertDialogMessageTitle('Wikipedia URL Not Complete');
       setAlertDialogMessageContent(
         'Please ensure that you have entered a valid and complete Wikipedia URL'
       );
       setAlertDialogOpenState(true);
       return false;
     } else if (postDto.PostType === null || postDto.PostType === '') {
-      setAlertDialogMessageTitle('Missing Post Type');
       setAlertDialogMessageContent(
         'Please ensure that you pick a post type that best suits your post!'
       );
