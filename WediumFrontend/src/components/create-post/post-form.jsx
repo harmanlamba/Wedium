@@ -47,6 +47,13 @@ const PostForm = (props) => {
     }
   };
 
+  const checkPrefix = (string) => {
+    if (string.indexOf('https://en.wikipedia.org/wiki/') == 0) {
+      return true;
+    }
+    return false;
+  };
+
   const handleToggleButtonChange = (postTypeText) => {
     setPostType(postTypeText);
   };
@@ -65,6 +72,13 @@ const PostForm = (props) => {
       setAlertDialogMessageTitle('Missing Wikipedia Url');
       setAlertDialogMessageContent(
         'Please ensure that you have entered a Wikipedia URL'
+      );
+      setAlertDialogOpenState(true);
+      return false;
+    } else if (!checkPrefix(postDto.ArticleUrl)) {
+      setAlertDialogMessageTitle('Wikipedia URL Not Complete');
+      setAlertDialogMessageContent(
+        'Please ensure that you have entered a valid and complete Wikipedia URL'
       );
       setAlertDialogOpenState(true);
       return false;
