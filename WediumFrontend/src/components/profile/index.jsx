@@ -75,14 +75,19 @@ const Profile = (props) => {
             onChange={(event, newValue) => setTabValue(newValue)}
             indicatorColor="primary"
             className={classes.tabs}>
-            <Tab label="Saved Posts" {...a11yProps(0)} />
-            <Tab label="Liked Posts" {...a11yProps(1)} />
+            
+            <Tab label="Created Posts" {...a11yProps(0)} />
+            <Tab label="Saved Posts" {...a11yProps(1)} />
+            <Tab label="Liked Posts" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={tabValue} index={0}>
-            <PostFeed getFavouritesOnly />
+            <PostFeed profileFilter={{getCreatedOnly: true}} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-          <PostFeed getPostLikesOnly />
+            <PostFeed profileFilter={{getFavouritesOnly: true}} />
+          </TabPanel>
+          <TabPanel value={tabValue} index={2}>
+            <PostFeed profileFilter={{getPostLikesOnly: true}} />
           </TabPanel>
         </Grid>
         <Grid item xs={2} className={classes.sidebar}>
