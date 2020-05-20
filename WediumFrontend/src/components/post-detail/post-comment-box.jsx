@@ -18,7 +18,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-const COMMENT_CHAR_LIMIT = 350;
+const COMMENT_CHAR_LIMIT = 450;
 
 const PostCommentBox = (props) => {
   const { classes } = props;

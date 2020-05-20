@@ -16,7 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PostTypeButtons from './post-type-buttons';
 
 const TITLE_CHAR_LIMIT = 100;
-const DESCRIPTION_CHAR_LIMIT = 350;
+const DESCRIPTION_CHAR_LIMIT = 450;
 
 const PostForm = (props) => {
   const { classes } = props;
@@ -48,7 +48,7 @@ const PostForm = (props) => {
   };
 
   const checkPrefix = (string) => {
-    if (string.indexOf('https://en.wikipedia.org/wiki/') == 0) {
+    if (string.indexOf('https://en.wikipedia.org/wiki/') === 0) {
       return true;
     }
     return false;
