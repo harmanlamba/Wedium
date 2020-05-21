@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadInitialPosts, loadMorePosts } from '../../redux/actions/thunk/post-thunk';
+import {
+  loadInitialPosts,
+  loadMorePosts,
+} from '../../redux/actions/thunk/post-thunk';
 import axios from 'axios';
 
 // Material UI
@@ -15,33 +18,43 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 class PostFeed extends Component {
   componentDidMount() {
-    if (!this.props.posts.length || this.props.postType !== this.props.previousPostType
-      || this.props.searchString !== this.props.previousSearchString
-      || this.props.profileFilter !== this.props.previousProfileFilter) {
+    if (
+      !this.props.posts.length ||
+      this.props.postType !== this.props.previousPostType ||
+      this.props.searchString !== this.props.previousSearchString ||
+      this.props.profileFilter !== this.props.previousProfileFilter
+    ) {
       this.loadInitial();
     }
   }
 
   componentDidUpdate() {
-    if (this.props.postType !== this.props.previousPostType
-      || this.props.searchString !== this.props.previousSearchString
-      || this.props.profileFilter !== this.props.previousProfileFilter) {
+    if (
+      this.props.postType !== this.props.previousPostType ||
+      this.props.searchString !== this.props.previousSearchString ||
+      this.props.profileFilter !== this.props.previousProfileFilter
+    ) {
+      if (this.state && this.state.cancelToken) {
+        this.state.cancelToken.cancel();
+      }
 
-        if (this.state && this.state.cancelToken) {
-          this.state.cancelToken.cancel();
-        }
-        
-        this.loadInitial();
+      this.loadInitial();
     }
   }
 
   loadInitial() {
     const cancelToken = axios.CancelToken.source();
-    
+
     this.setState({
       cancelToken,
     });
-    this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.profileFilter);
+    
+    this.props.loadInitialPosts(
+      cancelToken.token,
+      this.props.postType,
+      this.props.searchString,
+      this.props.profileFilter
+    );
   }
 
   componentWillUnmount() {
@@ -55,7 +68,13 @@ class PostFeed extends Component {
   }
 
   loadMore() {
-    return this.props.loadMorePosts(this.state.cancelToken.token, this.getLastPost().postId, this.props.postType, this.props.searchString, this.props.profileFilter);
+    return this.props.loadMorePosts(
+      this.state.cancelToken.token,
+      this.getLastPost().postId,
+      this.props.postType,
+      this.props.searchString,
+      this.props.profileFilter
+    );
   }
 
   hasMore() {
@@ -72,10 +91,8 @@ class PostFeed extends Component {
 
     return (
       <div>
-        {(this.props.postsLoading &&
-          <LoadingPostCard />
-        ) ||
-          (items.length > 0 &&
+        {(this.props.postsLoading && <LoadingPostCard />) ||
+          (items.length > 0 && (
             <InfiniteScroll
               pageStart={0}
               loadMore={this.loadMore.bind(this)}
@@ -85,10 +102,14 @@ class PostFeed extends Component {
             >
               {items}
             </InfiniteScroll>
-          ) ||
-          (<Container className={classes.notFound}>
-            No Posts Found <span role="img" aria-label="sad cat">😿</span>
-          </Container>)}
+          )) || (
+            <Container className={classes.notFound}>
+              No Posts Found{' '}
+              <span role="img" aria-label="sad cat">
+                😿
+              </span>
+            </Container>
+          )}
       </div>
     );
   }
@@ -99,8 +120,8 @@ const styles = (theme) => ({
     textAlign: 'center',
     color: '#bbbbbb',
     fontSize: '1.4em',
-    margin: '80px 0'
-  }
+    margin: '80px 0',
+  },
 });
 
 // Redux
@@ -123,7 +144,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  withStyles(styles)(
-    connect(mapStateToProps, mapDispatchToProps)(PostFeed)
-  )
+  withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PostFeed))
 );

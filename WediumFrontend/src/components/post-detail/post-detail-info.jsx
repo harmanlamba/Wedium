@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PostLike from '../post-like';
 import PostFavourite from '../post-favourite';
 import ArticleInfo from './article-info';
-import CommentButton from './comment-button';
+import CommentButton from './comment/comment-button';
 
 const PostDetailInfo = (props) => {
   const post = props.post;

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
-import { postComment } from '../../redux/actions/thunk/comment-thunk';
-import RichTextBox from '../rich-text-box/index';
+import { postComment } from '../../../redux/actions/thunk/comment-thunk';
+import RichTextBox from '../../rich-text-box/index';
 
 // Material UI
 import Alert from '@material-ui/lab/Alert';
