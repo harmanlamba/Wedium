@@ -89,6 +89,7 @@ const styles = (theme) => ({
     letterSpacing: '0.03333em',
     fontWeight: 400,
     lineHeight: 1.66,
+    fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
   textLimitOverflow: {
     color: 'red',
@@ -105,6 +106,7 @@ const styles = (theme) => ({
       background: 'white',
       'min-height': 80,
       font: 'inherit',
+      fontFamily: ['Roboto', 'sans-serif'].join(','),
     },
   },
 });

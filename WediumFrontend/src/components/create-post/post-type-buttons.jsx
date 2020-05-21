@@ -6,6 +6,7 @@ import { loadPostTypes } from '../../redux/actions/thunk/post-type-thunk';
 // Material UI
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const PostTypeButtons = (props) => {
@@ -43,7 +44,7 @@ const PostTypeButtons = (props) => {
             value={postTypes.postType}
             key={postTypes.postType}
           >
-            {postTypes.postType}
+            <Typography variant="h6">{postTypes.postType}</Typography>
           </ToggleButton>
         ))}
     </ToggleButtonGroup>

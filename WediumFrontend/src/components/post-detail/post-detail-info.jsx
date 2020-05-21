@@ -42,7 +42,7 @@ const PostDetailInfo = (props) => {
       <Card className={classes.postHeader}>
         <Card className={classes.root} elevation={0}>
           <CardContent>
-            <Typography variant="caption">
+            <Typography variant="subtitle2">
               <span className={classes.postType}>{post.postType}</span>
               <Link
                 className={classes.articleLink}
@@ -52,11 +52,12 @@ const PostDetailInfo = (props) => {
                 {decodeURIComponent(post.articleTitle)}
               </Link>
             </Typography>
-            <Typography variant="h5" className={classes.postTitle}>
+            <Typography variant="h6" className={classes.postTitle}>
               {post.title}
             </Typography>
             {post.description && (
               <Typography
+                className={classes.postDescription}
                 variant="subtitle1"
                 color="textSecondary"
                 align="justify"
@@ -98,9 +99,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px 30px 10px 30px',
   },
   postType: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#0047ff',
     color: '#fff',
-    padding: '1px 3px',
+    padding: '1px 5px',
     borderRadius: 5,
     marginBottom: 5,
   },
@@ -128,7 +129,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 4,
   },
   postDescription: {
-    marginBottom: -5,
+    '& p': {
+      marginTop: 5,
+      marginBottom: 5,
+      lineHeight: 1.5,
+    },
   },
 }));
 

@@ -25,7 +25,7 @@ export const App = () => {
               <PostDetail />
             </Route>
             <Route exact path="/post/:postType" component={Home} />
-            <Route exact path="/profile" component={Profile}/>
+            <Route exact path="/profile" component={Profile} />
             <Route path="*">
               <h1>Page not found</h1>
             </Route>

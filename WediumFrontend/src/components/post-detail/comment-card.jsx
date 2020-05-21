@@ -258,11 +258,17 @@ const styles = (theme) => ({
     },
   },
   content: {
+    fontFamily: ['Roboto', 'sans-serif'].join(','),
+    fontSize: 15,
+    lineHeight: 1.5,
+    letterSpacing: 0.15,
+    useNextVariants: true,
+    suppressDeprecationWarnings: true,
     '& p': {
       margin: '2px 0 !important',
     },
     '& blockquote': {
-      borderLeft: '#3f51b5 solid 3px',
+      borderLeft: '#0047ff solid 3px',
       paddingLeft: 10,
       margin: '5px 10px',
     },
@@ -287,7 +293,7 @@ const styles = (theme) => ({
   },
   child: {
     padding: '5px 0',
-    borderLeft: '3px solid #3f51b5',
+    borderLeft: '3px solid #0047ff',
   },
   childContainer: {
     paddingLeft: '3.5em',
@@ -297,7 +303,7 @@ const styles = (theme) => ({
     bottom: 7,
     left: 15,
     '& span': {
-      backgroundColor: '#3f51b5',
+      backgroundColor: '#0047ff',
       color: '#fff',
       borderRadius: 5,
       padding: '0px 4px 3px 3px',

@@ -8,15 +8,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 // Components
 import Button from '@material-ui/core/Button';
+import Cake from '../../assets/cake-icon';
 import GoogleLoginButton from './google-login-button';
 import UserMenu from './user-menu';
 import SearchBar from './search-bar';
+import Typography from '@material-ui/core/Typography';
 
 const Header = (props) => {
   const goHome = () => {
     props.history.push('/');
     window.location.reload();
-  }
+  };
 
   const classes = useStyles();
 
@@ -32,7 +34,10 @@ const Header = (props) => {
           disableRipple={true}
           onClick={goHome}
         >
-          Wedium
+          <Cake />
+          <Typography className={classes.title} variant="h6">
+            Wedium
+          </Typography>
         </Button>
 
         {props.showSearch && <SearchBar postType={props.postType} />}
@@ -53,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.25em',
     fontWeight: 'bold',
     backgroundColor: 'transparent !important',
+  },
+  title: {
+    marginLeft: 10,
   },
   appBar: {
     padding: '5px 0',
