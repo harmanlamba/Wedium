@@ -9,7 +9,7 @@ import {
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Typography } from '@material-ui/core';
@@ -48,21 +48,27 @@ const CommentLike = (props) => {
         </Alert>
       </Snackbar>
 
-      <Typography className={classes.text} color="textSecondary">
-        {props.numberOfLikes}
-      </Typography>
       {props.isCommentLiked !== null ? (
-        <IconButton onClick={() => onButtonClick()}>
+        <Button onClick={() => onButtonClick()}>
           {props.isCommentLiked ? (
-            <FavoriteIcon className={classes.likedIcon} />
+            <FavoriteIcon className={classes.likedIcon} fontSize="small" />
           ) : (
-            <FavoriteBorderIcon className={classes.unlikedIcon} />
+            <FavoriteBorderIcon
+              className={classes.unlikedIcon}
+              fontSize="small"
+            />
           )}
-        </IconButton>
+          <Typography className={classes.text} color="textSecondary">
+            {props.numberOfLikes}
+          </Typography>
+        </Button>
       ) : (
-        <IconButton disabled>
-          <FavoriteIcon />
-        </IconButton>
+        <Button disabled>
+          <FavoriteIcon fontSize="small" />
+          <Typography className={classes.text} color="textSecondary">
+            {props.numberOfLikes}
+          </Typography>
+        </Button>
       )}
     </div>
   );
@@ -73,11 +79,9 @@ CommentLike.propTypes = {
 };
 
 const styles = (theme) => ({
-  root: {
-    display: 'flex',
-  },
   text: {
     alignSelf: 'center',
+    marginLeft: 5,
   },
   unlikedIcon: {
     opacity: 0.3,

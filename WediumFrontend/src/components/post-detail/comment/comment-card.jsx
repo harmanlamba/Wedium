@@ -23,7 +23,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 
 const COMMENT_CHAR_LIMIT = 350;
@@ -89,34 +88,44 @@ const CommentCard = (props) => {
         [classes.child]: isChild,
       })}
     >
-      <div className={classes.iconButtons}>
-        {comment.parentCommentId === null && props.user.isAuthenticated ? (
-          <IconButton
-            onClick={handleReplyClick}
-            aria-label="Comment button"
-            size="small"
-          >
-            {isReply ? (
-              <ChatBubbleIcon
-                className={classes.commentButtonEnabled}
-                fontSize="small"
-              />
-            ) : (
-              <ChatBubbleOutlineIcon
-                className={classes.commentButton}
-                fontSize="small"
-              />
-            )}
-          </IconButton>
-        ) : null}
-        {console.log(comment)}
-        <CommentLike
-          numberOfLikes={comment.numberOfLikes}
-          commentId={comment.commentId}
-          parentCommentId={comment.parentCommentId}
-          isCommentLiked={comment.isCommentLiked}
-        />
-      </div>
+      <Grid
+        className={classes.iconButtons}
+        container
+        spacing={0}
+        direction="row"
+        justify="flex-end"
+        alignItems="flex-end"
+      >
+        <Grid item className={classes.commentButtonParent}>
+          {comment.parentCommentId === null && props.user.isAuthenticated ? (
+            <IconButton
+              onClick={handleReplyClick}
+              aria-label="Comment button"
+              size="small"
+            >
+              {isReply ? (
+                <ChatBubbleIcon
+                  className={classes.commentButtonEnabled}
+                  fontSize="small"
+                />
+              ) : (
+                <ChatBubbleOutlineIcon
+                  className={classes.commentButton}
+                  fontSize="small"
+                />
+              )}
+            </IconButton>
+          ) : null}
+        </Grid>
+        <Grid item>
+          <CommentLike
+            numberOfLikes={comment.numberOfLikes}
+            commentId={comment.commentId}
+            parentCommentId={comment.parentCommentId}
+            isCommentLiked={comment.isCommentLiked}
+          />
+        </Grid>
+      </Grid>
 
       <CardContent className={classes.contentCard}>
         <Grid className={classes.header} item xs={10}>
@@ -277,14 +286,17 @@ const styles = (theme) => ({
   },
   iconButtons: {
     position: 'absolute',
-    top: 8,
-    right: 8,
+    top: 0,
+    right: 0,
   },
   commentButton: {
     opacity: 0.4,
   },
   commentButtonEnabled: {
     opacity: 1,
+  },
+  commentButtonParent: {
+    paddingBottom: '3.5px',
   },
   parent: {
     position: 'relative',
