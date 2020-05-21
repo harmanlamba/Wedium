@@ -28,7 +28,8 @@ const PostCommentFeed = (props) => {
       alignItems="flex-start"
     >
       <Grid className={classes.grid} item xs={12}>
-        {props.comments != []
+        {// eslint-disable-next-line
+        props.comments != []
           ? props.comments.map((comment) => {
               return (
                 <Card

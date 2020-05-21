@@ -39,6 +39,7 @@ export const postComment = (comment) => {
                     status,
                     commentDto
                 }) => {
+                    // eslint-disable-next-line
                     if (status == 201) {
                         dispatch(addComment(commentDto));
                     }
