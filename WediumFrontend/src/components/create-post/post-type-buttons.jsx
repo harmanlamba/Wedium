@@ -44,7 +44,7 @@ const PostTypeButtons = (props) => {
             value={postTypes.postType}
             key={postTypes.postType}
           >
-            <Typography variant="h6">{postTypes.postType}</Typography>
+            <Typography variant="button">{postTypes.postType}</Typography>
           </ToggleButton>
         ))}
     </ToggleButtonGroup>
@@ -62,7 +62,7 @@ const styles = (theme) => ({
     borderRadius: '50px !important',
   },
   selected: {
-    backgroundColor: '#3f51b5 !important',
+    backgroundColor: '#0047ff !important',
     color: '#fff !important',
   },
 });

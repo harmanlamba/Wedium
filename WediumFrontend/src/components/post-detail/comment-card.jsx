@@ -149,7 +149,7 @@ const CommentCard = (props) => {
               size="small"
             >
               {props.isLoadingAddReply && (
-                <CircularProgress size={20} thickness={6} color="inherit" />
+                <CircularProgress size={20} thickness={10} color="inherit" />
               )}
               {!props.isLoadingAddReply && 'Reply'}
             </Button>

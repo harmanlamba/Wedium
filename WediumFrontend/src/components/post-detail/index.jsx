@@ -115,7 +115,7 @@ class PostDetail extends Component {
           </Grid>
         ) : (
           <div className={classes.progressRing}>
-            <CircularProgress />
+            <CircularProgress size={40} thickness={10} />
           </div>
         )}
       </div>
