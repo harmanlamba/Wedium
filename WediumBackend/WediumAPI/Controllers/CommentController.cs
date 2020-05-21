@@ -28,11 +28,14 @@ namespace WediumAPI.Controllers
         [HttpGet("Get/{postId}")]
         public ActionResult<IEnumerable<CommentDto>> GetCommentsForPost(int postId)
         {
+            ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             IEnumerable<CommentDto> comments;
 
             try
             {
-                comments = _service.GetCommentsForPost(postId);
+                comments = _service.GetCommentsForPost(postId, userId);
             }
             catch (PostNotFoundException)
             {

@@ -9,7 +9,7 @@ namespace WediumAPI.Services
     public interface ICommentService
     {
         public bool CheckExists(int commentId);
-        public IEnumerable<CommentDto> GetCommentsForPost(int postId);
+        public IEnumerable<CommentDto> GetCommentsForPost(int postId, int? userId);
         public (CommentDto commentDto, PostDto post) CreateComment(CommentDto commentDto, int? userId);
     }
 }
