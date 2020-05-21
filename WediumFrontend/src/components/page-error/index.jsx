@@ -31,7 +31,7 @@ const Home = (props) => {
         alignItems="center"
         justify="center"
       >
-        <Grid item xs={6} justify="center">
+        <Grid item xs={6}>
           <Card>
             <CardContent>
               <Typography variant="h1" component="h2" align="center">
