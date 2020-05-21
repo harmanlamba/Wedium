@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadComments } from '../../redux/actions/thunk/comment-thunk';
+import { loadComments } from '../../../redux/actions/thunk/comment-thunk';
 import CommentCard from './comment-card';
 
 // Material UI

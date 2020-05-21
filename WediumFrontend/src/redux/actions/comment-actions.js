@@ -5,6 +5,8 @@ import {
     ADD_COMMENT,
     LOAD_ADD_COMMENT,
     LOAD_ADD_REPLY,
+    LIKE_COMMENT,
+    UNLIKE_COMMENT
 } from '../action-types/action-types'
 
 export const loadCommentsLoading = () => {
@@ -43,5 +45,19 @@ export const loadAddComment = () => {
 export const loadAddReply = () => {
     return {
         type: LOAD_ADD_REPLY,
+    }
+}
+
+export const likeComment = (commentIds) => {
+    return {
+        type: LIKE_COMMENT,
+        commentIds,
+    }
+}
+
+export const unlikeComment = (commentIds) => {
+    return {
+        type: UNLIKE_COMMENT,
+        commentIds,
     }
 }
