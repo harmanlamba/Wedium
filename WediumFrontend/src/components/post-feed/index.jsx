@@ -48,6 +48,7 @@ class PostFeed extends Component {
     this.setState({
       cancelToken,
     });
+    
     this.props.loadInitialPosts(
       cancelToken.token,
       this.props.postType,
