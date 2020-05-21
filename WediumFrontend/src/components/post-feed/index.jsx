@@ -41,7 +41,6 @@ class PostFeed extends Component {
     this.setState({
       cancelToken,
     });
-    console.log(this.props.getCreatedOnly)
     this.props.loadInitialPosts(cancelToken.token, this.props.postType, this.props.searchString, this.props.profileFilter);
   }
 
