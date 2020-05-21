@@ -304,7 +304,7 @@ const styles = (theme) => ({
     opacity: 1,
   },
   commentButtonParent: {
-    paddingBottom: '3.5px',
+    paddingBottom: 2,
   },
   parent: {
     position: 'relative',
@@ -329,7 +329,7 @@ const styles = (theme) => ({
     },
   },
   questionIcon: {
-    marginBottom: '-7px',
+    marginBottom: '-8px',
     width: '0.7em',
   },
   replyBox: {
