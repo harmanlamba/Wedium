@@ -8,6 +8,7 @@ import Home from './components/home';
 import CreatePost from './components/create-post';
 import PostDetail from './components/post-detail';
 import Profile from './components/profile';
+import PageNotFound from './components/page-error';
 
 export const App = () => {
   return (
@@ -25,10 +26,8 @@ export const App = () => {
               <PostDetail />
             </Route>
             <Route exact path="/post/:postType" component={Home} />
-            <Route exact path="/profile" component={Profile}/>
-            <Route path="*">
-              <h1>Page not found</h1>
-            </Route>
+            <Route exact path="/profile" component={Profile} />
+            <Route path="*" component={PageNotFound} />
           </Switch>
         </Router>
       </Provider>
