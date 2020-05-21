@@ -12,8 +12,8 @@ import { withStyles } from '@material-ui/core/styles';
 // Components
 import Header from '../header';
 import PostDetailInfo from './post-detail-info';
-import PostCommentBox from './post-comment-box';
-import PostCommentFeed from './post-comment-feed';
+import PostCommentBox from './comment/post-comment-box';
+import PostCommentFeed from './comment/post-comment-feed';
 
 class PostDetail extends Component {
   constructor(props) {

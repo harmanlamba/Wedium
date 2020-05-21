@@ -20,7 +20,7 @@ namespace WediumAPI.Services
             _db = database;
         }
 
-        public IEnumerable<CommentDto> GetCommentsForPost(int postId)
+        public IEnumerable<CommentDto> GetCommentsForPost(int postId, int? userId)
         {
             Post post = _db.Post.FirstOrDefault(p => p.PostId == postId) ?? throw new PostNotFoundException();
 
@@ -29,9 +29,11 @@ namespace WediumAPI.Services
                 .Include(c => c.User)
                 .Include(c => c.InverseParentComment)
                 .ThenInclude(c => c.User)
-                .Include(c => c.CommentType);
+                .ThenInclude(c => c.CommentLike)
+                .Include(c => c.CommentType)
+                .Include(c => c.CommentLike);   
 
-            return CommentMapper.ToDto(commentListQuery);
+            return CommentMapper.ToDto(commentListQuery, userId);
         }
 
         public (CommentDto commentDto, PostDto post) CreateComment(CommentDto commentDto, int? userId)
@@ -53,7 +55,7 @@ namespace WediumAPI.Services
                 .Include(c => c.CommentType)
                 .First();
           
-            return (CommentMapper.ToDto(commentWithJoin), PostMapper.ToDtoPostUrl(post));
+            return (CommentMapper.ToDto(commentWithJoin, userId), PostMapper.ToDtoPostUrl(post));
         }
 
         public bool CheckExists(int commentId)
