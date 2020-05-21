@@ -3,8 +3,9 @@ import moment from 'moment';
 import parse from 'html-react-parser';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
-import { postComment } from '../../redux/actions/thunk/comment-thunk';
-import RichTextBox from '../rich-text-box/index';
+import { postComment } from '../../../redux/actions/thunk/comment-thunk';
+import RichTextBox from '../../rich-text-box/index';
+import CommentLike from './comment-like';
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -108,9 +109,13 @@ const CommentCard = (props) => {
             )}
           </IconButton>
         ) : null}
-        <IconButton aria-label="Like button" size="small">
-          <FavoriteIcon fontSize="small" />
-        </IconButton>
+        {console.log(comment)}
+        <CommentLike
+          numberOfLikes={comment.numberOfLikes}
+          commentId={comment.commentId}
+          parentCommentId={comment.parentCommentId}
+          isCommentLiked={comment.isCommentLiked}
+        />
       </div>
 
       <CardContent className={classes.contentCard}>

@@ -21,7 +21,11 @@ namespace WediumAPI.Mappers
                 ParentCommentId = comment.ParentCommentId,
                 Body = comment.Body,
                 CommentTypeId = comment.CommentTypeId,
-                InverseParentComment = ToDto(comment.InverseParentComment.Reverse())
+                InverseParentComment = ToDto(comment.InverseParentComment.Reverse()),
+
+                // Comment Like
+                NumberOfLikes = comment.CommentLike.Count,
+                IsCommentLiked = (comment.UserId != -1) ? (bool?)comment.CommentLike.Any(c => c.UserId == comment.UserId) : null,
             };
         }
 

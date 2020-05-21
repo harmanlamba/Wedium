@@ -29,7 +29,9 @@ namespace WediumAPI.Services
                 .Include(c => c.User)
                 .Include(c => c.InverseParentComment)
                 .ThenInclude(c => c.User)
-                .Include(c => c.CommentType);
+                .ThenInclude(c => c.CommentLike)
+                .Include(c => c.CommentType)
+                .Include(c => c.CommentLike);   
 
             return CommentMapper.ToDto(commentListQuery);
         }

@@ -5,6 +5,8 @@ import {
     ADD_COMMENT,
     LOAD_ADD_COMMENT,
     LOAD_ADD_REPLY,
+    LIKE_COMMENT,
+    UNLIKE_COMMENT
 } from '../action-types/action-types';
 
 const INIT_COMMENT_REDUCER_STATE = {
@@ -52,21 +54,98 @@ export default (state = INIT_COMMENT_REDUCER_STATE, action) => {
                     comments: modifiedState,
                     isLoadingAddReply: false,
                 };
+            };
+
+        case LOAD_ADD_COMMENT:
+            return {
+                ...state,
+                isLoadingAddComment: true,
+            };
+
+        case LOAD_ADD_REPLY:
+            return {
+                ...state,
+                isLoadingAddReply: true,
+            };
+
+        case LIKE_COMMENT:
+            const editedLikedComments = [...state.comments];
+
+            if (action.commentIds.parentCommentId === null) {
+                const likedCommentIndex = editedLikedComments.findIndex(
+                    (c) => c.commentId === action.commentIds.commentId
+                );
+
+                if (
+                    likedCommentIndex !== -1 &&
+                    editedLikedComments.length &&
+                    editedLikedComments[likedCommentIndex]
+                ) {
+                    editedLikedComments[likedCommentIndex].isCommentLiked = true;
+                    editedLikedComments[likedCommentIndex].numberOfLikes += 1;
+                }
+            } else {
+                const likedParentCommentIndex = editedLikedComments.findIndex(
+                    (c) => c.commentId === action.commentIds.parentCommentId
+                );
+
+                const likedChildCommentIndex = editedLikedComments[likedParentCommentIndex].inverseParentComment
+                    .findIndex(
+                        (c) => c.commentId === action.commentIds.commentId
+                    );
+
+                if (likedChildCommentIndex !== -1 &&
+                    editedLikedComments[likedParentCommentIndex].inverseParentComment.length) {
+                    editedLikedComments[likedParentCommentIndex].inverseParentComment[likedChildCommentIndex].isCommentLiked = true;
+                    editedLikedComments[likedParentCommentIndex].inverseParentComment[likedChildCommentIndex].numberOfLikes += 1;
+                }
             }
 
-            case LOAD_ADD_COMMENT:
-                return {
-                    ...state,
-                    isLoadingAddComment: true,
-                };
+            return {
+                ...state,
+                comments: editedLikedComments,
+            };
 
-            case LOAD_ADD_REPLY:
-                return {
-                    ...state,
-                    isLoadingAddReply: true,
-                };
 
-            default:
-                return state;
+        case UNLIKE_COMMENT:
+            const editedUnlikedComments = [...state.comments];
+
+            if (action.commentIds.parentCommentId === null) {
+                const unlikedCommentIndex = editedUnlikedComments.findIndex(
+                    (c) => c.commentId === action.commentIds.commentId
+                );
+
+                if (
+                    unlikedCommentIndex !== -1 &&
+                    editedUnlikedComments.length &&
+                    editedUnlikedComments[unlikedCommentIndex]
+                ) {
+                    editedUnlikedComments[unlikedCommentIndex].isCommentLiked = false;
+                    editedUnlikedComments[unlikedCommentIndex].numberOfLikes -= 1;
+                }
+            } else {
+                const unlikedParentCommentIndex = editedUnlikedComments.findIndex(
+                    (c) => c.commentId === action.commentIds.parentCommentId
+                );
+
+                const unlikedChildCommentIndex = editedUnlikedComments[unlikedParentCommentIndex].inverseParentComment
+                    .findIndex(
+                        (c) => c.commentId === action.commentIds.commentId
+                    );
+
+                if (unlikedChildCommentIndex !== -1 &&
+                    editedUnlikedComments[unlikedParentCommentIndex].inverseParentComment.length) {
+                    editedUnlikedComments[unlikedParentCommentIndex].inverseParentComment[unlikedChildCommentIndex].isCommentLiked = false;
+                    editedUnlikedComments[unlikedParentCommentIndex].inverseParentComment[unlikedChildCommentIndex].numberOfLikes -= 1;
+                }
+            }
+
+            return {
+                ...state,
+                comments: editedUnlikedComments,
+            };
+
+        default:
+            return state;
     }
 };
