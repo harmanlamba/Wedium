@@ -29,7 +29,7 @@ namespace WediumAPI.Controllers
         public ActionResult<IEnumerable<CommentDto>> GetCommentsForPost(int postId)
         {
             ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-            int userId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int? userId = TryGetUserId(identity); 
 
             IEnumerable<CommentDto> comments;
 
@@ -65,6 +65,14 @@ namespace WediumAPI.Controllers
             }
 
             return Created($"/post/{postDto.PostType}/{postDto.PostId}/{postDto.Title}#{serviceCommentDto.CommentId}", serviceCommentDto);
+        }
+
+        private int? TryGetUserId(ClaimsIdentity identity)
+        {
+            Claim claim = identity.FindFirst(ClaimTypes.NameIdentifier);
+            int? userId = claim == null ? null : (int?)int.Parse(claim.Value);
+
+            return userId;
         }
     }
 }
