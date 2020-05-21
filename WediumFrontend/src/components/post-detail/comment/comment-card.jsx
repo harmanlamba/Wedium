@@ -227,6 +227,7 @@ const CommentCard = (props) => {
           ? comment.inverseParentComment.map((comment) => {
               return (
                 <CommentCard
+                  user={props.user}
                   comment={comment}
                   key={comment.commentId}
                   classes={classes}
