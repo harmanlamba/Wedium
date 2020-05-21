@@ -119,6 +119,7 @@ const CommentCard = (props) => {
         </Grid>
         <Grid item>
           <CommentLike
+            user={props.user}
             numberOfLikes={comment.numberOfLikes}
             commentId={comment.commentId}
             parentCommentId={comment.parentCommentId}

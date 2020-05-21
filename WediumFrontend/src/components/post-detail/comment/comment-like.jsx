@@ -48,7 +48,7 @@ const CommentLike = (props) => {
         </Alert>
       </Snackbar>
 
-      {props.isCommentLiked !== null ? (
+      {props.isCommentLiked !== null && props.user.isAuthenticated === true ? (
         <Button onClick={() => onButtonClick()}>
           {props.isCommentLiked ? (
             <FavoriteIcon className={classes.likedIcon} fontSize="small" />
@@ -87,7 +87,7 @@ const styles = (theme) => ({
     opacity: 0.3,
   },
   likedIcon: {
-    opacity: 0.8,
+    opacity: 0.7,
   },
 });
 
