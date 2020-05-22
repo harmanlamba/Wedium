@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
   },
   articleBody: {
-    borderLeft: '#0047ff solid 3px',
+    borderLeft: '#3b49df solid 3px',
     paddingLeft: 20,
     '& blockquote': {
       borderLeft: '#000 solid 3px',
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   showAllTag: {
-    backgroundColor: '#0047ff',
+    backgroundColor: '#3b49df',
     color: '#fff',
     fontSize: '0.85em',
     padding: '3px 5px 3px 5px',

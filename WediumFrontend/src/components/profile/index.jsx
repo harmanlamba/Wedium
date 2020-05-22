@@ -118,9 +118,13 @@ const styles = (theme) => ({
   },
   tabs: {
     borderRadius: 0,
-    padding: '10px 10px 0 10px',
+    padding: '0 10px 0 10px',
     marginBottom: 16,
     backgroundColor: 'white',
+    '& span': {
+      fontSize: '18px !important',
+      fontWeight: 800,
+    },
   },
 });
 

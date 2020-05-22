@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
+    backgroundColor: '#fff',
   },
   titleButton: {
     fontSize: '1.25em',
@@ -60,10 +61,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent !important',
   },
   title: {
-    marginLeft: 10,
-  },
-  appBar: {
-    padding: '5px 0',
+    marginLeft: 3,
+    color: '#000',
   },
 }));
 

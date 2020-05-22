@@ -284,7 +284,7 @@ const styles = (theme) => ({
       margin: '2px 0 !important',
     },
     '& blockquote': {
-      borderLeft: '#0047ff solid 3px',
+      borderLeft: '#3b49df solid 3px',
       paddingLeft: 10,
       margin: '5px 10px',
     },
@@ -312,7 +312,7 @@ const styles = (theme) => ({
   },
   child: {
     padding: '5px 0',
-    borderLeft: '3px solid #0047ff',
+    borderLeft: '3px solid #3b49df',
   },
   childContainer: {
     paddingLeft: '3.5em',
@@ -322,7 +322,7 @@ const styles = (theme) => ({
     bottom: 7,
     left: 15,
     '& span': {
-      backgroundColor: '#0047ff',
+      backgroundColor: '#3b49df',
       color: '#fff',
       borderRadius: 5,
       padding: '0px 4px 3px 3px',

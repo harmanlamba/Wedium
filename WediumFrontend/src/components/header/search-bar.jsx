@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '40%',
     borderRadius: 12,
+    border: '2px solid #000',
     '&:hover': {
       backgroundColor: fade(theme.palette.common.black, 0.05),
     },
@@ -89,14 +90,14 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     [`& fieldset`]: {
-      borderRadius: 12,
+      borderRadius: 8,
     },
     '&:hover': {
       borderColor: fade(theme.palette.common.black, 0.03),
     },
   },
   searchIcon: {
-    opacity: 0.5,
+    opacity: 0.9,
     marginLeft: 8,
   },
 }));

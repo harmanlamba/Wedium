@@ -92,7 +92,7 @@ const styles = (theme) => ({
     fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
   textLimitOverflow: {
-    color: '#0047ff',
+    color: '#3b49df',
   },
   quill: {
     '& .ql-toolbar': {

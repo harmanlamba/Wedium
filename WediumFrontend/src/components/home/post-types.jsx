@@ -55,15 +55,11 @@ const PostTypes = (props) => {
 
   return (
     <div>
-      <Divider light={true} />
-      <br />
       {listItems.length <= 1 ? (
         ''
       ) : (
         <List className={classes.list}>{listItems}</List>
       )}
-      <br />
-      <Divider light={true} />
     </div>
   );
 };
@@ -73,19 +69,22 @@ const styles = (theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     backgroundColor: 'transparent !important',
-    margin: '0 8px',
+    margin: '0 15px',
     width: '105%',
+    padding: '15px 0',
+    borderTop: '2px solid #000 !important',
+    borderBottom: '2px solid #000 !important',
   },
   toggleButton: {
     margin: '2px',
-    border: '1px solid #c4c4c4 !important',
+    border: '2px solid #e8e8e8 !important',
     borderRadius: '30px !important',
     padding: '8px 16px',
     width: 'fit-content',
     backgroundColor: '#fff',
   },
   active: {
-    backgroundColor: '#0047ff !important',
+    backgroundColor: '#3b49df !important',
     color: '#fff !important',
   },
 });

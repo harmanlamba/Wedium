@@ -8,7 +8,7 @@ import { ThemeProvider } from '@material-ui/styles';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#0047ff' },
+    primary: { main: '#3b49df' },
   },
   typography: {
     fontFamily: ['Roboto', 'sans-serif'].join(','),
@@ -23,6 +23,7 @@ const theme = createMuiTheme({
     button: {
       fontWeight: 600,
       fontSize: 15,
+      textTransform: 'none',
     },
     subtitle2: {
       fontWeight: 700,

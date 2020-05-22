@@ -182,7 +182,7 @@ const styles = (theme) => ({
   },
   commentTypeButtonSelected: {
     opacity: 1,
-    color: '#0047ff',
+    color: '#3b49df',
   },
   commentTypeIcon: {
     marginLeft: 5,

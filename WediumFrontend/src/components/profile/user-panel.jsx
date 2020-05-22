@@ -36,9 +36,8 @@ const UserPanel = (props) => {
   return (
     !userStatsLoading && (
       <div>
-        <Divider light={true} />
-        <br />
         <Grid
+          className={classes.profile}
           container
           direction="column"
           justify="center"
@@ -84,14 +83,17 @@ const UserPanel = (props) => {
             <LikedIcon />
           </div>
         </Grid>
-        <br />
-        <Divider light={true} />
       </div>
     )
   );
 };
 
 const styles = (theme) => ({
+  profile: {
+    padding: '15px 0',
+    borderTop: '2px solid #000 !important',
+    borderBottom: '2px solid #000 !important',
+  },
   avatarSize: {
     width: theme.spacing(14),
     height: theme.spacing(14),

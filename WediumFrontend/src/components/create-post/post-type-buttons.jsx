@@ -58,11 +58,12 @@ const styles = (theme) => ({
   },
   toggleButton: {
     margin: '0 5px 5px 0',
-    border: '1px solid #c4c4c4 !important',
+    border: '2px solid #c4c4c4 !important',
     borderRadius: '50px !important',
+    color: '#000 !important',
   },
   selected: {
-    backgroundColor: '#0047ff !important',
+    backgroundColor: '#3b49df !important',
     color: '#fff !important',
   },
 });

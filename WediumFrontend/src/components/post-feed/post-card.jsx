@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0px !important',
   },
   postType: {
-    backgroundColor: '#0047ff',
+    backgroundColor: '#3b49df',
     color: '#fff',
     padding: '1px 4px',
     borderRadius: 5,
