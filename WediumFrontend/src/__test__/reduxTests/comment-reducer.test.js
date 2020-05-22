@@ -22,7 +22,7 @@ it("check initial store state", () => {
 });
 
 it("check load comments", () => {
-    let comments = [{
+    const comments = [{
         body: "This is a comment",
         commentId: 1,
         commentTypeId: 1,
@@ -41,7 +41,7 @@ it("check load comments", () => {
 });
 
 it("check load child comment", () => {
-    let comments = [{
+    const comments = [{
         body: "This is a parent comment",
         commentId: 1,
         commentTypeId: 1,
@@ -70,7 +70,7 @@ it("check load child comment", () => {
 });
 
 it("check add comment", () => {
-    let comments = [{
+    const comments = [{
         body: "This is a comment",
         commentId: 1,
         commentTypeId: 1,
@@ -84,7 +84,7 @@ it("check add comment", () => {
     store.dispatch(loadCommentsSuccess(comments));
 
     // Add comment
-    let commentToAdd = {
+    const commentToAdd = {
         body: "This is a comment",
         commentId: 2,
         commentTypeId: 1,
@@ -102,7 +102,7 @@ it("check add comment", () => {
 });
 
 it("check add child comment", () => {
-    let comments = [{
+    const comments = [{
         body: "This is a comment",
         commentId: 1,
         commentTypeId: 1,
@@ -116,7 +116,7 @@ it("check add child comment", () => {
     store.dispatch(loadCommentsSuccess(comments));
 
     // Add comment
-    let childCommentToAdd = {
+    const childCommentToAdd = {
         body: "This is a comment",
         commentId: 2,
         commentTypeId: 1,
@@ -135,5 +135,7 @@ it("check add child comment", () => {
 });
 
 it("check load comment on error", () => {
-    // TODO
+    store.dispatch(loadCommentsError("Error message"));
+
+    expect(store.getState().comment.comments.length).toBe(0);
 });
