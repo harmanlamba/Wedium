@@ -41,7 +41,7 @@ const Profile = (props) => {
   const { classes } = props;
   const history = useHistory();
 
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(null);
 
   function a11yProps(index) {
     return {
@@ -52,6 +52,7 @@ const Profile = (props) => {
 
   useEffect(() => {
     props.tryLogin();
+    setTabValue(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,27 +70,30 @@ const Profile = (props) => {
         justify="center"
         alignItems="flex-start"
       >
-        <Grid item xs={6}>
-          <Tabs 
-            value={tabValue} 
-            onChange={(event, newValue) => setTabValue(newValue)}
-            indicatorColor="primary"
-            className={classes.tabs}>
-            
-            <Tab label="Created Posts" {...a11yProps(0)} />
-            <Tab label="Saved Posts" {...a11yProps(1)} />
-            <Tab label="Liked Posts" {...a11yProps(2)} />
-          </Tabs>
-          <TabPanel value={tabValue} index={0}>
-            <PostFeed profileFilter={{getCreatedOnly: true}} />
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <PostFeed profileFilter={{getFavouritesOnly: true}} />
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            <PostFeed profileFilter={{getPostLikesOnly: true}} />
-          </TabPanel>
-        </Grid>
+        {
+          tabValue !== null && 
+          <Grid item xs={6}>
+            <Tabs 
+              value={tabValue} 
+              onChange={(event, newValue) => setTabValue(newValue)}
+              indicatorColor="primary"
+              className={classes.tabs}>
+              
+              <Tab label="Created Posts" {...a11yProps(0)} />
+              <Tab label="Saved Posts" {...a11yProps(1)} />
+              <Tab label="Liked Posts" {...a11yProps(2)} />
+            </Tabs>
+            <TabPanel value={tabValue} index={0}>
+              <PostFeed profileFilter={{getCreatedOnly: true}} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              <PostFeed profileFilter={{getFavouritesOnly: true}} />
+            </TabPanel>
+            <TabPanel value={tabValue} index={2}>
+              <PostFeed profileFilter={{getPostLikesOnly: true}} />
+            </TabPanel>
+          </Grid>
+        }
         <Grid item xs={2} className={classes.sidebar}>
           <UserPanel user={user} />
         </Grid>

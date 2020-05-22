@@ -28,7 +28,7 @@ export const loadPostsSuccess = (posts) => {
     }
 }
 
-export const loadMorePostsSuccess = (posts,) => {
+export const loadMorePostsSuccess = (posts, ) => {
     return {
         type: LOAD_MORE_POSTS_SUCCESS,
         posts,
@@ -45,6 +45,13 @@ export const loadPostsError = (err) => {
 export const likePost = (postId) => {
     return {
         type: LIKE_POST,
+        postId,
+    }
+}
+
+export const unlikePost = (postId) => {
+    return {
+        type: UNLIKE_POST,
         postId,
     }
 }
@@ -66,13 +73,6 @@ export const postDetailDirectNavigationError = (err) => {
     return {
         type: POST_DETAIL_DIRECT_NAVIGATION_ERROR,
         err,
-    }
-}
-
-export const unlikePost = (postId) => {
-    return {
-        type: UNLIKE_POST,
-        postId,
     }
 }
 
