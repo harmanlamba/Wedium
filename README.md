@@ -1,6 +1,6 @@
 # Wedium
-![.github/workflows/dotnetcore.yml](https://github.com/harmanlamba/Wedium/workflows/.github/workflows/dotnetcore.yml/badge.svg)
-![Node.js CI](https://github.com/harmanlamba/Wedium/workflows/Node.js%20CI/badge.svg)
+![.github/workflows/dotnetcore.yml](https://github.com/harmanlamba/Wedium/workflows/.github/workflows/dotnetcore.yml/badge.svg?branch=master)
+![Node.js CI](https://github.com/harmanlamba/Wedium/workflows/Node.js%20CI/badge.svg?branch=master)
 
 A social media platform built around Wikipedia.
 
