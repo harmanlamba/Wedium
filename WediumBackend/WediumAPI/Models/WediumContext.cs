@@ -33,18 +33,6 @@ namespace WediumAPI.Models
             {
                 entity.ToTable("Comment", "WDM");
 
-                entity.HasIndex(e => e.CommentTypeId)
-                    .HasName("IX_FK_Comment_CommentType");
-
-                entity.HasIndex(e => e.ParentCommentId)
-                    .HasName("IX_FK_Comment_Comment");
-
-                entity.HasIndex(e => e.PostId)
-                    .HasName("IX_FK_Comment_Post");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_FK_Comment_User");
-
                 entity.Property(e => e.CommentId).HasColumnName("CommentID");
 
                 entity.Property(e => e.Body)
@@ -88,12 +76,6 @@ namespace WediumAPI.Models
             modelBuilder.Entity<CommentLike>(entity =>
             {
                 entity.ToTable("CommentLike", "WDM");
-
-                entity.HasIndex(e => e.CommentId)
-                    .HasName("IX_FK_CommentLike_Comment");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_FK_CommentLike_User");
 
                 entity.HasIndex(e => new { e.CommentId, e.UserId })
                     .HasName("UQ_CommentLike_CommentID_UserID")
@@ -139,12 +121,6 @@ namespace WediumAPI.Models
             {
                 entity.ToTable("Favourite", "WDM");
 
-                entity.HasIndex(e => e.PostId)
-                    .HasName("IX_FK_Favourite_Post");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_FK_Favourite_User");
-
                 entity.HasIndex(e => new { e.PostId, e.UserId })
                     .HasName("UQ_Favourite_PostID_UserID")
                     .IsUnique();
@@ -173,15 +149,6 @@ namespace WediumAPI.Models
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.ToTable("Post", "WDM");
-
-                entity.HasIndex(e => e.PostTypeId)
-                    .HasName("IX_FK_Post_PostType");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_FK_Post_User");
-
-                entity.HasIndex(e => e.WikiArticleId)
-                    .HasName("IX_FK_Post_WikiArticle");
 
                 entity.Property(e => e.PostId).HasColumnName("PostID");
 
@@ -221,12 +188,6 @@ namespace WediumAPI.Models
             modelBuilder.Entity<PostLike>(entity =>
             {
                 entity.ToTable("PostLike", "WDM");
-
-                entity.HasIndex(e => e.PostId)
-                    .HasName("IX_FK_PostLike_Post");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_FK_PostLike_User");
 
                 entity.HasIndex(e => new { e.PostId, e.UserId })
                     .HasName("UQ_PostLike_PostID_UserID")
