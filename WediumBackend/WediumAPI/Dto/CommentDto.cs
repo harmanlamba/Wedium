@@ -16,5 +16,9 @@ namespace WediumAPI.Dto
         public string Body { get; set; }
         public int CommentTypeId { get; set; }
         public IEnumerable<CommentDto> InverseParentComment { get; set; }
+
+        // PostLike
+        public int NumberOfLikes { get; set; }
+        public bool? IsCommentLiked { get; set; }
     }
 }

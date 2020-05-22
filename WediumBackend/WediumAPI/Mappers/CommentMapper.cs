@@ -9,7 +9,7 @@ namespace WediumAPI.Mappers
 {
     public class CommentMapper
     {
-        public static CommentDto ToDto(Comment comment)
+        public static CommentDto ToDto(Comment comment, int? userId)
         {
             return new CommentDto
             {
@@ -21,13 +21,17 @@ namespace WediumAPI.Mappers
                 ParentCommentId = comment.ParentCommentId,
                 Body = comment.Body,
                 CommentTypeId = comment.CommentTypeId,
-                InverseParentComment = ToDto(comment.InverseParentComment.Reverse())
+                InverseParentComment = ToDto(comment.InverseParentComment.Reverse(), userId),
+
+                // Comment Like
+                NumberOfLikes = comment.CommentLike.Count,
+                IsCommentLiked = (userId != -1) ? (bool?)comment.CommentLike.Any(c => c.UserId == userId) : null,
             };
         }
 
-        public static IEnumerable<CommentDto> ToDto(IEnumerable<Comment> commentList)
+        public static IEnumerable<CommentDto> ToDto(IEnumerable<Comment> commentList, int? userId)
         {
-            return commentList.Select(c => ToDto(c));
+            return commentList.Select(c => ToDto(c, userId));
         }
 
         public static Comment FromDto(CommentDto commentDto)
