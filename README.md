@@ -1,4 +1,4 @@
-# Wedium
+# Wedium ![](https://media.discordapp.net/attachments/688842397022421050/713713863488569404/cake3.png)
 ![.github/workflows/dotnetcore.yml](https://github.com/harmanlamba/Wedium/workflows/.github/workflows/dotnetcore.yml/badge.svg?branch=master)
 ![Node.js CI](https://github.com/harmanlamba/Wedium/workflows/Node.js%20CI/badge.svg?branch=master)
 
@@ -15,6 +15,10 @@ Influenced by forum-based apps such as Reddit, and Medium, in combination with a
 * **Quoting Text**: See some text in the article worthy of a comment. Simply highlight the text to quote it. Your comments can be formatted/styled how you want it with the use of Wedium's quirky comment box; it supports bold, italics, quoting, links bulletpoints and more.
 * **Viewing Profile**: Wedium users can view their recent activity, including recently liked, saved and created posts.
 * **Secure Authentication**: Wedium uses Google Authentication to manage authentication.
+
+## Screenshots
+![](https://media.discordapp.net/attachments/688842397022421050/713707932302180413/wedium1.gif?width=709&height=351)
+![](https://media.discordapp.net/attachments/688842397022421050/713707938375532614/wedium2.gif?width=709&height=351)
 
 ## Prerequisites
 * Ensure you have installed the `.NET Core 3.1` SDK. If using Visual Studio, also ensure the `ASP.NET and Web Development Tools` package is installed.
@@ -35,18 +39,18 @@ _We recommend the usage of Visual Studio for the development of the backend and 
 4. Run `npm run start` in the command line tool to start the React development server.
 5. The default internet browser will redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend.
 
+### Database
+_Contact a team member to obtain details regarding the database._
+
 ## Testing Wedium
-## Backend Testing
+### Backend Testing
 1. Find and open `WediumBackend.sln` in `./WediumBackend`.
 2. Ensure the Test Explorer window is open (Test > Test Explorer).
 3. Find `WediumTestSuite` in the solution explorer. Right click the project and select `Run Tests`.
 
-## Frontend Testing
+### Frontend Testing
 1. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool.
 2. Run `npm run test` in the command line tool.
-
-### Database
-_Contact a team member to obtain details regarding the database._
 
 ## Wedium Documentation
 We're using [GitHub Wiki](https://github.com/harmanlamba/Wedium/wiki) to document Wedium's development.
