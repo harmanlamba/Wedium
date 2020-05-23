@@ -1,11 +1,17 @@
-import { login, logout } from '../auth-actions';
-import { authTokenIsValid } from '../../../services/auth-service';
-import { postOneTimeToken } from "../../../apis/auth";
+import {
+    login,
+    logout
+} from '../auth-actions';
+import {
+    authTokenIsValid
+} from '../../../services/auth-service';
+import {
+    postOneTimeToken
+} from "../../../apis/auth";
 
 export const tryLogin = (user) => {
     // If a valid login session exists, dispatch login with the user information from local storage
     const storedUser = JSON.parse(localStorage.getItem("user"));
-
     if (storedUser && authTokenIsValid(storedUser.jwtToken)) {
         const userInfo = {
             "jwtToken": storedUser.jwtToken,
@@ -30,8 +36,9 @@ export const tryLogin = (user) => {
 
 export const logoutUser = () => {
     return dispatch => {
+        // Remove user from local storage in browser
         localStorage.removeItem("user");
-        
+
         dispatch(logout());
 
         window.location.reload();
@@ -40,6 +47,7 @@ export const logoutUser = () => {
 
 export const sendTokenAndLogin = (tokenBlob) => {
     return dispatch => {
+        // Update user information if tokenBlob is received successfully
         postOneTimeToken(tokenBlob)
             .then(user => {
                 const userInfo = {
@@ -51,6 +59,7 @@ export const sendTokenAndLogin = (tokenBlob) => {
                     "isAuthenticated": true,
                 }
 
+                // Set user given user's info in local storage in browser
                 localStorage.setItem("user", JSON.stringify(userInfo));
 
                 dispatch(login(userInfo));

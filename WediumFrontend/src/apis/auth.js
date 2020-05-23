@@ -2,6 +2,11 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+/**
+ * Make user login request to backend through tokenBlob.
+ * Where tokenBlob is the response received from google auth response button
+ * in components 
+ */
 export const postOneTimeToken = (tokenBlob) => {
     const endpoint = "/api/user/google";
 
@@ -18,6 +23,9 @@ export const postOneTimeToken = (tokenBlob) => {
         .catch(error => console.log("Axios error message (postToken): " + error.message));
 }
 
+/**
+ * Check user given jwt token in backend
+ */
 export const checkJWTToken = (tokenJSON) => {
     const endpoint = "/api/user";
     const tokenJSONConfig = {

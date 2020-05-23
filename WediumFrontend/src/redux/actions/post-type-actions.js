@@ -14,6 +14,7 @@ export const loadPostTypesSuccess = (postTypes) => {
 
     const storedPostTypes = JSON.parse(localStorage.getItem("postTypes"));
 
+    // If store post types are already fetched and stored, load stored state
     if (storedPostTypes) {
         return {
             type: LOAD_POST_TYPES_SUCCESS,
@@ -21,6 +22,7 @@ export const loadPostTypesSuccess = (postTypes) => {
         }
     }
 
+    // Else cache post types
     localStorage.setItem("postTypes", JSON.stringify(postTypes));
     return {
         type: LOAD_POST_TYPES_SUCCESS,

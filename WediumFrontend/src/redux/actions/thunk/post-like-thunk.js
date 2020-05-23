@@ -1,15 +1,18 @@
-import { 
-    likePost, 
-    unlikePost 
+import {
+    likePost,
+    unlikePost
 } from '../post-actions';
-import { 
-    likePostRequest, 
-    unlikePostRequest 
+import {
+    likePostRequest,
+    unlikePostRequest
 } from '../../../apis/post-like';
 
 export const tryLikePost = (postId, errorCallback) => {
     return dispatch => {
+        // Update state to like a post 
         dispatch(likePost(postId));
+
+        // Make request to create like entry for a post
         likePostRequest(postId)
             .then(
                 status => {
@@ -18,8 +21,9 @@ export const tryLikePost = (postId, errorCallback) => {
                         errorCallback();
                     }
                 },
-                
+
                 error => {
+                    // If error on request, update state to unlike a post
                     dispatch(unlikePost(postId));
                     errorCallback();
                 }
@@ -29,7 +33,10 @@ export const tryLikePost = (postId, errorCallback) => {
 
 export const tryUnlikePost = (postId, errorCallback) => {
     return dispatch => {
+        // Update state to unlike a post 
         dispatch(unlikePost(postId));
+
+        // Make request to delete like entry for a post
         unlikePostRequest(postId)
             .then(
                 status => {
@@ -40,6 +47,7 @@ export const tryUnlikePost = (postId, errorCallback) => {
                 },
 
                 error => {
+                    // If error on request, update state to like a post
                     dispatch(likePost(postId));
                     errorCallback();
                 }
