@@ -6,6 +6,7 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 // Components
@@ -42,6 +43,11 @@ const Home = (props) => {
         justify="center"
         alignItems="flex-start"
       >
+        <Grid className={classes.feedTitle} item xs={8}>
+          <Typography className={classes.commentTitle} variant="h6">
+            Post Feed
+          </Typography>
+        </Grid>
         <Grid item xs={6}>
           {searchString !== undefined && (
             <SearchResultLabel
@@ -49,7 +55,11 @@ const Home = (props) => {
               postType={currentPostType}
             />
           )}
-          <PostFeed postType={currentPostType} searchString={searchString} getFavouritesOnly={false} />
+          <PostFeed
+            postType={currentPostType}
+            searchString={searchString}
+            getFavouritesOnly={false}
+          />
         </Grid>
 
         <Grid item xs={2} className={classes.sidebar}>
@@ -74,6 +84,15 @@ const styles = (theme) => ({
   sidebar: {
     position: 'sticky',
     top: 40,
+  },
+  feedTitle: {
+    paddingTop: '0px !important',
+    padingBottom: '0px !important',
+    marginBottom: '-10px',
+    '& h6': {
+      borderLeft: '5px solid black',
+      paddingLeft: 10,
+    },
   },
 });
 

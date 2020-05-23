@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import AccessibleForwardIcon from '@material-ui/icons/AccessibleForward';
+import AccessibilityIcon from '@material-ui/icons/Accessibility';
 
 const Home = (props) => {
   const { classes } = props;
@@ -35,7 +35,7 @@ const Home = (props) => {
           <Card>
             <CardContent>
               <Typography variant="h1" component="h2" align="center">
-                O<AccessibleForwardIcon className={classes.chair} />
+                O<AccessibilityIcon className={classes.chair} />
                 PS!
               </Typography>
               <Typography variant="h5" component="h2" align="center">
