@@ -21,6 +21,10 @@ namespace WediumAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Gets the list of PostTypes
+        /// </summary>
+        /// <returns></returns> Ok with the post types in the body of the request
         [AllowAnonymous]
         [HttpGet]
         public ActionResult<List<PostTypeDto>> Get()

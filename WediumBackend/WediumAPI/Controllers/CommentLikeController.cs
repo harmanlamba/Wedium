@@ -23,6 +23,12 @@ namespace WediumAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// The endpoint creates comment likes given a commentLikeDto object
+        /// </summary>
+        /// <param name="commentLikeDto"></param>
+        /// <returns></returns> Ok in the case the comment was sucessfully liked, and a Not Found in the case 
+        /// the comment was not found
         [Authorize]
         [HttpPost("Post")]
         public IActionResult Create([FromBody]CommentLikeDto commentLikeDto)
@@ -46,6 +52,12 @@ namespace WediumAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// The endpoint deletes/removes a comment like from the comment given the commentLikeDto
+        /// </summary>
+        /// <param name="commentLikeDto"></param>
+        /// <returns></returns> Ok in the case that the comment like was successfully deleted. No Content in the case
+        /// that comment like was not found, and Not Found in the case that the comment was not found
         [Authorize]
         [HttpPost("Delete")]
         public IActionResult Delete([FromBody]CommentLikeDto commentLikeDto)
