@@ -1,8 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import {
-    shallow
-} from 'enzyme';
+import { shallow } from 'enzyme';
 
 import UserMenu from '../../../components/header/user-menu';
 
