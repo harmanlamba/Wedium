@@ -28,4 +28,4 @@ jobs:
     - run: npm run build --if-present --prefix ./WediumFrontend/
     - run: npm test --prefix ./WediumFrontend/
       env:
-        CI: false
+        CI: true
