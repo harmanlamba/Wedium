@@ -42,7 +42,7 @@ const Profile = (props) => {
   const { classes } = props;
   const history = useHistory();
 
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(null);
 
   function a11yProps(index) {
     return {
@@ -53,6 +53,7 @@ const Profile = (props) => {
 
   useEffect(() => {
     props.tryLogin();
+    setTabValue(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
