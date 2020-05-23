@@ -30,6 +30,12 @@ namespace WediumAPI.Controllers
             _options = options.Value;
         }
 
+        /// <summary>
+        /// The endpoint posts the onetime token given by Google to return the UserDto which includes the 
+        /// Jwt Token for subsequent requests.
+        /// </summary>
+        /// <param name="oneTimeTokenDto"></param> The user's onetime token provided by Google Login
+        /// <returns></returns>Ok in the case that the Google Token was succesfully recieved.
         [AllowAnonymous]
         [HttpPost("google")]
         public ActionResult<UserDto> Google([FromBody]OneTimeTokenDto oneTimeTokenDto)
@@ -51,6 +57,10 @@ namespace WediumAPI.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// API endpoint supplies the UserDto of the user that made the request
+        /// </summary>
+        /// <returns></returns>Ok with the userDto in the body of the request
         [Authorize]
         [HttpGet]
         public ActionResult<UserDto> GetUserDto()
@@ -62,6 +72,10 @@ namespace WediumAPI.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// Returns a set of statistics about the User's activities on Wedium.
+        /// </summary>
+        /// <returns></returns> Ok with the stats of the user in the body of the request
         [Authorize]
         [HttpGet("Stats")]
         public ActionResult<UserStatsDto> GetUserStats()
