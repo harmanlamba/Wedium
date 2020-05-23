@@ -27,6 +27,8 @@ const Home = (props) => {
   const user = props.auth;
 
   const currentPostType = props.match.params.postType;
+
+  // Parses searchString query string out of url. Removes percent encoding.
   const searchString = qs.parse(props.location.search, {
     ignoreQueryPrefix: true,
   }).search;

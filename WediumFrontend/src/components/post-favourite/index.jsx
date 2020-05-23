@@ -18,6 +18,8 @@ const PostFavourite = (props) => {
   const { classes } = props;
   const [isOpenSnack, setIsOpenSnack] = useState(false);
 
+  // Appropriately favourite/unfavourite post on click. The thunk method for this performs action in 
+  // advanced and will alter state again if api request fails through callback.
   const onButtonClick = () => {
     if (props.isFavourited) {
       props.tryUnfavouritePost(props.postId, errorCallback);
@@ -26,6 +28,7 @@ const PostFavourite = (props) => {
     }
   };
 
+  // Callback for if request to favourite/unfavourite post failed. Shows alert.
   const errorCallback = () => {
     setIsOpenSnack(true);
   };

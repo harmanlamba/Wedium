@@ -19,6 +19,8 @@ const CommentLike = (props) => {
   const { classes } = props;
   const [isOpenSnack, setIsOpenSnack] = useState(false);
 
+  // Appropriately like/unlike comment on click. The thunk method for this performs action in 
+  // advanced and will alter state again if api request fails through callback.
   const onButtonClick = () => {
     const commentIds = {
       commentId: props.commentId,
@@ -32,6 +34,7 @@ const CommentLike = (props) => {
     }
   };
 
+  // Callback for if request to like/unlike comment failed. Shows alert.
   const errorCallback = () => {
     setIsOpenSnack(true);
   };

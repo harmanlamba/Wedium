@@ -19,6 +19,8 @@ const PostLike = (props) => {
   const { classes } = props;
   const [isOpenSnack, setIsOpenSnack] = useState(false);
 
+  // Appropriately likes/unlikes post on click. The thunk method for this performs action in 
+  // advanced and will alter state again if api request fails through callback.
   const onButtonClick = () => {
     if (props.isPostLiked) {
       props.tryUnlikePost(props.postId, errorCallback);
@@ -27,6 +29,7 @@ const PostLike = (props) => {
     }
   };
 
+  // Callback for if request to like/unlike post failed. Shows alert.
   const errorCallback = () => {
     setIsOpenSnack(true);
   };

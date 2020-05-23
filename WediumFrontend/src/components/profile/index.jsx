@@ -15,6 +15,9 @@ import Header from '../header';
 import UserPanel from './user-panel';
 import PostFeed from '../post-feed';
 
+// TabPanel component to choose which tab to display based on selected value.
+// Displays all child nodes within the component. Does not display child nodes
+// of any other tab.
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -52,6 +55,9 @@ const Profile = (props) => {
 
   useEffect(() => {
     props.tryLogin();
+
+    // TabValue initialized to null but set 0 to avoid bug involving profile request being sent
+    // on reload (even though refresh redirects to home page)
     setTabValue(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

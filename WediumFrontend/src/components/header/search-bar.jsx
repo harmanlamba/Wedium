@@ -17,12 +17,14 @@ const SearchBar = (props) => {
     const filtered = [];
 
     if (params.inputValue !== '') {
+      // Adds 'All' option to search's dropdown menu. PostType of option set to null to denote all
       filtered.push({
         inputValue: params.inputValue,
         postType: null,
         title: `Search for "${params.inputValue}" in All`,
       });
 
+      // If on postType page, adds '<PostType>' option to search's dropdown menu.
       if (props.postType) {
         filtered.push({
           inputValue: params.inputValue,
@@ -35,6 +37,8 @@ const SearchBar = (props) => {
     return filtered;
   }
 
+  // On item select (click or enter), will redirect to respective page. If PostType option selected then redirects
+  // to PostType page, else to default page. Adds search query param to url.
   const getOptionsLabel = (option) => {
     history.push(`${option.postType ? `/post/${option.postType}` : "/"}?search=${option.inputValue}`);
     return option.inputValue;
