@@ -6,9 +6,10 @@ import { tryLogin } from '../../redux/actions/thunk/auth-thunk';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { withStyles } from '@material-ui/core/styles';
 
 // Components
 import Header from '../header';
@@ -76,30 +77,29 @@ const Profile = (props) => {
         justify="center"
         alignItems="flex-start"
       >
-        {
-          tabValue !== null && 
-          <Grid item xs={6}>
-            <Tabs 
-              value={tabValue} 
+        <Grid item xs={6}>
+          <Paper square>
+            <Tabs
+              value={tabValue}
               onChange={(event, newValue) => setTabValue(newValue)}
               indicatorColor="primary"
-              className={classes.tabs}>
-              
+              className={classes.tabs}
+            >
               <Tab label="Created Posts" {...a11yProps(0)} />
               <Tab label="Saved Posts" {...a11yProps(1)} />
               <Tab label="Liked Posts" {...a11yProps(2)} />
             </Tabs>
-            <TabPanel value={tabValue} index={0}>
-              <PostFeed profileFilter={{getCreatedOnly: true}} />
-            </TabPanel>
-            <TabPanel value={tabValue} index={1}>
-              <PostFeed profileFilter={{getFavouritesOnly: true}} />
-            </TabPanel>
-            <TabPanel value={tabValue} index={2}>
-              <PostFeed profileFilter={{getPostLikesOnly: true}} />
-            </TabPanel>
-          </Grid>
-        }
+          </Paper>
+          <TabPanel value={tabValue} index={0}>
+            <PostFeed profileFilter={{ getCreatedOnly: true }} />
+          </TabPanel>
+          <TabPanel value={tabValue} index={1}>
+            <PostFeed profileFilter={{ getFavouritesOnly: true }} />
+          </TabPanel>
+          <TabPanel value={tabValue} index={2}>
+            <PostFeed profileFilter={{ getPostLikesOnly: true }} />
+          </TabPanel>
+        </Grid>
         <Grid item xs={2} className={classes.sidebar}>
           <UserPanel user={user} />
         </Grid>
@@ -125,9 +125,13 @@ const styles = (theme) => ({
   },
   tabs: {
     borderRadius: 0,
-    padding: 10,
+    padding: '0 10px 0 10px',
     marginBottom: 16,
     backgroundColor: 'white',
+    '& span': {
+      fontSize: '18px !important',
+      fontWeight: 800,
+    },
   },
 });
 

@@ -6,7 +6,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from "@material-ui/core/TextField";
+import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const SearchBar = (props) => {
@@ -35,14 +35,18 @@ const SearchBar = (props) => {
     }
 
     return filtered;
-  }
+  };
 
   // On item select (click or enter), will redirect to respective page. If PostType option selected then redirects
   // to PostType page, else to default page. Adds search query param to url.
   const getOptionsLabel = (option) => {
-    history.push(`${option.postType ? `/post/${option.postType}` : "/"}?search=${option.inputValue}`);
+    history.push(
+      `${option.postType ? `/post/${option.postType}` : '/'}?search=${
+        option.inputValue
+      }`
+    );
     return option.inputValue;
-  }
+  };
 
   return (
     <Autocomplete
@@ -58,7 +62,12 @@ const SearchBar = (props) => {
       renderOption={(option) => option.title}
       freeSolo
       renderInput={(params) => (
-        <TextField {...params} className={classes.input} size="small" variant="outlined" placeholder="Search.."
+        <TextField
+          {...params}
+          className={classes.input}
+          size="small"
+          variant="outlined"
+          placeholder="Search..."
           InputProps={{
             ...params.InputProps,
             startAdornment: (
@@ -66,7 +75,7 @@ const SearchBar = (props) => {
                 <Search className={classes.searchIcon} />
               </InputAdornment>
             ),
-          }} 
+          }}
         />
       )}
     />
@@ -75,8 +84,9 @@ const SearchBar = (props) => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "40%",
+    width: '40%',
     borderRadius: 12,
+    border: '2px solid #000',
     '&:hover': {
       backgroundColor: fade(theme.palette.common.black, 0.05),
     },
@@ -84,16 +94,16 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     [`& fieldset`]: {
-      borderRadius: 12,
+      borderRadius: 8,
     },
     '&:hover': {
       borderColor: fade(theme.palette.common.black, 0.03),
     },
   },
   searchIcon: {
-    opacity: 0.5,
-    marginLeft: 8
-  }
+    opacity: 0.9,
+    marginLeft: 8,
+  },
 }));
 
 export default SearchBar;

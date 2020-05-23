@@ -119,7 +119,7 @@ const PostCommentBox = (props) => {
               size="small"
             >
               {props.isLoadingAddComment && (
-                <CircularProgress size={20} thickness={6} color="inherit" />
+                <CircularProgress size={20} thickness={10} color="inherit" />
               )}
               {!props.isLoadingAddComment && 'Comment'}
             </Button>
@@ -182,7 +182,7 @@ const styles = (theme) => ({
   },
   commentTypeButtonSelected: {
     opacity: 1,
-    color: '#3f51b5',
+    color: '#3b49df',
   },
   commentTypeIcon: {
     marginLeft: 5,

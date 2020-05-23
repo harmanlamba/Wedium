@@ -15,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PostCard from './post-card';
 import LoadingPostCard from './loading-post-card';
 import InfiniteScroll from 'react-infinite-scroller';
+import Typography from '@material-ui/core/Typography';
 
 class PostFeed extends Component {
   componentDidMount() {
@@ -52,7 +53,7 @@ class PostFeed extends Component {
     this.setState({
       cancelToken,
     });
-    
+
     this.props.loadInitialPosts(
       cancelToken.token,
       this.props.postType,
@@ -110,10 +111,12 @@ class PostFeed extends Component {
             </InfiniteScroll>
           )) || (
             <Container className={classes.notFound}>
-              No Posts Found{' '}
-              <span role="img" aria-label="sad cat">
-                😿
-              </span>
+              <Typography variant="button">
+                No Posts Found{' '}
+                <span role="img" aria-label="sad cat">
+                  😿
+                </span>
+              </Typography>
             </Container>
           )}
       </div>

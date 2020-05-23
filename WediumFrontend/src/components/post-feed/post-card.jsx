@@ -60,13 +60,12 @@ const PostCard = (props) => {
               {decodeURIComponent(post.articleTitle)}
             </Link>
           </Typography>
-
-          <Typography variant="h6">{post.title}</Typography>
-          <br />
+          <Typography className={classes.postTitle} variant="h6">
+            {post.title}
+          </Typography>
           <Link variant="subtitle2" color="textSecondary">
             {post.username}
-          </Link>
-
+          </Link>{' '}
           <Typography variant="subtitle2" color="textSecondary">
             {moment(post.date).format('DD MMM')} - {moment(post.date).fromNow()}
           </Typography>
@@ -113,10 +112,13 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0px !important',
   },
   postType: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#3b49df',
     color: '#fff',
-    padding: '1px 3px',
+    padding: '1px 4px',
     borderRadius: 5,
+  },
+  postTitle: {
+    marginBottom: 26,
   },
   image: {
     width: 140,
@@ -136,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignSelf: 'flex-end',
     marginRight: 12,
-    marginBottom: 12,
+    marginBottom: 7,
   },
 }));
 

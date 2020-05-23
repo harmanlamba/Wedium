@@ -46,7 +46,11 @@ const PostLike = (props) => {
         </Alert>
       </Snackbar>
 
-      <Typography className={classes.text} color="textSecondary">
+      <Typography
+        className={classes.text}
+        variant={'subtitle2'}
+        color="textSecondary"
+      >
         {props.numberOfLikes}
       </Typography>
       {props.isPostLiked !== null ? (
