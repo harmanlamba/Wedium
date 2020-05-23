@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+import moment from 'moment';
 
 import PostDetailInfo from '../../../components/post-detail/post-detail-info';
 
@@ -9,7 +10,7 @@ it('snapshot postDetailInfo default load', () => {
     {
       articleImageUrl: 'Image URL',
       articleUrl: 'Article URL',
-      date: '2020-05-21T21:55:24.33',
+      date: moment.utc().valueOf(),
       description: 'Post Description',
       isFavourited: false,
       isPostLiked: false,

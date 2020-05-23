@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+import moment from 'moment';
 
 import CommentCard, {
   styles,
@@ -20,7 +21,7 @@ it('snapshot commentCard default load', () => {
     body: 'This is a comment',
     commentId: 1,
     commentTypeId: 1,
-    date: '2020-05-21T21:56:36.933',
+    date: moment.utc().valueOf(),
     inverseParentComment: [],
     parentCommentId: null,
     postId: 123,
@@ -58,7 +59,7 @@ it('snapshot postCommentFeed with user authenticated load', () => {
     body: 'This is a comment',
     commentId: 1,
     commentTypeId: 1,
-    date: '2020-05-21T21:56:36.933',
+    date: moment.utc().valueOf(),
     inverseParentComment: [],
     parentCommentId: null,
     postId: 123,
