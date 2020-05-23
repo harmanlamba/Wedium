@@ -8,6 +8,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 
+import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
+import LinkIcon from '@material-ui/icons/Link';
+import DescriptionIcon from '@material-ui/icons/Description';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
+import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+
 const PostGuide = (props) => {
   const { classes } = props;
 
@@ -27,33 +33,38 @@ const PostGuide = (props) => {
         <Grid item xs={12}>
           <List>
             <ListItem button disableRipple={true}>
+              <WbIncandescentIcon className={classes.icon} />
               <ListItemText
                 classes={{ primary: classes.listItemText }}
-                primary="🤠 Provide a descriptive title"
+                primary=" Give an interesting title"
               />
             </ListItem>
             <ListItem button disableRipple={true}>
+              <LinkIcon className={classes.icon} />
               <ListItemText
                 classes={{ primary: classes.listItemText }}
-                primary="🔗 Make sure the URL is from Wikipedia"
+                primary=" Verify that your URL is from Wikipedia"
               />
             </ListItem>
             <ListItem button disableRipple={true}>
+              <DescriptionIcon className={classes.icon} />
               <ListItemText
                 classes={{ primary: classes.listItemText }}
-                primary="🤓 Give some context and interesting facts about the article in the description"
+                primary=" Provide interesting facts about the article in the description"
               />
             </ListItem>
             <ListItem button disableRipple={true}>
+              <AllInboxIcon className={classes.icon} />
               <ListItemText
                 classes={{ primary: classes.listItemText }}
-                primary="🦉 Choose a relevant post type that reflects the article subject"
+                primary=" Choose a relevant post type that reflects the article subject"
               />
             </ListItem>
             <ListItem button disableRipple={true}>
+              <EmojiEmotionsIcon className={classes.icon} />
               <ListItemText
                 classes={{ primary: classes.listItemText }}
-                primary="😻 Be good :-)"
+                primary=" Be respectful"
               />
             </ListItem>
           </List>
@@ -69,7 +80,11 @@ const styles = (theme) => ({
     borderRadius: '10px',
   },
   listItemText: {
-    fontSize: '0.9em', //Insert your required size
+    fontSize: '1.1em', //Insert your required size
+    fontWeight: 600,
+  },
+  icon: {
+    marginRight: 20,
   },
 });
 

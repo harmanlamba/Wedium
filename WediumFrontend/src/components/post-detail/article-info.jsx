@@ -56,11 +56,7 @@ const ArticleInfo = (props) => {
       ) : null}
 
       <div className={classes.article}>
-        <Typography
-          className={classes.articleTitle}
-          variant="h5"
-          color="textPrimary"
-        >
+        <Typography className={classes.articleTitle} variant="h6">
           {decodeURIComponent(post.articleTitle)}
         </Typography>
         {
@@ -83,15 +79,17 @@ const ArticleInfo = (props) => {
         }
         {!showingAll && (
           <div className={classes.showAllButton}>
-            <span
-              className={classes.showAllTag}
-              onClick={() => {
-                setShowingAll(true);
-              }}
-            >
-              <SubjectIcon className={classes.tagIcon} fontSize="small" />
-              Read More
-            </span>
+            <Typography variant="button">
+              <span
+                className={classes.showAllTag}
+                onClick={() => {
+                  setShowingAll(true);
+                }}
+              >
+                <SubjectIcon className={classes.tagIcon} fontSize="small" />
+                Read More
+              </span>
+            </Typography>
           </div>
         )}
       </div>
@@ -119,21 +117,22 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
   },
   articleBody: {
-    borderLeft: '#3f51b5 solid 3px',
+    borderLeft: '#3b49df solid 3px',
     paddingLeft: 20,
     '& blockquote': {
-      borderLeft: '#919191 solid 3px',
+      borderLeft: '#000 solid 3px',
       paddingLeft: 10,
     },
+    fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
   showAllButton: {
     textAlign: 'center',
   },
   showAllTag: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#3b49df',
     color: '#fff',
     fontSize: '0.85em',
-    padding: '1px 5px 3px 5px',
+    padding: '3px 5px 3px 5px',
     borderRadius: 5,
     marginBottom: 5,
     cursor: 'pointer',
@@ -142,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tagIcon: {
-    marginBottom: -5,
+    marginBottom: -6,
     marginRight: 3,
   },
 }));

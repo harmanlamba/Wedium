@@ -18,7 +18,11 @@ export const App = () => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/create" component={CreatePost} />
-            <Route exact path="/post/:postType/:postId/:postTitle" component={PostDetail} />
+            <Route
+              exact
+              path="/post/:postType/:postId/:postTitle"
+              component={PostDetail}
+            />
             <Route exact path="/post/:postType" component={Home} />
             <Route exact path="/profile" component={Profile} />
             <Route path="*" component={PageNotFound} />

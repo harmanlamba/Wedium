@@ -206,7 +206,7 @@ const PostForm = (props) => {
             color="primary"
           >
             {sendLoading && (
-              <CircularProgress size={20} thickness={6} color="inherit" />
+              <CircularProgress size={20} thickness={10} color="inherit" />
             )}
             {!sendLoading && 'Send'}
           </Button>
