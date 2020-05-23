@@ -29,7 +29,7 @@ exports[`snapshot postDetailInfo default load 1`] = `
     >
       <WithStyles(ForwardRef(CardContent))>
         <WithStyles(ForwardRef(Typography))
-          variant="caption"
+          variant="subtitle2"
         >
           <span
             className="makeStyles-postType-3"
@@ -46,12 +46,13 @@ exports[`snapshot postDetailInfo default load 1`] = `
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
           className="makeStyles-postTitle-9"
-          variant="h5"
+          variant="h6"
         >
           Post Title
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
           align="justify"
+          className="makeStyles-postDescription-10"
           color="textSecondary"
           variant="subtitle1"
         >
