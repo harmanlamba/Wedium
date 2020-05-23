@@ -33,6 +33,8 @@ namespace WediumAPI.Services
         public IEnumerable<PostDto> GetPosts(int? userId, string search, string postType, int? limit, int? afterId)
         {
             IQueryable<Post> postListQuery = _db.Post
+                .Include(p => p.PostType)
+                .Include(p => p.WikiArticle)
                 .AsQueryable();
 
             // Applies afterId query if present
@@ -48,13 +50,9 @@ namespace WediumAPI.Services
                 }
 
                 // Gets all posts in chronological order after after_id
-                postListQuery = _db.Post
+                postListQuery = postListQuery
                     .Where(p => p.Date < queryInputPost.Date);
             }
-
-            postListQuery = postListQuery
-                .Include(p => p.PostType)
-                .Include(p => p.WikiArticle);
 
             // Applies smart-search of searchString if present
             if (!string.IsNullOrEmpty(search))
@@ -73,14 +71,15 @@ namespace WediumAPI.Services
             // Adds 1 to limit to efficiently calculate hasMore of last element in list (while ensuring correctness if posttype/search filters present)
             int limitApplied = (limit.HasValue ? limit.Value : _options.GetPostDefaultLimit) + 1;
 
-            IEnumerable<Post> postList = postListQuery
+            postListQuery = postListQuery
                 .OrderByDescending(p => p.Date)
-                .Take(limitApplied)
-                .Include(p => p.User)
-                .Include(p => p.PostLike)
-                .Include(p => p.Favourite);
+                .Take(limitApplied);
 
-            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postList, userId).ToList();
+            postListQuery.Select(p => p.User).Load();
+            postListQuery.SelectMany(p => p.PostLike).Load();
+            postListQuery.SelectMany(p => p.Favourite).Load();
+
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(postListQuery, userId).ToList();
 
             if (postDtoList.Count() == limitApplied)
             {
@@ -214,15 +213,16 @@ namespace WediumAPI.Services
             // Adds 1 to limit to efficiently calculate hasMore of last element in list
             int limitApplied = (limit.HasValue ? limit.Value : _options.GetPostDefaultLimit) + 1;
 
-            IEnumerable<Post> likedPosts = postQuery
+            IQueryable<Post> createdPosts = postQuery
                 .Take(limitApplied)
-                .Include(p => p.User)
                 .Include(p => p.PostType)
-                .Include(p => p.WikiArticle)
-                .Include(p => p.PostLike)
-                .Include(p => p.Favourite);
+                .Include(p => p.WikiArticle);
 
-            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(likedPosts, userId).ToList();
+            createdPosts.Select(p => p.User).Load();
+            createdPosts.Select(p => p.Favourite).Load();
+            createdPosts.Select(p => p.PostLike).Load();
+
+            IEnumerable<PostDto> postDtoList = PostMapper.ToDto(createdPosts, userId).ToList();
 
             if (postDtoList.Count() == limitApplied)
             {

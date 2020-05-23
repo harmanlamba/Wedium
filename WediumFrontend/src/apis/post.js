@@ -5,7 +5,7 @@ import {
 } from './util/header-util';
 
 const API_URL = process.env.REACT_APP_API_URL;
-const LIMIT = 15; // Get posts limit in Feed
+const LIMIT = 8;
 
 /**
  * Request to get all posts given the threshold, filtering, and search input strings
