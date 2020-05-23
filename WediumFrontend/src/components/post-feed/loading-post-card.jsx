@@ -13,18 +13,16 @@ const LoadingPostCard = () => {
   return (
     <Card className={classes.root}>
       <div>
-        <CardContent className={classes.cardContent}>
-          <Skeleton variant="text" width={130} />
-          <Skeleton variant="text" width={150} height={40} />
-          <br />
-
-          <Skeleton variant="text" width={70} />
-          <Skeleton variant="text" width={70} />
+        <CardContent>
+          <Skeleton variant="text" width={130} animation="wave" />
+          <Skeleton className={classes.postTitle} variant="text" width={300} height={40} animation="wave" />
+          <Skeleton variant="text" width={90} animation="wave" />
+          <Skeleton variant="text" width={120} animation="wave" />
         </CardContent>
       </div>
 
       <div>
-        <Skeleton className={classes.image} variant="rect" />
+        <Skeleton className={classes.image} variant="rect" animation="wave" />
       </div>
     </Card>
   );
@@ -39,15 +37,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     borderRadius: 5,
   },
-  cardContent: {
-    paddingBottom: '0px !important',
-  },
   image: {
-    width: 140,
-    height: 128,
+    width: 150,
+    height: 132,
     marginTop: 16,
     marginRight: 16,
     marginBottom: 16,
     borderRadius: 5,
+  },
+  postTitle: {
+    marginBottom: 26,
   },
 }));
