@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot PostCard default load 1`] = `
+<WithStyles(ForwardRef(Card))
+  className="makeStyles-root-1"
+  onClick={[Function]}
+  onMouseDown={[Function]}
+>
+  <div>
+    <WithStyles(ForwardRef(CardContent))
+      className="makeStyles-cardContent-2"
+    >
+      <WithStyles(ForwardRef(Typography))
+        variant="subtitle2"
+      >
+        <span
+          className="makeStyles-postType-3"
+        >
+          Culture
+        </span>
+        <WithStyles(ForwardRef(Link))
+          className="makeStyles-articleLink-5"
+          href="Article URL"
+          onClick={[Function]}
+          target="_blank"
+        >
+          undefined
+        </WithStyles(ForwardRef(Link))>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        variant="h6"
+      >
+        Post Title
+      </WithStyles(ForwardRef(Typography))>
+      <br />
+      <WithStyles(ForwardRef(Link))
+        color="textSecondary"
+        variant="subtitle2"
+      >
+        Bob Bobby
+      </WithStyles(ForwardRef(Link))>
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        variant="subtitle2"
+      >
+        Invalid date
+         - 
+        Invalid date
+      </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(CardContent))>
+  </div>
+  <div
+    className="makeStyles-rightPanel-6"
+  >
+    <div
+      className="makeStyles-buttonGroup-7"
+      onClick={[Function]}
+    >
+      <WithStyles(Connect(PostLike))
+        isPostLiked={false}
+        numberOfLikes={2}
+        postId={3028}
+      />
+      <WithStyles(Connect(withRouter(PostFavourite)))
+        isFavourited={false}
+        postId={3028}
+      />
+    </div>
+    <WithStyles(ForwardRef(CardMedia))
+      className="makeStyles-image-4"
+      component="img"
+      src="Image URL"
+    />
+  </div>
+</WithStyles(ForwardRef(Card))>
+`;
