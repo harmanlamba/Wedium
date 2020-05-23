@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Skeleton from '@material-ui/lab/Skeleton';
 
+// Empty skeleton PostCard to display while posts are loading.
 const LoadingPostCard = () => {
   const classes = useStyles();
 

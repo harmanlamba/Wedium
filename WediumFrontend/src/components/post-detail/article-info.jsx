@@ -20,6 +20,9 @@ const ArticleInfo = (props) => {
   var articleBody = '';
   if (post.articleBody) {
     if (showingAll) {
+      // Shows full article. Tries to remove references from display by removing all string
+      // content after references tag. If no references tag found then fallbacks to showing
+      // full unedited article.
       articleBody =
         post.articleBody.indexOf(
           '<h2><span id="References">References</span></h2>'
@@ -32,6 +35,9 @@ const ArticleInfo = (props) => {
             )
           : post.articleBody;
     } else {
+      // Only shows summary by making cut at h2 tag (used by wikipedia to denote the start
+      // of a new section). If no h2 tag is found then sets state of showingAll to true. It will
+      // then show the full article (through code above).
       if (post.articleBody.indexOf('<h2>') === -1) {
         setShowingAll(true);
       } else {
@@ -47,6 +53,7 @@ const ArticleInfo = (props) => {
     <div>
       {post.articleImageUrl !== MISSING_IMAGE_URL ? (
         <div className={classes.imageCard}>
+          <div className={classes.imageBack}></div>
           <CardMedia
             className={classes.image}
             component="img"
@@ -102,11 +109,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     padding: 20,
+    position: 'relative',
+  },
+  imageBack: {
+    width: 200,
+    height: 200,
+    borderRadius: 25,
+    backgroundColor: '#3b49df',
+    marginLeft: 10,
+    marginTop: 10,
+    position: 'absolute',
+    zIndex: 1,
   },
   image: {
     width: 200,
     height: 200,
     borderRadius: 25,
+    position: 'relative',
+    zIndex: 2,
   },
   article: {
     padding: '0 60px 30px 40px',

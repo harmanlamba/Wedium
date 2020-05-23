@@ -25,11 +25,13 @@ const UserMenu = (props) => {
   const [expanded, setExpanded] = useState(false);
   const history = useHistory();
 
+  // Account menu open (only accessible if user is logged in)
   const handleMenuOpen = (event) => {
     setExpanded(!expanded);
     setAnchorEl(event.currentTarget);
   };
 
+  // Account menu closed (only accessible if user is logged in)
   const handleMenuClose = () => {
     setExpanded(!expanded);
     setAnchorEl(null);

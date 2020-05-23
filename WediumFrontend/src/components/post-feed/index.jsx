@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 
 class PostFeed extends Component {
   componentDidMount() {
+    // Only load posts if filter props did not change or no posts currently loaded
     if (
       !this.props.posts.length ||
       this.props.postType !== this.props.previousPostType ||
@@ -30,11 +31,13 @@ class PostFeed extends Component {
   }
 
   componentDidUpdate() {
+    // Only load posts if filter props did not change
     if (
       this.props.postType !== this.props.previousPostType ||
       this.props.searchString !== this.props.previousSearchString ||
       this.props.profileFilter !== this.props.previousProfileFilter
     ) {
+      // Cancels any in-air requests if filter props change.
       if (this.state && this.state.cancelToken) {
         this.state.cancelToken.cancel();
       }
@@ -44,6 +47,7 @@ class PostFeed extends Component {
   }
 
   loadInitial() {
+    // Creates cancel token to cancel in-air requests if filter props change
     const cancelToken = axios.CancelToken.source();
 
     this.setState({
@@ -59,6 +63,7 @@ class PostFeed extends Component {
   }
 
   componentWillUnmount() {
+    // Cancels any in-air requests so they do not interfere with posts redux state when retrieved
     if (this.state && this.state.cancelToken) {
       this.state.cancelToken.cancel();
     }
@@ -85,6 +90,7 @@ class PostFeed extends Component {
   render() {
     const classes = this.props.classes;
 
+    // Creates list of PostCard items to display in infinite scroll component 
     const items = [];
     this.props.posts.map((post, i) => {
       return items.push(<PostCard post={post} key={i} />);

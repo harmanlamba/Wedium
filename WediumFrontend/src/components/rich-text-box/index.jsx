@@ -10,6 +10,7 @@ const RichTextBox = (props) => {
   let quillRef = useRef();
   const { classes } = props;
 
+  // On load, set the initial max text length
   useEffect(() => {
     props.quotedText
       ? setCurrentTextLength(props.quotedText.length)
@@ -24,11 +25,13 @@ const RichTextBox = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     quillRef = reactQuillRef.getEditor();
 
+    // On post of comment/reply/create post, empty text editor
     if (props.isEmptyNow) {
       quillRef.setContents([{ insert: '\n' }]);
       props.setIsEmptyNow(!props.isEmptyNow);
     }
 
+    // On quoting article, add highlighted text to text editor
     if (props.isHighlighted) {
       quillRef.setContents([{ insert: '\n' }]);
       quillRef.insertText(0, `${props.quotedText}\n`, 'blockquote', true);
@@ -45,10 +48,10 @@ const RichTextBox = (props) => {
       props.onChange(htmlText);
     }
 
-    var quill = quillRef;
-    quill.on('text-change', function (delta, old, source) {
-      if (quill.getLength() > props.maxLength) {
-        quill.deleteText(props.maxLength, quill.getLength());
+    // If current text editor content reaches maximum length - cut next characters typed
+    quillRef.on('text-change', function (delta, old, source) {
+      if (quillRef.getLength() > props.maxLength) {
+        quillRef.deleteText(props.maxLength, quillRef.getLength());
       }
     });
   };
@@ -107,6 +110,7 @@ const styles = (theme) => ({
       'min-height': 80,
       font: 'inherit',
       fontFamily: ['Roboto', 'sans-serif'].join(','),
+      fontSize: 15,
     },
   },
 });

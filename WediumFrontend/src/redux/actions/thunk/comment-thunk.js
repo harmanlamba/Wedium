@@ -13,11 +13,13 @@ import {
 
 export const loadComments = (postId) => {
     return dispatch => {
+        // Comments loading state
         dispatch(loadCommentsLoading());
 
         commentGetRequest(postId)
             .then(
                 comments => {
+                    // Comments loading finished - update state with received comments
                     dispatch(loadCommentsSuccess(comments));
                 },
 
@@ -27,6 +29,7 @@ export const loadComments = (postId) => {
 
 export const postComment = (comment) => {
     return dispatch => {
+        // If comment is not a reply - add to parent comment state
         if (comment.ParentCommentId === null) {
             dispatch(loadAddComment());
         } else {

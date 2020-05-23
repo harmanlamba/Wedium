@@ -23,6 +23,12 @@ namespace WediumAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// The endpoint favorites a post for a user given the favoriteDto object
+        /// </summary>
+        /// <param name="favouriteDto"></param>
+        /// <returns></returns> Ok in the case that the post was favourited successfully, and Not Found in the case 
+        /// that the post was not found
         [Authorize]
         [HttpPost("Post")]
         public IActionResult Create([FromBody]FavouriteDto favouriteDto)
@@ -46,6 +52,12 @@ namespace WediumAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// The endpoint removes a favourite for a user given the favouriteDto object
+        /// </summary>
+        /// <param name="favouriteDto"></param>
+        /// <returns></returns> Ok in the case that the post was unfavourited for the user. No Content in the case that 
+        /// the favourited post was not found, and Not Found in the case that the post was not found.
         [Authorize]
         [HttpPost("Delete")]
         public IActionResult Delete([FromBody]FavouriteDto favouriteDto)
@@ -69,6 +81,13 @@ namespace WediumAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// The endpoint gets the Favourited posts of the authenticated user making the request
+        /// </summary>
+        /// <param name="limit"></param> The number of posts to retrieve (default: uses GetPostDefaultLimit value in appsettings.json)
+        /// <param name="after_id"></param> The last retrieved PostId (default: will start stream at the most recently favourited post)
+        /// <returns></returns> Ok in the case that the list of posts was retrieved correctly. Not Found in the case that 
+        /// the posts were not found.
         [Authorize]
         [HttpGet("Get")]
         public ActionResult<List<PostDto>> Get(int? limit = null, int? after_id = null)
