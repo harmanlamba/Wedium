@@ -6,6 +6,10 @@ import {
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+/**
+ * Request to create comment given the comment load (commentDto)
+ * which takes in {postId, parentCommentId, Body, CommentTypeId} 
+ */
 export const commentPostRequest = (commentDto) => {
     const header = createHeader();
     const endpoint = `${API_URL}/api/Comment/Post`;
@@ -24,6 +28,9 @@ export const commentPostRequest = (commentDto) => {
         });
 }
 
+/** 
+ * Request to get comments given the postId
+ */
 export const commentGetRequest = (postId) => {
     const header = createHeader();
     const endpoint = `${API_URL}/api/comment/get/${postId}`;

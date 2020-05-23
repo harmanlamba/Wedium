@@ -9,7 +9,10 @@ import {
 
 export const tryFavouritePost = (postId, errorCallback) => {
     return dispatch => {
+        // Update state to favourite a post 
         dispatch(favouritePost(postId));
+
+        // Request to create favourite entry for a post
         favouritePostRequest(postId)
             .then(
                 status => {
@@ -20,6 +23,7 @@ export const tryFavouritePost = (postId, errorCallback) => {
                 },
 
                 error => {
+                    // If unsuccessful request, unfavourite state applied
                     dispatch(unfavouritePost(postId));
                     errorCallback()
                 }
@@ -29,7 +33,10 @@ export const tryFavouritePost = (postId, errorCallback) => {
 
 export const tryUnfavouritePost = (postId, errorCallback) => {
     return dispatch => {
+        // Update state to unfavourite a post 
         dispatch(unfavouritePost(postId));
+
+        // Request to delete favourite entry for a post
         unfavouritePostRequest(postId)
             .then(
                 status => {
@@ -40,6 +47,7 @@ export const tryUnfavouritePost = (postId, errorCallback) => {
                 },
 
                 error => {
+                    // If unsuccessful request, favourite state applied
                     dispatch(favouritePost(postId));
                     errorCallback();
                 }

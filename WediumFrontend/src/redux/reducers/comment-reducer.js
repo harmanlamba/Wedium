@@ -32,6 +32,10 @@ export default (state = INIT_COMMENT_REDUCER_STATE, action) => {
                 comments: [],
             };
 
+            /** 
+             * By adding comment, update the comments state depending on whether the comment
+             * is a comment or child in posts
+             */
         case ADD_COMMENT:
             if (action.comment.parentCommentId === null) {
                 return {
@@ -68,9 +72,14 @@ export default (state = INIT_COMMENT_REDUCER_STATE, action) => {
                 isLoadingAddReply: true,
             };
 
+            /**
+             * By liking a comment, update the state where the comment is
+             * by searching for the comment id through state.comments. 
+             */
         case LIKE_COMMENT:
             const editedLikedComments = [...state.comments];
 
+            // If liked comment is not a reply, find index on through list of state.comments
             if (action.commentIds.parentCommentId === null) {
                 const likedCommentIndex = editedLikedComments.findIndex(
                     (c) => c.commentId === action.commentIds.commentId
@@ -107,9 +116,14 @@ export default (state = INIT_COMMENT_REDUCER_STATE, action) => {
             };
 
 
+            /**
+             * By unliking a comment, update the state where the comment is
+             * by searching for the comment id through state.comments. 
+             */
         case UNLIKE_COMMENT:
             const editedUnlikedComments = [...state.comments];
 
+            // If unliked comment is not a reply, find index on through list of state.comments
             if (action.commentIds.parentCommentId === null) {
                 const unlikedCommentIndex = editedUnlikedComments.findIndex(
                     (c) => c.commentId === action.commentIds.commentId

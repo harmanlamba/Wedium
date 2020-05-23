@@ -14,6 +14,7 @@ const INIT_AUTH_REDUCER_STATE = ({
 
 export default (state = INIT_AUTH_REDUCER_STATE, action) => {
     switch (action.type) {
+        // Update state with user information
         case LOGIN:
             state = {
                 ...state,
@@ -27,6 +28,7 @@ export default (state = INIT_AUTH_REDUCER_STATE, action) => {
             break;
 
         case LOGOUT:
+            // On logout, set user jtw token to empty and falsify isAuthenticated
             state = {
                 ...state,
                 user: '',
