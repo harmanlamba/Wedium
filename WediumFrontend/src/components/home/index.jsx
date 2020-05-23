@@ -28,6 +28,8 @@ const Home = (props) => {
   const user = props.auth;
 
   const currentPostType = props.match.params.postType;
+
+  // Parses searchString query string out of url. Removes percent encoding.
   const searchString = qs.parse(props.location.search, {
     ignoreQueryPrefix: true,
   }).search;
@@ -43,11 +45,13 @@ const Home = (props) => {
         justify="center"
         alignItems="flex-start"
       >
-        <Grid className={classes.feedTitle} item xs={8}>
-          <Typography className={classes.commentTitle} variant="h6">
-            Post Feed
-          </Typography>
-        </Grid>
+        {searchString === undefined ? (
+          <Grid className={classes.feedTitle} item xs={8}>
+            <Typography className={classes.commentTitle} variant="h6">
+              Post Feed
+            </Typography>
+          </Grid>
+        ) : null}
         <Grid item xs={6}>
           {searchString !== undefined && (
             <SearchResultLabel

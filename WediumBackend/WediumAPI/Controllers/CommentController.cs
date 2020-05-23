@@ -24,6 +24,12 @@ namespace WediumAPI.Controllers
             _service = commentService;
         }
 
+        /// <summary>
+        /// This endpoint gets a list of comments for a post
+        /// </summary>
+        /// <param name="postId"></param> The postId of the comment for which the comments will be retrieved
+        /// <returns></returns> The list of comments that are associated to the postId provided. It is important
+        /// to note that in the case that no comments are present an empty list is returned.
         [AllowAnonymous]
         [HttpGet("Get/{postId}")]
         public ActionResult<IEnumerable<CommentDto>> GetCommentsForPost(int postId)
@@ -45,6 +51,12 @@ namespace WediumAPI.Controllers
             return Ok(comments.Reverse());
         }
 
+        /// <summary>
+        /// The endpoint creates a comment, given its respective commentDto object
+        /// </summary>
+        /// <param name="commentDto"></param>
+        /// <returns></returns> On sucessfully creating the Comment returns the URI of the comment in the location 
+        /// header and a updated commentDto in the body.
         [Authorize]
         [HttpPost("Post")]
         public ActionResult CreateComment(CommentDto commentDto)

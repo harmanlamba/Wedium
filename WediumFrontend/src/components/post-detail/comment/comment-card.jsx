@@ -44,28 +44,29 @@ const CommentCard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Set reply to new value when comment box (for reply) is typed into
   const handleCommentChange = (event) => {
     setReply(event);
   };
 
+  // Expand to see replied comments.
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
     setIsReply(false);
   };
 
+  // Click to start replying to comment
   const handleReplyClick = () => {
     setIsReply(!isReply);
     setIsExpanded(false);
   };
 
+  // Checks commentDto correctly formatted
   const checkCommentDto = (commentDto) => {
-    if (commentDto.Body === '') {
-      return false;
-    }
-
-    return true;
+    return commentDto.Body !== '';
   };
 
+  // Dispatches reply message to thunk
   const handleSendReply = () => {
     const commentDto = {
       PostId: comment.postId,

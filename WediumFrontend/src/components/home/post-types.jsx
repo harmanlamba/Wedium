@@ -15,6 +15,7 @@ const PostTypes = (props) => {
 
   useEffect(() => {
     if (!postTypes || !postTypes.length) {
+      // Only loads PostTypes (from thunk) if they are not in the store. This is because PostTypes are static.
       props.loadPostTypes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +38,8 @@ const PostTypes = (props) => {
       <Typography variant="button"> {postTypes.postType}</Typography>
     </ListItem>
   ));
-
+    
+  // Adds 'all into first position of the list
   listItems.unshift(
     <ListItem
       dense

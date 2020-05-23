@@ -15,6 +15,7 @@ const GoogleLoginButton = (props) => {
       tokenId: response.tokenId,
     };
 
+    // Dispatch received token to send to backend to receive jwt token
     dispatch(sendTokenAndLogin(tokenBlob));
   };
 

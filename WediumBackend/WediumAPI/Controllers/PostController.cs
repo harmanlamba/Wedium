@@ -24,6 +24,19 @@ namespace WediumAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        ///  Gets a list of posts in chronological order (without duplicates), starting at the newest Post
+        /// </summary>
+        /// <param name="search"></param> If present, only posts with a title, description or wikipedia article 
+        /// title which contain the search string, or posts with wikipedia url which equals the search string will
+        /// be returned
+        /// <param name="postType"></param> If present, only posts with a PostType equal to the inputted string will
+        /// be returned
+        /// <param name="limit"></param> The number of posts to retrieve (default: uses GetPostDefaultLimit value in 
+        /// appsettings.json)
+        /// <param name="after_id"></param> The last retrieved PostId (default: will start chronological stream at newest post)
+        /// <returns></returns> Ok in the case that the request was successful, and Not found in the case that the posts were
+        /// not found
         [AllowAnonymous]
         [HttpGet("Get")]
         public ActionResult<List<PostDto>> Get(string search, string postType, int? limit = null, int? after_id = null)
@@ -48,6 +61,12 @@ namespace WediumAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a singular post matching the post id provided
+        /// </summary>
+        /// <param name="postId"></param> The id of the post you want retrieved from the database
+        /// <returns></returns>  Ok in the case that the request was successful, and Not found in the case that the posts were
+        /// not found
         [AllowAnonymous]
         [HttpGet("Get/{postId}")]
         public ActionResult<PostDto> Get(int postId)
@@ -66,6 +85,13 @@ namespace WediumAPI.Controllers
             } 
         }
 
+        /// <summary>
+        /// The endpoint creates a post given the postDto object
+        /// </summary>
+        /// <param name="postDto"></param>
+        /// <returns></returns> Internal server error in the case that the request could not be processed.
+        /// Created in the case of the request being succsfull, wherein the URI in the location header is the 
+        /// location of the newly created post, and in the body an updated postDto is returned.
         [Authorize]
         [HttpPost("Post")]
         public IActionResult CreatePost([FromBody]PostDto postDto)
@@ -98,6 +124,12 @@ namespace WediumAPI.Controllers
             return StatusCode((int)statusCode);
         }
 
+        /// <summary>
+        /// Deletes the post given the postId of the post
+        /// </summary>
+        /// <param name="postId"></param> The postId of the post that has to be deleted
+        /// <returns></returns> Ok in the case that the post was deleted successfully, Not found in the case that the post 
+        /// was not found
         [Authorize]
         [HttpDelete("Delete/{postId}")]
         public IActionResult DeletePost(int postId)
@@ -121,6 +153,14 @@ namespace WediumAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// The endpoint gets the posts created by the authenticated user making the request
+        /// </summary>
+        /// <param name="limit"></param> The number of posts to retrieve (default: uses GetPostDefaultLimit 
+        /// value in appsettings.json)
+        /// <param name="after_id"></param> The last retrieved PostId (default: will start stream at the most 
+        /// recently created post)
+        /// <returns></returns>
         [Authorize]
         [HttpGet("GetCreated")]
         public ActionResult<List<PostDto>> GetCreatedPosts(int? limit = null, int? after_id = null)

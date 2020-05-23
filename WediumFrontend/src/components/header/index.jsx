@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 
 const Header = (props) => {
   const goHome = () => {
+    // Changes current path and does a force reload to reset redux state.
     props.history.push('/');
     window.location.reload();
   };

@@ -18,6 +18,7 @@ const PostCard = (props) => {
   const post = props.post;
   const classes = useStyles();
 
+  // Redirect to post-detail page
   const handleClickPostDetail = () => {
     const postType = post.postType;
     const postId = post.postId;
@@ -28,6 +29,7 @@ const PostCard = (props) => {
     });
   };
 
+  // Opens post-detail page in new tab on middle mouse button click. Not handled by default by react
   const mouseDownEvent = (e) => {
     if (e.button === 1) {
       const postType = post.postType;

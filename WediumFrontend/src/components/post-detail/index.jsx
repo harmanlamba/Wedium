@@ -45,6 +45,8 @@ class PostDetail extends Component {
     const reduxPosts = this.props.reduxPosts;
     let postIndex = -1;
 
+    // Gets postIndex of post so it can be passed as reference to child components. This cannot be
+    // a prop because of index changing on component mount.
     if (reduxPosts.length > 0) {
       postIndex = reduxPosts.findIndex((p) => p.postId == this.state.postId);
     }
@@ -59,7 +61,6 @@ class PostDetail extends Component {
 
     const handleBackFeed = () => {
       this.props.history.push('/');
-      window.location.reload();
     };
 
     const handleTextHighlight = (text) => {
