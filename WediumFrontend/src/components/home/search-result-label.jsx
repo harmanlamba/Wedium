@@ -14,33 +14,34 @@ const SearchResultLabel = (props) => {
   return (
     <Card className={classes.root}>
       <div className={classes.searchText}>
-        <Typography variant="body1">
-          Showing results for
-        </Typography>
-        
-        <Typography variant="body1"
+        <Typography variant="subtitle1">Showing results for</Typography>
+
+        <Typography
+          variant="subtitle1"
           color="primary"
-          className={classes.searchString}>
+          className={classes.searchString}
+        >
           {props.searchString}
         </Typography>
-        
-        {props.postType &&
-          <Typography variant="body1">
-            in
-          </Typography>
-        }
-        
-        {props.postType &&
-          <Typography variant="body1"
+
+        {props.postType && <Typography variant="subtitle1">in</Typography>}
+
+        {props.postType && (
+          <Typography
+            variant="subtitle1"
             color="primary"
             className={classes.postType}
-            onClick={() => history.push(`/post/${props.postType}`)}>
+            onClick={() => history.push(`/post/${props.postType}`)}
+          >
             {props.postType}
           </Typography>
-        }
+        )}
       </div>
-      <CloseIcon className={classes.closeIcon}
-        onClick={() => history.push(props.postType ? `/post/${props.postType}` : "")}
+      <CloseIcon
+        className={classes.closeIcon}
+        onClick={() =>
+          history.push(props.postType ? `/post/${props.postType}` : '')
+        }
       />
     </Card>
   );
@@ -60,16 +61,16 @@ const useStyles = makeStyles((theme) => ({
   },
   searchString: {
     margin: '0 4px',
-    fontWeight: 500,
+    fontWeight: 600,
   },
   postType: {
     margin: '0 4px',
     cursor: 'pointer',
-    fontWeight: 500,
+    fontWeight: 800,
   },
   closeIcon: {
     cursor: 'pointer',
-  }
+  },
 }));
 
 export default SearchResultLabel;

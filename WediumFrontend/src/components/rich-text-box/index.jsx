@@ -110,6 +110,7 @@ const styles = (theme) => ({
       'min-height': 80,
       font: 'inherit',
       fontFamily: ['Roboto', 'sans-serif'].join(','),
+      fontSize: 15,
     },
   },
 });

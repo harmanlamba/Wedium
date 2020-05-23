@@ -224,7 +224,10 @@ const styles = (theme) => ({
   textField: {
     marginBottom: '-15px !important',
     '& p': {
-      textAlign: 'right !important',
+      textAlign: 'left !important',
+      fontSize: 12,
+      fontWeight: 500,
+      marginLeft: '-2px',
     },
   },
 });

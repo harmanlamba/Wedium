@@ -61,7 +61,6 @@ class PostDetail extends Component {
 
     const handleBackFeed = () => {
       this.props.history.push('/');
-      window.location.reload();
     };
 
     const handleTextHighlight = (text) => {

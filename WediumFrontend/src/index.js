@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import {
+  createMuiTheme
+} from '@material-ui/core/styles';
+import {
+  ThemeProvider
+} from '@material-ui/styles';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#3b49df' },
+    primary: {
+      main: '#3b49df'
+    },
   },
   typography: {
     fontFamily: ['Roboto', 'sans-serif'].join(','),
@@ -43,10 +49,14 @@ const theme = createMuiTheme({
   },
 });
 
-ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
+ReactDOM.render( <
+  ThemeProvider theme = {
+    theme
+  } >
+  <
+  App / >
+  <
+  /ThemeProvider>,
   document.getElementById('root')
 );
 

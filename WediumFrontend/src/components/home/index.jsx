@@ -45,11 +45,13 @@ const Home = (props) => {
         justify="center"
         alignItems="flex-start"
       >
-        <Grid className={classes.feedTitle} item xs={8}>
-          <Typography className={classes.commentTitle} variant="h6">
-            Post Feed
-          </Typography>
-        </Grid>
+        {searchString === undefined ? (
+          <Grid className={classes.feedTitle} item xs={8}>
+            <Typography className={classes.commentTitle} variant="h6">
+              Post Feed
+            </Typography>
+          </Grid>
+        ) : null}
         <Grid item xs={6}>
           {searchString !== undefined && (
             <SearchResultLabel
