@@ -1,5 +1,5 @@
 import {
-    loadPostsSuccess, loadMorePostsSuccess, loadPostsError
+    loadPostsSuccess, loadMorePostsSuccess, loadPostsError, likePost, favouritePost
 } from "../../redux/actions/post-actions"
 import rootReducer from "../../redux/reducers";
 import {
@@ -73,4 +73,56 @@ it("check load posts on error", () => {
     store.dispatch(loadPostsError("Error message"));
 
     expect(store.getState().post.posts.length).toBe(0);
+});
+
+it("check like post", () => {
+    const posts = [{
+        postId: 1,
+        date: '2020-05-23T18:29:23.207',
+        title: 'A new dance to learn while inside?',
+        description: '<p><strong>Nigerians </strong>are hella <strong>strong </strong>to perform this dance</p>',
+        username: 'Eric Leung',
+        postType: 'Culture',
+        articleUrl: 'https://en.wikipedia.org/wiki/Russian_folk_dance',
+        articleBody: '<p><b>Nigerian shakku shakku dance</b> is an important part of Nigerian culture. ',
+        articleTitle: 'Nigerian shakku shakku dance',
+        articleImageUrl: 'www.jpg.com',
+        numberOfLikes: 2,
+        isPostLiked: false,
+        isFavourited: false,
+        hasMore: true
+    }];
+
+    store.dispatch(loadPostsSuccess(posts));
+
+    expect(store.getState().post.posts[0].isPostLiked).toBe(false);
+
+    store.dispatch(likePost(1))
+    expect(store.getState().post.posts[0].isPostLiked).toBe(true);
+});
+
+it("check favourite post", () => {
+    const posts = [{
+        postId: 1,
+        date: '2020-05-23T18:29:23.207',
+        title: 'A new dance to learn while inside?',
+        description: '<p><strong>Nigerians </strong>are hella <strong>strong </strong>to perform this dance</p>',
+        username: 'Eric Leung',
+        postType: 'Culture',
+        articleUrl: 'https://en.wikipedia.org/wiki/Russian_folk_dance',
+        articleBody: '<p><b>Nigerian shakku shakku dance</b> is an important part of Nigerian culture. ',
+        articleTitle: 'Nigerian shakku shakku dance',
+        articleImageUrl: 'www.jpg.com',
+        numberOfLikes: 2,
+        isPostLiked: false,
+        isFavourited: false,
+        hasMore: true
+    }];
+
+    store.dispatch(loadPostsSuccess(posts));
+
+    expect(store.getState().post.posts[0].isFavourited).toBe(false);
+
+    store.dispatch(favouritePost(1))
+    expect(store.getState().post.posts[0].isFavourited).toBe(true);
 });
