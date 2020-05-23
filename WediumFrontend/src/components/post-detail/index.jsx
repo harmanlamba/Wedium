@@ -43,6 +43,7 @@ class PostDetail extends Component {
     let postIndex = -1;
 
     if (reduxPosts.length > 0) {
+      // eslint-disable-next-line
       postIndex = reduxPosts.findIndex((p) => p.postId == this.state.postId);
     }
 

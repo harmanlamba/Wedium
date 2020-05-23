@@ -39,7 +39,7 @@ export const postComment = (comment) => {
                     status,
                     commentDto
                 }) => {
-                    if (status == 201) {
+                    if (status === 201) {
                         dispatch(addComment(commentDto));
                     }
                 },
