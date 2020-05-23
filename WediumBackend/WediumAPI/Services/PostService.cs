@@ -50,7 +50,7 @@ namespace WediumAPI.Services
                 }
 
                 // Gets all posts in chronological order after after_id
-                postListQuery = _db.Post
+                postListQuery = postListQuery
                     .Where(p => p.Date < queryInputPost.Date);
             }
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { createHeader } from './util/header-util';
 
 const API_URL = process.env.REACT_APP_API_URL;
-const LIMIT = 15;
+const LIMIT = 8;
 
 export const getPosts = (cancelToken, afterPostId, postType, searchString, profileFilter) => {
   const header = createHeader();
