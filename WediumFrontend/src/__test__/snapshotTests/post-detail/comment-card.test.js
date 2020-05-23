@@ -1,0 +1,83 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import moment from 'moment';
+
+import CommentCard, {
+  styles,
+} from '../../../components/post-detail/comment/comment-card';
+
+it('snapshot commentCard default load', () => {
+  const user = {
+    firstName: 'null',
+    isAuthenticated: false,
+    jwtToken: 'null',
+    lastName: 'null',
+    pictureUri: 'null',
+    username: 'null',
+  };
+
+  const comment = {
+    body: 'This is a comment',
+    commentId: 1,
+    commentTypeId: 1,
+    date: '',
+    inverseParentComment: [],
+    parentCommentId: null,
+    postId: 123,
+    userId: 123,
+    userName: 'Bob Shaw',
+  };
+
+  const setRouteLeaveHook = jest.fn();
+
+  let wrapper = shallow(
+    <CommentCard.WrappedComponent
+      user={user}
+      comment={comment}
+      classes={styles}
+      params={{
+        router: setRouteLeaveHook,
+      }}
+    />
+  );
+
+  expect(wrapper).toMatchSnapshot();
+});
+
+it('snapshot postCommentFeed with user authenticated load', () => {
+  const user = {
+    firstName: 'Bob',
+    isAuthenticated: true,
+    jwtToken: 'jwtToken',
+    lastName: 'Jenkins',
+    pictureUri: 'somePhoto',
+    username: 'Bob Jenkins',
+  };
+
+  const comment = {
+    body: 'This is a comment',
+    commentId: 1,
+    commentTypeId: 1,
+    date: '',
+    inverseParentComment: [],
+    parentCommentId: null,
+    postId: 123,
+    userId: 123,
+    userName: 'Bob Shaw',
+  };
+
+  const setRouteLeaveHook = jest.fn();
+
+  let wrapper = shallow(
+    <CommentCard.WrappedComponent
+      user={user}
+      comment={comment}
+      classes={styles}
+      params={{
+        router: setRouteLeaveHook,
+      }}
+    />
+  );
+
+  expect(wrapper).toMatchSnapshot();
+});

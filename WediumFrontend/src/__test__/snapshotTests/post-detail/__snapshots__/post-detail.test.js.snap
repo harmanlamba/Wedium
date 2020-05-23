@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot postDetailInfo default load 1`] = `
+<div>
+  <div
+    className="makeStyles-buttonGroup-6"
+  >
+    <div
+      className="makeStyles-buttonGroupFlex-7"
+    >
+      <WithStyles(Connect(PostLike))
+        isPostLiked={false}
+        numberOfLikes={2}
+        postId={3028}
+      />
+      <WithStyles(Connect(withRouter(PostFavourite)))
+        isFavourited={false}
+        postId={3028}
+      />
+      <WithStyles(CommentButton) />
+    </div>
+  </div>
+  <WithStyles(ForwardRef(Card))
+    className="makeStyles-postHeader-2"
+  >
+    <WithStyles(ForwardRef(Card))
+      className="makeStyles-root-1"
+      elevation={0}
+    >
+      <WithStyles(ForwardRef(CardContent))>
+        <WithStyles(ForwardRef(Typography))
+          variant="caption"
+        >
+          <span
+            className="makeStyles-postType-3"
+          >
+            Culture
+          </span>
+          <WithStyles(ForwardRef(Link))
+            className="makeStyles-articleLink-4"
+            href="Article URL"
+            target="_blank"
+          >
+            undefined
+          </WithStyles(ForwardRef(Link))>
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          className="makeStyles-postTitle-9"
+          variant="h5"
+        >
+          Post Title
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          align="justify"
+          color="textSecondary"
+          variant="subtitle1"
+        >
+          Post Description
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          className="makeStyles-username-8"
+          color="textSecondary"
+          variant="caption"
+        >
+          Bob Bobby
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          color="textSecondary"
+          variant="caption"
+        >
+          Invalid date
+           -
+           
+          Invalid date
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(CardContent))>
+    </WithStyles(ForwardRef(Card))>
+    <ArticleInfo
+      post={
+        Object {
+          "articleImageUrl": "Image URL",
+          "articleUrl": "Article URL",
+          "date": "",
+          "description": "Post Description",
+          "isFavourited": false,
+          "isPostLiked": false,
+          "numberOfLikes": 2,
+          "postId": 3028,
+          "postType": "Culture",
+          "title": "Post Title",
+          "username": "Bob Bobby",
+        }
+      }
+    />
+  </WithStyles(ForwardRef(Card))>
+</div>
+`;

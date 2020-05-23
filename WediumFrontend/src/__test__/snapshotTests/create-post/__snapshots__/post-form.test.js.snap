@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshot with no content matches 1`] = `
+exports[`snapshot postform default load 1`] = `
 <PostForm
   classes={
     Object {
