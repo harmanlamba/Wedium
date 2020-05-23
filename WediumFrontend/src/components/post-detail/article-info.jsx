@@ -47,6 +47,7 @@ const ArticleInfo = (props) => {
     <div>
       {post.articleImageUrl !== MISSING_IMAGE_URL ? (
         <div className={classes.imageCard}>
+          <div className={classes.imageBack}></div>
           <CardMedia
             className={classes.image}
             component="img"
@@ -56,11 +57,7 @@ const ArticleInfo = (props) => {
       ) : null}
 
       <div className={classes.article}>
-        <Typography
-          className={classes.articleTitle}
-          variant="h5"
-          color="textPrimary"
-        >
+        <Typography className={classes.articleTitle} variant="h6">
           {decodeURIComponent(post.articleTitle)}
         </Typography>
         {
@@ -83,15 +80,17 @@ const ArticleInfo = (props) => {
         }
         {!showingAll && (
           <div className={classes.showAllButton}>
-            <span
-              className={classes.showAllTag}
-              onClick={() => {
-                setShowingAll(true);
-              }}
-            >
-              <SubjectIcon className={classes.tagIcon} fontSize="small" />
-              Read More
-            </span>
+            <Typography variant="button">
+              <span
+                className={classes.showAllTag}
+                onClick={() => {
+                  setShowingAll(true);
+                }}
+              >
+                <SubjectIcon className={classes.tagIcon} fontSize="small" />
+                Read More
+              </span>
+            </Typography>
           </div>
         )}
       </div>
@@ -104,11 +103,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     padding: 20,
+    position: 'relative',
+  },
+  imageBack: {
+    width: 200,
+    height: 200,
+    borderRadius: 25,
+    backgroundColor: '#3b49df',
+    marginLeft: 10,
+    marginTop: 10,
+    position: 'absolute',
+    zIndex: 1,
   },
   image: {
     width: 200,
     height: 200,
     borderRadius: 25,
+    position: 'relative',
+    zIndex: 2,
   },
   article: {
     padding: '0 60px 30px 40px',
@@ -119,21 +131,22 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
   },
   articleBody: {
-    borderLeft: '#3f51b5 solid 3px',
+    borderLeft: '#3b49df solid 3px',
     paddingLeft: 20,
     '& blockquote': {
-      borderLeft: '#919191 solid 3px',
+      borderLeft: '#000 solid 3px',
       paddingLeft: 10,
     },
+    fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
   showAllButton: {
     textAlign: 'center',
   },
   showAllTag: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#3b49df',
     color: '#fff',
     fontSize: '0.85em',
-    padding: '1px 5px 3px 5px',
+    padding: '3px 5px 3px 5px',
     borderRadius: 5,
     marginBottom: 5,
     cursor: 'pointer',
@@ -142,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tagIcon: {
-    marginBottom: -5,
+    marginBottom: -6,
     marginRight: 3,
   },
 }));
