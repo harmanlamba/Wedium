@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot articleInfo default load 1`] = `
+<div>
+  <div
+    className="makeStyles-imageCard-1"
+  >
+    <WithStyles(ForwardRef(CardMedia))
+      className="makeStyles-image-2"
+      component="img"
+      src="Image"
+    />
+  </div>
+  <div
+    className="makeStyles-article-3"
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-articleTitle-4"
+      color="textPrimary"
+      variant="h5"
+    >
+      Title
+    </WithStyles(ForwardRef(Typography))>
+    <t
+      onExitHighlight={null}
+      onHighlightComment={null}
+      popoverItems={[Function]}
+    >
+      <div
+        className="makeStyles-articleBody-5"
+      >
+        Body
+      </div>
+    </t>
+  </div>
+</div>
+`;
+
+exports[`snapshot postform load with missing image 1`] = `
+<div>
+  <div
+    className="makeStyles-article-3"
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-articleTitle-4"
+      color="textPrimary"
+      variant="h5"
+    >
+      Title
+    </WithStyles(ForwardRef(Typography))>
+    <t
+      onExitHighlight={null}
+      onHighlightComment={null}
+      popoverItems={[Function]}
+    >
+      <div
+        className="makeStyles-articleBody-5"
+      >
+        <p>
+          Body
+        </p>
+      </div>
+    </t>
+  </div>
+</div>
+`;

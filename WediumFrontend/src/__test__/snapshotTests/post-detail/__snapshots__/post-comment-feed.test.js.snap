@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot postCommentFeed default load 1`] = `
+<PostCommentFeed
+  classes={
+    Object {
+      "commentCard": "PostCommentFeed-commentCard-5",
+      "expand": "PostCommentFeed-expand-3",
+      "expandOpen": "PostCommentFeed-expandOpen-4",
+      "grid": "PostCommentFeed-grid-2",
+      "root": "PostCommentFeed-root-1",
+    }
+  }
+  comments={Array []}
+  params={
+    Object {
+      "router": [MockFunction],
+    }
+  }
+  user={
+    Object {
+      "firstName": "null",
+      "isAuthenticated": false,
+      "jwtToken": "null",
+      "lastName": "null",
+      "pictureUri": "null",
+      "username": "null",
+    }
+  }
+/>
+`;
+
+exports[`snapshot postCommentFeed with comments load 1`] = `
+<PostCommentFeed
+  classes={
+    Object {
+      "commentCard": "PostCommentFeed-commentCard-5",
+      "expand": "PostCommentFeed-expand-3",
+      "expandOpen": "PostCommentFeed-expandOpen-4",
+      "grid": "PostCommentFeed-grid-2",
+      "root": "PostCommentFeed-root-1",
+    }
+  }
+  comments={
+    Array [
+      Object {
+        "body": "This is a comment",
+        "commentId": 1,
+        "commentTypeId": 1,
+        "date": "2020-05-21T21:56:36.933",
+        "inverseParentComment": Array [],
+        "parentCommentId": null,
+        "postId": 123,
+        "userId": 123,
+        "userName": "Bob Shaw",
+      },
+    ]
+  }
+  params={
+    Object {
+      "router": [MockFunction],
+    }
+  }
+  user={
+    Object {
+      "firstName": "null",
+      "isAuthenticated": false,
+      "jwtToken": "null",
+      "lastName": "null",
+      "pictureUri": "null",
+      "username": "null",
+    }
+  }
+/>
+`;
+
+exports[`snapshot postCommentFeed with user authenticated load 1`] = `
+<PostCommentFeed
+  classes={
+    Object {
+      "commentCard": "PostCommentFeed-commentCard-5",
+      "expand": "PostCommentFeed-expand-3",
+      "expandOpen": "PostCommentFeed-expandOpen-4",
+      "grid": "PostCommentFeed-grid-2",
+      "root": "PostCommentFeed-root-1",
+    }
+  }
+  comments={
+    Array [
+      Object {
+        "body": "This is a comment",
+        "commentId": 1,
+        "commentTypeId": 1,
+        "date": "2020-05-21T21:56:36.933",
+        "inverseParentComment": Array [],
+        "parentCommentId": null,
+        "postId": 123,
+        "userId": 123,
+        "userName": "Bob Shaw",
+      },
+    ]
+  }
+  params={
+    Object {
+      "router": [MockFunction],
+    }
+  }
+  user={
+    Object {
+      "firstName": "Bob",
+      "isAuthenticated": true,
+      "jwtToken": "jwtToken",
+      "lastName": "Jenkins",
+      "pictureUri": "somePhoto",
+      "username": "Bob Jenkins",
+    }
+  }
+/>
+`;

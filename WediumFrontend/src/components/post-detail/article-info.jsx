@@ -17,7 +17,7 @@ const ArticleInfo = (props) => {
 
   const [showingAll, setShowingAll] = useState(false);
 
-  var articleBody = null;
+  var articleBody = '';
   if (post.articleBody) {
     if (showingAll) {
       articleBody =
