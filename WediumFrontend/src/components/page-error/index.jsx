@@ -16,6 +16,7 @@ import AccessibleForwardIcon from '@material-ui/icons/AccessibleForward';
 const Home = (props) => {
   const { classes } = props;
 
+  // Goes to home page and does a force refresh to reset redux state.
   const handleReturnHome = () => {
     props.history.push('/');
     window.location.reload();

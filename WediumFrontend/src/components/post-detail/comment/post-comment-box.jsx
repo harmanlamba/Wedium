@@ -18,7 +18,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-const COMMENT_CHAR_LIMIT = 450;
+const COMMENT_CHAR_LIMIT = 400;
 
 const PostCommentBox = (props) => {
   const { classes } = props;
@@ -28,22 +28,22 @@ const PostCommentBox = (props) => {
   const [isEmptyNow, setIsEmptyNow] = useState(false);
   const [isOpenSnack, setIsOpenSnack] = useState(false);
 
+  // Handler for comment box being typed into.
   const handleCommentChange = (event) => {
     setComment(event);
   };
 
+  // Handler for query type being changed
   const handleQuestionType = (event) => {
     commentTypeId === 1 ? setCommentTypeId(2) : setCommentTypeId(1);
   };
 
+  // Checks commentDto correctly formatted
   const checkCommentDto = (commentDto) => {
-    if (commentDto.Body === '') {
-      return false;
-    }
-
-    return true;
+    return commentDto.Body !== '';
   };
 
+  // Dispatches message to thunk
   const handleSendParent = () => {
     const commentDto = {
       PostId: parseInt(props.match.params.postId),

@@ -17,9 +17,13 @@ const ArticleInfo = (props) => {
 
   const [showingAll, setShowingAll] = useState(false);
 
+  // Selects how much of the wikiarticle to display (either summary or full article)
   var articleBody = null;
   if (post.articleBody) {
     if (showingAll) {
+      // Shows full article. Tries to remove references from display by removing all string 
+      // content after references tag. If no references tag found then fallbacks to showing
+      // full unedited article.
       articleBody =
         post.articleBody.indexOf(
           '<h2><span id="References">References</span></h2>'
@@ -32,6 +36,9 @@ const ArticleInfo = (props) => {
             )
           : post.articleBody;
     } else {
+      // Only shows summary by making cut at h2 tag (used by wikipedia to denote the start
+      // of a new section). If no h2 tag is found then sets state of showingAll to true. It will
+      // then show the full article (through code above).
       if (post.articleBody.indexOf('<h2>') === -1) {
         setShowingAll(true);
       } else {
