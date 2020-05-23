@@ -21,8 +21,8 @@ const RichTextBox = (props) => {
     if (typeof reactQuillRef.getEditor !== 'function') {
       return;
     }
-    quillRef = reactQuillRef.getEditor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    quillRef = reactQuillRef.getEditor();
 
     if (props.isEmptyNow) {
       quillRef.setContents([{ insert: '\n' }]);
