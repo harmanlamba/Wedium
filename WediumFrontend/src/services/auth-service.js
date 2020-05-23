@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
  */
 export const authTokenIsValid = (token) => {
 
-    // Check if authorization token is valid via using jtw library 
+    // Check if authorization token is valid via using jwt library 
     if (token) {
         const decodedToken = jwt.decode(token);
         const dateNow = new Date().getTime();

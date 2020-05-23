@@ -42,7 +42,8 @@ namespace WediumAPI.Controllers
 
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch(PostLikeAlreadyExistsException){
+            catch (PostLikeAlreadyExistsException)
+            {
                 return Ok();
             }
             catch (PostNotFoundException)
@@ -86,7 +87,7 @@ namespace WediumAPI.Controllers
         /// <param name="limit"></param> The number of posts to retrieve (default: uses GetPostDefaultLimit value 
         /// in appsettings.json)
         /// <param name="after_id"></param> The last retrieved PostId (default: will start stream at the most recently liked post)
-        /// <returns></returns>Ok in the case that the request was successfull. Not found in the case of the post not being found.
+        /// <returns></returns>Ok in the case that the request was successful. Not found in the case of the post not being found.
         [Authorize]
         [HttpGet("Get")]
         public ActionResult<List<PostDto>> Get(int? limit = null, int? after_id = null)

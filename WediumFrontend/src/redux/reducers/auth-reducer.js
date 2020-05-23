@@ -28,7 +28,7 @@ export default (state = INIT_AUTH_REDUCER_STATE, action) => {
             break;
 
         case LOGOUT:
-            // On logout, set user jtw token to empty and falsify isAuthenticated
+            // On logout, set user jwt token to empty and falsify isAuthenticated
             state = {
                 ...state,
                 user: '',

@@ -35,7 +35,7 @@ namespace WediumAPI.Controllers
         /// <param name="limit"></param> The number of posts to retrieve (default: uses GetPostDefaultLimit value in 
         /// appsettings.json)
         /// <param name="after_id"></param> The last retrieved PostId (default: will start chronological stream at newest post)
-        /// <returns></returns> Ok in the case that the request was successfull, and Not found in the case that the posts were
+        /// <returns></returns> Ok in the case that the request was successful, and Not found in the case that the posts were
         /// not found
         [AllowAnonymous]
         [HttpGet("Get")]
@@ -65,7 +65,7 @@ namespace WediumAPI.Controllers
         /// Get a singular post matching the post id provided
         /// </summary>
         /// <param name="postId"></param> The id of the post you want retrieved from the database
-        /// <returns></returns>  Ok in the case that the request was successfull, and Not found in the case that the posts were
+        /// <returns></returns>  Ok in the case that the request was successful, and Not found in the case that the posts were
         /// not found
         [AllowAnonymous]
         [HttpGet("Get/{postId}")]

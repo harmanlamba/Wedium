@@ -55,7 +55,7 @@ namespace WediumAPI.Controllers
         /// The endpoint creates a comment, given its respective commentDto object
         /// </summary>
         /// <param name="commentDto"></param>
-        /// <returns></returns> On sucessfully creating the Comment returns the URI of the comment in the locaiton 
+        /// <returns></returns> On sucessfully creating the Comment returns the URI of the comment in the location 
         /// header and a updated commentDto in the body.
         [Authorize]
         [HttpPost("Post")]
