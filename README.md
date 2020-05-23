@@ -31,9 +31,19 @@ _We recommend the usage of Visual Studio for the development of the backend and 
 ### Frontend Setup
 1. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool.
 2. Run `npm install` in the command line tool to download and install frontend dependencies.
-3. Create a `.env.development` file in `./WediumFrontend`. Add the required settings _(contact a team-member to obtain values)_.
+3. Edit the `.env.development` file in `./WediumFrontend`. Add the required settings _(contact a team-member to obtain values)_.
 4. Run `npm run start` in the command line tool to start the React development server.
 5. The default internet browser will redirect to the home page (`http://localhost:3000/`). This should be successfully connected to the backend.
+
+## Testing Wedium
+## Backend Testing
+1. Find and open `WediumBackend.sln` in `./WediumBackend`.
+2. Ensure the Test Explorer window is open (Test > Test Explorer).
+3. Find `WediumTestSuite` in the solution explorer. Right click the project and select `Run Tests`.
+
+## Frontend Testing
+1. Naviagate to the frontend folder in `./WediumFrontend` in a command line tool.
+2. Run `npm run test` in the command line tool.
 
 ### Database
 _Contact a team member to obtain details regarding the database._
