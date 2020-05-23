@@ -9,7 +9,7 @@ it('snapshot postDetailInfo default load', () => {
     {
       articleImageUrl: 'Image URL',
       articleUrl: 'Article URL',
-      date: moment.utc().valueOf(),
+      date: '',
       description: 'Post Description',
       isFavourited: false,
       isPostLiked: false,

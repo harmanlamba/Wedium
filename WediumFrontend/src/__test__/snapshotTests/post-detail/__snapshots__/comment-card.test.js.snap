@@ -48,10 +48,10 @@ exports[`snapshot commentCard default load 1`] = `
         color="textSecondary"
         variant="caption"
       >
-        23 May
+        Invalid date
          -
          
-        a few seconds ago
+        Invalid date
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
@@ -166,10 +166,10 @@ exports[`snapshot postCommentFeed with user authenticated load 1`] = `
         color="textSecondary"
         variant="caption"
       >
-        23 May
+        Invalid date
          -
          
-        a few seconds ago
+        Invalid date
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))

@@ -68,10 +68,10 @@ exports[`snapshot postDetailInfo default load 1`] = `
           color="textSecondary"
           variant="caption"
         >
-          23 May
+          Invalid date
            -
            
-          a few seconds ago
+          Invalid date
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(CardContent))>
     </WithStyles(ForwardRef(Card))>
@@ -80,7 +80,7 @@ exports[`snapshot postDetailInfo default load 1`] = `
         Object {
           "articleImageUrl": "Image URL",
           "articleUrl": "Article URL",
-          "date": 1590216007250,
+          "date": "",
           "description": "Post Description",
           "isFavourited": false,
           "isPostLiked": false,
