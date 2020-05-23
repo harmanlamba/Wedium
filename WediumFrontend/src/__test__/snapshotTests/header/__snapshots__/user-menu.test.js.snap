@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot usermenu default load 1`] = `
+<div>
+  <WithStyles(ForwardRef(Button))
+    className="makeStyles-rightSpacing-4"
+    color="primary"
+    onClick={[Function]}
+    startIcon={<UNDEFINED />}
+    variant="contained"
+  >
+    Post
+  </WithStyles(ForwardRef(Button))>
+  <WithStyles(ForwardRef(Button))
+    onClick={[Function]}
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-rightSpacing-4"
+      display="inline"
+      variant="button"
+    >
+      steve mcqueen
+    </WithStyles(ForwardRef(Typography))>
+    <WithStyles(ForwardRef(Avatar))
+      className="makeStyles-profileImage-5"
+      src="https://imsteve.jpg"
+    />
+    <ExpandMoreIcon
+      className="makeStyles-expand-1"
+    />
+  </WithStyles(ForwardRef(Button))>
+  <WithStyles(ForwardRef(Menu))
+    anchorEl={null}
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+    className="makeStyles-menuDropdown-3"
+    getContentAnchorEl={null}
+    onClose={[Function]}
+    open={false}
+    transformOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "top",
+      }
+    }
+  >
+    <div>
+      <WithStyles(ForwardRef(MenuItem))
+        onClick={[Function]}
+      >
+        <PersonIcon
+          className="makeStyles-rightSpacing-4"
+        />
+        <WithStyles(ForwardRef(Typography))
+          variant="subtitle2"
+        >
+          My Profile
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(MenuItem))>
+      <WithStyles(ForwardRef(MenuItem))
+        onClick={[Function]}
+      >
+        <MeetingRoomIcon
+          className="makeStyles-rightSpacing-4"
+        />
+        <WithStyles(ForwardRef(Typography))
+          variant="subtitle2"
+        >
+          Sign Out
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(MenuItem))>
+    </div>
+  </WithStyles(ForwardRef(Menu))>
+</div>
+`;

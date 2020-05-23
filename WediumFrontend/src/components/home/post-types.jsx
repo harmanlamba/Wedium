@@ -7,7 +7,6 @@ import { loadPostTypes } from '../../redux/actions/thunk/post-type-thunk';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 const PostTypes = (props) => {
@@ -22,7 +21,7 @@ const PostTypes = (props) => {
 
   const onClick = (redirectRoute) => {
     props.history.push(redirectRoute);
-  }
+  };
 
   const listItems = props.postTypes.map((postTypes, i) => (
     <ListItem
@@ -34,7 +33,7 @@ const PostTypes = (props) => {
         currentPostType === postTypes.postType ? classes.active : ''
       }`}
     >
-      <Typography variant="body2"> {postTypes.postType}</Typography>
+      <Typography variant="button"> {postTypes.postType}</Typography>
     </ListItem>
   ));
 
@@ -49,43 +48,42 @@ const PostTypes = (props) => {
         currentPostType ? '' : classes.active
       }`}
     >
-      <Typography variant="body2">All</Typography>
+      <Typography variant="button">All</Typography>
     </ListItem>
   );
 
   return (
     <div>
-      <Divider />
-      <br />
       {listItems.length <= 1 ? (
         ''
       ) : (
         <List className={classes.list}>{listItems}</List>
       )}
-      <br />
-      <Divider />
     </div>
   );
-}
+};
 
 const styles = (theme) => ({
   list: {
     display: 'flex',
     flexWrap: 'wrap',
     backgroundColor: 'transparent !important',
-    margin: '0 8px',
+    margin: '0 15px',
     width: '105%',
+    padding: '15px 0',
+    borderTop: '2px solid #000 !important',
+    borderBottom: '2px solid #000 !important',
   },
   toggleButton: {
     margin: '2px',
-    border: '1px solid #c4c4c4 !important',
-    borderRadius: '20px !important',
+    border: '2px solid #e8e8e8 !important',
+    borderRadius: '30px !important',
     padding: '8px 16px',
     width: 'fit-content',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
   },
   active: {
-    backgroundColor: '#3f51b5 !important',
+    backgroundColor: '#3b49df !important',
     color: '#fff !important',
   },
 });

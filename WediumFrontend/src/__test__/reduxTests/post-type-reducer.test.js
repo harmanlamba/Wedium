@@ -17,7 +17,6 @@ it("check initial store state", () => {
     const keys = Object.keys(store.getState());
     expect(keys.length).toBe(5);
     expect(keys[1]).toBe("postType");
-    expect(store.getState().comment.comments).toStrictEqual([]);
 });
 
 it("check load post type success", () => {
