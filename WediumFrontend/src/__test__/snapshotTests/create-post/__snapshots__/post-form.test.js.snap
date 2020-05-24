@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot postform default load 1`] = `
+<PostForm
+  classes={
+    Object {
+      "container": "PostForm-container-1",
+      "textField": "PostForm-textField-2",
+    }
+  }
+  params={
+    Object {
+      "router": [MockFunction],
+    }
+  }
+/>
+`;

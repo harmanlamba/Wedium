@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot commentLike default load 1`] = `
+<Connect(CommentLike)
+  classes={
+    Object {
+      "likedIcon": "Connect(CommentLike)-likedIcon-3",
+      "text": "Connect(CommentLike)-text-1",
+      "unlikedIcon": "Connect(CommentLike)-unlikedIcon-2",
+    }
+  }
+  commentId={1}
+  isCommentLiked={false}
+  numberOfLikes={0}
+  parentCommentId={null}
+  user={1}
+/>
+`;
+
+exports[`snapshot commentLike for child comment load 1`] = `
+<Connect(CommentLike)
+  classes={
+    Object {
+      "likedIcon": "Connect(CommentLike)-likedIcon-3",
+      "text": "Connect(CommentLike)-text-1",
+      "unlikedIcon": "Connect(CommentLike)-unlikedIcon-2",
+    }
+  }
+  commentId={2}
+  isCommentLiked={false}
+  numberOfLikes={0}
+  parentCommentId={1}
+  user={1}
+/>
+`;
+
+exports[`snapshot commentLike with liked component load 1`] = `
+<Connect(CommentLike)
+  classes={
+    Object {
+      "likedIcon": "Connect(CommentLike)-likedIcon-3",
+      "text": "Connect(CommentLike)-text-1",
+      "unlikedIcon": "Connect(CommentLike)-unlikedIcon-2",
+    }
+  }
+  commentId={2}
+  isCommentLiked={true}
+  numberOfLikes={5}
+  parentCommentId={1}
+  user={1}
+/>
+`;

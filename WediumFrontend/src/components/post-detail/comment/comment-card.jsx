@@ -241,7 +241,7 @@ const CommentCard = (props) => {
   );
 };
 
-const styles = (theme) => ({
+export const styles = (theme) => ({
   actions: {
     padding: '0 3px 0 8px !important',
     position: 'relative',

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot postTypeButtons default load 1`] = `
+<PostTypeButtons
+  classes={
+    Object {
+      "selected": "PostTypeButtons-selected-3",
+      "toggleButton": "PostTypeButtons-toggleButton-2",
+      "toggleGroup": "PostTypeButtons-toggleGroup-1",
+    }
+  }
+  params={
+    Object {
+      "router": [MockFunction],
+    }
+  }
+/>
+`;

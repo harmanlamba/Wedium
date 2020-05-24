@@ -17,11 +17,10 @@ const ArticleInfo = (props) => {
 
   const [showingAll, setShowingAll] = useState(false);
 
-  // Selects how much of the wikiarticle to display (either summary or full article)
-  var articleBody = null;
+  var articleBody = '';
   if (post.articleBody) {
     if (showingAll) {
-      // Shows full article. Tries to remove references from display by removing all string 
+      // Shows full article. Tries to remove references from display by removing all string
       // content after references tag. If no references tag found then fallbacks to showing
       // full unedited article.
       articleBody =

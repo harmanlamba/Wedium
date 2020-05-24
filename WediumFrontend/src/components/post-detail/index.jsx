@@ -48,6 +48,7 @@ class PostDetail extends Component {
     // Gets postIndex of post so it can be passed as reference to child components. This cannot be
     // a prop because of index changing on component mount.
     if (reduxPosts.length > 0) {
+      // eslint-disable-next-line
       postIndex = reduxPosts.findIndex((p) => p.postId == this.state.postId);
     }
 

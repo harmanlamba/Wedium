@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot commentCard default load 1`] = `
+<div
+  className=""
+>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="flex-end"
+    container={true}
+    direction="row"
+    justify="flex-end"
+    spacing={0}
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+    />
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+    >
+      <WithStyles(Connect(CommentLike))
+        commentId={1}
+        parentCommentId={null}
+        user={
+          Object {
+            "firstName": "null",
+            "isAuthenticated": false,
+            "jwtToken": "null",
+            "lastName": "null",
+            "pictureUri": "null",
+            "username": "null",
+          }
+        }
+      />
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+  <WithStyles(ForwardRef(CardContent))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={10}
+    >
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        variant="caption"
+      >
+        Bob Shaw
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        variant="caption"
+      >
+        Invalid date
+         -
+         
+        Invalid date
+      </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={10}
+    >
+      This is a comment
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Collapse))
+      in={false}
+      timeout="auto"
+      unmountOnExit={true}
+    >
+      <div>
+        <WithStyles(RichTextBox)
+          isEmptyNow={false}
+          maxLength={350}
+          onChange={[Function]}
+          placeholder="Write a reply here..."
+          setIsEmptyNow={[Function]}
+        />
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[Function]}
+          size="small"
+          variant="contained"
+        >
+          Reply
+        </WithStyles(ForwardRef(Button))>
+      </div>
+    </WithStyles(ForwardRef(Collapse))>
+  </WithStyles(ForwardRef(CardContent))>
+  <WithStyles(ForwardRef(Snackbar))
+    autoHideDuration={2000}
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(ForwardRef(Alert))
+      onClose={[Function]}
+      severity="warning"
+    >
+      Reply is empty!
+    </WithStyles(ForwardRef(Alert))>
+  </WithStyles(ForwardRef(Snackbar))>
+  <WithStyles(ForwardRef(CardActions))
+    className=""
+    disableSpacing={true}
+  />
+  <WithStyles(ForwardRef(Collapse))
+    in={false}
+    timeout="auto"
+    unmountOnExit={true}
+  />
+</div>
+`;
+
+exports[`snapshot postCommentFeed with user authenticated load 1`] = `
+<div
+  className=""
+>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="flex-end"
+    container={true}
+    direction="row"
+    justify="flex-end"
+    spacing={0}
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+    >
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="Comment button"
+        onClick={[Function]}
+        size="small"
+      >
+        <ChatBubbleOutlineIcon
+          fontSize="small"
+        />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+    >
+      <WithStyles(Connect(CommentLike))
+        commentId={1}
+        parentCommentId={null}
+        user={
+          Object {
+            "firstName": "Bob",
+            "isAuthenticated": true,
+            "jwtToken": "jwtToken",
+            "lastName": "Jenkins",
+            "pictureUri": "somePhoto",
+            "username": "Bob Jenkins",
+          }
+        }
+      />
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+  <WithStyles(ForwardRef(CardContent))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={10}
+    >
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        variant="caption"
+      >
+        Bob Shaw
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        variant="caption"
+      >
+        Invalid date
+         -
+         
+        Invalid date
+      </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={10}
+    >
+      This is a comment
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Collapse))
+      in={false}
+      timeout="auto"
+      unmountOnExit={true}
+    >
+      <div>
+        <WithStyles(RichTextBox)
+          isEmptyNow={false}
+          maxLength={350}
+          onChange={[Function]}
+          placeholder="Write a reply here..."
+          setIsEmptyNow={[Function]}
+        />
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[Function]}
+          size="small"
+          variant="contained"
+        >
+          Reply
+        </WithStyles(ForwardRef(Button))>
+      </div>
+    </WithStyles(ForwardRef(Collapse))>
+  </WithStyles(ForwardRef(CardContent))>
+  <WithStyles(ForwardRef(Snackbar))
+    autoHideDuration={2000}
+    onClose={[Function]}
+    open={false}
+  >
+    <WithStyles(ForwardRef(Alert))
+      onClose={[Function]}
+      severity="warning"
+    >
+      Reply is empty!
+    </WithStyles(ForwardRef(Alert))>
+  </WithStyles(ForwardRef(Snackbar))>
+  <WithStyles(ForwardRef(CardActions))
+    className=""
+    disableSpacing={true}
+  />
+  <WithStyles(ForwardRef(Collapse))
+    in={false}
+    timeout="auto"
+    unmountOnExit={true}
+  />
+</div>
+`;
