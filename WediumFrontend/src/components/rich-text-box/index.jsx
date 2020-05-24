@@ -22,8 +22,8 @@ const RichTextBox = (props) => {
     if (typeof reactQuillRef.getEditor !== 'function') {
       return;
     }
-    quillRef = reactQuillRef.getEditor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    quillRef = reactQuillRef.getEditor();
 
     // On post of comment/reply/create post, empty text editor
     if (props.isEmptyNow) {

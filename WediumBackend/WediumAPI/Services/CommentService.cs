@@ -28,8 +28,8 @@ namespace WediumAPI.Services
                 .Where(c => c.PostId == postId & c.ParentCommentId == null)
                 .Include(c => c.User)
                 .Include(c => c.InverseParentComment)
-                .ThenInclude(c => c.User)
                 .ThenInclude(c => c.CommentLike)
+                .ThenInclude(c => c.User)
                 .Include(c => c.CommentType)
                 .Include(c => c.CommentLike);   
 

@@ -7,7 +7,6 @@ import { loadPostTypes } from '../../redux/actions/thunk/post-type-thunk';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 const PostTypes = (props) => {

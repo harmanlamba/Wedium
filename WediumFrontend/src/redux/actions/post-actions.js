@@ -28,7 +28,7 @@ export const loadPostsSuccess = (posts) => {
     }
 }
 
-export const loadMorePostsSuccess = (posts, ) => {
+export const loadMorePostsSuccess = (posts) => {
     return {
         type: LOAD_MORE_POSTS_SUCCESS,
         posts,
