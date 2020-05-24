@@ -19,7 +19,7 @@ import CommentButton from './comment/comment-button';
 const PostDetailInfo = (props) => {
   const post = props.post;
   const classes = useStyles();
-  const postIndex = props.posts.findIndex((p) => p.postId === post.postId);
+  const postIndex = props.posts.findIndex((p) => p.postId == post.postId); // eslint-disable-line
   const reduxPosts = props.posts;
 
   return (

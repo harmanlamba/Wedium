@@ -38,7 +38,7 @@ class PostFeed extends Component {
       this.props.profileFilter !== this.props.previousProfileFilter
     ) {
       // Cancels any in-air requests if filter props change.
-      if (this.state && this.state.cancelToken) {
+      if (this && this.state && this.state.cancelToken) {
         this.state.cancelToken.cancel();
       }
 
@@ -64,7 +64,7 @@ class PostFeed extends Component {
 
   componentWillUnmount() {
     // Cancels any in-air requests so they do not interfere with posts redux state when retrieved
-    if (this.state && this.state.cancelToken) {
+    if (this && this.state && this.state.cancelToken) {
       this.state.cancelToken.cancel();
     }
   }
@@ -74,8 +74,20 @@ class PostFeed extends Component {
   }
 
   loadMore() {
+    let cancelToken = null;
+
+    if (this && this.state && this.state.cancelToken) {
+      cancelToken = this.state.cancelToken;
+    } else {
+      cancelToken = axios.CancelToken.source();
+
+      this.setState({
+        cancelToken,
+      });
+    }
+
     return this.props.loadMorePosts(
-      this.state.cancelToken.token,
+      cancelToken.token,
       this.getLastPost().postId,
       this.props.postType,
       this.props.searchString,
