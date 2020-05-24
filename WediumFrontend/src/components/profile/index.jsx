@@ -38,14 +38,14 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
 };
 
 const Profile = (props) => {
   const { classes } = props;
   const history = useHistory();
 
-  const [tabValue, setTabValue] = useState(null);
+  const [tabValue, setTabValue] = useState(0);
+  const [pageMounted, setPageMounted] = useState(false);
 
   function a11yProps(index) {
     return {
@@ -59,7 +59,7 @@ const Profile = (props) => {
 
     // TabValue initialized to null but set 0 to avoid bug involving profile request being sent
     // on reload (even though refresh redirects to home page)
-    setTabValue(0);
+    setPageMounted(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -91,7 +91,7 @@ const Profile = (props) => {
             </Tabs>
           </Paper>
           <TabPanel value={tabValue} index={0}>
-            <PostFeed profileFilter={{ getCreatedOnly: true }} />
+            {pageMounted === true && <PostFeed profileFilter={{ getCreatedOnly: true }} />}
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
             <PostFeed profileFilter={{ getFavouritesOnly: true }} />
