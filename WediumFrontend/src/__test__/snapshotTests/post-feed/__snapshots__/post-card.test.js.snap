@@ -19,7 +19,7 @@ exports[`snapshot PostCard default load 1`] = `
           Culture
         </span>
         <WithStyles(ForwardRef(Link))
-          className="makeStyles-articleLink-6"
+          className="makeStyles-articleLink-7"
           href="Article URL"
           onClick={[Function]}
           target="_blank"
@@ -51,10 +51,10 @@ exports[`snapshot PostCard default load 1`] = `
     </WithStyles(ForwardRef(CardContent))>
   </div>
   <div
-    className="makeStyles-rightPanel-7"
+    className="makeStyles-rightPanel-8"
   >
     <div
-      className="makeStyles-buttonGroup-8"
+      className="makeStyles-buttonGroup-9"
       onClick={[Function]}
     >
       <WithStyles(Connect(PostLike))
@@ -68,7 +68,7 @@ exports[`snapshot PostCard default load 1`] = `
       />
     </div>
     <WithStyles(ForwardRef(CardMedia))
-      className="makeStyles-image-5"
+      className="makeStyles-image-6"
       component="img"
       src="Image URL"
     />
