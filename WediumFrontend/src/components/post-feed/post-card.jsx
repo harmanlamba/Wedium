@@ -47,6 +47,7 @@ const PostCard = (props) => {
       onClick={() => handleClickPostDetail()}
       onMouseDown={(e) => mouseDownEvent(e)}
     >
+      {console.log(post.title.length)}
       <div>
         <CardContent className={classes.cardContent}>
           <Typography variant="subtitle2">
@@ -60,7 +61,7 @@ const PostCard = (props) => {
               {decodeURIComponent(post.articleTitle)}
             </Link>
           </Typography>
-          <Typography className={classes.postTitle} variant="h6">
+          <Typography className={post.title.length > 40 ? classes.longPostTitle : classes.postTitle} variant="h6">
             {post.title}
           </Typography>
           <Link variant="subtitle2" color="textSecondary">
@@ -109,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   cardContent: {
-    paddingBottom: '0px !important',
+    paddingBottom: '12px !important',
   },
   postType: {
     backgroundColor: '#3b49df',
@@ -119,10 +120,15 @@ const useStyles = makeStyles((theme) => ({
   },
   postTitle: {
     marginBottom: 26,
+    width: '120%',
+  },
+  longPostTitle: {
+    marginBottom: 8,
+    width: '120%',
   },
   image: {
-    width: 140,
-    height: 128,
+    width: 150,
+    height: 132,
     marginTop: 16,
     marginRight: 16,
     marginBottom: 16,

@@ -12,7 +12,7 @@ Influenced by forum-based apps such as Reddit, and Medium, in combination with a
 * **Liking and Saving Posts**: Posts can be liked and saved by logged in users; perfect for re-visiting later.
 * **Viewing Posts**: Read the wikipedia article directly from Wedium.
 * **Commenting on Posts**: Comment on posts to share your thoughts. Wedium supports replying to other comments and liking comments. Comments can also be marked as questions to promote response from other users.
-* **Quoting Text**: See some text in the article worthy of a comment. Simply highlight the text to quote it. Your comments can be formatted/styled how you want it with the use of Wedium's quirky comment box; it supports bold, italics, quoting, links bulletpoints and more.
+* **Quoting Text**: See some text in the article worthy of a comment? Simply highlight the text to quote it. Your comments can be formatted/styled how you want it with the use of Wedium's quirky comment box; it supports bold, italics, quoting, links bulletpoints and more.
 * **Viewing Profile**: Wedium users can view their recent activity, including recently liked, saved and created posts.
 * **Secure Authentication**: Wedium uses Google Authentication to manage authentication.
 
@@ -26,7 +26,7 @@ Influenced by forum-based apps such as Reddit, and Medium, in combination with a
 
 _We recommend the usage of Visual Studio for the development of the backend and your choice of text editor for the frontend._
 
-## Installing Wedium
+## Installing & Running Wedium
 ### Backend Setup
 1. Find and open `WediumBackend.sln` in `./WediumBackend`.
 2. Add the `WediumDatabase` connection string and `JwtSecret` into `appsettings.json` _(contact a team-member to obtain values)_.
