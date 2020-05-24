@@ -47,7 +47,6 @@ const PostCard = (props) => {
       onClick={() => handleClickPostDetail()}
       onMouseDown={(e) => mouseDownEvent(e)}
     >
-      {console.log(post.title.length)}
       <div>
         <CardContent className={classes.cardContent}>
           <Typography variant="subtitle2">
