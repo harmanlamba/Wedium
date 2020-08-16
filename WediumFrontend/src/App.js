@@ -8,6 +8,7 @@ import Home from './components/home';
 import CreatePost from './components/create-post';
 import PostDetail from './components/post-detail';
 import Profile from './components/profile';
+import Careers from './components/careers';
 import PageNotFound from './components/page-error';
 
 export const App = () => {
@@ -25,6 +26,7 @@ export const App = () => {
             />
             <Route exact path="/post/:postType" component={Home} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/careers" component={Careers} />
             <Route path="*" component={PageNotFound} />
           </Switch>
         </Router>
