@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 // Components
 import Header from '../header';
+import Footer from '../footer';
 import PostTypes from './post-types';
 import PostFeed from '../post-feed';
 import SearchResultLabel from './search-result-label';
@@ -68,6 +69,7 @@ const Home = (props) => {
 
         <Grid item xs={2} className={classes.sidebar}>
           <PostTypes currentPostType={currentPostType} />
+          <Footer />
         </Grid>
       </Grid>
     </div>
